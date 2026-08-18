@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "miljotillstandsrisker-mcp",
+  "account_id": "f65ff1e7c6270b468bfe83169d420158",
   "main": "worker.mjs",
   "compatibility_date": "2026-08-18",
   "compatibility_flags": ["nodejs_compat"],

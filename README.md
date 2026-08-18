@@ -20,6 +20,9 @@ GitHub Actions publicerar endast appen och de fyra JSON-filerna. Arkiv, byggmell
 
 MCP-servern finns i [`Artefakt_C_Riskregister/mcp-server`](Artefakt_C_Riskregister/mcp-server). Den körs separat på Cloudflare Workers eftersom GitHub Pages endast kan leverera statiska filer.
 
+- MCP-endpoint: <https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp>
+- Hälsokontroll: <https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/health>
+
 Servern använder publik, autentiseringsfri Streamable HTTP på `/mcp`. Alla verktyg är skrivskyddade och annoterade som icke-destruktiva. Den erbjuder:
 
 - OpenAI-kompatibla `search` och `fetch`
@@ -28,10 +31,10 @@ Servern använder publik, autentiseringsfri Streamable HTTP på `/mcp`. Alla ver
 - noder, statistik, källor och kompletta processkartor
 - fullständiga rådata-URL:er via `get_dataset_manifest`
 
-När Workern har distribuerats ansluter du ChatGPT till:
+Anslut ChatGPT till:
 
 ```text
-https://<din-worker>.workers.dev/mcp
+https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp
 ```
 
 Aktivera Developer mode i ChatGPT under **Settings → Security and login**, öppna **Plugins**, välj **+**, och ange MCP-URL:en. Servern kräver ingen OAuth eller API-nyckel.
@@ -69,7 +72,7 @@ Testsviten verifierar verktygsscheman, skrivskyddsannoteringar, standardkontrakt
 Kör samma kontraktstester mot en offentlig distribution med:
 
 ```bash
-MCP_URL=https://<din-worker>.workers.dev/mcp npm test
+MCP_URL=https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp npm test
 ```
 
 ## Bygg webbappen
