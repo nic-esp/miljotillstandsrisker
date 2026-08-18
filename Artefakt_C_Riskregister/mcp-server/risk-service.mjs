@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 
 export const SERVICE_NAME = 'miljotillstandsrisker';
-export const SERVICE_VERSION = '2.0.0';
+export const SERVICE_VERSION = '2.1.0';
 export const DEFAULT_SITE_URL = 'https://nic-esp.github.io/miljotillstandsrisker/';
 export const DEFAULT_DATA_URL = `${DEFAULT_SITE_URL}data/riskregister.json`;
 export const DEFAULT_NODES_URL = `${DEFAULT_SITE_URL}data/nodes.json`;

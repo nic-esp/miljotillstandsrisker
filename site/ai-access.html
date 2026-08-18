@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-åtkomst och rådata – Miljötillståndsrisker</title>
+  <meta name="description" content="Publik MCP-server och öppna JSON-data för 342 risker i den svenska miljötillståndsprocessen.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://nic-esp.github.io/miljotillstandsrisker/ai-access.html">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <style>
+    :root { color-scheme: light; --ink:#212a35; --muted:#5d6a78; --line:#d8dde3; --accent:#33506e; --bg:#f4f5f7; --panel:#fff; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { max-width:900px; margin:0 auto; padding:48px 24px 72px; }
+    article { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:32px; }
+    h1 { margin:0 0 8px; font-size:2rem; line-height:1.2; }
+    h2 { margin:32px 0 8px; font-size:1.25rem; }
+    p, li { max-width:78ch; }
+    a { color:var(--accent); }
+    code, pre { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    pre { overflow:auto; padding:16px; border-radius:8px; background:#eef0f3; border:1px solid var(--line); white-space:pre-wrap; }
+    .lead { color:var(--muted); font-size:1.08rem; }
+    .notice { padding:14px 16px; border-left:4px solid var(--accent); background:#eef3f8; }
+    nav { margin-bottom:18px; }
+    ul { padding-left:22px; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Miljötillståndsrisker",
+    "description": "342 riskposter mappade till 160 noder i den svenska miljötillståndsprocessen.",
+    "url": "https://nic-esp.github.io/miljotillstandsrisker/",
+    "inLanguage": "sv",
+    "isAccessibleForFree": true,
+    "distribution": [
+      {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json"},
+      {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json"},
+      {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/sources.json"},
+      {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json"}
+    ]
+  }
+  </script>
+</head>
+<body>
+<main>
+  <nav><a href="./">← Öppna riskregistret</a></nav>
+  <article>
+    <h1>AI-åtkomst och rådata</h1>
+    <p class="lead">Hela registret är offentligt och skrivskyddat: 342 risker, 160 riskmappbara noder och processkartor B00–B70. Ingen inloggning eller API-nyckel krävs.</p>
+
+    <h2>Remote MCP</h2>
+    <p>Använd en AI-klient med stöd för publik MCP över Streamable HTTP:</p>
+    <pre>Name: Miljötillståndsrisker
+URL: https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp
+Transport: Streamable HTTP
+Authentication: none</pre>
+    <p>Servern erbjuder OpenAI-kompatibla <code>search</code> och <code>fetch</code>, fullständig paginering med <code>get_dataset_page</code>, samt verktyg för noder, källor, statistik och processkartor.</p>
+    <p class="notice"><strong>ChatGPT:</strong> skapa först MCP-anslutningen i Developer mode. Starta sedan en ny konversation och lägg till anslutningen från menyn Tools. En publik MCP-URL upptäcks eller aktiveras inte automatiskt genom webbsökning.</p>
+
+    <h2>Direkta JSON-filer på GitHub Pages</h2>
+    <ul>
+      <li><a href="data/riskregister.json">Riskregister – alla 342 kompletta riskposter</a></li>
+      <li><a href="data/nodes.json">Riskmappbara processnoder</a></li>
+      <li><a href="data/sources.json">Källregister</a></li>
+      <li><a href="data/process-charts.json">Processkartor B00–B70</a></li>
+      <li><a href="data/">Maskin- och människoläsbart dataindex</a></li>
+    </ul>
+
+    <h2>HTTP-reservväg på samma värd som MCP</h2>
+    <p>Klienter som kan göra vanliga HTTPS-anrop men inte MCP kan använda dessa CORS-öppna läs-URL:er:</p>
+    <ul>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/api/risks?limit=20&amp;offset=0">Sök/lista kompletta risker med paginering</a></li>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/riskregister.json">Alla risker</a></li>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/nodes.json">Alla riskmappbara noder</a></li>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/sources.json">Källregistret</a></li>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/process-charts.json">Alla processkartor</a></li>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/api/risks/R-B10-010-01">Exempel: en riskpost via ID</a></li>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/openapi.json">OpenAPI 3.1-beskrivning</a></li>
+    </ul>
+
+    <h2>Kontrollera åtkomsten</h2>
+    <p>Efter att MCP-anslutningen har lagts till i konversationen, be klienten: <em>”Anropa register_stats och därefter get_dataset_page med limit 2. Redovisa total, risk_id för båda posterna och next_cursor.”</em></p>
+    <p><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/health">Hälsokontroll</a> · <a href="llms.txt">llms.txt</a> · <a href="https://github.com/nic-esp/miljotillstandsrisker">Källkod på GitHub</a></p>
+  </article>
+</main>
+</body>
+</html>

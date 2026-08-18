@@ -1,0 +1,23 @@
+# Miljötillståndsrisker
+
+Public, read-only Swedish dataset covering risks in the Swedish environmental permitting process.
+
+- Web app: https://nic-esp.github.io/miljotillstandsrisker/
+- AI access guide: https://nic-esp.github.io/miljotillstandsrisker/ai-access.html
+- Remote MCP (Streamable HTTP, no authentication): https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp
+- MCP health: https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/health
+
+## Complete public data
+
+- 342 complete risk records: https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json
+- 160 risk-mappable nodes: https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json
+- Source registry: https://nic-esp.github.io/miljotillstandsrisker/data/sources.json
+- Process charts B00-B70: https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json
+
+The same JSON files are available on the MCP host under /data/*.json. A single risk is available at /api/risks/{risk_id}.
+
+## MCP retrieval
+
+Use `search` followed by `fetch` for cited retrieval. To retrieve every complete risk record, call `get_dataset_page` with `limit: 100`, then follow `next_cursor` until it is null. The expected page sizes are 100, 100, 100, and 42. Other read-only tools expose nodes, sources, statistics, and complete process charts.
+
+ChatGPT does not auto-discover a public MCP URL. Create the connection in Developer mode, then add that connection to a new conversation from the Tools menu.

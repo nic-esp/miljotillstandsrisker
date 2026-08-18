@@ -28,6 +28,8 @@ jobs:
 
       - name: Prepare static site
         run: |
+          mkdir -p _site
+          cp -R site/. _site/
           mkdir -p _site/data
           cp Artefakt_C_Riskregister/Artefakt_C_riskregister.html _site/index.html
           cp Artefakt_C_Riskregister/Artefakt_C_riskregister.json _site/data/riskregister.json
@@ -40,6 +42,10 @@ jobs:
           test -s _site/data/nodes.json
           test -s _site/data/sources.json
           test -s _site/data/process-charts.json
+          test -s _site/data/index.html
+          test -s _site/ai-access.html
+          test -s _site/llms.txt
+          test -s _site/sitemap.xml
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

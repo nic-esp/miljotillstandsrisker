@@ -1,6 +1,6 @@
 {
   "name": "artefakt-c-riskregister-mcp",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Publik read-only MCP-server för miljötillståndsrisker, kompatibel med ChatGPT",
   "type": "module",
   "private": true,

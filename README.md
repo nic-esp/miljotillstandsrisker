@@ -5,6 +5,8 @@ Publikt riskregister för den svenska miljötillståndsprocessen, med en statisk
 ## Publik webbapp och data
 
 - Webbapp: <https://nic-esp.github.io/miljotillstandsrisker/>
+- AI-åtkomst och dataindex: <https://nic-esp.github.io/miljotillstandsrisker/ai-access.html>
+- Maskinläsbar vägledning (`llms.txt`): <https://nic-esp.github.io/miljotillstandsrisker/llms.txt>
 - Riskregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json>
 - Riskmappbara noder (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json>
 - Källregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/sources.json>
@@ -22,6 +24,8 @@ MCP-servern finns i [`Artefakt_C_Riskregister/mcp-server`](Artefakt_C_Riskregist
 
 - MCP-endpoint: <https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp>
 - Hälsokontroll: <https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/health>
+- REST/OpenAPI-reservväg: <https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/openapi.json>
+- AI-åtkomst på MCP-värden: <https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/ai-access>
 
 Servern använder publik, autentiseringsfri Streamable HTTP på `/mcp`. Alla verktyg är skrivskyddade och annoterade som icke-destruktiva. Den erbjuder:
 
@@ -37,7 +41,14 @@ Anslut ChatGPT till:
 https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp
 ```
 
-Aktivera Developer mode i ChatGPT under **Settings → Security and login**, öppna **Plugins**, välj **+**, och ange MCP-URL:en. Servern kräver ingen OAuth eller API-nyckel.
+Aktivera Developer mode i ChatGPT under **Settings → Security and login**, öppna **Plugins**, välj **+**, och ange MCP-URL:en. Starta därefter en **ny konversation** och lägg till anslutningen från menyn **Tools**. Servern kräver ingen OAuth eller API-nyckel.
+
+En publik MCP-URL blir inte automatiskt tillgänglig genom webbsökning. Om en klient säger att anslutningen eller verktyget ”was not provisioned” har den aktiva konversationen inte fått MCP-anslutningen, eller så blockerar klientens konto-/workspacepolicy den. Servern erbjuder därför även vanliga CORS-öppna GET-reservvägar:
+
+- `GET /api/risks?q=&chart_key=&category=&origin=&node_id=&offset=&limit=`
+- `GET /api/risks/{risk_id}`
+- `GET /data/riskregister.json`, `/data/nodes.json`, `/data/sources.json` och `/data/process-charts.json`
+- `GET /openapi.json`, `/llms.txt` och `/ai-access`
 
 ## Utveckla och testa MCP-servern
 

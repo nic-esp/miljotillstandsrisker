@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Artefakt C – Riskregister: Miljötillstånd i Sverige</title>
+<meta name="description" content="342 offentliga riskposter mappade till 160 noder i den svenska miljötillståndsprocessen.">
+<meta name="robots" content="index,follow">
+<link id="canonical" rel="canonical" href="https://nic-esp.github.io/miljotillstandsrisker/">
+<link rel="alternate" type="application/json" title="Riskregister" href="data/riskregister.json">
+<link rel="alternate" type="application/json" title="Processnoder" href="data/nodes.json">
+<link rel="alternate" type="application/json" title="Källregister" href="data/sources.json">
+<link rel="alternate" type="application/json" title="Processkartor" href="data/process-charts.json">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Dataset","name":"Miljötillståndsrisker","description":"342 riskposter mappade till 160 noder i den svenska miljötillståndsprocessen.","url":"https://nic-esp.github.io/miljotillstandsrisker/","inLanguage":"sv","isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/sources.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json"}]}
+</script>
 <style>
 :root{
   --bg:#f4f5f7; --bg2:#ffffff; --bg3:#eef0f3; --border:#d8dde3; --border2:#c6cdd5;
@@ -28,7 +39,7 @@ header .sub{color:var(--muted);margin-top:4px;font-size:13px}
 .searchwrap input:focus{border-color:var(--accent)}
 .searchwrap .icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 select,.btn{padding:9px 13px;border-radius:7px;border:1px solid var(--border2);background:var(--bg2);
-  color:var(--text);font-size:14px;cursor:pointer;outline:none}
+  color:var(--text);font-size:14px;cursor:pointer;outline:none;text-decoration:none}
 select:focus{border-color:var(--accent)}
 .btn:hover{background:var(--bg3)}
 .btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -145,6 +156,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
     <button class="btn" data-view="nodes">Nodbläddrare</button>
     <button class="btn" data-view="stats">Statistik</button>
     <button class="btn" id="expandAll">Expandera alla</button>
+    <a class="btn" href="https://nic-esp.github.io/miljotillstandsrisker/ai-access.html">AI &amp; rådata</a>
   </div>
 </header>
 <div class="layout" id="layout">
@@ -181,6 +193,7 @@ if (requestedRisk) {
   state.q = requestedRisk.risk_id;
   state.expandAll = true;
   document.title = `${requestedRisk.risk_id} – ${requestedRisk.title}`;
+  document.querySelector('#canonical').href = `https://nic-esp.github.io/miljotillstandsrisker/?risk=${encodeURIComponent(requestedRisk.risk_id)}`;
 }
 
 // ---- helpers ----
