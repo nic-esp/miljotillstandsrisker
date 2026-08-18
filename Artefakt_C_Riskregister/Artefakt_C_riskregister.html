@@ -175,6 +175,13 @@ for (const r of RISKS) CHART_RISKS[r.chart_key] = (CHART_RISKS[r.chart_key] || 0
 // ---- state ----
 const state = { q:'', charts:new Set(CHARTS), cats:new Set(CATEGORIES), origins:new Set(ORIGINS),
   node:'', view:'risks', sort:'id', selNode:null, selChart:'B00', selProcNode:null, expandAll:false };
+const requestedRiskId = new URLSearchParams(location.search).get('risk');
+const requestedRisk = requestedRiskId && RISKS.find(r => r.risk_id === requestedRiskId);
+if (requestedRisk) {
+  state.q = requestedRisk.risk_id;
+  state.expandAll = true;
+  document.title = `${requestedRisk.risk_id} – ${requestedRisk.title}`;
+}
 
 // ---- helpers ----
 const $ = s => document.querySelector(s);
@@ -657,7 +664,13 @@ $('#expandAll').onclick = () => {
   if (state.view === 'risks') renderRisks();
 };
 
+$('#search').value = state.q;
+if (state.expandAll) $('#expandAll').textContent = 'Minimera alla';
 renderHead(); renderSidebar(); renderMain();
+if (requestedRisk) requestAnimationFrame(() => {
+  const card = document.querySelector(`[data-rid="${CSS.escape(requestedRisk.risk_id)}"]`);
+  if (card) card.scrollIntoView({ block:'start' });
+});
 </script>
 </body>
 </html>

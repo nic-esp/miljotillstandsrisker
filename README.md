@@ -1,40 +1,83 @@
-# Envpermit
+# Miljötillståndsrisker
 
-This repository is configured to publish the self-contained Artefakt C risk-register app with GitHub Pages.
+Publikt riskregister för den svenska miljötillståndsprocessen, med en statisk webbapp på GitHub Pages och en skrivskyddad MCP-server för AI-klienter.
 
-## One-time GitHub setup
+## Publik webbapp och data
 
-1. Create a GitHub repository and push this project to its `main` branch.
-2. In the GitHub repository, open **Settings → Pages**.
-3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-4. Open the **Actions** tab and wait for **Deploy app to GitHub Pages** to finish.
+- Webbapp: <https://nic-esp.github.io/miljotillstandsrisker/>
+- Riskregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json>
+- Riskmappbara noder (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json>
+- Källregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/sources.json>
+- Processkartor B00–B70 (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json>
 
-The deployment URL appears in the completed workflow run and in **Settings → Pages**. Every later push to `main` deploys the current app automatically. You can also run the workflow manually from the **Actions** tab.
+En risk kan länkas direkt med `?risk=RISK-ID`, till exempel:
 
-## What is published
+<https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B10-010-01>
 
-The workflow publishes only:
+GitHub Actions publicerar endast appen och de fyra JSON-filerna. Arkiv, byggmellanprodukter och `node_modules` publiceras inte.
+
+## MCP för ChatGPT och andra AI-klienter
+
+MCP-servern finns i [`Artefakt_C_Riskregister/mcp-server`](Artefakt_C_Riskregister/mcp-server). Den körs separat på Cloudflare Workers eftersom GitHub Pages endast kan leverera statiska filer.
+
+Servern använder publik, autentiseringsfri Streamable HTTP på `/mcp`. Alla verktyg är skrivskyddade och annoterade som icke-destruktiva. Den erbjuder:
+
+- OpenAI-kompatibla `search` och `fetch`
+- avancerad filtrering och cursorpaginering via `search_risks`
+- fullständig hämtning av alla 342 riskposter via `get_dataset_page`
+- noder, statistik, källor och kompletta processkartor
+- fullständiga rådata-URL:er via `get_dataset_manifest`
+
+När Workern har distribuerats ansluter du ChatGPT till:
 
 ```text
-Artefakt_C_Riskregister/Artefakt_C_riskregister.html → index.html
+https://<din-worker>.workers.dev/mcp
 ```
 
-The page contains its styles, JavaScript, and data inline, so it works at both a repository subpath such as `https://OWNER.github.io/REPOSITORY/` and a root Pages domain. Source data, build scripts, archives, and the local MCP server are not included in the deployed site.
+Aktivera Developer mode i ChatGPT under **Settings → Security and login**, öppna **Plugins**, välj **+**, och ange MCP-URL:en. Servern kräver ingen OAuth eller API-nyckel.
 
-Everything embedded in the HTML—including all risk-register data—is visible to anyone who can access the Pages site.
-
-GitHub Pages is static hosting and cannot run `Artefakt_C_Riskregister/mcp-server`; the browser app does not depend on that server.
-
-## Local preview
-
-From the repository root, run:
+## Utveckla och testa MCP-servern
 
 ```bash
-python3 -m http.server 8000
+cd Artefakt_C_Riskregister/mcp-server
+npm install
+npm test
+npm run deploy:dry
 ```
 
-Then open:
+Den lokala stdio-transporten finns kvar för MCP-klienter som kör servern på samma dator:
 
-```text
-http://localhost:8000/Artefakt_C_Riskregister/Artefakt_C_riskregister.html
+```bash
+npm start
 ```
+
+Starta Worker-miljön lokalt med:
+
+```bash
+npm run dev
+```
+
+Distribuera till ett autentiserat Cloudflare-konto med:
+
+```bash
+npx wrangler login
+npm run deploy
+```
+
+Testsviten verifierar verktygsscheman, skrivskyddsannoteringar, standardkontrakten för `search`/`fetch`, CORS, rå Streamable HTTP, officiell MCP-SDK-klient och att pagineringen hämtar exakt 342 unika risker.
+
+Kör samma kontraktstester mot en offentlig distribution med:
+
+```bash
+MCP_URL=https://<din-worker>.workers.dev/mcp npm test
+```
+
+## Bygg webbappen
+
+Webbappen är en fristående HTML-fil med all data inbäddad. Bygg om den från mall och källdata med:
+
+```bash
+node Artefakt_C_Riskregister/_build/build_html.mjs
+```
+
+Varje push till `main` startar [GitHub Pages-arbetsflödet](.github/workflows/deploy-pages.yml).

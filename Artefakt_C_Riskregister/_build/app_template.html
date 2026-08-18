@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artefakt C – Riskregister: Miljötillstånd i Sverige</title>
+<style>
+:root{
+  --bg:#f4f5f7; --bg2:#ffffff; --bg3:#eef0f3; --border:#d8dde3; --border2:#c6cdd5;
+  --text:#212a35; --muted:#5d6a78; --accent:#33506e; --accent2:#2a4059;
+  --chip:#eceff2; --mark:#f5e3a8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.55;font-size:15px}
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:26px 32px 20px;position:sticky;top:0;z-index:50}
+header h1{font-size:21px;font-weight:700;letter-spacing:.1px;color:var(--text)}
+header h1 .accent{color:var(--accent)}
+header .sub{color:var(--muted);margin-top:4px;font-size:13px}
+.headstats{display:flex;gap:22px;margin-top:12px;flex-wrap:wrap}
+.headstat{font-size:13px;color:var(--muted)}
+.headstat b{color:var(--text);font-size:17px;font-weight:700;margin-right:5px}
+.controls{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center}
+.searchwrap{flex:1;min-width:260px;position:relative}
+.searchwrap input{width:100%;padding:10px 14px 10px 36px;border-radius:7px;border:1px solid var(--border2);
+  background:var(--bg);color:var(--text);font-size:15px;outline:none;transition:border-color .15s}
+.searchwrap input:focus{border-color:var(--accent)}
+.searchwrap .icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+select,.btn{padding:9px 13px;border-radius:7px;border:1px solid var(--border2);background:var(--bg2);
+  color:var(--text);font-size:14px;cursor:pointer;outline:none}
+select:focus{border-color:var(--accent)}
+.btn:hover{background:var(--bg3)}
+.btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.layout{display:grid;grid-template-columns:285px 1fr;gap:0;min-height:calc(100vh - 190px)}
+.layout.full{grid-template-columns:1fr}
+.layout.full aside{display:none}
+aside{border-right:1px solid var(--border);padding:20px 18px;background:var(--bg2);
+  overflow-y:auto;max-height:calc(100vh - 190px);position:sticky;top:190px;align-self:start}
+main{padding:24px 32px;min-width:0}
+.fgroup{margin-bottom:22px}
+.fgroup h3{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:9px;font-weight:700}
+.fopt{display:flex;align-items:center;gap:8px;padding:4px 2px;font-size:13.5px;cursor:pointer;border-radius:6px}
+.fopt:hover{background:var(--bg3)}
+.fopt input{accent-color:var(--accent);cursor:pointer}
+.fopt .cnt{margin-left:auto;color:var(--muted);font-size:12px;background:var(--chip);padding:1px 7px;border-radius:10px}
+.clearbtn{width:100%;margin-top:4px}
+.resultline{color:var(--muted);font-size:13px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.resultline b{color:var(--text)}
+.resultline .btn{margin-left:auto;padding:6px 11px;font-size:12.5px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:9px;margin-bottom:12px;overflow:hidden;transition:border-color .15s}
+.card:hover{border-color:var(--border2)}
+.card.open{border-color:var(--accent)}
+.cardhead{padding:13px 18px;cursor:pointer;display:flex;gap:14px;align-items:flex-start;user-select:none}
+.cardhead .rid{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;color:var(--muted);white-space:nowrap;padding-top:3px}
+.cardhead .mid{flex:1;min-width:0}
+.cardhead .ttl{font-weight:650;font-size:15px}
+.cardhead .node{color:var(--muted);font-size:12.5px;margin-top:2px}
+.chips{display:flex;flex-direction:column;gap:4px;align-items:flex-end;flex-shrink:0}
+.chip{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11.5px;font-weight:600;white-space:nowrap;
+  background:var(--chip);color:var(--muted);border:1px solid var(--border)}
+.chip.org{background:#e8edf3;color:var(--accent);border-color:#c3cfdd}
+.chev{color:var(--muted);transition:transform .2s;padding-top:4px;font-size:13px}
+.card.open .chev{transform:rotate(90deg)}
+.cardbody{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
+.card.open .cardbody{display:block}
+.sect{margin-top:14px}
+.sect h4{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:5px;font-weight:700}
+.sect p{color:var(--text);font-size:14px}
+.sect.impact p{color:#7a3a34}
+.sect.mitigation p{color:#2f5d3a}
+.refs{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.ref{font-size:12px;background:var(--chip);border:1px solid var(--border);border-radius:6px;padding:3px 9px;color:var(--accent);text-decoration:none}
+.ref:hover{border-color:var(--accent);text-decoration:underline}
+.ref.plain{color:var(--muted)}
+mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+@media(max-width:1100px){.grid2{grid-template-columns:1fr}}
+.nodeview{display:grid;grid-template-columns:330px 1fr;gap:18px}
+.nodelist{background:var(--bg2);border:1px solid var(--border);border-radius:9px;overflow-y:auto;max-height:calc(100vh - 260px)}
+.nodeitem{padding:9px 14px;cursor:pointer;border-bottom:1px solid var(--border);font-size:13px}
+.nodeitem:hover{background:var(--bg3)}
+.nodeitem.sel{background:var(--accent);color:#fff}
+.nodeitem .nid{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;opacity:.7}
+.nodeitem.sel .nid{opacity:.9}
+.facts{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:16px 18px;margin-bottom:14px}
+.facts dl{display:grid;grid-template-columns:130px 1fr;gap:5px 14px;font-size:13.5px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+.statbox{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:18px 20px;margin-bottom:18px}
+.statbox h3{font-size:14px;margin-bottom:14px;font-weight:650}
+.bar{display:grid;grid-template-columns:210px 1fr 46px;gap:10px;align-items:center;margin-bottom:7px;font-size:13px}
+.bar .lbl{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .track{background:var(--bg3);border-radius:4px;height:16px;overflow:hidden}
+.bar .fill{height:100%;border-radius:4px;background:var(--accent)}
+.bar .val{text-align:right;color:var(--text);font-weight:600}
+.empty{color:var(--muted);text-align:center;padding:60px 20px;font-size:15px}
+.tagrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+/* --- process view --- */
+.charttabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.charttabs .btn{padding:7px 12px;font-size:13px}
+.charttabs .cnt{opacity:.7;font-size:11.5px;margin-left:4px}
+.procwrap{border:1px solid var(--border);border-radius:9px;background:#fbfcfd;overflow:hidden;position:relative;height:66vh}
+.procwrap svg{display:block;width:100%;height:100%;cursor:grab}
+.procwrap svg.dragging{cursor:grabbing}
+.proctoolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--muted);margin-left:auto}
+.legend .li{display:flex;align-items:center;gap:6px}
+.legend .sw{width:14px;height:14px;border-radius:4px;display:inline-block;border:1px solid var(--border2)}
+.legend .dia{width:11px;height:11px;transform:rotate(45deg);border-radius:2px;display:inline-block}
+.pnode{cursor:pointer}
+.pnode rect,.pnode polygon{transition:filter .12s}
+.pnode:hover rect,.pnode:hover polygon{filter:brightness(.94)}
+.pnode.sel rect,.pnode.sel polygon{stroke:#1d2c3d;stroke-width:3}
+.zoomhint{position:absolute;right:12px;bottom:10px;color:#8b97a5;font-size:11.5px;pointer-events:none}
+#procDetail{margin-top:18px}
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  aside{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--border)}
+  .nodeview{grid-template-columns:1fr}
+  main{padding:16px}
+  header{position:static}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Artefakt C <span class="accent">·</span> Riskregister — Miljötillståndsprocessen i Sverige</h1>
+  <div class="sub">Nodnivårisker för samtliga riskmappbara detaljnoder i processkartan (B10–B70) · Sverige AB · Baslinje S0 per 2026-08-14</div>
+  <div class="headstats" id="headstats"></div>
+  <div class="controls">
+    <div class="searchwrap">
+      <span class="icon">⌕</span>
+      <input id="search" type="search" placeholder="Sök i titel, beskrivning, motivation, påverkan, åtgärder…" autocomplete="off">
+    </div>
+    <select id="sort">
+      <option value="id">Sortera: Diagram / nod</option>
+      <option value="category">Sortera: Kategori</option>
+      <option value="origin">Sortera: Ursprung</option>
+      <option value="node">Sortera: Nodnamn</option>
+      <option value="affects">Sortera: Flest berörda noder</option>
+    </select>
+    <button class="btn active" data-view="risks">Risker</button>
+    <button class="btn" data-view="process">Processkarta</button>
+    <button class="btn" data-view="nodes">Nodbläddrare</button>
+    <button class="btn" data-view="stats">Statistik</button>
+    <button class="btn" id="expandAll">Expandera alla</button>
+  </div>
+</header>
+<div class="layout" id="layout">
+  <aside id="sidebar"></aside>
+  <main id="main"></main>
+</div>
+
+<script>
+const DATA = /*__PAYLOAD__*/;
+const RISKS = DATA.risks;
+const NODES = Object.values(DATA.nodesByChart).flat();
+const NODE_BY_ID = Object.fromEntries(NODES.map(n => [n.node_id, n]));
+const SOURCES = DATA.sources;
+const CHARTS = Object.keys(DATA.nodesByChart);
+const CHART_NAME = DATA.chartNames;
+const PROC = DATA.proc;
+const PROC_CHARTS = Object.keys(PROC);
+const PROC_NODE = {};
+for (const ck of PROC_CHARTS) for (const n of PROC[ck].nodes) PROC_NODE[n.id] = { ...n, chart: ck };
+
+const CATEGORIES = [...new Set(RISKS.map(r => r.category))].sort((a,b)=>a.localeCompare(b,'sv'));
+const ORIGINS = ['Myndighet & prövning','Sökande & ansökan','Extern & omvärld'];
+const RISK_COUNT = {};
+for (const r of RISKS) RISK_COUNT[r.node_id] = (RISK_COUNT[r.node_id] || 0) + 1;
+const CHART_RISKS = {};
+for (const r of RISKS) CHART_RISKS[r.chart_key] = (CHART_RISKS[r.chart_key] || 0) + 1;
+
+// ---- state ----
+const state = { q:'', charts:new Set(CHARTS), cats:new Set(CATEGORIES), origins:new Set(ORIGINS),
+  node:'', view:'risks', sort:'id', selNode:null, selChart:'B00', selProcNode:null, expandAll:false };
+const requestedRiskId = new URLSearchParams(location.search).get('risk');
+const requestedRisk = requestedRiskId && RISKS.find(r => r.risk_id === requestedRiskId);
+if (requestedRisk) {
+  state.q = requestedRisk.risk_id;
+  state.expandAll = true;
+  document.title = `${requestedRisk.risk_id} – ${requestedRisk.title}`;
+}
+
+// ---- helpers ----
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function hl(text, q){
+  const e = esc(text);
+  if (!q) return e;
+  const parts = q.trim().split(/\s+/).filter(Boolean).map(p => p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  if (!parts.length) return e;
+  return e.replace(new RegExp('(' + parts.join('|') + ')', 'gi'), '<mark>$1</mark>');
+}
+function refLink(s){
+  if (s.startsWith('EXT:')) {
+    const m = s.slice(4).trim().match(/^(.*?)\s*(https?:\/\/\S+)$/);
+    if (m) return `<a class="ref" href="${esc(m[2])}" target="_blank" rel="noopener">${esc(m[1])} ↗</a>`;
+    return `<span class="ref plain">${esc(s.slice(4).trim())}</span>`;
+  }
+  const src = SOURCES[s];
+  if (src && src.url) return `<a class="ref" href="${esc(src.url)}" target="_blank" rel="noopener" title="${esc(src.title)} — ${esc(src.authority)}">${esc(s)} ↗</a>`;
+  return `<span class="ref plain">${esc(s)}</span>`;
+}
+function affectsCount(r){ return (String(r.affects).match(/B\d{2}-[A-Z]*\d+/g) || []).length; }
+
+// ---- CSV export ----
+function csvCell(v){
+  v = v == null ? '' : String(v);
+  return /[";\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
+}
+function csvDownload(filename, header, rows){
+  const lines = [header, ...rows].map(r => r.map(csvCell).join(';'));
+  const blob = new Blob(['﻿' + lines.join('\r\n')], { type:'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+  URL.revokeObjectURL(a.href);
+}
+function exportRisks(rs, fname){
+  csvDownload(fname,
+    ['risk_id','node_id','delprocess','nod','rubrik','kategori','ursprung','utlosande_faktor','beskrivning','motivering','drabbar','konsekvens','atgarder','kallor','scenario'],
+    rs.map(r => [r.risk_id, r.node_id, CHART_NAME[r.chart_key]||r.chart_key, r.node_label, r.title, r.category, r.origin,
+      r.trigger, r.description, r.motivation, r.affects, r.impact, r.mitigation,
+      r.source_refs.join(' | '), r.scenario_tags]));
+}
+function exportProcNodes(ck){
+  const chart = PROC[ck];
+  csvDownload(`processkarta_${ck}_noder.csv`,
+    ['delprocess','node_id','etikett','nodtyp','fas','aktor','x','y','antal_risker','riskmappbar','handoff_fran','handoff_till'],
+    chart.nodes.map(n => [ck, n.id, n.label, n.type, n.phase, n.actor, n.x, n.y, RISK_COUNT[n.id]||0, n.rma?'ja':'nej', n.hf.join(' | '), n.ht.join(' | ')]));
+}
+function exportProcEdges(ck){
+  const chart = PROC[ck];
+  csvDownload(`processkarta_${ck}_kanter.csv`,
+    ['delprocess','kant_id','fran','till','etikett'],
+    chart.edges.map(e => [ck, e.id, e.s, e.t, e.label]));
+}
+function exportNodes(){
+  csvDownload('riskregister_noder.csv',
+    ['node_id','delprocess','etikett','fas','aktor','beskrivning','rattslig_grund','antal_risker','scenario'],
+    NODES.map(n => [n.node_id, CHART_NAME[n.chart_key]||n.chart_key, n.label, n.phase, n.actor, n.description, n.legal_basis, RISK_COUNT[n.node_id]||0, n.scenario_tags]));
+}
+function exportStats(){
+  const rows = [];
+  const byChart = {}, byCat = {}, byOrg = {};
+  for (const r of RISKS){ byChart[r.chart_key]=(byChart[r.chart_key]||0)+1; byCat[r.category]=(byCat[r.category]||0)+1; byOrg[r.origin]=(byOrg[r.origin]||0)+1; }
+  for (const c of CHARTS) rows.push(['Delprocess', CHART_NAME[c], byChart[c]||0]);
+  for (const c of CATEGORIES) rows.push(['Kategori', c, byCat[c]||0]);
+  for (const o of ORIGINS) rows.push(['Ursprung', o, byOrg[o]||0]);
+  csvDownload('riskregister_statistik.csv', ['grupp','namn','antal_risker'], rows);
+}
+
+// ---- filtering ----
+function filtered(){
+  const q = state.q.trim().toLowerCase();
+  const terms = q ? q.split(/\s+/) : [];
+  return RISKS.filter(r => {
+    if (!state.charts.has(r.chart_key)) return false;
+    if (!state.cats.has(r.category)) return false;
+    if (!state.origins.has(r.origin)) return false;
+    if (state.node && r.node_id !== state.node) return false;
+    if (terms.length){
+      const hay = (r.risk_id+' '+r.title+' '+r.node_id+' '+r.node_label+' '+r.description+' '+r.motivation+' '+r.trigger+' '+r.affects+' '+r.impact+' '+r.mitigation+' '+r.category+' '+r.origin).toLowerCase();
+      if (!terms.every(t => hay.includes(t))) return false;
+    }
+    return true;
+  });
+}
+function sorted(rs){
+  const arr = [...rs];
+  if (state.sort === 'category') arr.sort((a,b)=>a.category.localeCompare(b.category,'sv') || a.risk_id.localeCompare(b.risk_id));
+  else if (state.sort === 'origin') arr.sort((a,b)=>ORIGINS.indexOf(a.origin)-ORIGINS.indexOf(b.origin) || a.risk_id.localeCompare(b.risk_id));
+  else if (state.sort === 'node') arr.sort((a,b)=>a.node_label.localeCompare(b.node_label,'sv') || a.risk_id.localeCompare(b.risk_id));
+  else if (state.sort === 'affects') arr.sort((a,b)=>affectsCount(b)-affectsCount(a));
+  else arr.sort((a,b)=>a.risk_id.localeCompare(b.risk_id,'sv'));
+  return arr;
+}
+
+// ---- shared rendering ----
+function renderHead(){
+  $('#headstats').innerHTML =
+    `<span class="headstat"><b>${RISKS.length}</b>risker</span>
+     <span class="headstat"><b>${NODES.length}</b>noder täckta</span>
+     <span class="headstat"><b>${CHARTS.length}</b>delprocesser</span>
+     <span class="headstat"><b>${CATEGORIES.length}</b>riskkategorier</span>`;
+}
+function renderSidebar(){
+  const chartCounts = {}, catCounts = {}, orgCounts = {};
+  for (const r of RISKS){ chartCounts[r.chart_key]=(chartCounts[r.chart_key]||0)+1; catCounts[r.category]=(catCounts[r.category]||0)+1; orgCounts[r.origin]=(orgCounts[r.origin]||0)+1; }
+  const nodeOpts = NODES
+    .filter(n => state.charts.has(n.chart_key))
+    .map(n => `<option value="${esc(n.node_id)}" ${state.node===n.node_id?'selected':''}>${esc(n.node_id)} – ${esc(n.label)}</option>`).join('');
+  $('#sidebar').innerHTML = `
+    <div class="fgroup">
+      <h3>Nod</h3>
+      <select id="fNode" style="width:100%">
+        <option value="">Alla noder</option>${nodeOpts}
+      </select>
+    </div>
+    <div class="fgroup"><h3>Riskens ursprung</h3>
+      ${ORIGINS.map(o => `<label class="fopt"><input type="checkbox" data-org="${esc(o)}" ${state.origins.has(o)?'checked':''}>${esc(o)}<span class="cnt">${orgCounts[o]||0}</span></label>`).join('')}
+    </div>
+    <div class="fgroup"><h3>Delprocess</h3>
+      ${CHARTS.map(c => `<label class="fopt"><input type="checkbox" data-chart="${c}" ${state.charts.has(c)?'checked':''}>${esc(CHART_NAME[c])}<span class="cnt">${chartCounts[c]||0}</span></label>`).join('')}
+    </div>
+    <div class="fgroup"><h3>Riskkategori</h3>
+      ${CATEGORIES.map(c => `<label class="fopt"><input type="checkbox" data-cat="${esc(c)}" ${state.cats.has(c)?'checked':''}>${esc(c)}<span class="cnt">${catCounts[c]||0}</span></label>`).join('')}
+    </div>
+    <button class="btn clearbtn" id="clearFilters">Rensa filter</button>`;
+  $('#fNode').onchange = e => { state.node = e.target.value; renderMain(); };
+  document.querySelectorAll('[data-chart]').forEach(cb => cb.onchange = () => {
+    cb.checked ? state.charts.add(cb.dataset.chart) : state.charts.delete(cb.dataset.chart);
+    if (state.node && NODE_BY_ID[state.node] && !state.charts.has(NODE_BY_ID[state.node].chart_key)) state.node = '';
+    renderSidebar(); renderMain();
+  });
+  document.querySelectorAll('[data-cat]').forEach(cb => cb.onchange = () => {
+    cb.checked ? state.cats.add(cb.dataset.cat) : state.cats.delete(cb.dataset.cat);
+    renderMain();
+  });
+  document.querySelectorAll('[data-org]').forEach(cb => cb.onchange = () => {
+    cb.checked ? state.origins.add(cb.dataset.org) : state.origins.delete(cb.dataset.org);
+    renderMain();
+  });
+  $('#clearFilters').onclick = () => {
+    state.q=''; $('#search').value=''; state.charts=new Set(CHARTS); state.cats=new Set(CATEGORIES); state.origins=new Set(ORIGINS); state.node='';
+    renderSidebar(); renderMain();
+  };
+}
+function riskCard(r){
+  const q = state.q;
+  return `<div class="card ${state.expandAll?'open':''}" data-rid="${esc(r.risk_id)}">
+    <div class="cardhead">
+      <span class="rid">${hl(r.risk_id,q)}</span>
+      <div class="mid">
+        <div class="ttl">${hl(r.title,q)}</div>
+        <div class="node">${hl(r.node_id+' – '+r.node_label,q)} · ${esc(CHART_NAME[r.chart_key]||r.chart_key)}</div>
+      </div>
+      <div class="chips">
+        <span class="chip">${hl(r.category,q)}</span>
+        <span class="chip org" title="Riskens ursprung">${hl(r.origin,q)}</span>
+      </div>
+      <span class="chev">▶</span>
+    </div>
+    <div class="cardbody">
+      <div class="sect"><h4>Beskrivning</h4><p>${hl(r.description,q)}</p></div>
+      <div class="grid2">
+        <div class="sect"><h4>Utlösande faktor</h4><p>${hl(r.trigger,q)}</p></div>
+        <div class="sect"><h4>Drabbar</h4><p>${hl(r.affects,q)}</p></div>
+      </div>
+      <div class="sect"><h4>Motivering &amp; underbyggnad</h4><p>${hl(r.motivation,q)}</p></div>
+      <div class="grid2">
+        <div class="sect impact"><h4>Konsekvens om risken realiseras</h4><p>${hl(r.impact,q)}</p></div>
+        <div class="sect mitigation"><h4>Motåtgärder</h4><p>${hl(r.mitigation,q)}</p></div>
+      </div>
+      <div class="refs">${r.source_refs.map(refLink).join('')}
+        ${r.scenario_tags ? `<span class="ref plain">${esc(r.scenario_tags)}</span>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+function bindCards(root){
+  (root || document).querySelectorAll('.cardhead').forEach(h => h.onclick = () => h.parentElement.classList.toggle('open'));
+}
+function nodeDetailHTML(id){
+  const m = NODE_BY_ID[id];
+  const p = PROC_NODE[id];
+  if (!m && !p) return '<div class="empty">Okänd nod.</div>';
+  const label = m ? m.label : p.label;
+  const desc = m ? m.description : p.desc;
+  const phase = m ? m.phase : p.phase;
+  const actor = m ? m.actor : p.actor;
+  const legal = m ? m.legal_basis : p.legal;
+  const refs = m ? String(m.source_refs||'').split(/[;,\s]+/).filter(Boolean) : (p.refs||[]);
+  const chart = m ? m.chart_key : p.chart;
+  const rs = RISKS.filter(r => r.node_id === id);
+  const handoffs = p ? [...(p.hf||[]).map(x=>({id:x,dir:'från'})), ...(p.ht||[]).map(x=>({id:x,dir:'till'}))] : [];
+  const otherCharts = [...new Set(handoffs.map(h => h.id.split('-')[0]).filter(c => c !== chart))];
+  return `<div class="facts">
+      <h2 style="font-size:17px;margin-bottom:10px">${esc(id)} – ${esc(label)}</h2>
+      <dl>
+        <dt>Delprocess</dt><dd>${esc(CHART_NAME[chart]||chart)}</dd>
+        ${phase ? `<dt>Fas</dt><dd>${esc(phase)}</dd>` : ''}
+        ${actor ? `<dt>Aktör</dt><dd>${esc(actor)}</dd>` : ''}
+        ${desc ? `<dt>Beskrivning</dt><dd>${esc(desc)}</dd>` : ''}
+        ${legal ? `<dt>Rättslig grund</dt><dd>${esc(legal)}</dd>` : ''}
+        ${m && m.applies_when ? `<dt>Tillämpas när</dt><dd>${esc(m.applies_when)}</dd>` : ''}
+        ${m && m.s1_delta ? `<dt>S1-delta</dt><dd>${esc(m.s1_delta)}</dd>` : ''}
+        ${!m ? `<dt>Riskmappning</dt><dd>Inte riskmappbar (master/handoff/navigering)</dd>` : ''}
+      </dl>
+      <div class="tagrow">${refs.map(refLink).join('')}</div>
+      ${otherCharts.length ? `<div class="tagrow">${otherCharts.map(c => `<button class="btn" data-goto-chart="${esc(c)}" style="padding:5px 11px;font-size:12.5px">Öppna diagram ${esc(c)} →</button>`).join('')}</div>` : ''}
+    </div>
+    ${m ? `<div class="resultline"><b>${rs.length}</b> risker på denna nod</div>${rs.map(riskCard).join('') || '<div class="empty">Inga risker registrerade.</div>'}` : ''}`;
+}
+function bindDetail(root){
+  bindCards(root);
+  root.querySelectorAll('[data-goto-chart]').forEach(b => b.onclick = () => {
+    state.selChart = b.dataset.gotoChart; state.selProcNode = null;
+    setView('process');
+  });
+}
+function setView(v){
+  state.view = v;
+  document.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('active', x.dataset.view === v));
+  renderMain();
+}
+
+// ---- view: risks ----
+function renderRisks(){
+  const rs = sorted(filtered());
+  const line = `<div class="resultline">Visar <b>${rs.length}</b> av <b>${RISKS.length}</b> risker
+    ${state.node ? `· nod <b>${esc(state.node)}</b>` : ''}
+    ${state.q ? `· sökterm “<b>${esc(state.q)}</b>”` : ''}
+    <button class="btn" id="csvRisks">Exportera visade risker (CSV)</button></div>`;
+  $('#main').innerHTML = line + (rs.length ? rs.map(riskCard).join('') : `<div class="empty">Inga risker matchar. Justera sökning eller filter.</div>`);
+  bindCards();
+  $('#csvRisks').onclick = () => exportRisks(rs, 'riskregister_urval.csv');
+}
+
+// ---- view: node browser ----
+function renderNodes(){
+  const ns = NODES.filter(n => state.charts.has(n.chart_key));
+  if (!state.selNode || !ns.some(n => n.node_id === state.selNode)) state.selNode = ns[0]?.node_id;
+  const list = ns.map(x => `<div class="nodeitem ${x.node_id===state.selNode?'sel':''}" data-nid="${esc(x.node_id)}">
+      <div class="nid">${esc(x.node_id)} · ${RISK_COUNT[x.node_id]||0} risker</div>${esc(x.label)}</div>`).join('');
+  $('#main').innerHTML = `<div class="resultline">Nodbläddrare
+      <button class="btn" id="csvNodes">Exportera alla noder (CSV)</button></div>
+    <div class="nodeview"><div class="nodelist">${list}</div><div class="nodedetail" id="nodeDetail">${nodeDetailHTML(state.selNode)}</div></div>`;
+  $('#csvNodes').onclick = exportNodes;
+  document.querySelectorAll('.nodeitem').forEach(el => el.onclick = () => {
+    state.selNode = el.dataset.nid;
+    document.querySelectorAll('.nodeitem').forEach(x => x.classList.toggle('sel', x === el));
+    $('#nodeDetail').innerHTML = nodeDetailHTML(state.selNode);
+    bindDetail($('#nodeDetail'));
+  });
+  bindDetail($('#nodeDetail'));
+}
+
+// ---- view: stats ----
+function bar(label, val, max){
+  const pct = max ? Math.max(2, Math.round(val/max*100)) : 0;
+  return `<div class="bar"><span class="lbl" title="${esc(label)}">${esc(label)}</span>
+    <span class="track"><span class="fill" style="width:${pct}%"></span></span>
+    <span class="val">${val}</span></div>`;
+}
+function renderStats(){
+  const byChart = {}, byCat = {}, byOrg = {}, byNode = {};
+  for (const r of RISKS){ byChart[r.chart_key]=(byChart[r.chart_key]||0)+1; byCat[r.category]=(byCat[r.category]||0)+1; byOrg[r.origin]=(byOrg[r.origin]||0)+1; byNode[r.node_id]=(byNode[r.node_id]||0)+1; }
+  const maxC = Math.max(...Object.values(byChart));
+  const maxK = Math.max(...Object.values(byCat));
+  const maxO = Math.max(...Object.values(byOrg));
+  const topNodes = Object.entries(byNode).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  const avg = (RISKS.length / NODES.length).toFixed(1);
+  $('#main').innerHTML = `
+    <div class="resultline">Statistik <button class="btn" id="csvStats">Exportera statistik (CSV)</button></div>
+    <div class="statbox"><h3>Risker per ursprung</h3>
+      ${ORIGINS.map(o => bar(o, byOrg[o]||0, maxO)).join('')}
+      <p style="color:var(--muted);font-size:12.5px;margin-top:8px">Ursprunget anger vems handlande eller underlåtenhet som i första hand orsakar risken — vägledning för var processförbättringar kan göra skillnad.</p></div>
+    <div class="statbox"><h3>Risker per delprocess</h3>
+      ${CHARTS.map(c => bar(CHART_NAME[c], byChart[c]||0, maxC)).join('')}</div>
+    <div class="statbox"><h3>Risker per kategori</h3>
+      ${CATEGORIES.map(c => bar(c, byCat[c]||0, maxK)).join('')}</div>
+    <div class="statbox"><h3>Noder med flest risker (topp 15)</h3>
+      ${topNodes.map(([id,v]) => bar(id+' – '+(NODE_BY_ID[id]?.label||''), v, topNodes[0][1])).join('')}</div>
+    <div class="statbox"><h3>Täckning</h3>
+      <p style="color:var(--muted);font-size:14px">${NODES.length} av ${NODES.length} riskmappbara noder täckta · i snitt ${avg} risker per nod · B00 (masterprocess) samt handoffs/slutnoder är av design inte riskmappade.</p></div>`;
+  $('#csvStats').onclick = exportStats;
+}
+
+// ---- view: process map ----
+const NW = 210, NH = 70, SEW = 180, SEH = 50, DW = 240, DH = 116;
+function nodeGeom(n){
+  if (n.type === 'decision') return { w: DW, h: DH };
+  if (n.type === 'start' || n.type === 'end') return { w: SEW, h: SEH };
+  return { w: NW, h: NH };
+}
+function riskFill(cnt, rma){
+  if (!rma) return '#eef0f3';
+  if (cnt >= 3) return '#7d9cbb';
+  if (cnt === 2) return '#b7cbdd';
+  return '#dfe8f1';
+}
+function wrapText(s, max){
+  const words = String(s).split(/\s+/); const lines = []; let cur = '';
+  for (const w of words){
+    if (cur && (cur + ' ' + w).length > max){ lines.push(cur); cur = w; }
+    else cur = cur ? cur + ' ' + w : w;
+  }
+  if (cur) lines.push(cur);
+  return lines.slice(0, 4);
+}
+function borderPoint(n, fromX, fromY){
+  const { w, h } = nodeGeom(n);
+  const cx = n.x + w/2, cy = n.y + h/2;
+  const dx = fromX - cx, dy = fromY - cy;
+  if (!dx && !dy) return [cx, cy];
+  const t = Math.min(dx ? (w/2)/Math.abs(dx) : Infinity, dy ? (h/2)/Math.abs(dy) : Infinity);
+  return [cx + dx*t, cy + dy*t];
+}
+function renderProcess(){
+  const ck = state.selChart;
+  const chart = PROC[ck];
+  const tabs = PROC_CHARTS.map(c =>
+    `<button class="btn ${c===ck?'active':''}" data-chart-tab="${c}">${c}<span class="cnt">${CHART_RISKS[c]||0} risker</span></button>`).join('');
+  const nodeById = Object.fromEntries(chart.nodes.map(n => [n.id, n]));
+
+  // edges
+  let edgeSvg = '';
+  for (const e of chart.edges){
+    const s = nodeById[e.s], t = nodeById[e.t];
+    if (!s || !t) continue;
+    const sg = nodeGeom(s), tg = nodeGeom(t);
+    const [x1,y1] = borderPoint(s, t.x + tg.w/2, t.y + tg.h/2);
+    const [x2,y2] = borderPoint(t, s.x + sg.w/2, s.y + sg.h/2);
+    edgeSvg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#a7b3bf" stroke-width="1.5" marker-end="url(#arr)"/>`;
+    if (e.label){
+      const mx=(x1+x2)/2, my=(y1+y2)/2;
+      edgeSvg += `<text x="${mx}" y="${my-5}" text-anchor="middle" font-size="10.5" fill="#66748a" style="paint-order:stroke;stroke:#fbfcfd;stroke-width:4px">${esc(e.label)}</text>`;
+    }
+  }
+
+  // nodes
+  let nodeSvg = '';
+  for (const n of chart.nodes){
+    const { w, h } = nodeGeom(n);
+    const cnt = RISK_COUNT[n.id] || 0;
+    const fill = riskFill(cnt, n.rma);
+    const isDec = n.type === 'decision';
+    const isSE = n.type === 'start' || n.type === 'end';
+    const selCls = state.selProcNode === n.id ? ' sel' : '';
+    const dash = n.rma ? '' : ' stroke-dasharray="5,4"';
+    const stroke = n.rma ? '#7a8ca0' : '#b6bfc9';
+    const shape = isDec
+      ? `<polygon points="${n.x+w/2},${n.y} ${n.x+w},${n.y+h/2} ${n.x+w/2},${n.y+h} ${n.x},${n.y+h/2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"${dash}/>`
+      : `<rect x="${n.x}" y="${n.y}" width="${w}" height="${h}" rx="${isSE?h/2:8}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"${dash}/>`;
+    const cx = n.x + w/2;
+    const maxCh = isDec ? 20 : (isSE ? 22 : 27);
+    const lines = wrapText(n.label, maxCh);
+    const fs = isDec ? 10.5 : 11.5;
+    const blockH = lines.length * (fs + 2.5);
+    const idY = n.y + h/2 - blockH/2 - 7;
+    const textStartY = n.y + h/2 - blockH/2 + fs/2 + 2;
+    const idTxt = `<text x="${cx}" y="${idY}" text-anchor="middle" font-size="9" fill="#5d6a78" font-family="ui-monospace,Menlo,Consolas,monospace" opacity=".9">${esc(n.id)}</text>`;
+    const labelTxt = lines.map((ln,i) =>
+      `<text x="${cx}" y="${textStartY + i*(fs+2.5)}" text-anchor="middle" font-size="${fs}" fill="#212a35">${esc(ln)}</text>`).join('');
+    const badge = cnt
+      ? `<circle cx="${n.x+w-4}" cy="${n.y+2}" r="12" fill="#ffffff" stroke="#33506e" stroke-width="1.6"/>
+         <text x="${n.x+w-4}" y="${n.y+6}" text-anchor="middle" font-size="11" font-weight="700" fill="#33506e">${cnt}</text>`
+      : '';
+    const handoff = (n.ht.length || n.hf.length)
+      ? `<text x="${n.x+8}" y="${n.y+15}" font-size="11" fill="#7a8ca0">⇄</text>` : '';
+    nodeSvg += `<g class="pnode${selCls}" data-nid="${esc(n.id)}">${shape}${handoff}${idTxt}${labelTxt}${badge}
+      <title>${esc(n.id)} – ${esc(n.label)}${cnt ? ` · ${cnt} risker` : (n.rma ? '' : ' · ej riskmappbar')}</title></g>`;
+  }
+
+  // bounds
+  const xs = chart.nodes.map(n => n.x), ys = chart.nodes.map(n => n.y);
+  const x2s = chart.nodes.map(n => n.x + nodeGeom(n).w), y2s = chart.nodes.map(n => n.y + nodeGeom(n).h);
+  const b = { x0: Math.min(...xs)-70, y0: Math.min(...ys)-70, x1: Math.max(...x2s)+70, y1: Math.max(...y2s)+70 };
+
+  $('#main').innerHTML = `
+    <div class="charttabs">${tabs}</div>
+    <div class="proctoolbar">
+      <button class="btn" id="zoomOut">−</button>
+      <button class="btn" id="zoomIn">+</button>
+      <button class="btn" id="zoomFit">Anpassa</button>
+      <button class="btn" id="csvPNodes">Noder (CSV)</button>
+      <button class="btn" id="csvPEdges">Kanter (CSV)</button>
+      <span style="color:var(--muted);font-size:13px">${esc(chart.name)} — klicka på en nod för fakta och risker. Mörkare blå ton = fler mappade risker; streckade grå noder är inte riskmappbara.</span>
+      <div class="legend">
+        <span class="li"><span class="sw" style="background:#dfe8f1"></span>1 risk</span>
+        <span class="li"><span class="sw" style="background:#b7cbdd"></span>2 risker</span>
+        <span class="li"><span class="sw" style="background:#7d9cbb"></span>3+ risker</span>
+        <span class="li"><span class="sw" style="background:#eef0f3;border-style:dashed"></span>ej riskmappbar</span>
+        <span class="li"><span class="dia" style="background:#fff;border:1px solid #7a8ca0"></span>beslut</span>
+      </div>
+    </div>
+    <div class="procwrap">
+      <svg id="procSvg" viewBox="${b.x0} ${b.y0} ${b.x1-b.x0} ${b.y1-b.y0}" preserveAspectRatio="xMidYMid meet">
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0L10,5L0,10z" fill="#a7b3bf"/></marker></defs>
+        <g id="procG">${edgeSvg}${nodeSvg}</g>
+      </svg>
+      <div class="zoomhint">Scrolla = zoom · Dra = panorera</div>
+    </div>
+    <div id="procDetail">${state.selProcNode ? nodeDetailHTML(state.selProcNode) : ''}</div>`;
+
+  // chart tabs
+  document.querySelectorAll('[data-chart-tab]').forEach(bt => bt.onclick = () => {
+    state.selChart = bt.dataset.chartTab; state.selProcNode = null; renderProcess();
+  });
+  $('#csvPNodes').onclick = () => exportProcNodes(ck);
+  $('#csvPEdges').onclick = () => exportProcEdges(ck);
+
+  // zoom/pan via viewBox manipulation; context shared with one-time global listeners
+  const svg = $('#procSvg');
+  const vb = { x: b.x0, y: b.y0, w: b.x1-b.x0, h: b.y1-b.y0 };
+  procCtx = { svg, vb, b, drag: null, moved: false };
+  const apply = () => svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  const zoom = f => {
+    const cw = svg.clientWidth, chh = svg.clientHeight;
+    const cx = vb.x + vb.w/2, cy = vb.y + vb.h/2;
+    vb.w = Math.max(200, Math.min(12000, vb.w * f));
+    vb.h = vb.w * chh / cw;
+    vb.x = cx - vb.w/2; vb.y = cy - vb.h/2;
+    apply();
+  };
+  $('#zoomIn').onclick = () => zoom(0.8);
+  $('#zoomOut').onclick = () => zoom(1.25);
+  $('#zoomFit').onclick = () => { vb.x=b.x0; vb.y=b.y0; vb.w=b.x1-b.x0; vb.h=b.y1-b.y0; apply(); };
+  svg.addEventListener('wheel', e => { e.preventDefault(); zoom(e.deltaY > 0 ? 1.15 : 0.87); }, { passive:false });
+  svg.addEventListener('mousedown', e => { procCtx.drag = { x: e.clientX, y: e.clientY }; procCtx.moved = false; svg.classList.add('dragging'); });
+
+  // node click
+  const g = $('#procG');
+  g.querySelectorAll('.pnode').forEach(el => el.addEventListener('click', () => {
+    if (procCtx && procCtx.moved) return;
+    state.selProcNode = el.dataset.nid;
+    g.querySelectorAll('.pnode').forEach(x => x.classList.toggle('sel', x === el));
+    const det = $('#procDetail');
+    det.innerHTML = nodeDetailHTML(state.selProcNode);
+    bindDetail(det);
+    det.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }));
+
+  if (state.selProcNode) bindDetail($('#procDetail'));
+}
+
+// one-time global pan listeners, acting on the active process-view context
+let procCtx = null;
+window.addEventListener('mousemove', e => {
+  if (!procCtx || !procCtx.drag) return;
+  const { svg, vb } = procCtx;
+  const dx = e.clientX - procCtx.drag.x, dy = e.clientY - procCtx.drag.y;
+  if (Math.abs(dx) + Math.abs(dy) > 4) procCtx.moved = true;
+  vb.x -= dx * vb.w / svg.clientWidth;
+  vb.y -= dy * vb.h / svg.clientHeight;
+  procCtx.drag = { x: e.clientX, y: e.clientY };
+  svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+});
+window.addEventListener('mouseup', () => {
+  if (!procCtx) return;
+  procCtx.drag = null;
+  procCtx.svg.classList.remove('dragging');
+});
+
+function renderMain(){
+  $('#layout').classList.toggle('full', state.view === 'process');
+  if (state.view === 'risks') renderRisks();
+  else if (state.view === 'process') renderProcess();
+  else if (state.view === 'nodes') renderNodes();
+  else renderStats();
+}
+
+// ---- events ----
+let deb;
+$('#search').addEventListener('input', e => { clearTimeout(deb); deb = setTimeout(() => { state.q = e.target.value; renderMain(); }, 120); });
+$('#sort').onchange = e => { state.sort = e.target.value; renderMain(); };
+document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => setView(b.dataset.view));
+$('#expandAll').onclick = () => {
+  state.expandAll = !state.expandAll;
+  $('#expandAll').textContent = state.expandAll ? 'Minimera alla' : 'Expandera alla';
+  if (state.view === 'risks') renderRisks();
+};
+
+$('#search').value = state.q;
+if (state.expandAll) $('#expandAll').textContent = 'Minimera alla';
+renderHead(); renderSidebar(); renderMain();
+if (requestedRisk) requestAnimationFrame(() => {
+  const card = document.querySelector(`[data-rid="${CSS.escape(requestedRisk.risk_id)}"]`);
+  if (card) card.scrollIntoView({ block:'start' });
+});
+</script>
+</body>
+</html>

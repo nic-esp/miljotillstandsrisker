@@ -1,0 +1,23 @@
+{
+  "name": "artefakt-c-riskregister-mcp",
+  "version": "2.0.0",
+  "description": "Publik read-only MCP-server för miljötillståndsrisker, kompatibel med ChatGPT",
+  "type": "module",
+  "private": true,
+  "main": "server.mjs",
+  "scripts": {
+    "build:data": "node build-data.mjs",
+    "start": "node server.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:dry": "wrangler deploy --dry-run",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "wrangler": "4.124.0"
+  }
+}
