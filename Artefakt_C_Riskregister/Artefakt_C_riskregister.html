@@ -1505,10 +1505,12 @@ function renderProcess(){
   svg.addEventListener('wheel', e => { e.preventDefault(); zoom(e.deltaY > 0 ? 1.15 : 0.87); }, { passive:false });
   svg.addEventListener('pointerdown', e => {
     if (e.button !== 0) return;
-    procCtx.drag = { x:e.clientX, y:e.clientY, pointerId:e.pointerId };
+    procCtx.drag = {
+      startX:e.clientX, startY:e.clientY,
+      lastX:e.clientX, lastY:e.clientY,
+      pointerId:e.pointerId,
+    };
     procCtx.moved = false;
-    svg.setPointerCapture(e.pointerId);
-    svg.classList.add('dragging');
   });
   setReadable();
 
@@ -1532,11 +1534,19 @@ let procCtx = null;
 window.addEventListener('pointermove', e => {
   if (!procCtx || !procCtx.drag || procCtx.drag.pointerId !== e.pointerId) return;
   const { svg, vb } = procCtx;
-  const dx = e.clientX - procCtx.drag.x, dy = e.clientY - procCtx.drag.y;
-  if (Math.abs(dx) + Math.abs(dy) > 4) { procCtx.moved = true; procCtx.setModeButtons(null); }
+  const total = Math.abs(e.clientX-procCtx.drag.startX) + Math.abs(e.clientY-procCtx.drag.startY);
+  if (!procCtx.moved && total <= 4) return;
+  if (!procCtx.moved) {
+    procCtx.moved = true;
+    procCtx.setModeButtons(null);
+    svg.setPointerCapture(e.pointerId);
+    svg.classList.add('dragging');
+  }
+  const dx = e.clientX-procCtx.drag.lastX, dy = e.clientY-procCtx.drag.lastY;
   vb.x -= dx * vb.w / svg.clientWidth;
   vb.y -= dy * vb.h / svg.clientHeight;
-  procCtx.drag = { x:e.clientX, y:e.clientY, pointerId:e.pointerId };
+  procCtx.drag.lastX = e.clientX;
+  procCtx.drag.lastY = e.clientY;
   svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
 });
 function endProcessPan(e){
