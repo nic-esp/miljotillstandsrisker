@@ -14,3 +14,4 @@ Artefakt_C_Riskregister/_build/*
 !Artefakt_C_Riskregister/_build/app_template.html
 !Artefakt_C_Riskregister/_build/build_html.mjs
 !Artefakt_C_Riskregister/_build/mappable_nodes.json
+!Artefakt_C_Riskregister/_build/process_geometry.mjs

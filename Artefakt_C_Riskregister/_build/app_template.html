@@ -111,18 +111,33 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 .charttabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .charttabs .btn{padding:7px 12px;font-size:13px}
 .charttabs .cnt{opacity:.7;font-size:11.5px;margin-left:4px}
-.procwrap{border:1px solid var(--border);border-radius:9px;background:#fbfcfd;overflow:hidden;position:relative;height:66vh}
-.procwrap svg{display:block;width:100%;height:100%;cursor:grab}
+.procwrap{border:1px solid var(--border);border-radius:9px;background:#fbfcfd;overflow:hidden;position:relative;height:72vh;min-height:560px}
+.procwrap svg{display:block;width:100%;height:100%;cursor:grab;touch-action:none;user-select:none}
 .procwrap svg.dragging{cursor:grabbing}
 .proctoolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.proctoolbar .viewmode{font-size:12px;color:var(--muted);padding:0 2px}
 .legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--muted);margin-left:auto}
 .legend .li{display:flex;align-items:center;gap:6px}
 .legend .sw{width:14px;height:14px;border-radius:4px;display:inline-block;border:1px solid var(--border2)}
 .legend .dia{width:11px;height:11px;transform:rotate(45deg);border-radius:2px;display:inline-block}
+.legend .terminal{width:19px;height:11px;border:2px solid #4f7566;border-radius:8px;background:#eef5f2;display:inline-block}
+.pedge-halo{fill:none;stroke:#fbfcfd;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;vector-effect:non-scaling-stroke}
+.pedge{fill:none;stroke:#8698aa;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;vector-effect:non-scaling-stroke}
+.pedge-label{pointer-events:none}
+.pedge-label rect{fill:#fff;fill-opacity:.96;stroke:#d6dde5;stroke-width:1;vector-effect:non-scaling-stroke}
+.pedge-label text{fill:#526173;font-size:10.5px;font-weight:550}
 .pnode{cursor:pointer}
-.pnode rect,.pnode polygon{transition:filter .12s}
-.pnode:hover rect,.pnode:hover polygon{filter:brightness(.94)}
-.pnode.sel rect,.pnode.sel polygon{stroke:#1d2c3d;stroke-width:3}
+.pnode .node-shape{transition:filter .12s;vector-effect:non-scaling-stroke}
+.pnode:hover .node-shape{filter:brightness(.94)}
+.pnode.sel .node-shape{stroke:#1d2c3d;stroke-width:3}
+.pnode.start-node .node-shape{stroke:#4f7566;stroke-width:2.2}
+.pnode.end-node .node-shape{stroke:#33506e;stroke-width:2.2}
+.pnode .end-frame{fill:none;stroke:#33506e;stroke-width:1;opacity:.72;pointer-events:none;vector-effect:non-scaling-stroke}
+.pnode .terminal-tag{font-size:8.5px;font-weight:800;letter-spacing:1.1px}
+.pnode.start-node .terminal-tag{fill:#3f6757}
+.pnode.end-node .terminal-tag{fill:#33506e}
+.pnode .risk-badge{fill:#fff;stroke:#33506e;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.pnode .risk-badge-text{fill:#33506e;font-size:10.5px;font-weight:750}
 .zoomhint{position:absolute;right:12px;bottom:10px;color:#8b97a5;font-size:11.5px;pointer-events:none}
 #procDetail{margin-top:18px}
 @media(max-width:900px){
@@ -131,6 +146,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   .nodeview{grid-template-columns:1fr}
   main{padding:16px}
   header{position:static}
+  .procwrap{height:68vh;min-height:480px}
 }
 </style>
 </head>
@@ -165,6 +181,8 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 </div>
 
 <script>
+/*__PROCESS_GEOMETRY__*/
+
 const DATA = /*__PAYLOAD__*/;
 const RISKS = DATA.risks;
 const NODES = Object.values(DATA.nodesByChart).flat();
@@ -174,6 +192,8 @@ const CHARTS = Object.keys(DATA.nodesByChart);
 const CHART_NAME = DATA.chartNames;
 const PROC = DATA.proc;
 const PROC_CHARTS = Object.keys(PROC);
+const PROCESS_GEOMETRY = createProcessGeometry();
+const PROC_GEOMETRY_CACHE = {};
 const PROC_NODE = {};
 for (const ck of PROC_CHARTS) for (const n of PROC[ck].nodes) PROC_NODE[n.id] = { ...n, chart: ck };
 
@@ -482,102 +502,117 @@ function renderStats(){
 }
 
 // ---- view: process map ----
-const NW = 210, NH = 70, SEW = 180, SEH = 50, DW = 240, DH = 116;
-function nodeGeom(n){
-  if (n.type === 'decision') return { w: DW, h: DH };
-  if (n.type === 'start' || n.type === 'end') return { w: SEW, h: SEH };
-  return { w: NW, h: NH };
-}
+function nodeGeom(n){ return PROCESS_GEOMETRY.nodeGeometry(n); }
 function riskFill(cnt, rma){
   if (!rma) return '#eef0f3';
   if (cnt >= 3) return '#7d9cbb';
   if (cnt === 2) return '#b7cbdd';
   return '#dfe8f1';
 }
-function wrapText(s, max){
+function wrapText(s, max, maxLines=4){
   const words = String(s).split(/\s+/); const lines = []; let cur = '';
   for (const w of words){
     if (cur && (cur + ' ' + w).length > max){ lines.push(cur); cur = w; }
     else cur = cur ? cur + ' ' + w : w;
   }
   if (cur) lines.push(cur);
-  return lines.slice(0, 4);
+  if (lines.length <= maxLines) return lines;
+  const visible = lines.slice(0, maxLines);
+  visible[maxLines-1] = visible[maxLines-1].replace(/[….]*$/, '') + '…';
+  return visible;
 }
-function borderPoint(n, fromX, fromY){
-  const { w, h } = nodeGeom(n);
-  const cx = n.x + w/2, cy = n.y + h/2;
-  const dx = fromX - cx, dy = fromY - cy;
-  if (!dx && !dy) return [cx, cy];
-  const t = Math.min(dx ? (w/2)/Math.abs(dx) : Infinity, dy ? (h/2)/Math.abs(dy) : Infinity);
-  return [cx + dx*t, cy + dy*t];
+function processLayout(ck){
+  if (!PROC_GEOMETRY_CACHE[ck]) {
+    const raw = PROC[ck];
+    const nodes = PROCESS_GEOMETRY.layoutNodes(raw.nodes);
+    const routes = PROCESS_GEOMETRY.routeEdges(nodes, raw.edges);
+    PROC_GEOMETRY_CACHE[ck] = {
+      nodes,
+      routes,
+      bounds: PROCESS_GEOMETRY.diagramBounds(nodes, routes),
+    };
+  }
+  return PROC_GEOMETRY_CACHE[ck];
 }
 function renderProcess(){
   const ck = state.selChart;
   const chart = PROC[ck];
+  const { nodes, routes, bounds: b } = processLayout(ck);
   const tabs = PROC_CHARTS.map(c =>
     `<button class="btn ${c===ck?'active':''}" data-chart-tab="${c}">${c}<span class="cnt">${CHART_RISKS[c]||0} risker</span></button>`).join('');
-  const nodeById = Object.fromEntries(chart.nodes.map(n => [n.id, n]));
 
-  // edges
-  let edgeSvg = '';
-  for (const e of chart.edges){
-    const s = nodeById[e.s], t = nodeById[e.t];
-    if (!s || !t) continue;
-    const sg = nodeGeom(s), tg = nodeGeom(t);
-    const [x1,y1] = borderPoint(s, t.x + tg.w/2, t.y + tg.h/2);
-    const [x2,y2] = borderPoint(t, s.x + sg.w/2, s.y + sg.h/2);
-    edgeSvg += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#a7b3bf" stroke-width="1.5" marker-end="url(#arr)"/>`;
-    if (e.label){
-      const mx=(x1+x2)/2, my=(y1+y2)/2;
-      edgeSvg += `<text x="${mx}" y="${my-5}" text-anchor="middle" font-size="10.5" fill="#66748a" style="paint-order:stroke;stroke:#fbfcfd;stroke-width:4px">${esc(e.label)}</text>`;
-    }
-  }
+  // Edges use display-only geometry. Raw PROC coordinates remain untouched for CSV export.
+  const renderedRoutes = routes.map(route => ({
+    route,
+    d: PROCESS_GEOMETRY.roundedPath(route.points),
+    labelBox: route.labelBox,
+  }));
+  const edgeHaloSvg = renderedRoutes.map(({route,d}) =>
+    `<path class="pedge-halo" data-eid="${esc(route.edge.id)}" d="${esc(d)}"/>`).join('');
+  const edgeLineSvg = renderedRoutes.map(({route,d}) =>
+    `<path class="pedge" data-eid="${esc(route.edge.id)}" d="${esc(d)}" marker-end="url(#arr)"/>`).join('');
+  const edgeLabelSvg = renderedRoutes.filter(({labelBox}) => labelBox).map(({route,labelBox:box}) => {
+    const lines = box.lines || wrapText(route.edge.label, 24, 2);
+    const firstY = box.y + box.h/2 - (lines.length-1)*6.5 + 3.8;
+    return `<g class="pedge-label" data-eid="${esc(route.edge.id)}">
+      <title>${esc(route.edge.label)}</title>
+      <rect x="${box.x}" y="${box.y}" width="${box.w}" height="${box.h}" rx="6"/>
+      ${lines.map((line,i) => `<text x="${box.x+box.w/2}" y="${firstY+i*13}" text-anchor="middle">${esc(line)}</text>`).join('')}
+    </g>`;
+  }).join('');
 
   // nodes
   let nodeSvg = '';
-  for (const n of chart.nodes){
+  for (const n of nodes){
     const { w, h } = nodeGeom(n);
     const cnt = RISK_COUNT[n.id] || 0;
     const fill = riskFill(cnt, n.rma);
     const isDec = n.type === 'decision';
-    const isSE = n.type === 'start' || n.type === 'end';
+    const isStart = n.type === 'start';
+    const isEnd = n.type === 'end';
+    const isSE = isStart || isEnd;
     const selCls = state.selProcNode === n.id ? ' sel' : '';
+    const typeCls = isStart ? ' start-node' : (isEnd ? ' end-node' : '');
     const dash = n.rma ? '' : ' stroke-dasharray="5,4"';
     const stroke = n.rma ? '#7a8ca0' : '#b6bfc9';
     const shape = isDec
-      ? `<polygon points="${n.x+w/2},${n.y} ${n.x+w},${n.y+h/2} ${n.x+w/2},${n.y+h} ${n.x},${n.y+h/2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"${dash}/>`
-      : `<rect x="${n.x}" y="${n.y}" width="${w}" height="${h}" rx="${isSE?h/2:8}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"${dash}/>`;
+      ? `<polygon class="node-shape" points="${n.x+w/2},${n.y} ${n.x+w},${n.y+h/2} ${n.x+w/2},${n.y+h} ${n.x},${n.y+h/2}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"${dash}/>`
+      : `<rect class="node-shape" x="${n.x}" y="${n.y}" width="${w}" height="${h}" rx="${isSE?h/2:9}" fill="${fill}" stroke="${stroke}" stroke-width="1.5"${dash}/>`;
+    const endFrame = isEnd
+      ? `<rect class="end-frame" x="${n.x+5}" y="${n.y+5}" width="${w-10}" height="${h-10}" rx="${h/2-5}"/>` : '';
     const cx = n.x + w/2;
-    const maxCh = isDec ? 20 : (isSE ? 22 : 27);
-    const lines = wrapText(n.label, maxCh);
-    const fs = isDec ? 10.5 : 11.5;
-    const blockH = lines.length * (fs + 2.5);
-    const idY = n.y + h/2 - blockH/2 - 7;
-    const textStartY = n.y + h/2 - blockH/2 + fs/2 + 2;
+    const maxCh = isDec ? 21 : (isSE ? 24 : 28);
+    const lines = wrapText(n.label, maxCh, isSE ? 2 : 4);
+    const fs = isDec ? 11 : (isSE ? 11.5 : 12);
+    const lineH = fs + 2.5;
+    const blockH = lines.length * lineH;
+    const idY = isSE ? n.y+18 : n.y+h/2-blockH/2-7;
+    const textStartY = isSE ? n.y+(lines.length===1 ? 43 : 38) : n.y+h/2-blockH/2+fs/2+2;
+    const terminalTag = isSE
+      ? `<text class="terminal-tag" x="${n.x+15}" y="${n.y+18}">${isStart?'START':'SLUT'}</text>` : '';
     const idTxt = `<text x="${cx}" y="${idY}" text-anchor="middle" font-size="9" fill="#5d6a78" font-family="ui-monospace,Menlo,Consolas,monospace" opacity=".9">${esc(n.id)}</text>`;
     const labelTxt = lines.map((ln,i) =>
-      `<text x="${cx}" y="${textStartY + i*(fs+2.5)}" text-anchor="middle" font-size="${fs}" fill="#212a35">${esc(ln)}</text>`).join('');
+      `<text x="${cx}" y="${textStartY+i*lineH}" text-anchor="middle" font-size="${fs}" fill="#212a35">${esc(ln)}</text>`).join('');
+    const badgeX = isDec ? cx+42 : n.x+w-18;
+    const badgeY = isDec ? n.y+35 : n.y+18;
     const badge = cnt
-      ? `<circle cx="${n.x+w-4}" cy="${n.y+2}" r="12" fill="#ffffff" stroke="#33506e" stroke-width="1.6"/>
-         <text x="${n.x+w-4}" y="${n.y+6}" text-anchor="middle" font-size="11" font-weight="700" fill="#33506e">${cnt}</text>`
+      ? `<circle class="risk-badge" cx="${badgeX}" cy="${badgeY}" r="11"/>
+         <text class="risk-badge-text" x="${badgeX}" y="${badgeY+3.5}" text-anchor="middle">${cnt}</text>`
       : '';
     const handoff = (n.ht.length || n.hf.length)
-      ? `<text x="${n.x+8}" y="${n.y+15}" font-size="11" fill="#7a8ca0">⇄</text>` : '';
-    nodeSvg += `<g class="pnode${selCls}" data-nid="${esc(n.id)}">${shape}${handoff}${idTxt}${labelTxt}${badge}
+      ? `<text x="${n.x+12}" y="${n.y+h-8}" font-size="10.5" fill="#6e7f90">⇄</text>` : '';
+    nodeSvg += `<g class="pnode${typeCls}${selCls}" data-nid="${esc(n.id)}">${shape}${endFrame}${terminalTag}${handoff}${idTxt}${labelTxt}${badge}
       <title>${esc(n.id)} – ${esc(n.label)}${cnt ? ` · ${cnt} risker` : (n.rma ? '' : ' · ej riskmappbar')}</title></g>`;
   }
-
-  // bounds
-  const xs = chart.nodes.map(n => n.x), ys = chart.nodes.map(n => n.y);
-  const x2s = chart.nodes.map(n => n.x + nodeGeom(n).w), y2s = chart.nodes.map(n => n.y + nodeGeom(n).h);
-  const b = { x0: Math.min(...xs)-70, y0: Math.min(...ys)-70, x1: Math.max(...x2s)+70, y1: Math.max(...y2s)+70 };
 
   $('#main').innerHTML = `
     <div class="charttabs">${tabs}</div>
     <div class="proctoolbar">
-      <button class="btn" id="zoomOut">−</button>
-      <button class="btn" id="zoomIn">+</button>
-      <button class="btn" id="zoomFit">Anpassa</button>
+      <button class="btn" id="zoomOut" aria-label="Zooma ut">−</button>
+      <button class="btn" id="zoomIn" aria-label="Zooma in">+</button>
+      <button class="btn active" id="zoomReadable">Läsbar</button>
+      <button class="btn" id="zoomFit">Översikt</button>
+      <span class="viewmode" id="procViewMode">Läsbart läge</span>
       <button class="btn" id="csvPNodes">Noder (CSV)</button>
       <button class="btn" id="csvPEdges">Kanter (CSV)</button>
       <span style="color:var(--muted);font-size:13px">${esc(chart.name)} — klicka på en nod för fakta och risker. Mörkare blå ton = fler mappade risker; streckade grå noder är inte riskmappbara.</span>
@@ -587,15 +622,21 @@ function renderProcess(){
         <span class="li"><span class="sw" style="background:#7d9cbb"></span>3+ risker</span>
         <span class="li"><span class="sw" style="background:#eef0f3;border-style:dashed"></span>ej riskmappbar</span>
         <span class="li"><span class="dia" style="background:#fff;border:1px solid #7a8ca0"></span>beslut</span>
+        <span class="li"><span class="terminal"></span>START / SLUT</span>
       </div>
     </div>
     <div class="procwrap">
       <svg id="procSvg" viewBox="${b.x0} ${b.y0} ${b.x1-b.x0} ${b.y1-b.y0}" preserveAspectRatio="xMidYMid meet">
-        <defs><marker id="arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="8.8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
           <path d="M0,0L10,5L0,10z" fill="#a7b3bf"/></marker></defs>
-        <g id="procG">${edgeSvg}${nodeSvg}</g>
+        <g id="procG">
+          <g class="pedge-halos">${edgeHaloSvg}</g>
+          <g class="pedges">${edgeLineSvg}</g>
+          <g class="pedge-labels">${edgeLabelSvg}</g>
+          <g class="pnodes">${nodeSvg}</g>
+        </g>
       </svg>
-      <div class="zoomhint">Scrolla = zoom · Dra = panorera</div>
+      <div class="zoomhint">Läsbar = arbetsvy · Översikt = hela flödet · Scrolla = zoom · Dra = panorera</div>
     </div>
     <div id="procDetail">${state.selProcNode ? nodeDetailHTML(state.selProcNode) : ''}</div>`;
 
@@ -609,21 +650,53 @@ function renderProcess(){
   // zoom/pan via viewBox manipulation; context shared with one-time global listeners
   const svg = $('#procSvg');
   const vb = { x: b.x0, y: b.y0, w: b.x1-b.x0, h: b.y1-b.y0 };
-  procCtx = { svg, vb, b, drag: null, moved: false };
   const apply = () => svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
-  const zoom = f => {
-    const cw = svg.clientWidth, chh = svg.clientHeight;
-    const cx = vb.x + vb.w/2, cy = vb.y + vb.h/2;
-    vb.w = Math.max(200, Math.min(12000, vb.w * f));
-    vb.h = vb.w * chh / cw;
-    vb.x = cx - vb.w/2; vb.y = cy - vb.h/2;
+  const setModeButtons = mode => {
+    $('#zoomReadable').classList.toggle('active', mode === 'readable');
+    $('#zoomFit').classList.toggle('active', mode === 'overview');
+    $('#procViewMode').textContent = mode === 'overview' ? 'Översiktsläge' : (mode === 'readable' ? 'Läsbart läge' : 'Egen zoom');
+  };
+  const positionView = (center, width, height) => {
+    const fullW = b.x1-b.x0, fullH = b.y1-b.y0;
+    vb.w = width; vb.h = height;
+    vb.x = width >= fullW ? b.x0-(width-fullW)/2 : Math.max(b.x0, Math.min(b.x1-width, center.x-width/2));
+    vb.y = height >= fullH ? b.y0-(height-fullH)/2 : Math.max(b.y0, Math.min(b.y1-height, center.y-height/2));
     apply();
+  };
+  const setOverview = () => {
+    vb.x=b.x0; vb.y=b.y0; vb.w=b.x1-b.x0; vb.h=b.y1-b.y0;
+    apply(); setModeButtons('overview');
+  };
+  const setReadable = () => {
+    const cw = Math.max(svg.clientWidth, 1), chh = Math.max(svg.clientHeight, 1);
+    const focus = nodes.find(n => n.id === state.selProcNode) || nodes.find(n => n.type === 'start') || nodes[0];
+    const center = PROCESS_GEOMETRY.nodeCenter(focus);
+    const targetNodeWidth = cw < 700 ? 150 : 190;
+    const width = Math.min(b.x1-b.x0, cw*PROCESS_GEOMETRY.dimensions.process.w/targetNodeWidth);
+    positionView(center, width, width*chh/cw);
+    setModeButtons('readable');
+  };
+  procCtx = { svg, vb, b, drag: null, moved: false, setModeButtons };
+  const zoom = f => {
+    const cw = Math.max(svg.clientWidth, 1), chh = Math.max(svg.clientHeight, 1);
+    const cx = vb.x + vb.w/2, cy = vb.y + vb.h/2;
+    const width = Math.max(320, Math.min((b.x1-b.x0)*1.35, vb.w*f));
+    positionView({x:cx,y:cy}, width, width*chh/cw);
+    setModeButtons(null);
   };
   $('#zoomIn').onclick = () => zoom(0.8);
   $('#zoomOut').onclick = () => zoom(1.25);
-  $('#zoomFit').onclick = () => { vb.x=b.x0; vb.y=b.y0; vb.w=b.x1-b.x0; vb.h=b.y1-b.y0; apply(); };
+  $('#zoomReadable').onclick = setReadable;
+  $('#zoomFit').onclick = setOverview;
   svg.addEventListener('wheel', e => { e.preventDefault(); zoom(e.deltaY > 0 ? 1.15 : 0.87); }, { passive:false });
-  svg.addEventListener('mousedown', e => { procCtx.drag = { x: e.clientX, y: e.clientY }; procCtx.moved = false; svg.classList.add('dragging'); });
+  svg.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    procCtx.drag = { x:e.clientX, y:e.clientY, pointerId:e.pointerId };
+    procCtx.moved = false;
+    svg.setPointerCapture(e.pointerId);
+    svg.classList.add('dragging');
+  });
+  setReadable();
 
   // node click
   const g = $('#procG');
@@ -642,21 +715,24 @@ function renderProcess(){
 
 // one-time global pan listeners, acting on the active process-view context
 let procCtx = null;
-window.addEventListener('mousemove', e => {
-  if (!procCtx || !procCtx.drag) return;
+window.addEventListener('pointermove', e => {
+  if (!procCtx || !procCtx.drag || procCtx.drag.pointerId !== e.pointerId) return;
   const { svg, vb } = procCtx;
   const dx = e.clientX - procCtx.drag.x, dy = e.clientY - procCtx.drag.y;
-  if (Math.abs(dx) + Math.abs(dy) > 4) procCtx.moved = true;
+  if (Math.abs(dx) + Math.abs(dy) > 4) { procCtx.moved = true; procCtx.setModeButtons(null); }
   vb.x -= dx * vb.w / svg.clientWidth;
   vb.y -= dy * vb.h / svg.clientHeight;
-  procCtx.drag = { x: e.clientX, y: e.clientY };
+  procCtx.drag = { x:e.clientX, y:e.clientY, pointerId:e.pointerId };
   svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
 });
-window.addEventListener('mouseup', () => {
-  if (!procCtx) return;
+function endProcessPan(e){
+  if (!procCtx || !procCtx.drag || procCtx.drag.pointerId !== e.pointerId) return;
+  if (procCtx.svg.hasPointerCapture(e.pointerId)) procCtx.svg.releasePointerCapture(e.pointerId);
   procCtx.drag = null;
   procCtx.svg.classList.remove('dragging');
-});
+}
+window.addEventListener('pointerup', endProcessPan);
+window.addEventListener('pointercancel', endProcessPan);
 
 function renderMain(){
   $('#layout').classList.toggle('full', state.view === 'process');

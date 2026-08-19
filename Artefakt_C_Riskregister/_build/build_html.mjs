@@ -59,9 +59,14 @@ const CHART_NAMES = {
 
 const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames: CHART_NAMES, proc })
   .replace(/</g, '\\u003c');
+const processGeometry = readFileSync(join(here, 'process_geometry.mjs'), 'utf8')
+  .replace(/^export\s*\{\s*createProcessGeometry\s*\};?\s*$/m, '');
 
 const template = readFileSync(join(here, 'app_template.html'), 'utf8');
 if (!template.includes('/*__PAYLOAD__*/')) throw new Error('Mall saknar /*__PAYLOAD__*/-placeholder');
-const html = template.replace('/*__PAYLOAD__*/', () => payload);
+if (!template.includes('/*__PROCESS_GEOMETRY__*/')) throw new Error('Mall saknar /*__PROCESS_GEOMETRY__*/-placeholder');
+const html = template
+  .replace('/*__PROCESS_GEOMETRY__*/', () => processGeometry)
+  .replace('/*__PAYLOAD__*/', () => payload);
 writeFileSync(join(root, 'Artefakt_C_riskregister.html'), html);
 console.log(`Skrev Artefakt_C_riskregister.html (${(html.length / 1024).toFixed(0)} KB, ${risks.length} risker)`);
