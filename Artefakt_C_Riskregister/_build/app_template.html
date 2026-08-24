@@ -8,12 +8,14 @@
 <meta name="robots" content="index,follow">
 <link id="canonical" rel="canonical" href="https://nic-esp.github.io/miljotillstandsrisker/">
 <link rel="alternate" type="application/json" title="Riskregister" href="data/riskregister.json">
+<link rel="alternate" type="text/csv" title="Riskregister CSV" href="data/riskregister.csv">
+<link rel="alternate" type="text/csv" title="Normaliserade orsaker och konsekvenser" href="data/riskregister-items.csv">
 <link rel="alternate" type="application/json" title="Processnoder" href="data/nodes.json">
 <link rel="alternate" type="application/json" title="Källregister" href="data/sources.json">
 <link rel="alternate" type="application/json" title="Processkartor" href="data/process-charts.json">
 <link rel="sitemap" type="application/xml" href="sitemap.xml">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Dataset","name":"Miljötillståndsrisker","description":"342 riskposter mappade till 160 noder i den svenska miljötillståndsprocessen.","url":"https://nic-esp.github.io/miljotillstandsrisker/","inLanguage":"sv","isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/sources.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json"}]}
+{"@context":"https://schema.org","@type":"Dataset","name":"Miljötillståndsrisker","description":"342 riskposter mappade till 160 noder i den svenska miljötillståndsprocessen.","url":"https://nic-esp.github.io/miljotillstandsrisker/","inLanguage":"sv","isAccessibleForFree":true,"distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv"},{"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/sources.json"},{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json"}]}
 </script>
 <style>
 :root{
@@ -58,7 +60,8 @@ main{padding:24px 32px;min-width:0}
 .clearbtn{width:100%;margin-top:4px}
 .resultline{color:var(--muted);font-size:13px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .resultline b{color:var(--text)}
-.resultline .btn{margin-left:auto;padding:6px 11px;font-size:12.5px}
+.resultline .btn{margin-left:0;padding:6px 11px;font-size:12.5px}
+.resultline .btn:first-of-type{margin-left:auto}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:9px;margin-bottom:12px;overflow:hidden;transition:border-color .15s}
 .card:hover{border-color:var(--border2)}
 .card.open{border-color:var(--accent)}
@@ -80,6 +83,14 @@ main{padding:24px 32px;min-width:0}
 .sect p{color:var(--text);font-size:14px}
 .sect.impact p{color:#7a3a34}
 .sect.mitigation p{color:#2f5d3a}
+.riskitems{padding-left:20px;color:var(--text);font-size:14px;display:grid;gap:7px}
+.riskitems li{padding-left:2px}
+.riskitems .basis{display:inline-block;margin-left:5px;padding:1px 6px;border-radius:10px;font-size:10px;
+  line-height:1.4;vertical-align:1px;background:#eef2f5;color:var(--muted);border:1px solid var(--border)}
+.riskitems .basis.source{background:#e8f0eb;color:#31573d;border-color:#c8dacd}
+.riskitems .itemrefs{display:inline-flex;gap:3px;margin-left:5px;flex-wrap:wrap;vertical-align:middle}
+.riskitems .itemrefs .ref{font-size:10px;padding:1px 5px;border-radius:9px}
+.sect.impact .riskitems{color:#7a3a34}
 .refs{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
 .ref{font-size:12px;background:var(--chip);border:1px solid var(--border);border-radius:6px;padding:3px 9px;color:var(--accent);text-decoration:none}
 .ref:hover{border-color:var(--accent);text-decoration:underline}
@@ -153,7 +164,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 <body>
 <header>
   <h1>Artefakt C <span class="accent">·</span> Riskregister — Miljötillståndsprocessen i Sverige</h1>
-  <div class="sub">Nodnivårisker för samtliga riskmappbara detaljnoder i processkartan (B10–B70) · Sverige AB · Baslinje S0 per 2026-08-14</div>
+  <div class="sub">Nodnivårisker för samtliga riskmappbara detaljnoder i processkartan (B10–B70) · Sverige AB · Baslinje S0 per 2026-08-20</div>
   <div class="headstats" id="headstats"></div>
   <div class="controls">
     <div class="searchwrap">
@@ -182,6 +193,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 
 <script>
 /*__PROCESS_GEOMETRY__*/
+/*__RISK_FIELDS__*/
 
 const DATA = /*__PAYLOAD__*/;
 const RISKS = DATA.risks;
@@ -239,23 +251,17 @@ function refLink(s){
 function affectsCount(r){ return (String(r.affects).match(/B\d{2}-[A-Z]*\d+/g) || []).length; }
 
 // ---- CSV export ----
-function csvCell(v){
-  v = v == null ? '' : String(v);
-  return /[";\n\r]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
-}
 function csvDownload(filename, header, rows){
-  const lines = [header, ...rows].map(r => r.map(csvCell).join(';'));
-  const blob = new Blob(['﻿' + lines.join('\r\n')], { type:'text/csv;charset=utf-8' });
+  const blob = new Blob([serializeCsv(header, rows)], { type:'text/csv;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = filename; a.click();
   URL.revokeObjectURL(a.href);
 }
 function exportRisks(rs, fname){
-  csvDownload(fname,
-    ['risk_id','node_id','delprocess','nod','rubrik','kategori','ursprung','utlosande_faktor','beskrivning','motivering','drabbar','konsekvens','atgarder','kallor','scenario'],
-    rs.map(r => [r.risk_id, r.node_id, CHART_NAME[r.chart_key]||r.chart_key, r.node_label, r.title, r.category, r.origin,
-      r.trigger, r.description, r.motivation, r.affects, r.impact, r.mitigation,
-      r.source_refs.join(' | '), r.scenario_tags]));
+  csvDownload(fname, RISK_CSV_HEADER, rs.map(r => riskCsvRow(r, CHART_NAME)));
+}
+function exportRiskItems(rs, fname){
+  csvDownload(fname, RISK_ITEM_CSV_HEADER, rs.flatMap(r => riskItemCsvRows(r, CHART_NAME)));
 }
 function exportProcNodes(ck){
   const chart = PROC[ck];
@@ -281,7 +287,13 @@ function exportStats(){
   for (const c of CHARTS) rows.push(['Delprocess', CHART_NAME[c], byChart[c]||0]);
   for (const c of CATEGORIES) rows.push(['Kategori', c, byCat[c]||0]);
   for (const o of ORIGINS) rows.push(['Ursprung', o, byOrg[o]||0]);
-  csvDownload('riskregister_statistik.csv', ['grupp','namn','antal_risker'], rows);
+  const factors = RISKS.flatMap(triggerFactors);
+  const effects = RISKS.flatMap(consequences);
+  rows.push(['Datamodell', 'Utlösande faktorer', factors.length]);
+  rows.push(['Datamodell', 'Källförankrade premisser – utlösande faktorer', factors.filter(item => item.basis === 'source').length]);
+  rows.push(['Datamodell', 'Möjliga konsekvenser', effects.length]);
+  rows.push(['Datamodell', 'Källförankrade premisser – konsekvenser', effects.filter(item => item.basis === 'source').length]);
+  csvDownload('riskregister_statistik.csv', ['grupp','namn','antal'], rows);
 }
 
 // ---- filtering ----
@@ -294,7 +306,7 @@ function filtered(){
     if (!state.origins.has(r.origin)) return false;
     if (state.node && r.node_id !== state.node) return false;
     if (terms.length){
-      const hay = (r.risk_id+' '+r.title+' '+r.node_id+' '+r.node_label+' '+r.description+' '+r.motivation+' '+r.trigger+' '+r.affects+' '+r.impact+' '+r.mitigation+' '+r.category+' '+r.origin).toLowerCase();
+      const hay = (r.risk_id+' '+r.title+' '+r.node_id+' '+r.node_label+' '+r.description+' '+r.motivation+' '+r.trigger+' '+riskItemText(triggerFactors(r))+' '+r.affects+' '+r.impact+' '+riskItemText(consequences(r))+' '+r.mitigation+' '+r.category+' '+r.origin+' '+r.scenario_tags+' '+r.source_refs.join(' ')).toLowerCase();
       if (!terms.every(t => hay.includes(t))) return false;
     }
     return true;
@@ -362,6 +374,15 @@ function renderSidebar(){
 }
 function riskCard(r){
   const q = state.q;
+  const factors = triggerFactors(r);
+  const effects = consequences(r);
+  const itemList = (items) => `<ul class="riskitems">${items.map(item => {
+    const isSource = item.basis === 'source';
+    const label = isSource ? 'Källförankrad premiss' : 'Analytisk bedömning';
+    const title = isSource && item.source_refs.length ? `Källförankrad premiss: ${item.source_refs.join(', ')}` : label;
+    const links = isSource ? `<span class="itemrefs">${item.source_refs.map(refLink).join('')}</span>` : '';
+    return `<li>${hl(item.text,q)}<span class="basis ${isSource?'source':'analysis'}" title="${esc(title)}">${label}</span>${links}</li>`;
+  }).join('')}</ul>`;
   return `<div class="card ${state.expandAll?'open':''}" data-rid="${esc(r.risk_id)}">
     <div class="cardhead">
       <span class="rid">${hl(r.risk_id,q)}</span>
@@ -378,12 +399,12 @@ function riskCard(r){
     <div class="cardbody">
       <div class="sect"><h4>Beskrivning</h4><p>${hl(r.description,q)}</p></div>
       <div class="grid2">
-        <div class="sect"><h4>Utlösande faktor</h4><p>${hl(r.trigger,q)}</p></div>
+        <div class="sect"><h4>Utlösande faktorer (${factors.length})</h4>${itemList(factors)}</div>
         <div class="sect"><h4>Drabbar</h4><p>${hl(r.affects,q)}</p></div>
       </div>
       <div class="sect"><h4>Motivering &amp; underbyggnad</h4><p>${hl(r.motivation,q)}</p></div>
       <div class="grid2">
-        <div class="sect impact"><h4>Konsekvens om risken realiseras</h4><p>${hl(r.impact,q)}</p></div>
+        <div class="sect impact"><h4>Möjliga konsekvenser (${effects.length})</h4>${itemList(effects)}</div>
         <div class="sect mitigation"><h4>Motåtgärder</h4><p>${hl(r.mitigation,q)}</p></div>
       </div>
       <div class="refs">${r.source_refs.map(refLink).join('')}
@@ -445,9 +466,11 @@ function renderRisks(){
   const line = `<div class="resultline">Visar <b>${rs.length}</b> av <b>${RISKS.length}</b> risker
     ${state.node ? `· nod <b>${esc(state.node)}</b>` : ''}
     ${state.q ? `· sökterm “<b>${esc(state.q)}</b>”` : ''}
-    <button class="btn" id="csvRisks">Exportera visade risker (CSV)</button></div>`;
+    <button class="btn" id="csvRiskItems">Orsaker/konsekvenser som rader (CSV)</button>
+    <button class="btn" id="csvRisks">En rad per risk (CSV)</button></div>`;
   $('#main').innerHTML = line + (rs.length ? rs.map(riskCard).join('') : `<div class="empty">Inga risker matchar. Justera sökning eller filter.</div>`);
   bindCards();
+  $('#csvRiskItems').onclick = () => exportRiskItems(rs, 'riskregister_orsaker_konsekvenser_urval.csv');
   $('#csvRisks').onclick = () => exportRisks(rs, 'riskregister_urval.csv');
 }
 
@@ -480,6 +503,10 @@ function bar(label, val, max){
 function renderStats(){
   const byChart = {}, byCat = {}, byOrg = {}, byNode = {};
   for (const r of RISKS){ byChart[r.chart_key]=(byChart[r.chart_key]||0)+1; byCat[r.category]=(byCat[r.category]||0)+1; byOrg[r.origin]=(byOrg[r.origin]||0)+1; byNode[r.node_id]=(byNode[r.node_id]||0)+1; }
+  const allFactors = RISKS.flatMap(triggerFactors);
+  const allEffects = RISKS.flatMap(consequences);
+  const sourceFactors = allFactors.filter(item => item.basis === 'source').length;
+  const sourceEffects = allEffects.filter(item => item.basis === 'source').length;
   const maxC = Math.max(...Object.values(byChart));
   const maxK = Math.max(...Object.values(byCat));
   const maxO = Math.max(...Object.values(byOrg));
@@ -487,6 +514,8 @@ function renderStats(){
   const avg = (RISKS.length / NODES.length).toFixed(1);
   $('#main').innerHTML = `
     <div class="resultline">Statistik <button class="btn" id="csvStats">Exportera statistik (CSV)</button></div>
+    <div class="statbox"><h3>Orsaks- och konsekvensmodell</h3>
+      <p style="color:var(--muted);font-size:14px">${allFactors.length} utlösande faktorer (${sourceFactors} källförankrade premisser) · ${allEffects.length} möjliga konsekvenser (${sourceEffects} källförankrade premisser) · i snitt ${(allFactors.length/RISKS.length).toFixed(1)} respektive ${(allEffects.length/RISKS.length).toFixed(1)} poster per risk.</p></div>
     <div class="statbox"><h3>Risker per ursprung</h3>
       ${ORIGINS.map(o => bar(o, byOrg[o]||0, maxO)).join('')}
       <p style="color:var(--muted);font-size:12.5px;margin-top:8px">Ursprunget anger vems handlande eller underlåtenhet som i första hand orsakar risken — vägledning för var processförbättringar kan göra skillnad.</p></div>

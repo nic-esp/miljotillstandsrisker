@@ -1,10 +1,13 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
+import { consequences, riskItemText, triggerFactors } from '../_build/risk_fields.mjs';
 
 export const SERVICE_NAME = 'miljotillstandsrisker';
-export const SERVICE_VERSION = '2.1.0';
+export const SERVICE_VERSION = '2.2.0';
 export const DEFAULT_SITE_URL = 'https://nic-esp.github.io/miljotillstandsrisker/';
 export const DEFAULT_DATA_URL = `${DEFAULT_SITE_URL}data/riskregister.json`;
+export const DEFAULT_CSV_URL = `${DEFAULT_SITE_URL}data/riskregister.csv`;
+export const DEFAULT_ITEM_CSV_URL = `${DEFAULT_SITE_URL}data/riskregister-items.csv`;
 export const DEFAULT_NODES_URL = `${DEFAULT_SITE_URL}data/nodes.json`;
 export const DEFAULT_SOURCES_URL = `${DEFAULT_SITE_URL}data/sources.json`;
 export const DEFAULT_PROCESS_URL = `${DEFAULT_SITE_URL}data/process-charts.json`;
@@ -22,6 +25,7 @@ const TEXT_FIELDS = [
   'mitigation',
   'category',
   'origin',
+  'scenario_tags',
 ];
 
 const READ_ONLY = {
@@ -44,6 +48,8 @@ const riskSummarySchema = z.object({
   title: z.string(),
   category: z.string(),
   origin: z.string(),
+  trigger_factor_count: z.number().int(),
+  consequence_count: z.number().int(),
   snippet: z.string(),
   url: z.string().url(),
 });
@@ -67,7 +73,12 @@ function normalizeTerms(query = '') {
 }
 
 function searchableText(risk) {
-  return TEXT_FIELDS.map(field => risk[field] ?? '').join(' ').toLocaleLowerCase('sv-SE');
+  return [
+    ...TEXT_FIELDS.map(field => risk[field] ?? ''),
+    riskItemText(triggerFactors(risk)),
+    riskItemText(consequences(risk)),
+    (risk.source_refs ?? []).join(' '),
+  ].join(' ').toLocaleLowerCase('sv-SE');
 }
 
 function matchesTerms(risk, terms) {
@@ -81,18 +92,36 @@ function relevance(risk, terms) {
   const id = risk.risk_id.toLocaleLowerCase('sv-SE');
   const title = risk.title.toLocaleLowerCase('sv-SE');
   const node = `${risk.node_id} ${risk.node_label}`.toLocaleLowerCase('sv-SE');
+  const factors = riskItemText(triggerFactors(risk)).toLocaleLowerCase('sv-SE');
+  const effects = riskItemText(consequences(risk)).toLocaleLowerCase('sv-SE');
+  const description = risk.description.toLocaleLowerCase('sv-SE');
+  const motivation = risk.motivation.toLocaleLowerCase('sv-SE');
+  const sources = (risk.source_refs ?? []).join(' ').toLocaleLowerCase('sv-SE');
   let score = 0;
   for (const term of terms) {
     if (id === term) score += 100;
     else if (id.includes(term)) score += 30;
     if (title.includes(term)) score += 12;
     if (node.includes(term)) score += 5;
+    if (factors.includes(term)) score += 10;
+    if (effects.includes(term)) score += 9;
+    if (description.includes(term)) score += 6;
+    if (motivation.includes(term)) score += 3;
+    if (sources.includes(term)) score += 4;
   }
   return score;
 }
 
 function excerpt(risk, terms) {
-  const candidates = [risk.description, risk.trigger, risk.motivation, risk.impact, risk.mitigation];
+  const candidates = [
+    risk.description,
+    riskItemText(triggerFactors(risk)),
+    risk.trigger,
+    risk.motivation,
+    riskItemText(consequences(risk)),
+    risk.impact,
+    risk.mitigation,
+  ];
   const text = candidates.find(value => terms.some(term => value.toLocaleLowerCase('sv-SE').includes(term)))
     ?? risk.description;
   if (!terms.length) return text.slice(0, 260);
@@ -127,6 +156,12 @@ function page(items, cursor, limit) {
 }
 
 function riskText(risk) {
+  const itemLines = items => items.map((item, index) => {
+    const basis = item.basis === 'source'
+      ? `källförankrad premiss: ${item.source_refs.join(', ')}`
+      : 'analytisk bedömning';
+    return `${index + 1}. ${item.text} (${basis})`;
+  }).join('\n');
   return [
     `# ${risk.title}`,
     '',
@@ -136,11 +171,13 @@ function riskText(risk) {
     `Kategori: ${risk.category}`,
     `Ursprung: ${risk.origin}`,
     '',
-    `## Utlösande faktor\n${risk.trigger}`,
+    `## Sammanfattande utlösande faktor (bakåtkompatibelt fält)\n${risk.trigger}`,
+    `## Utlösande faktorer\n${itemLines(triggerFactors(risk))}`,
     `## Beskrivning\n${risk.description}`,
     `## Motivering och underbyggnad\n${risk.motivation}`,
     `## Drabbar\n${risk.affects}`,
-    `## Konsekvens\n${risk.impact}`,
+    `## Sammanfattande konsekvens (bakåtkompatibelt fält)\n${risk.impact}`,
+    `## Möjliga konsekvenser\n${itemLines(consequences(risk))}`,
     `## Motåtgärder\n${risk.mitigation}`,
     `## Källreferenser\n${risk.source_refs.map(source => `- ${source}`).join('\n')}`,
     `## Scenario\n${risk.scenario_tags}`,
@@ -154,6 +191,8 @@ export function createRiskRegistry({
   processCharts = { charts: [] },
   siteUrl = DEFAULT_SITE_URL,
   dataUrl = DEFAULT_DATA_URL,
+  csvUrl = DEFAULT_CSV_URL,
+  itemCsvUrl = DEFAULT_ITEM_CSV_URL,
   nodesUrl = DEFAULT_NODES_URL,
   sourcesUrl = DEFAULT_SOURCES_URL,
   processUrl = DEFAULT_PROCESS_URL,
@@ -198,7 +237,12 @@ export function createRiskRegistry({
   }
   const allSources = [...sourceByRef.values()].sort((a, b) => a.source_ref.localeCompare(b.source_ref, 'sv'));
   const processChartList = Array.isArray(processCharts?.charts) ? processCharts.charts : [];
-  const processChartByKey = new Map(processChartList.map(chart => [chart.name.split(/\s/)[0], chart]));
+  const processChartKey = chart => {
+    const key = chart?.metadata?.chartKey;
+    if (!key) throw new Error(`Processdiagrammet ${chart?.name ?? '(utan namn)'} saknar metadata.chartKey`);
+    return key;
+  };
+  const processChartByKey = new Map(processChartList.map(chart => [processChartKey(chart), chart]));
 
   const riskUrl = riskId => `${normalizedSiteUrl}?risk=${encodeURIComponent(riskId)}`;
 
@@ -224,6 +268,8 @@ export function createRiskRegistry({
       title: risk.title,
       category: risk.category,
       origin: risk.origin,
+      trigger_factor_count: triggerFactors(risk).length,
+      consequence_count: consequences(risk).length,
       snippet: excerpt(risk, terms),
       url: riskUrl(risk.risk_id),
     };
@@ -234,8 +280,14 @@ export function createRiskRegistry({
       counts[risk[key]] = (counts[risk[key]] ?? 0) + 1;
       return counts;
     }, {});
+    const factors = orderedRisks.flatMap(triggerFactors);
+    const effects = orderedRisks.flatMap(consequences);
     return {
       total_risks: orderedRisks.length,
+      total_trigger_factors: factors.length,
+      source_grounded_trigger_factors: factors.filter(item => item.basis === 'source').length,
+      total_consequences: effects.length,
+      source_grounded_consequences: effects.filter(item => item.basis === 'source').length,
       nodes_covered: Object.keys(riskCount).length,
       mappable_nodes: nodes.length,
       by_chart: countBy('chart_key'),
@@ -249,13 +301,17 @@ export function createRiskRegistry({
       name: SERVICE_NAME,
       version: SERVICE_VERSION,
       language: 'sv',
-      description: 'Offentligt riskregister för den svenska miljötillståndsprocessen.',
+      description: 'Offentligt riskregister för den svenska miljötillståndsprocessen med flera möjliga utlösande faktorer och konsekvenser per riskhändelse.',
       site_url: normalizedSiteUrl,
       raw_data_url: dataUrl,
+      csv_data_url: csvUrl,
+      normalized_csv_data_url: itemCsvUrl,
       raw_nodes_url: nodesUrl,
       raw_sources_url: sourcesUrl,
       raw_process_charts_url: processUrl,
       total_risks: orderedRisks.length,
+      total_trigger_factors: orderedRisks.reduce((sum, risk) => sum + triggerFactors(risk).length, 0),
+      total_consequences: orderedRisks.reduce((sum, risk) => sum + consequences(risk).length, 0),
       mappable_nodes: nodes.length,
       total_sources: allSources.length,
       process_charts: processChartList.length,
@@ -264,8 +320,10 @@ export function createRiskRegistry({
       origins,
       retrieval: {
         standard: ['search', 'fetch'],
-        exhaustive: 'Anropa get_dataset_page utan cursor och följ next_cursor tills den är null.',
+        exhaustive: 'Anropa get_dataset_page med limit 25 utan cursor och följ next_cursor tills den är null.',
         raw: dataUrl,
+        csv: csvUrl,
+        normalized_csv: itemCsvUrl,
       },
     };
   }
@@ -387,7 +445,7 @@ export function createRiskRegistry({
       description: 'Hämta alla kompletta riskposter deterministiskt. Följ next_cursor tills den är null.',
       inputSchema: {
         cursor: z.string().regex(/^o:\d+$/).optional().describe('Cursor från next_cursor; utelämna för första sidan.'),
-        limit: z.number().int().min(1).max(100).default(100).describe('Antal kompletta poster per sida, 1–100.'),
+        limit: z.number().int().min(1).max(25).default(25).describe('Antal kompletta poster per sida, 1–25. Mindre sidor minskar risken för trunkering i AI-klienter.'),
       },
       annotations: READ_ONLY,
     }, async ({ cursor, limit }) => {
@@ -451,7 +509,7 @@ export function createRiskRegistry({
 
     server.registerTool('register_stats', {
       title: 'Riskregistrets statistik',
-      description: 'Hämta antal risker per delprocess, kategori och ursprung samt nodtäckning.',
+      description: 'Hämta antal risker, utlösande faktorer och konsekvenser samt fördelning per delprocess, kategori och ursprung och nodtäckning.',
       inputSchema: {},
       annotations: READ_ONLY,
     }, async () => asToolResult(stats()));
@@ -508,7 +566,7 @@ export function createRiskRegistry({
       annotations: READ_ONLY,
     }, async () => asToolResult({
       charts: processChartList.map(chart => ({
-        chart_key: chart.name.split(/\s/)[0],
+        chart_key: processChartKey(chart),
         name: chart.name,
         nodes: chart.chartData?.nodes?.length ?? 0,
         edges: chart.chartData?.edges?.length ?? 0,

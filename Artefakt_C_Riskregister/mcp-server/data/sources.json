@@ -49,7 +49,7 @@
   },
   {
     "source_ref": "SFS2026_400",
-    "title": "SFS 2026:400 – ändringar i miljöbalken",
+    "title": "SFS 2026:400 – Lag om ändring i miljöbalken",
     "authority": "Svensk författningssamling",
     "url": "https://www.svenskforfattningssamling.se/sites/default/files/sfs/2026-04/SFS2026-400.pdf"
   },
@@ -157,19 +157,19 @@
   },
   {
     "source_ref": "SFS2026_1442",
-    "title": "SFS 2026:1442 – Miljöprövningsmyndigheten, ändring i miljöbalken",
+    "title": "SFS 2026:1442 – Lag om ändring i miljöbalken",
     "authority": "Svensk författningssamling",
     "url": "https://svenskforfattningssamling.se/doc/20261442.html"
   },
   {
     "source_ref": "SFS2026_1443",
-    "title": "SFS 2026:1443 – följdändringar för Miljöprövningsmyndigheten",
+    "title": "SFS 2026:1443 – Lag om ändring i lagen (2010:921) om mark- och miljödomstolar",
     "authority": "Svensk författningssamling",
     "url": "https://svenskforfattningssamling.se/doc/20261443.html"
   },
   {
     "source_ref": "SFS2026_1444",
-    "title": "SFS 2026:1444 – följdändringar för Miljöprövningsmyndigheten",
+    "title": "SFS 2026:1444 – Lag om ändring i lagen (2026:1443) om ändring i lagen (2010:921) om mark- och miljödomstolar",
     "authority": "Svensk författningssamling",
     "url": "https://svenskforfattningssamling.se/doc/20261444.html"
   },
@@ -214,5 +214,95 @@
     "title": "Förordning (2015:236) om åtgärder för att förebygga och begränsa följderna av allvarliga kemikalieolyckor",
     "authority": "Sveriges riksdag",
     "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-2015236-om-atgarder-for-att_sfs-2015-236/"
+  },
+  {
+    "source_ref": "IUF",
+    "title": "Industriutsläppsförordning (2013:250)",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/industriutslappsforordning-2013250_sfs-2013-250/"
+  },
+  {
+    "source_ref": "NV_IED",
+    "title": "Industriutsläppsdirektivet (IED) – vägledning",
+    "authority": "Naturvårdsverket",
+    "url": "https://www.naturvardsverket.se/vagledning-och-stod/industriutslapp-ied/industriutslappsdirektivet-ied/"
+  },
+  {
+    "source_ref": "FL",
+    "title": "Förvaltningslag (2017:900)",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forvaltningslag-2017900_sfs-2017-900/"
+  },
+  {
+    "source_ref": "ARENDELAG",
+    "title": "Lag (1996:242) om domstolsärenden",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-1996242-om-domstolsarenden_sfs-1996-242/"
+  },
+  {
+    "source_ref": "RATTSPROVNING",
+    "title": "Lag (2006:304) om rättsprövning av vissa regeringsbeslut",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-2006304-om-rattsprovning-av-vissa_sfs-2006-304/"
+  },
+  {
+    "source_ref": "LEDNINGSRATT",
+    "title": "Ledningsrättslag (1973:1144)",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/ledningsrattslag-19731144_sfs-1973-1144/"
+  },
+  {
+    "source_ref": "FBL",
+    "title": "Fastighetsbildningslag (1970:988)",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/fastighetsbildningslag-1970988_sfs-1970-988/"
+  },
+  {
+    "source_ref": "JB",
+    "title": "Jordabalk (1970:994)",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/jordabalk-1970994_sfs-1970-994/"
+  },
+  {
+    "source_ref": "PBF",
+    "title": "Plan- och byggförordning (2011:338)",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/plan--och-byggforordning-2011338_sfs-2011-338/"
+  },
+  {
+    "source_ref": "MB_AVGIFT",
+    "title": "Förordning (1998:940) om avgifter för prövning och tillsyn enligt miljöbalken",
+    "authority": "Sveriges riksdag",
+    "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-1998940-om-avgifter-for_sfs-1998-940/"
+  },
+  {
+    "source_ref": "SFS2024_963",
+    "title": "SFS 2024:963 – Lag om ändring i miljöbalken",
+    "authority": "Svensk författningssamling",
+    "url": "https://svenskforfattningssamling.se/doc/2024963.html"
+  },
+  {
+    "source_ref": "SFS2024_325",
+    "title": "SFS 2024:325 – Lag om ändring i minerallagen (1991:45)",
+    "authority": "Svensk författningssamling",
+    "url": "https://svenskforfattningssamling.se/doc/2024325.html"
+  },
+  {
+    "source_ref": "SFS2026_1238",
+    "title": "SFS 2026:1238 – Lag om ändring i miljöbalken",
+    "authority": "Svensk författningssamling",
+    "url": "https://svenskforfattningssamling.se/doc/20261238.html"
+  },
+  {
+    "source_ref": "SFS2026_1441",
+    "title": "SFS 2026:1441 – Lag om ändring i miljöbalken",
+    "authority": "Svensk författningssamling",
+    "url": "https://svenskforfattningssamling.se/doc/20261441.html"
+  },
+  {
+    "source_ref": "SFS2026_1504",
+    "title": "SFS 2026:1504 – Förordning om ändring i artskyddsförordningen (2007:845)",
+    "authority": "Svensk författningssamling",
+    "url": "https://svenskforfattningssamling.se/doc/20261504.html"
   }
 ]

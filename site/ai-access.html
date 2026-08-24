@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI-åtkomst och rådata – Miljötillståndsrisker</title>
-  <meta name="description" content="Publik MCP-server och öppna JSON-data för 342 risker i den svenska miljötillståndsprocessen.">
+  <meta name="description" content="Publik MCP-server samt öppna JSON- och CSV-data för 342 risker i den svenska miljötillståndsprocessen.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://nic-esp.github.io/miljotillstandsrisker/ai-access.html">
   <link rel="sitemap" type="application/xml" href="sitemap.xml">
@@ -36,6 +36,8 @@
     "isAccessibleForFree": true,
     "distribution": [
       {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json"},
+      {"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv"},
+      {"@type":"DataDownload","encodingFormat":"text/csv","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv"},
       {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json"},
       {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/sources.json"},
       {"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json"}
@@ -48,7 +50,7 @@
   <nav><a href="./">← Öppna riskregistret</a></nav>
   <article>
     <h1>AI-åtkomst och rådata</h1>
-    <p class="lead">Hela registret är offentligt och skrivskyddat: 342 risker, 160 riskmappbara noder och processkartor B00–B70. Ingen inloggning eller API-nyckel krävs.</p>
+    <p class="lead">Hela registret är offentligt och skrivskyddat: 342 risker, 160 riskmappbara noder och processkartor B00–B70. Varje risk har 3–5 möjliga utlösande faktorer och 3–5 möjliga konsekvenser, där varje post skiljer en källförankrad premiss från en analytisk riskbedömning. Ingen inloggning eller API-nyckel krävs.</p>
 
     <h2>Remote MCP</h2>
     <p>Använd en AI-klient med stöd för publik MCP över Streamable HTTP:</p>
@@ -59,9 +61,11 @@ Authentication: none</pre>
     <p>Servern erbjuder OpenAI-kompatibla <code>search</code> och <code>fetch</code>, fullständig paginering med <code>get_dataset_page</code>, samt verktyg för noder, källor, statistik och processkartor.</p>
     <p class="notice"><strong>ChatGPT:</strong> skapa först MCP-anslutningen i Developer mode. Starta sedan en ny konversation och lägg till anslutningen från menyn Tools. En publik MCP-URL upptäcks eller aktiveras inte automatiskt genom webbsökning.</p>
 
-    <h2>Direkta JSON-filer på GitHub Pages</h2>
+    <h2>Direkta datafiler på GitHub Pages</h2>
     <ul>
       <li><a href="data/riskregister.json">Riskregister – alla 342 kompletta riskposter</a></li>
+      <li><a href="data/riskregister.csv">Riskregister som CSV – läsbara listor och förlustfria JSON-listfält</a></li>
+      <li><a href="data/riskregister-items.csv">Normaliserad CSV – en rad per orsak eller konsekvens</a></li>
       <li><a href="data/nodes.json">Riskmappbara processnoder</a></li>
       <li><a href="data/sources.json">Källregister</a></li>
       <li><a href="data/process-charts.json">Processkartor B00–B70</a></li>
@@ -73,6 +77,8 @@ Authentication: none</pre>
     <ul>
       <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/api/risks?limit=20&amp;offset=0">Sök/lista kompletta risker med paginering</a></li>
       <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/riskregister.json">Alla risker</a></li>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/riskregister.csv">Alla risker som CSV</a></li>
+      <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/riskregister-items.csv">Normaliserade orsaks- och konsekvensrader</a></li>
       <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/nodes.json">Alla riskmappbara noder</a></li>
       <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/sources.json">Källregistret</a></li>
       <li><a href="https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/data/process-charts.json">Alla processkartor</a></li>

@@ -4,34 +4,22 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { readSourceRegister } from './source_register.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
 const risks = JSON.parse(readFileSync(join(root, 'Artefakt_C_riskregister.json'), 'utf8'));
 const nodesByChart = JSON.parse(readFileSync(join(here, 'mappable_nodes.json'), 'utf8'));
 
-function parseCSV(text) {
-  const rows = []; let row = [], field = '', inQ = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (inQ) { if (c === '"') { if (text[i+1] === '"') { field += '"'; i++; } else inQ = false; } else field += c; }
-    else if (c === '"') inQ = true;
-    else if (c === ',') { row.push(field); field = ''; }
-    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i+1] === '\n') i++; row.push(field); field = ''; if (row.length > 1 || row[0] !== '') rows.push(row); row = []; }
-    else field += c;
-  }
-  if (field !== '' || row.length) { row.push(field); rows.push(row); }
-  const header = rows.shift();
-  return rows.map(r => Object.fromEntries(header.map((h, i) => [h, r[i] ?? ''])));
-}
-const kallr = parseCSV(readFileSync(join(root, '../Artefakt_B_Processkarta_nodordbok/Artefakt_B_kallregister.csv'), 'utf8'));
+const kallr = readSourceRegister(join(root, '../Artefakt_B_Processkarta_nodordbok/Artefakt_B_kallregister.csv'));
 const sources = Object.fromEntries(kallr.map(r => [r.source_ref, { title: r.title, authority: r.authority, url: r.url }]));
 
 // Process layouts (nodes with positions + edges) from the Artefakt B Cardinal export
 const imp = JSON.parse(readFileSync(join(root, '../Artefakt_B_Processkarta_nodordbok/Artefakt_B_processkarta_import.json'), 'utf8'));
 const proc = {};
 for (const c of imp.charts) {
-  const key = c.name.split(' ')[0];
+  const key = c.metadata.chartKey;
+  if (!key) throw new Error(`Diagrammet ${c.name} saknar metadata.chartKey`);
   proc[key] = {
     name: c.name,
     nodes: c.chartData.nodes.map(n => ({
@@ -46,27 +34,26 @@ for (const c of imp.charts) {
   };
 }
 
-const CHART_NAMES = {
-  B00: 'B00 Masterprocess',
-  B10: 'B10 Förstudie och prövningsväg',
-  B20: 'B20 Samråd och miljöbedömning',
-  B30: 'B30 Miljöfarlig verksamhet',
-  B40: 'B40 Vattenverksamhet',
-  B50: 'B50 Tvärgående och sektorsspår',
-  B60: 'B60 Ansökan, beslut och överprövning',
-  B70: 'B70 Laga kraft och byggberedskap',
-};
+const chartNames = Object.fromEntries(imp.charts.map(chart => {
+  const key = chart.metadata.chartKey;
+  if (!key) throw new Error(`Diagrammet ${chart.name} saknar metadata.chartKey`);
+  return [key, chart.name];
+}));
 
-const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames: CHART_NAMES, proc })
+const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc })
   .replace(/</g, '\\u003c');
 const processGeometry = readFileSync(join(here, 'process_geometry.mjs'), 'utf8')
   .replace(/^export\s*\{\s*createProcessGeometry\s*\};?\s*$/m, '');
+const riskFields = readFileSync(join(here, 'risk_fields.mjs'), 'utf8')
+  .replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
 
 const template = readFileSync(join(here, 'app_template.html'), 'utf8');
 if (!template.includes('/*__PAYLOAD__*/')) throw new Error('Mall saknar /*__PAYLOAD__*/-placeholder');
 if (!template.includes('/*__PROCESS_GEOMETRY__*/')) throw new Error('Mall saknar /*__PROCESS_GEOMETRY__*/-placeholder');
+if (!template.includes('/*__RISK_FIELDS__*/')) throw new Error('Mall saknar /*__RISK_FIELDS__*/-placeholder');
 const html = template
   .replace('/*__PROCESS_GEOMETRY__*/', () => processGeometry)
+  .replace('/*__RISK_FIELDS__*/', () => riskFields)
   .replace('/*__PAYLOAD__*/', () => payload);
 writeFileSync(join(root, 'Artefakt_C_riskregister.html'), html);
 console.log(`Skrev Artefakt_C_riskregister.html (${(html.length / 1024).toFixed(0)} KB, ${risks.length} risker)`);

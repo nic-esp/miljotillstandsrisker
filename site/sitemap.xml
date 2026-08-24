@@ -4,6 +4,8 @@
   <url><loc>https://nic-esp.github.io/miljotillstandsrisker/ai-access.html</loc></url>
   <url><loc>https://nic-esp.github.io/miljotillstandsrisker/data/</loc></url>
   <url><loc>https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json</loc></url>
+  <url><loc>https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv</loc></url>
+  <url><loc>https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv</loc></url>
   <url><loc>https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json</loc></url>
   <url><loc>https://nic-esp.github.io/miljotillstandsrisker/data/sources.json</loc></url>
   <url><loc>https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json</loc></url>

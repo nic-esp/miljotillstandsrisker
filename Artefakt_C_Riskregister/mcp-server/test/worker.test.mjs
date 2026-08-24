@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
@@ -17,7 +18,7 @@ test('health, manifest, CORS, and not-found routes are public', async () => {
   assert.deepEqual(await health.json(), {
     status: 'ok',
     service: 'miljotillstandsrisker',
-    version: '2.1.0',
+    version: '2.2.0',
     transport: 'streamable-http',
     authentication: 'none',
     risks: 342,
@@ -126,6 +127,13 @@ test('REST, raw-data, and discovery fallbacks expose the complete public dataset
   assert.equal((await request('/data/nodes.json')).status, 200);
   assert.equal((await request('/data/sources.json')).status, 200);
   assert.equal((await request('/data/process-charts.json')).status, 200);
+  const csv = await request('/data/riskregister.csv');
+  assert.equal(csv.status, 200);
+  assert.match(csv.headers.get('content-type'), /^text\/csv/);
+  assert.deepEqual(Buffer.from(await csv.arrayBuffer()), readFileSync(new URL('../data/riskregister.csv', import.meta.url)));
+  const itemCsv = await request('/data/riskregister-items.csv');
+  assert.equal(itemCsv.status, 200);
+  assert.deepEqual(Buffer.from(await itemCsv.arrayBuffer()), readFileSync(new URL('../data/riskregister-items.csv', import.meta.url)));
 
   const docs = await request('/ai-access');
   assert.match(docs.headers.get('content-type'), /^text\/html/);
@@ -135,7 +143,7 @@ test('REST, raw-data, and discovery fallbacks expose the complete public dataset
   assert.match(await (await request('/robots.txt')).text(), /Sitemap:/);
   assert.match(await (await request('/sitemap.xml')).text(), /data\/riskregister\.json/);
 
-  for (const path of ['/health', '/ai-access', '/openapi.json', '/api/risks?limit=1', '/api/risks/R-B10-010-01', '/data/riskregister.json']) {
+  for (const path of ['/health', '/ai-access', '/openapi.json', '/api/risks?limit=1', '/api/risks/R-B10-010-01', '/data/riskregister.json', '/data/riskregister.csv', '/data/riskregister-items.csv']) {
     const head = await request(path, { method: 'HEAD' });
     assert.equal(head.status, 200, `HEAD ${path}`);
     assert.equal(await head.text(), '');
@@ -145,6 +153,8 @@ test('REST, raw-data, and discovery fallbacks expose the complete public dataset
   assert.equal(openapi.security.length, 0);
   assert.equal(openapi.paths['/api/risks'].get.responses['200'].content['application/json'].schema.$ref, '#/components/schemas/RiskPage');
   assert.equal(openapi.components.schemas.Risk.properties.source_refs.items.type, 'string');
+  assert.equal(openapi.components.schemas.Risk.properties.trigger_factors.items.$ref, '#/components/schemas/RiskItem');
+  assert.equal(openapi.components.schemas.Risk.properties.consequences.items.$ref, '#/components/schemas/RiskItem');
 });
 
 test('official SDK Streamable HTTP client connects and calls tools', async () => {

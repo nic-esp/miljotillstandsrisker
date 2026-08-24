@@ -4,9 +4,15 @@ import nodesByChart from '../_build/mappable_nodes.json' with { type: 'json' };
 import processCharts from '../../Artefakt_B_Processkarta_nodordbok/Artefakt_B_processkarta_import.json' with { type: 'json' };
 import sources from './data/sources.json' with { type: 'json' };
 import { SERVICE_NAME, SERVICE_VERSION, createRiskRegistry } from './risk-service.mjs';
+import { serializeRiskCsv, serializeRiskItemCsv } from '../_build/risk_fields.mjs';
 
 const registry = createRiskRegistry({ risks, nodesByChart, sources, processCharts });
 const riskById = new Map(registry.orderedRisks.map(risk => [risk.risk_id, risk]));
+const chartNames = Object.fromEntries(processCharts.charts.map(chart => [chart.metadata.chartKey, chart.name]));
+const riskCsv = serializeRiskCsv(risks, chartNames);
+const riskItemCsv = serializeRiskItemCsv(risks, chartNames);
+const RISK_CSV_PATH = '/data/riskregister.csv';
+const RISK_ITEM_CSV_PATH = '/data/riskregister-items.csv';
 
 const RAW_DATA = new Map([
   ['/data/riskregister.json', risks],
@@ -67,12 +73,14 @@ function aiAccessHtml(origin) {
 <link rel="canonical" href="${origin}/ai-access"><link rel="sitemap" type="application/xml" href="${origin}/sitemap.xml">
 <style>body{max-width:850px;margin:48px auto;padding:0 24px;font:16px/1.6 system-ui;color:#212a35}code,pre{font-family:ui-monospace,monospace}pre{padding:14px;background:#eef0f3;overflow:auto}a{color:#33506e}</style></head>
 <body><main><h1>Miljötillståndsrisker – AI-åtkomst</h1>
-<p>Offentlig, autentiseringsfri och skrivskyddad åtkomst till 342 riskposter, 160 riskmappbara noder, källor och processkartor B00–B70.</p>
+<p>Offentlig, autentiseringsfri och skrivskyddad åtkomst till 342 riskposter, 160 riskmappbara noder, källor och processkartor B00–B70. Varje risk har 3–5 möjliga utlösande faktorer och 3–5 möjliga konsekvenser, där varje post skiljer en källförankrad premiss från en analytisk riskbedömning.</p>
 <h2>MCP</h2><pre>${origin}/mcp</pre><p>Transport: Streamable HTTP. Använd <code>search</code>/<code>fetch</code> eller hämta allt med <code>get_dataset_page</code>.</p>
 <h2>REST och rådata</h2><ul>
 <li><a href="${origin}/api/risks?limit=20&amp;offset=0">Sök/lista risker med paginering</a></li>
 <li><a href="${origin}/api/risks/R-B10-010-01">Hämta en risk via ID</a></li>
 <li><a href="${origin}/data/riskregister.json">Alla riskposter</a></li>
+<li><a href="${origin}${RISK_CSV_PATH}">Alla riskposter som CSV</a></li>
+<li><a href="${origin}${RISK_ITEM_CSV_PATH}">Normaliserad CSV – en rad per orsak eller konsekvens</a></li>
 <li><a href="${origin}/data/nodes.json">Alla riskmappbara noder</a></li>
 <li><a href="${origin}/data/sources.json">Källregister</a></li>
 <li><a href="${origin}/data/process-charts.json">Processkartor B00–B70</a></li>
@@ -83,18 +91,20 @@ function aiAccessHtml(origin) {
 function llmsText(origin) {
   return `# Miljötillståndsrisker
 
-Public, read-only Swedish risk registry: 342 complete risks, 160 risk-mappable nodes, sources, and process charts B00-B70.
+Public, read-only Swedish risk registry: 342 complete risks, 160 risk-mappable nodes, sources, and process charts B00-B70. Each risk contains 3-5 possible trigger factors and 3-5 possible consequences. A source item identifies a source-grounded premise; an analysis item is an analytical risk inference.
 
 - AI access guide: ${origin}/ai-access
 - MCP (Streamable HTTP, no auth): ${origin}/mcp
 - OpenAPI: ${origin}/openapi.json
 - REST list/search: ${origin}/api/risks?limit=20&offset=0
 - Complete risks: ${origin}/data/riskregister.json
+- Complete risks (CSV): ${origin}${RISK_CSV_PATH}
+- Normalized trigger/consequence rows (CSV): ${origin}${RISK_ITEM_CSV_PATH}
 - Nodes: ${origin}/data/nodes.json
 - Sources: ${origin}/data/sources.json
 - Process charts: ${origin}/data/process-charts.json
 
-For MCP, use search then fetch. For exhaustive MCP retrieval, call get_dataset_page with limit 100 and follow next_cursor until null.
+For MCP, use search then fetch. For exhaustive MCP retrieval without oversized tool responses, call get_dataset_page with limit 25 and follow next_cursor until null.
 `;
 }
 
@@ -105,7 +115,7 @@ function openApiDocument(origin) {
     info: {
       title: 'Miljötillståndsrisker read-only API',
       version: SERVICE_VERSION,
-      description: 'Public, authentication-free retrieval of the Swedish environmental permitting risk registry.',
+      description: 'Public, authentication-free retrieval of the Swedish environmental permitting risk registry. Each event includes several possible trigger factors and consequences with explicit evidence status.',
     },
     servers: [{ url: origin }],
     security: [],
@@ -153,6 +163,18 @@ function openApiDocument(origin) {
           responses: { 200: { description: 'JSON array', content: jsonContent({ type: 'array', items: { $ref: '#/components/schemas/Risk' } }) } },
         },
       },
+      '/data/riskregister.csv': {
+        get: {
+          operationId: 'downloadRiskRegisterCsv', summary: 'Download all 342 risk records as semicolon-delimited UTF-8 CSV',
+          responses: { 200: { description: 'CSV with readable multi-line lists and lossless JSON list columns', content: { 'text/csv': { schema: { type: 'string' } } } } },
+        },
+      },
+      '/data/riskregister-items.csv': {
+        get: {
+          operationId: 'downloadRiskItemsCsv', summary: 'Download normalized trigger-factor and consequence rows',
+          responses: { 200: { description: 'One CSV row per trigger factor or consequence', content: { 'text/csv': { schema: { type: 'string' } } } } },
+        },
+      },
       '/data/nodes.json': {
         get: {
           operationId: 'downloadNodes', summary: 'Download all risk-mappable nodes grouped by chart',
@@ -185,14 +207,26 @@ function openApiDocument(origin) {
         },
         Risk: {
           type: 'object',
-          required: ['risk_id', 'node_id', 'chart_key', 'node_label', 'title', 'category', 'origin', 'trigger', 'description', 'motivation', 'affects', 'impact', 'mitigation', 'source_refs', 'scenario_tags'],
+          required: ['risk_id', 'node_id', 'chart_key', 'node_label', 'title', 'category', 'origin', 'trigger', 'trigger_factors', 'description', 'motivation', 'affects', 'impact', 'consequences', 'mitigation', 'source_refs', 'scenario_tags'],
           properties: {
             risk_id: { type: 'string' }, node_id: { type: 'string' }, chart_key: { type: 'string' },
             node_label: { type: 'string' }, title: { type: 'string' }, category: { type: 'string' },
             origin: { type: 'string' }, trigger: { type: 'string' }, description: { type: 'string' },
+            trigger_factors: { type: 'array', minItems: 3, maxItems: 5, items: { $ref: '#/components/schemas/RiskItem' } },
             motivation: { type: 'string' }, affects: { type: 'string' }, impact: { type: 'string' },
+            consequences: { type: 'array', minItems: 3, maxItems: 5, items: { $ref: '#/components/schemas/RiskItem' } },
             mitigation: { type: 'string' }, source_refs: { type: 'array', items: { type: 'string' } },
             scenario_tags: { type: 'string' },
+          },
+        },
+        RiskItem: {
+          type: 'object',
+          description: 'En atomär möjlig utlösande faktor eller konsekvens. source anger källförankrad premiss; analysis anger kvalificerad kausal eller scenarioanalytisk bedömning.',
+          required: ['text', 'basis', 'source_refs'],
+          properties: {
+            text: { type: 'string', minLength: 1 },
+            basis: { type: 'string', enum: ['source', 'analysis'] },
+            source_refs: { type: 'array', items: { type: 'string' } },
           },
         },
         RiskWithUrl: {
@@ -267,7 +301,7 @@ export async function handleRequest(request) {
   }
 
   if (request.method === 'GET' && path === '/sitemap.xml') {
-    const locations = ['/', '/ai-access', '/openapi.json', '/llms.txt', ...RAW_DATA.keys()];
+    const locations = ['/', '/ai-access', '/openapi.json', '/llms.txt', RISK_CSV_PATH, RISK_ITEM_CSV_PATH, ...RAW_DATA.keys()];
     const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${locations.map(location => `\n  <url><loc>${url.origin}${location}</loc></url>`).join('')}\n</urlset>\n`;
     return text(body, 'application/xml; charset=utf-8');
   }
@@ -280,9 +314,25 @@ export async function handleRequest(request) {
     return json(RAW_DATA.get(path), 200, { 'Cache-Control': 'public, max-age=3600' });
   }
 
+  if (request.method === 'GET' && path === RISK_CSV_PATH) {
+    return text(riskCsv, 'text/csv; charset=utf-8', 200, {
+      'Cache-Control': 'public, max-age=3600',
+      'Content-Disposition': 'attachment; filename="riskregister.csv"',
+    });
+  }
+
+  if (request.method === 'GET' && path === RISK_ITEM_CSV_PATH) {
+    return text(riskItemCsv, 'text/csv; charset=utf-8', 200, {
+      'Cache-Control': 'public, max-age=3600',
+      'Content-Disposition': 'attachment; filename="riskregister-items.csv"',
+    });
+  }
+
   if (request.method === 'GET' && path === '/data') {
     return json({
       riskregister: `${url.origin}/data/riskregister.json`,
+      riskregister_csv: `${url.origin}${RISK_CSV_PATH}`,
+      riskregister_items_csv: `${url.origin}${RISK_ITEM_CSV_PATH}`,
       nodes: `${url.origin}/data/nodes.json`,
       sources: `${url.origin}/data/sources.json`,
       process_charts: `${url.origin}/data/process-charts.json`,
@@ -341,6 +391,8 @@ export async function handleRequest(request) {
       openapi_url: `${url.origin}/openapi.json`,
       rest_api_url: `${url.origin}/api/risks`,
       raw_data_mirror: `${url.origin}/data/riskregister.json`,
+      raw_csv_mirror: `${url.origin}${RISK_CSV_PATH}`,
+      normalized_csv_mirror: `${url.origin}${RISK_ITEM_CSV_PATH}`,
       transport: 'Streamable HTTP',
       authentication: 'none',
     });

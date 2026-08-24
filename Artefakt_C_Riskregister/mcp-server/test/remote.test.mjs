@@ -46,7 +46,7 @@ test('deployed endpoint passes health, discovery, search, fetch, and exhaustive 
     do {
       const result = await client.callTool({
         name: 'get_dataset_page',
-        arguments: { limit: 100, ...(cursor ? { cursor } : {}) },
+        arguments: { limit: 25, ...(cursor ? { cursor } : {}) },
       });
       ids.push(...result.structuredContent.risks.map(risk => risk.risk_id));
       cursor = result.structuredContent.next_cursor;

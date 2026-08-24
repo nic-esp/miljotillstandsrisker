@@ -2,6 +2,8 @@
 
 Public, read-only Swedish dataset covering risks in the Swedish environmental permitting process.
 
+Each risk event contains 3-5 possible trigger factors and 3-5 possible consequences. Every item distinguishes a source-grounded premise (`source`) from analytical risk inference (`analysis`); the source label does not claim that the complete causal chain is empirically proven.
+
 - Web app: https://nic-esp.github.io/miljotillstandsrisker/
 - AI access guide: https://nic-esp.github.io/miljotillstandsrisker/ai-access.html
 - Remote MCP (Streamable HTTP, no authentication): https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp
@@ -10,14 +12,16 @@ Public, read-only Swedish dataset covering risks in the Swedish environmental pe
 ## Complete public data
 
 - 342 complete risk records: https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json
+- 342 complete risk records (CSV): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv
+- Normalized trigger/consequence rows (CSV): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv
 - 160 risk-mappable nodes: https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json
 - Source registry: https://nic-esp.github.io/miljotillstandsrisker/data/sources.json
 - Process charts B00-B70: https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json
 
-The same JSON files are available on the MCP host under /data/*.json. A single risk is available at /api/risks/{risk_id}.
+The same JSON files and riskregister.csv are available on the MCP host under /data/. A single risk is available at /api/risks/{risk_id}.
 
 ## MCP retrieval
 
-Use `search` followed by `fetch` for cited retrieval. To retrieve every complete risk record, call `get_dataset_page` with `limit: 100`, then follow `next_cursor` until it is null. The expected page sizes are 100, 100, 100, and 42. Other read-only tools expose nodes, sources, statistics, and complete process charts.
+Use `search` followed by `fetch` for cited retrieval. To retrieve every complete risk record without oversized tool responses, call `get_dataset_page` with `limit: 25`, then follow `next_cursor` until it is null. Other read-only tools expose nodes, sources, statistics, and complete process charts.
 
 ChatGPT does not auto-discover a public MCP URL. Create the connection in Developer mode, then add that connection to a new conversation from the Tools menu.

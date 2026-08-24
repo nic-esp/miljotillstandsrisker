@@ -16,7 +16,7 @@ const MIN_FINAL_SEGMENT = 18;
 
 function mapChart(chart) {
   return {
-    key: chart.name.split(' ')[0],
+    key: chart.metadata.chartKey,
     name: chart.name,
     nodes: chart.chartData.nodes.map(node => ({
       id: node.id,

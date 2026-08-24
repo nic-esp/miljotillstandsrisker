@@ -66,7 +66,7 @@ function fakeClassList() {
 }
 
 test('every B00 subprocess node targets the matching subprocess start node', () => {
-  const chartKeys = new Set(processSource.charts.map(chart => chart.name.split(' ')[0]));
+  const chartKeys = new Set(processSource.charts.map(chart => chart.metadata.chartKey));
   const master = processSource.charts.find(chart => chart.name.startsWith('B00 '));
   assert.ok(master, 'B00 master chart is present');
   const subprocessNodes = master.chartData.nodes.filter(node => node.type === 'subprocess');

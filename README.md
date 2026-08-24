@@ -2,12 +2,16 @@
 
 Publikt riskregister för den svenska miljötillståndsprocessen, med en statisk webbapp på GitHub Pages och en skrivskyddad MCP-server för AI-klienter.
 
+Varje riskhändelse redovisar 3–5 möjliga utlösande faktorer och 3–5 möjliga konsekvenser. Varje post skiljer källförankring från analytisk riskbedömning och kan hämtas som strukturerad JSON eller CSV.
+
 ## Publik webbapp och data
 
 - Webbapp: <https://nic-esp.github.io/miljotillstandsrisker/>
 - AI-åtkomst och dataindex: <https://nic-esp.github.io/miljotillstandsrisker/ai-access.html>
 - Maskinläsbar vägledning (`llms.txt`): <https://nic-esp.github.io/miljotillstandsrisker/llms.txt>
 - Riskregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json>
+- Riskregister (CSV): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv>
+- Orsaker och konsekvenser i normaliserad CSV: <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv>
 - Riskmappbara noder (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json>
 - Källregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/sources.json>
 - Processkartor B00–B70 (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json>
@@ -16,7 +20,7 @@ En risk kan länkas direkt med `?risk=RISK-ID`, till exempel:
 
 <https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B10-010-01>
 
-GitHub Actions publicerar endast appen och de fyra JSON-filerna. Arkiv, byggmellanprodukter och `node_modules` publiceras inte.
+GitHub Actions publicerar de statiska informationssidorna, appen, fyra JSON-filer och riskregistret som CSV. Arkiv, byggmellanprodukter och `node_modules` publiceras inte.
 
 ## MCP för ChatGPT och andra AI-klienter
 
@@ -47,7 +51,7 @@ En publik MCP-URL blir inte automatiskt tillgänglig genom webbsökning. Om en k
 
 - `GET /api/risks?q=&chart_key=&category=&origin=&node_id=&offset=&limit=`
 - `GET /api/risks/{risk_id}`
-- `GET /data/riskregister.json`, `/data/nodes.json`, `/data/sources.json` och `/data/process-charts.json`
+- `GET /data/riskregister.json`, `/data/riskregister.csv`, `/data/riskregister-items.csv`, `/data/nodes.json`, `/data/sources.json` och `/data/process-charts.json`
 - `GET /openapi.json`, `/llms.txt` och `/ai-access`
 
 ## Utveckla och testa MCP-servern
@@ -88,10 +92,12 @@ MCP_URL=https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp npm test
 
 ## Bygg webbappen
 
-Webbappen är en fristående HTML-fil med all data inbäddad. Bygg om den från mall och källdata med:
+Webbappen är en fristående HTML-fil med all data inbäddad. Den kompletta verifieringskedjan synkroniserar processmetadata, bygger nod- och källutdrag, genererar HTML och kör alla tester:
 
 ```bash
-node Artefakt_C_Riskregister/_build/build_html.mjs
+cd Artefakt_C_Riskregister/mcp-server
+npm ci
+npm run verify
 ```
 
-Varje push till `main` startar [GitHub Pages-arbetsflödet](.github/workflows/deploy-pages.yml).
+Varje push till `main` startar [GitHub Pages-arbetsflödet](.github/workflows/deploy-pages.yml), som kör samma kedja och stoppar publiceringen om de incheckade genererade filerna inte är synkroniserade.

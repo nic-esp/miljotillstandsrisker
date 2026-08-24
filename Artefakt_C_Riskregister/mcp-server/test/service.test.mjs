@@ -83,12 +83,20 @@ test('OpenAI-compatible search and fetch mirror structured content as JSON text'
     assert.equal(searchResult.results[0].id, 'R-B10-010-01');
     assert.match(searchResult.results[0].url, /^https:\/\/nic-esp\.github\.io\/miljotillstandsrisker\/\?risk=/);
 
+    const factorQuery = risks[0].trigger_factors[1].text.split(/\s+/).slice(0, 7).join(' ');
+    const factorSearch = structured(await client.callTool({
+      name: 'search',
+      arguments: { query: factorQuery },
+    }));
+    assert.ok(factorSearch.results.some(result => result.id === risks[0].risk_id));
+
     const fetchResult = structured(await client.callTool({
       name: 'fetch',
       arguments: { id: 'R-B10-010-01' },
     }));
     assert.equal(fetchResult.id, 'R-B10-010-01');
-    assert.match(fetchResult.text, /## Utlösande faktor/);
+    assert.match(fetchResult.text, /## Utlösande faktorer/);
+    assert.match(fetchResult.text, /## Möjliga konsekvenser/);
     for (const field of Object.keys(risks[0])) assert.deepEqual(fetchResult.metadata[field], risks[0][field]);
 
     const missing = await client.callTool({ name: 'fetch', arguments: { id: 'R-DOES-NOT-EXIST' } });
@@ -104,7 +112,7 @@ test('cursor pagination retrieves all 342 risks exactly once', async () => {
     do {
       const value = structured(await client.callTool({
         name: 'get_dataset_page',
-        arguments: { limit: 100, ...(cursor ? { cursor } : {}) },
+        arguments: { limit: 25, ...(cursor ? { cursor } : {}) },
       }));
       assert.equal(value.total, 342);
       seen.push(...value.risks.map(risk => risk.risk_id));
@@ -112,13 +120,13 @@ test('cursor pagination retrieves all 342 risks exactly once', async () => {
       cursor = value.next_cursor;
     } while (cursor);
 
-    assert.deepEqual(pageSizes, [100, 100, 100, 42]);
+    assert.deepEqual(pageSizes, [...Array(13).fill(25), 17]);
     assert.equal(new Set(seen).size, 342);
     assert.deepEqual(seen, registry.orderedRisks.map(risk => risk.risk_id));
 
     const beyond = structured(await client.callTool({
       name: 'get_dataset_page',
-      arguments: { limit: 100, cursor: 'o:999' },
+      arguments: { limit: 25, cursor: 'o:999' },
     }));
     assert.equal(beyond.total, 342);
     assert.equal(beyond.shown, 0);
@@ -162,6 +170,10 @@ test('specialized tools expose complete node, source, chart, and statistics data
 
     const stats = structured(await client.callTool({ name: 'register_stats', arguments: {} }));
     assert.equal(stats.total_risks, 342);
+    assert.ok(stats.total_trigger_factors >= 342 * 3);
+    assert.ok(stats.total_consequences >= 342 * 3);
+    assert.ok(stats.source_grounded_trigger_factors >= 342);
+    assert.ok(stats.source_grounded_consequences >= 342);
     assert.equal(stats.nodes_covered, 160);
     assert.equal(stats.mappable_nodes, 160);
 
