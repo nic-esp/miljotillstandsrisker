@@ -194,6 +194,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 <script>
 /*__PROCESS_GEOMETRY__*/
 /*__RISK_FIELDS__*/
+/*__PROCESS_CHART_EXPORT__*/
 
 const DATA = /*__PAYLOAD__*/;
 const RISKS = DATA.risks;
@@ -203,6 +204,7 @@ const SOURCES = DATA.sources;
 const CHARTS = Object.keys(DATA.nodesByChart);
 const CHART_NAME = DATA.chartNames;
 const PROC = DATA.proc;
+const PROCESS_EXPORT = DATA.processExport;
 const PROC_CHARTS = Object.keys(PROC);
 const PROCESS_GEOMETRY = createProcessGeometry();
 const PROC_GEOMETRY_CACHE = {};
@@ -251,29 +253,23 @@ function refLink(s){
 function affectsCount(r){ return (String(r.affects).match(/B\d{2}-[A-Z]*\d+/g) || []).length; }
 
 // ---- CSV export ----
-function csvDownload(filename, header, rows){
-  const blob = new Blob([serializeCsv(header, rows)], { type:'text/csv;charset=utf-8' });
+function csvDownload(filename, header, rows, options = {}){
+  const blob = new Blob([serializeCsv(header, rows, options)], { type:'text/csv;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = filename; a.click();
   URL.revokeObjectURL(a.href);
 }
 function exportRisks(rs, fname){
-  csvDownload(fname, RISK_CSV_HEADER, rs.map(r => riskCsvRow(r, CHART_NAME)));
+  csvDownload(fname, RISK_CSV_HEADER, rs.map(r => riskCsvRow(r, CHART_NAME)), { delimiter:',', bom:false });
 }
 function exportRiskItems(rs, fname){
   csvDownload(fname, RISK_ITEM_CSV_HEADER, rs.flatMap(r => riskItemCsvRows(r, CHART_NAME)));
 }
-function exportProcNodes(ck){
-  const chart = PROC[ck];
-  csvDownload(`processkarta_${ck}_noder.csv`,
-    ['delprocess','node_id','etikett','nodtyp','fas','aktor','x','y','antal_risker','riskmappbar','handoff_fran','handoff_till'],
-    chart.nodes.map(n => [ck, n.id, n.label, n.type, n.phase, n.actor, n.x, n.y, RISK_COUNT[n.id]||0, n.rma?'ja':'nej', n.hf.join(' | '), n.ht.join(' | ')]));
-}
-function exportProcEdges(ck){
-  const chart = PROC[ck];
-  csvDownload(`processkarta_${ck}_kanter.csv`,
-    ['delprocess','kant_id','fran','till','etikett'],
-    chart.edges.map(e => [ck, e.id, e.s, e.t, e.label]));
+function exportProcessChart(ck){
+  const blob = new Blob([serializeProcessChartExport(PROCESS_EXPORT, ck)], { type:'application/json;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = `processkarta_${ck}.json`; a.click();
+  URL.revokeObjectURL(a.href);
 }
 function exportNodes(){
   csvDownload('riskregister_noder.csv',
@@ -570,7 +566,7 @@ function renderProcess(){
   const tabs = PROC_CHARTS.map(c =>
     `<button class="btn ${c===ck?'active':''}" data-chart-tab="${c}">${c}<span class="cnt">${CHART_RISKS[c]||0} risker</span></button>`).join('');
 
-  // Edges use display-only geometry. Raw PROC coordinates remain untouched for CSV export.
+  // Edges use display-only geometry. The JSON download uses the embedded canonical chart instead.
   const renderedRoutes = routes.map(route => ({
     route,
     d: PROCESS_GEOMETRY.roundedPath(route.points),
@@ -642,8 +638,7 @@ function renderProcess(){
       <button class="btn active" id="zoomReadable">Läsbar</button>
       <button class="btn" id="zoomFit">Översikt</button>
       <span class="viewmode" id="procViewMode">Läsbart läge</span>
-      <button class="btn" id="csvPNodes">Noder (CSV)</button>
-      <button class="btn" id="csvPEdges">Kanter (CSV)</button>
+      <button class="btn" id="jsonProcessChart">Ladda ner ${esc(ck)} (JSON)</button>
       <span style="color:var(--muted);font-size:13px">${esc(chart.name)} — klicka på en nod för fakta och risker. Mörkare blå ton = fler mappade risker; streckade grå noder är inte riskmappbara.</span>
       <div class="legend">
         <span class="li"><span class="sw" style="background:#dfe8f1"></span>1 risk</span>
@@ -673,8 +668,7 @@ function renderProcess(){
   document.querySelectorAll('[data-chart-tab]').forEach(bt => bt.onclick = () => {
     state.selChart = bt.dataset.chartTab; state.selProcNode = null; renderProcess();
   });
-  $('#csvPNodes').onclick = () => exportProcNodes(ck);
-  $('#csvPEdges').onclick = () => exportProcEdges(ck);
+  $('#jsonProcessChart').onclick = () => exportProcessChart(ck);
 
   // zoom/pan via viewBox manipulation; context shared with one-time global listeners
   const svg = $('#procSvg');

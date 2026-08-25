@@ -18,5 +18,6 @@ Artefakt_C_Riskregister/_build/*
 !Artefakt_C_Riskregister/_build/sync_metadata.mjs
 !Artefakt_C_Riskregister/_build/mappable_nodes.json
 !Artefakt_C_Riskregister/_build/process_geometry.mjs
+!Artefakt_C_Riskregister/_build/process_chart_export.mjs
 !Artefakt_C_Riskregister/_build/risk_fields.mjs
 !Artefakt_C_Riskregister/_build/source_register.mjs

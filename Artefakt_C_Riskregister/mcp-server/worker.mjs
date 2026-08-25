@@ -165,7 +165,7 @@ function openApiDocument(origin) {
       },
       '/data/riskregister.csv': {
         get: {
-          operationId: 'downloadRiskRegisterCsv', summary: 'Download all 342 risk records as semicolon-delimited UTF-8 CSV',
+          operationId: 'downloadRiskRegisterCsv', summary: 'Download all 342 risk records as comma-delimited UTF-8 CSV',
           responses: { 200: { description: 'One row per risk with rubrik plus a lossless causes-event-effects bow_tie_json column', content: { 'text/csv': { schema: { type: 'string' } } } } },
         },
       },

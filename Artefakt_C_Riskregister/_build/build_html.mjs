@@ -40,20 +40,24 @@ const chartNames = Object.fromEntries(imp.charts.map(chart => {
   return [key, chart.name];
 }));
 
-const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc })
+const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc, processExport: imp })
   .replace(/</g, '\\u003c');
 const processGeometry = readFileSync(join(here, 'process_geometry.mjs'), 'utf8')
   .replace(/^export\s*\{\s*createProcessGeometry\s*\};?\s*$/m, '');
 const riskFields = readFileSync(join(here, 'risk_fields.mjs'), 'utf8')
+  .replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
+const processChartExport = readFileSync(join(here, 'process_chart_export.mjs'), 'utf8')
   .replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
 
 const template = readFileSync(join(here, 'app_template.html'), 'utf8');
 if (!template.includes('/*__PAYLOAD__*/')) throw new Error('Mall saknar /*__PAYLOAD__*/-placeholder');
 if (!template.includes('/*__PROCESS_GEOMETRY__*/')) throw new Error('Mall saknar /*__PROCESS_GEOMETRY__*/-placeholder');
 if (!template.includes('/*__RISK_FIELDS__*/')) throw new Error('Mall saknar /*__RISK_FIELDS__*/-placeholder');
+if (!template.includes('/*__PROCESS_CHART_EXPORT__*/')) throw new Error('Mall saknar /*__PROCESS_CHART_EXPORT__*/-placeholder');
 const html = template
   .replace('/*__PROCESS_GEOMETRY__*/', () => processGeometry)
   .replace('/*__RISK_FIELDS__*/', () => riskFields)
+  .replace('/*__PROCESS_CHART_EXPORT__*/', () => processChartExport)
   .replace('/*__PAYLOAD__*/', () => payload);
 writeFileSync(join(root, 'Artefakt_C_riskregister.html'), html);
 console.log(`Skrev Artefakt_C_riskregister.html (${(html.length / 1024).toFixed(0)} KB, ${risks.length} risker)`);

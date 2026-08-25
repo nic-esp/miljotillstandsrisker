@@ -118,8 +118,9 @@ test('wide CSV keeps the complete bow tie in one JSON cell and repeats rubrik as
   const serialized = serializeRiskCsv(risks, chartNames);
   const committed = readFileSync(join(here, '../data/riskregister.csv'), 'utf8');
   assert.equal(committed, serialized, 'genererad CSV ar inaktuell');
-  assert.ok(serialized.startsWith('\uFEFF'));
-  const rows = parseCsv(serialized);
+  assert.equal(serialized.startsWith('\uFEFF'), false);
+  assert.equal(serialized.split('\r\n', 1)[0], RISK_CSV_HEADER.join(','));
+  const rows = parseCsv(serialized, ',');
   assert.equal(rows.length, risks.length + 1);
   assert.deepEqual(rows[0], RISK_CSV_HEADER);
   assert.deepEqual(rows[0], [
@@ -161,6 +162,8 @@ test('normalized CSV exposes one row per trigger factor or consequence', () => {
   const serialized = serializeRiskItemCsv(risks, chartNames);
   const committed = readFileSync(join(here, '../data/riskregister-items.csv'), 'utf8');
   assert.equal(committed, serialized, 'genererad normaliserad CSV ar inaktuell');
+  assert.ok(serialized.startsWith('\uFEFF'));
+  assert.equal(serialized.slice(1).split('\r\n', 1)[0], RISK_ITEM_CSV_HEADER.join(';'));
   const rows = parseCsv(serialized);
   assert.deepEqual(rows[0], RISK_ITEM_CSV_HEADER);
   const expectedItems = risks.reduce((sum, risk) => sum + risk.trigger_factors.length + risk.consequences.length, 0);
@@ -203,6 +206,7 @@ test('web app exposes both CSV exports and the qualified evidence labels', () =>
     assert.match(html, /id="csvRiskItems"/, `${label}: normaliserad CSV-knapp saknas`);
     assert.match(html, /id="csvRisks"/, `${label}: bred CSV-knapp saknas`);
     assert.match(html, /En rad per risk \(Bow tie-JSON\)/, `${label}: bow-tie-exporten ar otydlig`);
+    assert.match(html, /\{ delimiter:',', bom:false \}/, `${label}: bred CSV matchar inte referensdialekten`);
     assert.match(html, /Källförankrad premiss/, `${label}: evidensetiketten ar for kategorisk`);
     assert.match(html, /Utlösande faktorer \(\$\{factors\.length\}\)/, `${label}: faktorlistan renderas inte`);
     assert.match(html, /Möjliga konsekvenser \(\$\{effects\.length\}\)/, `${label}: konsekvenslistan renderas inte`);

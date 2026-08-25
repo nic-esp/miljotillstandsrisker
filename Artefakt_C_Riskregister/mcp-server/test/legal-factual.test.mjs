@@ -614,6 +614,11 @@ test('derived node dictionary and built HTML exactly mirror the canonical data',
     JSON.stringify(htmlData.proc) === JSON.stringify(projectHtmlProcess()),
     'den byggda appens processdata ar inaktuell',
   );
+  assert.deepEqual(
+    htmlData.processExport,
+    processExport,
+    'den byggda appens kanoniska process-export ar inaktuell',
+  );
   const expectedChartNames = Object.fromEntries(processExport.charts.map(chart => {
     const key = chart.metadata.chartKey;
     return [key, chart.name];

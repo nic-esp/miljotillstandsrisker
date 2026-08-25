@@ -42,9 +42,11 @@ function readableRiskItems(items) {
   }).join('\r\n');
 }
 
-function csvCell(value) {
+function csvCell(value, delimiter = ';') {
   const text = value == null ? '' : String(value);
-  return /[";\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+  return text.includes(delimiter) || /["\n\r]/.test(text)
+    ? `"${text.replace(/"/g, '""')}"`
+    : text;
 }
 
 const RISK_CSV_HEADER = Object.freeze([
@@ -98,13 +100,17 @@ function riskCsvRow(risk, chartNames = {}) {
   ];
 }
 
-function serializeCsv(header, rows, { bom = true } = {}) {
-  const lines = [header, ...rows].map(row => row.map(csvCell).join(';'));
+function serializeCsv(header, rows, { bom = true, delimiter = ';' } = {}) {
+  const lines = [header, ...rows].map(row => row.map(value => csvCell(value, delimiter)).join(delimiter));
   return `${bom ? '\uFEFF' : ''}${lines.join('\r\n')}`;
 }
 
 function serializeRiskCsv(risks, chartNames = {}, options = {}) {
-  return serializeCsv(RISK_CSV_HEADER, risks.map(risk => riskCsvRow(risk, chartNames)), options);
+  return serializeCsv(
+    RISK_CSV_HEADER,
+    risks.map(risk => riskCsvRow(risk, chartNames)),
+    { delimiter: ',', bom: false, ...options },
+  );
 }
 
 function riskItemCsvRows(risk, chartNames = {}) {

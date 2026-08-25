@@ -155,6 +155,7 @@ test('REST, raw-data, and discovery fallbacks expose the complete public dataset
   assert.equal(openapi.components.schemas.Risk.properties.source_refs.items.type, 'string');
   assert.equal(openapi.components.schemas.Risk.properties.trigger_factors.items.$ref, '#/components/schemas/RiskItem');
   assert.equal(openapi.components.schemas.Risk.properties.consequences.items.$ref, '#/components/schemas/RiskItem');
+  assert.match(openapi.paths['/data/riskregister.csv'].get.summary, /comma-delimited/);
   assert.match(openapi.paths['/data/riskregister.csv'].get.responses['200'].description, /bow_tie_json/);
 });
 
