@@ -467,7 +467,7 @@ function renderRisks(){
     ${state.node ? `· nod <b>${esc(state.node)}</b>` : ''}
     ${state.q ? `· sökterm “<b>${esc(state.q)}</b>”` : ''}
     <button class="btn" id="csvRiskItems">Orsaker/konsekvenser som rader (CSV)</button>
-    <button class="btn" id="csvRisks">En rad per risk (CSV)</button></div>`;
+    <button class="btn" id="csvRisks">En rad per risk (Bow tie-JSON)</button></div>`;
   $('#main').innerHTML = line + (rs.length ? rs.map(riskCard).join('') : `<div class="empty">Inga risker matchar. Justera sökning eller filter.</div>`);
   bindCards();
   $('#csvRiskItems').onclick = () => exportRiskItems(rs, 'riskregister_orsaker_konsekvenser_urval.csv');

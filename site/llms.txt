@@ -12,7 +12,7 @@ Each risk event contains 3-5 possible trigger factors and 3-5 possible consequen
 ## Complete public data
 
 - 342 complete risk records: https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json
-- 342 complete risk records (CSV): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv
+- 342 complete risk records (CSV; one row per risk with a causes-event-effects `bow_tie_json` cell): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv
 - Normalized trigger/consequence rows (CSV): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv
 - 160 risk-mappable nodes: https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json
 - Source registry: https://nic-esp.github.io/miljotillstandsrisker/data/sources.json

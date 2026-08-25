@@ -7,7 +7,7 @@ import { createRiskRegistry } from '../risk-service.mjs';
 import {
   RISK_CSV_HEADER,
   RISK_ITEM_CSV_HEADER,
-  readableRiskItems,
+  bowTie,
   serializeRiskCsv,
   serializeRiskItemCsv,
 } from '../../_build/risk_fields.mjs';
@@ -114,7 +114,7 @@ test('new factor and consequence text participates in full-text search', () => {
   assert.ok(registry.queryRisks({ query: effectQuery }).some(hit => hit.risk_id === risk.risk_id));
 });
 
-test('CSV keeps readable multi-line lists and lossless JSON arrays in single cells', () => {
+test('wide CSV keeps the complete bow tie in one JSON cell and repeats rubrik as its event', () => {
   const serialized = serializeRiskCsv(risks, chartNames);
   const committed = readFileSync(join(here, '../data/riskregister.csv'), 'utf8');
   assert.equal(committed, serialized, 'genererad CSV ar inaktuell');
@@ -122,23 +122,39 @@ test('CSV keeps readable multi-line lists and lossless JSON arrays in single cel
   const rows = parseCsv(serialized);
   assert.equal(rows.length, risks.length + 1);
   assert.deepEqual(rows[0], RISK_CSV_HEADER);
-  assert.deepEqual(rows[0].slice(0, 15), [
+  assert.deepEqual(rows[0], [
     'risk_id', 'node_id', 'delprocess', 'nod', 'rubrik', 'kategori', 'ursprung',
-    'utlosande_faktor', 'beskrivning', 'motivering', 'drabbar', 'konsekvens',
-    'atgarder', 'kallor', 'scenario',
-  ], 'de ursprungliga CSV-kolumnerna ska behalla namn och ordning');
+    'beskrivning', 'motivering', 'drabbar', 'atgarder', 'kallor', 'scenario',
+    'bow_tie_json',
+  ]);
   assert.ok(rows.every(row => row.length === RISK_CSV_HEADER.length));
 
   const index = Object.fromEntries(RISK_CSV_HEADER.map((name, position) => [name, position]));
+  for (const removed of [
+    'utlosande_faktor', 'konsekvens',
+    'utlosande_faktorer', 'utlosande_faktorer_json', 'konsekvenser', 'konsekvenser_json',
+  ]) {
+    assert.equal(index[removed], undefined, `${removed} ska ingå i bow_tie_json i stället`);
+  }
   for (let rowIndex = 1; rowIndex < rows.length; rowIndex += 1) {
     const risk = risks[rowIndex - 1];
     const row = rows[rowIndex];
     assert.equal(row[index.risk_id], risk.risk_id);
-    assert.equal(row[index.utlosande_faktorer], readableRiskItems(risk.trigger_factors));
-    assert.equal(row[index.konsekvenser], readableRiskItems(risk.consequences));
-    assert.deepEqual(JSON.parse(row[index.utlosande_faktorer_json]), risk.trigger_factors);
-    assert.deepEqual(JSON.parse(row[index.konsekvenser_json]), risk.consequences);
+    assert.equal(row[index.rubrik], risk.title);
+    const parsedBowTie = JSON.parse(row[index.bow_tie_json]);
+    assert.deepEqual(Object.keys(parsedBowTie), ['causes', 'event', 'effects']);
+    assert.deepEqual(Object.keys(parsedBowTie.event), ['rubrik']);
+    assert.equal(parsedBowTie.event.rubrik, row[index.rubrik]);
+    assert.deepEqual(parsedBowTie, bowTie(risk));
   }
+});
+
+test('bow tie falls back to legacy summaries when item arrays are absent', () => {
+  assert.deepEqual(bowTie({ title: 'Händelse', trigger: 'Orsak', impact: 'Effekt' }), {
+    causes: [{ text: 'Orsak', basis: 'analysis', source_refs: [] }],
+    event: { rubrik: 'Händelse' },
+    effects: [{ text: 'Effekt', basis: 'analysis', source_refs: [] }],
+  });
 });
 
 test('normalized CSV exposes one row per trigger factor or consequence', () => {
@@ -186,6 +202,7 @@ test('web app exposes both CSV exports and the qualified evidence labels', () =>
   for (const [label, html] of [['template', template], ['built app', built]]) {
     assert.match(html, /id="csvRiskItems"/, `${label}: normaliserad CSV-knapp saknas`);
     assert.match(html, /id="csvRisks"/, `${label}: bred CSV-knapp saknas`);
+    assert.match(html, /En rad per risk \(Bow tie-JSON\)/, `${label}: bow-tie-exporten ar otydlig`);
     assert.match(html, /Källförankrad premiss/, `${label}: evidensetiketten ar for kategorisk`);
     assert.match(html, /Utlösande faktorer \(\$\{factors\.length\}\)/, `${label}: faktorlistan renderas inte`);
     assert.match(html, /Möjliga konsekvenser \(\$\{effects\.length\}\)/, `${label}: konsekvenslistan renderas inte`);

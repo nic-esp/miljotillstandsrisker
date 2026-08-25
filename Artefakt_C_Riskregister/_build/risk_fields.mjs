@@ -21,6 +21,14 @@ function consequences(risk) {
   return normalizeRiskItems(risk, 'consequences', 'impact');
 }
 
+function bowTie(risk) {
+  return {
+    causes: triggerFactors(risk),
+    event: { rubrik: String(risk?.title ?? '').trim() },
+    effects: consequences(risk),
+  };
+}
+
 function riskItemText(items) {
   return items.map(item => item.text).join(' ');
 }
@@ -47,18 +55,13 @@ const RISK_CSV_HEADER = Object.freeze([
   'rubrik',
   'kategori',
   'ursprung',
-  'utlosande_faktor',
   'beskrivning',
   'motivering',
   'drabbar',
-  'konsekvens',
   'atgarder',
   'kallor',
   'scenario',
-  'utlosande_faktorer',
-  'utlosande_faktorer_json',
-  'konsekvenser',
-  'konsekvenser_json',
+  'bow_tie_json',
 ]);
 
 const RISK_ITEM_CSV_HEADER = Object.freeze([
@@ -77,8 +80,6 @@ const RISK_ITEM_CSV_HEADER = Object.freeze([
 ]);
 
 function riskCsvRow(risk, chartNames = {}) {
-  const factors = triggerFactors(risk);
-  const effects = consequences(risk);
   return [
     risk.risk_id,
     risk.node_id,
@@ -87,18 +88,13 @@ function riskCsvRow(risk, chartNames = {}) {
     risk.title,
     risk.category,
     risk.origin,
-    risk.trigger,
     risk.description,
     risk.motivation,
     risk.affects,
-    risk.impact,
     risk.mitigation,
     risk.source_refs.join(' | '),
     risk.scenario_tags,
-    readableRiskItems(factors),
-    JSON.stringify(factors),
-    readableRiskItems(effects),
-    JSON.stringify(effects),
+    JSON.stringify(bowTie(risk)),
   ];
 }
 
@@ -138,6 +134,7 @@ function serializeRiskItemCsv(risks, chartNames = {}, options = {}) {
 export {
   RISK_CSV_HEADER,
   RISK_ITEM_CSV_HEADER,
+  bowTie,
   consequences,
   csvCell,
   normalizeRiskItems,

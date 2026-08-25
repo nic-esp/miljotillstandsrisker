@@ -10,7 +10,7 @@ Varje riskhändelse redovisar 3–5 möjliga utlösande faktorer och 3–5 möjl
 - AI-åtkomst och dataindex: <https://nic-esp.github.io/miljotillstandsrisker/ai-access.html>
 - Maskinläsbar vägledning (`llms.txt`): <https://nic-esp.github.io/miljotillstandsrisker/llms.txt>
 - Riskregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json>
-- Riskregister (CSV): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv>
+- Riskregister (CSV, en rad per risk med `bow_tie_json`): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv>
 - Orsaker och konsekvenser i normaliserad CSV: <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv>
 - Riskmappbara noder (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json>
 - Källregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/sources.json>

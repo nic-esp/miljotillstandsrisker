@@ -79,7 +79,7 @@ function aiAccessHtml(origin) {
 <li><a href="${origin}/api/risks?limit=20&amp;offset=0">Sök/lista risker med paginering</a></li>
 <li><a href="${origin}/api/risks/R-B10-010-01">Hämta en risk via ID</a></li>
 <li><a href="${origin}/data/riskregister.json">Alla riskposter</a></li>
-<li><a href="${origin}${RISK_CSV_PATH}">Alla riskposter som CSV</a></li>
+<li><a href="${origin}${RISK_CSV_PATH}">Alla riskposter som bow-tie-CSV</a></li>
 <li><a href="${origin}${RISK_ITEM_CSV_PATH}">Normaliserad CSV – en rad per orsak eller konsekvens</a></li>
 <li><a href="${origin}/data/nodes.json">Alla riskmappbara noder</a></li>
 <li><a href="${origin}/data/sources.json">Källregister</a></li>
@@ -98,7 +98,7 @@ Public, read-only Swedish risk registry: 342 complete risks, 160 risk-mappable n
 - OpenAPI: ${origin}/openapi.json
 - REST list/search: ${origin}/api/risks?limit=20&offset=0
 - Complete risks: ${origin}/data/riskregister.json
-- Complete risks (CSV): ${origin}${RISK_CSV_PATH}
+- Complete risks (CSV with bow_tie_json): ${origin}${RISK_CSV_PATH}
 - Normalized trigger/consequence rows (CSV): ${origin}${RISK_ITEM_CSV_PATH}
 - Nodes: ${origin}/data/nodes.json
 - Sources: ${origin}/data/sources.json
@@ -166,7 +166,7 @@ function openApiDocument(origin) {
       '/data/riskregister.csv': {
         get: {
           operationId: 'downloadRiskRegisterCsv', summary: 'Download all 342 risk records as semicolon-delimited UTF-8 CSV',
-          responses: { 200: { description: 'CSV with readable multi-line lists and lossless JSON list columns', content: { 'text/csv': { schema: { type: 'string' } } } } },
+          responses: { 200: { description: 'One row per risk with rubrik plus a lossless causes-event-effects bow_tie_json column', content: { 'text/csv': { schema: { type: 'string' } } } } },
         },
       },
       '/data/riskregister-items.csv': {
