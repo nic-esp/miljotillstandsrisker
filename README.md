@@ -4,6 +4,8 @@ Publikt riskregister för den svenska miljötillståndsprocessen, med en statisk
 
 Varje riskhändelse redovisar 3–5 möjliga utlösande faktorer och 3–5 möjliga konsekvenser. Varje post skiljer källförankring från analytisk riskbedömning och kan hämtas som strukturerad JSON eller CSV.
 
+Den senaste importerade BTL-rangordningen kommer från **16 september 2026 kl. 12:28, Europe/Stockholm**, i `nr.getcardinal.io` (experiment **Prel rank**, exekvering **Brave Raven**). Den omfattar 341 av registrets 342 risker. Besökaren kan visa topp 50, filtrera huvudregistret och se de 40 berörda noderna i sju delprocesser. En risk saknar rangordning. Poängen visas som relativ BTL-poäng, inte absolut händelsesannolikhet. Källor, kopplingskontroller och återimport beskrivs i [BTL_RANKING.md](BTL_RANKING.md).
+
 ## Publik webbapp och data
 
 - Webbapp: <https://nic-esp.github.io/miljotillstandsrisker/>
@@ -15,6 +17,8 @@ Varje riskhändelse redovisar 3–5 möjliga utlösande faktorer och 3–5 möjl
 - Riskmappbara noder (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json>
 - Källregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/sources.json>
 - Processkartor B00–B70 (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json>
+
+GitHub Pages-publiceringen använder den ursprungliga adressen ovan och öppnas utan lösenord.
 
 En risk kan länkas direkt med `?risk=RISK-ID`, till exempel:
 

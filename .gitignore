@@ -12,6 +12,10 @@ Artefakt_B_Processkarta_nodordbok/*
 !Artefakt_B_Processkarta_nodordbok/Artefakt_B_README.md
 
 Artefakt_C_Riskregister/_build/*
+!Artefakt_C_Riskregister/_build/btl_snapshot.json
+!Artefakt_C_Riskregister/_build/btl_ranking.mjs
+!Artefakt_C_Riskregister/_build/ranking_view.mjs
+!Artefakt_C_Riskregister/_build/svenskt-naringsliv.css
 !Artefakt_C_Riskregister/_build/app_template.html
 !Artefakt_C_Riskregister/_build/build_html.mjs
 !Artefakt_C_Riskregister/_build/extract_nodes.mjs

@@ -3,8 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artefakt C – Riskregister: Miljötillstånd i Sverige</title>
-<meta name="description" content="342 offentliga riskposter mappade till 160 noder i den svenska miljötillståndsprocessen.">
+<title>Miljötillståndsrisker</title>
+<meta name="description" content="Utforska 342 miljötillståndsrisker, de 50 högst rankade riskerna och berörda noder i tillståndsprocessen.">
+<meta property="og:title" content="Miljötillståndsrisker">
+<meta property="og:description" content="Alla risker, de 50 högst rankade och deras kopplingar till tillståndsprocessens noder.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sv_SE">
 <meta name="robots" content="index,follow">
 <link id="canonical" rel="canonical" href="https://nic-esp.github.io/miljotillstandsrisker/">
 <link rel="alternate" type="application/json" title="Riskregister" href="data/riskregister.json">
@@ -159,26 +163,38 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   header{position:static}
   .procwrap{height:68vh;min-height:480px}
 }
+/*__BRAND_CSS__*/
 </style>
 </head>
 <body>
 <header>
-  <h1>Artefakt C <span class="accent">·</span> Riskregister — Miljötillståndsprocessen i Sverige</h1>
-  <div class="sub">Nodnivårisker för samtliga riskmappbara detaljnoder i processkartan (B10–B70) · Sverige AB · Baslinje S0 per 2026-08-20</div>
+  <div class="brand-heading">
+    <a class="brand-logo" href="https://www.svensktnaringsliv.se/" aria-label="Svenskt Näringsliv" target="_blank" rel="noopener">
+      <span class="brand-logo-stacked" aria-hidden="true"><!--__SN_LOGO_STACKED__--></span>
+      <span class="brand-logo-horizontal" aria-hidden="true"><!--__SN_LOGO_HORIZONTAL__--></span>
+    </a>
+    <div class="brand-title">
+      <div class="eyebrow">Den svenska tillståndsprocessen</div>
+      <h1>Miljötillståndsrisker</h1>
+      <div class="sub">Risker, sannolikhetsrangordning och processkartor · Baslinje S0 per 2026-08-20</div>
+    </div>
+  </div>
   <div class="headstats" id="headstats"></div>
   <div class="controls">
     <div class="searchwrap">
       <span class="icon">⌕</span>
-      <input id="search" type="search" placeholder="Sök i titel, beskrivning, motivation, påverkan, åtgärder…" autocomplete="off">
+      <input aria-label="Sök risker" id="search" type="search" placeholder="Sök i titel, beskrivning, motivation, påverkan, åtgärder…" autocomplete="off">
     </div>
-    <select id="sort">
+    <select id="sort" aria-label="Sortera risker">
+      <option value="rank">Sortera: BTL-rangordning</option>
       <option value="id">Sortera: Diagram / nod</option>
       <option value="category">Sortera: Kategori</option>
       <option value="origin">Sortera: Ursprung</option>
       <option value="node">Sortera: Nodnamn</option>
       <option value="affects">Sortera: Flest berörda noder</option>
     </select>
-    <button class="btn active" data-view="risks">Risker</button>
+    <button class="btn active" data-view="ranking">Topp 50 &amp; rangordning</button>
+    <button class="btn" data-view="risks">Alla risker</button>
     <button class="btn" data-view="process">Processkarta</button>
     <button class="btn" data-view="nodes">Nodbläddrare</button>
     <button class="btn" data-view="stats">Statistik</button>
@@ -192,6 +208,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 </div>
 
 <script>
+/*__RANKING_MODEL__*/
 /*__PROCESS_GEOMETRY__*/
 /*__RISK_FIELDS__*/
 /*__PROCESS_CHART_EXPORT__*/
@@ -206,6 +223,7 @@ const CHART_NAME = DATA.chartNames;
 const PROC = DATA.proc;
 const PROCESS_EXPORT = DATA.processExport;
 const PROC_CHARTS = Object.keys(PROC);
+const RANKING = createRankingModel(RISKS, DATA.ranking, PROC);
 const PROCESS_GEOMETRY = createProcessGeometry();
 const PROC_GEOMETRY_CACHE = {};
 const PROC_NODE = {};
@@ -220,10 +238,11 @@ for (const r of RISKS) CHART_RISKS[r.chart_key] = (CHART_RISKS[r.chart_key] || 0
 
 // ---- state ----
 const state = { q:'', charts:new Set(CHARTS), cats:new Set(CATEGORIES), origins:new Set(ORIGINS),
-  node:'', view:'risks', sort:'id', selNode:null, selChart:'B00', selProcNode:null, expandAll:false };
+  node:'', view:'ranking', sort:'rank', topOnly:false, rankScope:'top', showDownstream:false, selNode:null, selChart:'B00', selProcNode:null, expandAll:false };
 const requestedRiskId = new URLSearchParams(location.search).get('risk');
 const requestedRisk = requestedRiskId && RISKS.find(r => r.risk_id === requestedRiskId);
 if (requestedRisk) {
+  state.view = 'risks';
   state.q = requestedRisk.risk_id;
   state.expandAll = true;
   document.title = `${requestedRisk.risk_id} – ${requestedRisk.title}`;
@@ -297,6 +316,7 @@ function filtered(){
   const q = state.q.trim().toLowerCase();
   const terms = q ? q.split(/\s+/) : [];
   return RISKS.filter(r => {
+    if (state.topOnly && !RANKING.topRiskIds.has(r.risk_id)) return false;
     if (!state.charts.has(r.chart_key)) return false;
     if (!state.cats.has(r.category)) return false;
     if (!state.origins.has(r.origin)) return false;
@@ -310,7 +330,8 @@ function filtered(){
 }
 function sorted(rs){
   const arr = [...rs];
-  if (state.sort === 'category') arr.sort((a,b)=>a.category.localeCompare(b.category,'sv') || a.risk_id.localeCompare(b.risk_id));
+  if (state.sort === 'rank') arr.sort((a,b)=>(RANKING.byRiskId.get(a.risk_id)?.rank ?? Infinity)-(RANKING.byRiskId.get(b.risk_id)?.rank ?? Infinity) || a.risk_id.localeCompare(b.risk_id));
+  else if (state.sort === 'category') arr.sort((a,b)=>a.category.localeCompare(b.category,'sv') || a.risk_id.localeCompare(b.risk_id));
   else if (state.sort === 'origin') arr.sort((a,b)=>ORIGINS.indexOf(a.origin)-ORIGINS.indexOf(b.origin) || a.risk_id.localeCompare(b.risk_id));
   else if (state.sort === 'node') arr.sort((a,b)=>a.node_label.localeCompare(b.node_label,'sv') || a.risk_id.localeCompare(b.risk_id));
   else if (state.sort === 'affects') arr.sort((a,b)=>affectsCount(b)-affectsCount(a));
@@ -333,6 +354,10 @@ function renderSidebar(){
     .filter(n => state.charts.has(n.chart_key))
     .map(n => `<option value="${esc(n.node_id)}" ${state.node===n.node_id?'selected':''}>${esc(n.node_id)} – ${esc(n.label)}</option>`).join('');
   $('#sidebar').innerHTML = `
+    <div class="fgroup ranking-filter"><h3>BTL-rangordning</h3>
+      <label class="fopt"><input id="topOnly" type="checkbox" ${state.topOnly?'checked':''}>Endast topp 50 <span class="cnt">${RANKING.topEntries.length}</span></label>
+      <p class="ranking-note">Samma topp 50 i hela registret. Övriga filter begränsar urvalet.</p>
+    </div>
     <div class="fgroup">
       <h3>Nod</h3>
       <select id="fNode" style="width:100%">
@@ -349,6 +374,7 @@ function renderSidebar(){
       ${CATEGORIES.map(c => `<label class="fopt"><input type="checkbox" data-cat="${esc(c)}" ${state.cats.has(c)?'checked':''}>${esc(c)}<span class="cnt">${catCounts[c]||0}</span></label>`).join('')}
     </div>
     <button class="btn clearbtn" id="clearFilters">Rensa filter</button>`;
+  $('#topOnly').onchange = e => { state.topOnly=e.target.checked; state.sort='rank'; $('#sort').value='rank'; renderMain(); };
   $('#fNode').onchange = e => { state.node = e.target.value; renderMain(); };
   document.querySelectorAll('[data-chart]').forEach(cb => cb.onchange = () => {
     cb.checked ? state.charts.add(cb.dataset.chart) : state.charts.delete(cb.dataset.chart);
@@ -364,12 +390,13 @@ function renderSidebar(){
     renderMain();
   });
   $('#clearFilters').onclick = () => {
-    state.q=''; $('#search').value=''; state.charts=new Set(CHARTS); state.cats=new Set(CATEGORIES); state.origins=new Set(ORIGINS); state.node='';
+    state.q=''; $('#search').value=''; state.charts=new Set(CHARTS); state.cats=new Set(CATEGORIES); state.origins=new Set(ORIGINS); state.node=''; state.topOnly=false;
     renderSidebar(); renderMain();
   };
 }
 function riskCard(r){
   const q = state.q;
+  const rankingEntry = RANKING.byRiskId.get(r.risk_id);
   const factors = triggerFactors(r);
   const effects = consequences(r);
   const itemList = (items) => `<ul class="riskitems">${items.map(item => {
@@ -379,20 +406,22 @@ function riskCard(r){
     const links = isSource ? `<span class="itemrefs">${item.source_refs.map(refLink).join('')}</span>` : '';
     return `<li>${hl(item.text,q)}<span class="basis ${isSource?'source':'analysis'}" title="${esc(title)}">${label}</span>${links}</li>`;
   }).join('')}</ul>`;
-  return `<div class="card ${state.expandAll?'open':''}" data-rid="${esc(r.risk_id)}">
-    <div class="cardhead">
+  return `<div class="card ${rankingEntry?.isTop?'top-ranked':''} ${state.expandAll?'open':''}" data-rid="${esc(r.risk_id)}">
+    <div class="cardhead" role="button" tabindex="0" aria-expanded="${state.expandAll}" aria-label="${esc(r.title)}">
       <span class="rid">${hl(r.risk_id,q)}</span>
       <div class="mid">
         <div class="ttl">${hl(r.title,q)}</div>
         <div class="node">${hl(r.node_id+' – '+r.node_label,q)} · ${esc(CHART_NAME[r.chart_key]||r.chart_key)}</div>
       </div>
       <div class="chips">
+        ${rankBadge(r.risk_id)}
         <span class="chip">${hl(r.category,q)}</span>
         <span class="chip org" title="Riskens ursprung">${hl(r.origin,q)}</span>
       </div>
       <span class="chev">▶</span>
     </div>
     <div class="cardbody">
+      ${rankDetail(r)}
       <div class="sect"><h4>Beskrivning</h4><p>${hl(r.description,q)}</p></div>
       <div class="grid2">
         <div class="sect"><h4>Utlösande faktorer (${factors.length})</h4>${itemList(factors)}</div>
@@ -410,7 +439,11 @@ function riskCard(r){
   </div>`;
 }
 function bindCards(root){
-  (root || document).querySelectorAll('.cardhead').forEach(h => h.onclick = () => h.parentElement.classList.toggle('open'));
+  (root || document).querySelectorAll('.cardhead').forEach(h => {
+    const toggle = () => { const open=h.parentElement.classList.toggle('open'); h.setAttribute('aria-expanded', String(open)); };
+    h.onclick=toggle; h.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} };
+  });
+  bindRankingLinks(root || document);
 }
 function nodeDetailHTML(id){
   const m = NODE_BY_ID[id];
@@ -428,6 +461,7 @@ function nodeDetailHTML(id){
   const otherCharts = [...new Set(handoffs.map(h => h.id.split('-')[0]).filter(c => c !== chart))];
   return `<div class="facts">
       <h2 style="font-size:17px;margin-bottom:10px">${esc(id)} – ${esc(label)}</h2>
+      ${nodeRankingSummary(id)}
       <dl>
         <dt>Delprocess</dt><dd>${esc(CHART_NAME[chart]||chart)}</dd>
         ${phase ? `<dt>Fas</dt><dd>${esc(phase)}</dd>` : ''}
@@ -441,7 +475,8 @@ function nodeDetailHTML(id){
       <div class="tagrow">${refs.map(refLink).join('')}</div>
       ${otherCharts.length ? `<div class="tagrow">${otherCharts.map(c => `<button class="btn" data-goto-chart="${esc(c)}" style="padding:5px 11px;font-size:12.5px">Öppna diagram ${esc(c)} →</button>`).join('')}</div>` : ''}
     </div>
-    ${m ? `<div class="resultline"><b>${rs.length}</b> risker på denna nod</div>${rs.map(riskCard).join('') || '<div class="empty">Inga risker registrerade.</div>'}` : ''}`;
+    ${m ? `<div class="resultline"><b>${rs.length}</b> risker på denna nod</div>${sorted(rs).map(riskCard).join('') || '<div class="empty">Inga risker registrerade.</div>'}` : ''}
+    ${downstreamDetail(id)}`;
 }
 function bindDetail(root){
   bindCards(root);
@@ -452,6 +487,9 @@ function bindDetail(root){
 }
 function setView(v){
   state.view = v;
+  $('#search').closest('.searchwrap').hidden = !['risks','nodes'].includes(v);
+  $('#sort').hidden = v !== 'risks';
+  $('#expandAll').hidden = v !== 'risks';
   document.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('active', x.dataset.view === v));
   renderMain();
 }
@@ -459,7 +497,8 @@ function setView(v){
 // ---- view: risks ----
 function renderRisks(){
   const rs = sorted(filtered());
-  const line = `<div class="resultline">Visar <b>${rs.length}</b> av <b>${RISKS.length}</b> risker
+  const line = `<div class="ranking-note">Rangordning från ${rankingDate()}. Orange markering = topp 50. ${RANKING.unranked.length} risk saknar rang i denna körning.</div><div class="resultline" aria-live="polite">Visar <b>${rs.length}</b> av <b>${RISKS.length}</b> risker
+    ${state.topOnly ? '· endast topp 50' : ''}
     ${state.node ? `· nod <b>${esc(state.node)}</b>` : ''}
     ${state.q ? `· sökterm “<b>${esc(state.q)}</b>”` : ''}
     <button class="btn" id="csvRiskItems">Orsaker/konsekvenser som rader (CSV)</button>
@@ -472,10 +511,11 @@ function renderRisks(){
 
 // ---- view: node browser ----
 function renderNodes(){
-  const ns = NODES.filter(n => state.charts.has(n.chart_key));
+  const matchingNodes = new Set(filtered().map(r=>r.node_id));
+  const ns = NODES.filter(n => matchingNodes.has(n.node_id));
   if (!state.selNode || !ns.some(n => n.node_id === state.selNode)) state.selNode = ns[0]?.node_id;
   const list = ns.map(x => `<div class="nodeitem ${x.node_id===state.selNode?'sel':''}" data-nid="${esc(x.node_id)}">
-      <div class="nid">${esc(x.node_id)} · ${RISK_COUNT[x.node_id]||0} risker</div>${esc(x.label)}</div>`).join('');
+      <div class="nid">${esc(x.node_id)} · ${RISK_COUNT[x.node_id]||0} risker${RANKING.nodeExposure.get(x.node_id)?.topDirectCount ? ` · ${RANKING.nodeExposure.get(x.node_id).topDirectCount} i topp 50` : ''}</div>${esc(x.label)}</div>`).join('');
   $('#main').innerHTML = `<div class="resultline">Nodbläddrare
       <button class="btn" id="csvNodes">Exportera alla noder (CSV)</button></div>
     <div class="nodeview"><div class="nodelist">${list}</div><div class="nodedetail" id="nodeDetail">${nodeDetailHTML(state.selNode)}</div></div>`;
@@ -564,7 +604,7 @@ function renderProcess(){
   const chart = PROC[ck];
   const { nodes, routes, bounds: b } = processLayout(ck);
   const tabs = PROC_CHARTS.map(c =>
-    `<button class="btn ${c===ck?'active':''}" data-chart-tab="${c}">${c}<span class="cnt">${CHART_RISKS[c]||0} risker</span></button>`).join('');
+    `<button class="btn ${c===ck?'active':''}" data-chart-tab="${c}">${c}<span class="cnt">${c==='B00'?'Översikt':`${CHART_RISKS[c]||0} risker${RANKING.chartExposure.get(c)?.topDirectCount ? ` · ${RANKING.chartExposure.get(c).topDirectCount} i topp 50` : ''}`}</span></button>`).join('');
 
   // Edges use display-only geometry. The JSON download uses the embedded canonical chart instead.
   const renderedRoutes = routes.map(route => ({
@@ -591,12 +631,15 @@ function renderProcess(){
   for (const n of nodes){
     const { w, h } = nodeGeom(n);
     const cnt = RISK_COUNT[n.id] || 0;
-    const fill = riskFill(cnt, n.rma);
+    const exposure = processExposure(n);
+    const topCount = exposure?.topDirectCount || 0;
+    const downstreamCount = state.showDownstream ? (exposure?.topAffectedCount || 0) : 0;
+    const fill = topCount ? '#f3b763' : downstreamCount ? '#f9e2c2' : '#eff2f5';
     const isDec = n.type === 'decision';
     const isStart = n.type === 'start';
     const isEnd = n.type === 'end';
     const isSE = isStart || isEnd;
-    const selCls = state.selProcNode === n.id ? ' sel' : '';
+    const selCls = (state.selProcNode === n.id ? ' sel' : '') + (topCount ? ' top-ranked' : downstreamCount ? ' downstream-ranked' : '');
     const typeCls = isStart ? ' start-node' : (isEnd ? ' end-node' : '');
     const dash = n.rma ? '' : ' stroke-dasharray="5,4"';
     const stroke = n.rma ? '#7a8ca0' : '#b6bfc9';
@@ -620,18 +663,22 @@ function renderProcess(){
       `<text x="${cx}" y="${textStartY+i*lineH}" text-anchor="middle" font-size="${fs}" fill="#212a35">${esc(ln)}</text>`).join('');
     const badgeX = isDec ? cx+42 : n.x+w-18;
     const badgeY = isDec ? n.y+35 : n.y+18;
-    const badge = cnt
+    const badgeCount = topCount || downstreamCount;
+    const badge = badgeCount
       ? `<circle class="risk-badge" cx="${badgeX}" cy="${badgeY}" r="11"/>
-         <text class="risk-badge-text" x="${badgeX}" y="${badgeY+3.5}" text-anchor="middle">${cnt}</text>`
+         <text class="risk-badge-text" x="${badgeX}" y="${badgeY+3.5}" text-anchor="middle">${badgeCount}</text>`
       : '';
     const handoff = (n.ht.length || n.hf.length)
       ? `<text x="${n.x+12}" y="${n.y+h-8}" font-size="10.5" fill="#6e7f90">⇄</text>` : '';
-    nodeSvg += `<g class="pnode${typeCls}${selCls}" data-nid="${esc(n.id)}">${shape}${endFrame}${terminalTag}${handoff}${idTxt}${labelTxt}${badge}
-      <title>${esc(n.id)} – ${esc(n.label)}${cnt ? ` · ${cnt} risker` : (n.rma ? '' : ' · ej riskmappbar')}</title></g>`;
+    nodeSvg += `<g class="pnode${typeCls}${selCls}" data-nid="${esc(n.id)}" role="button" tabindex="0" aria-label="${esc(n.id+' – '+n.label)}${topCount?` · ${topCount} risker i topp 50`:downstreamCount?` · ${downstreamCount} följdpåverkande risker i topp 50`:' · ingen topp 50-risk direkt mappad'}">${shape}${endFrame}${terminalTag}${handoff}${idTxt}${labelTxt}${badge}
+      <title>${esc(n.id)} – ${esc(n.label)}${topCount ? ` · ${topCount} direkt mappade risker i topp 50` : downstreamCount ? ` · ${downstreamCount} följdpåverkande risker i topp 50` : ` · ${cnt} direkt mappade risker, ingen i topp 50`}</title></g>`;
   }
 
   $('#main').innerHTML = `
+    <h2 class="process-heading">Var finns de högst rankade riskerna?</h2>
+    <p class="ranking-note">Topp 50 efter relativ sannolikhet · ${rankingDate()}. Antal kopplade risker och deras rang visar var uppmärksamheten behövs; nodernas egen störningssannolikhet är inte beräknad.</p>
     <div class="charttabs">${tabs}</div>
+    ${processRankingPanel(ck)}
     <div class="proctoolbar">
       <button class="btn" id="zoomOut" aria-label="Zooma ut">−</button>
       <button class="btn" id="zoomIn" aria-label="Zooma in">+</button>
@@ -639,12 +686,11 @@ function renderProcess(){
       <button class="btn" id="zoomFit">Översikt</button>
       <span class="viewmode" id="procViewMode">Läsbart läge</span>
       <button class="btn" id="jsonProcessChart">Ladda ner ${esc(ck)} (JSON)</button>
-      <span style="color:var(--muted);font-size:13px">${esc(chart.name)} — klicka på en nod för fakta och risker. Mörkare blå ton = fler mappade risker; streckade grå noder är inte riskmappbara.</span>
+      <span style="color:var(--muted);font-size:13px">${esc(chart.name)} — klicka på en nod för fakta och risker. Orange = nod med direkt mappad topp 50-risk. Siffran anger antal. Streckade noder är navigering eller handoff.</span>
       <div class="legend">
-        <span class="li"><span class="sw" style="background:#dfe8f1"></span>1 risk</span>
-        <span class="li"><span class="sw" style="background:#b7cbdd"></span>2 risker</span>
-        <span class="li"><span class="sw" style="background:#7d9cbb"></span>3+ risker</span>
-        <span class="li"><span class="sw" style="background:#eef0f3;border-style:dashed"></span>ej riskmappbar</span>
+        <span class="li"><span class="sw" style="background:#f3b763"></span>Direkt topp 50-risk</span>
+        <span class="li"><span class="sw" style="background:#f9e2c2;border-style:dashed"></span>Följdpåverkan</span>
+        <span class="li"><span class="sw" style="background:#eff2f5"></span>Ingen direkt topp 50-risk</span>
         <span class="li"><span class="dia" style="background:#fff;border:1px solid #7a8ca0"></span>beslut</span>
         <span class="li"><span class="terminal"></span>START / SLUT</span>
       </div>
@@ -668,6 +714,8 @@ function renderProcess(){
   document.querySelectorAll('[data-chart-tab]').forEach(bt => bt.onclick = () => {
     state.selChart = bt.dataset.chartTab; state.selProcNode = null; renderProcess();
   });
+  bindRankingLinks($('#main'));
+  $('#showDownstream').onchange = e => { state.showDownstream=e.target.checked; renderProcess(); };
   $('#jsonProcessChart').onclick = () => exportProcessChart(ck);
 
   // zoom/pan via viewBox manipulation; context shared with one-time global listeners
@@ -735,6 +783,7 @@ function renderProcess(){
     det.scrollIntoView({ behavior:'smooth', block:'nearest' });
   }));
 
+  g.querySelectorAll('.pnode').forEach(el => el.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();el.dispatchEvent(new MouseEvent('click',{bubbles:true}));} }));
   if (state.selProcNode) bindDetail($('#procDetail'));
 }
 
@@ -768,18 +817,24 @@ window.addEventListener('pointerup', endProcessPan);
 window.addEventListener('pointercancel', endProcessPan);
 
 function renderMain(){
-  $('#layout').classList.toggle('full', state.view === 'process');
-  if (state.view === 'risks') renderRisks();
+  $('#layout').classList.toggle('full', ['process','ranking','stats'].includes(state.view));
+  if (state.view === 'ranking') renderRanking();
+  else if (state.view === 'risks') renderRisks();
   else if (state.view === 'process') renderProcess();
   else if (state.view === 'nodes') renderNodes();
   else renderStats();
 }
 
+/*__RANKING_VIEW__*/
+
 // ---- events ----
 let deb;
 $('#search').addEventListener('input', e => { clearTimeout(deb); deb = setTimeout(() => { state.q = e.target.value; renderMain(); }, 120); });
 $('#sort').onchange = e => { state.sort = e.target.value; renderMain(); };
-document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => setView(b.dataset.view));
+document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => {
+  if(b.dataset.view==='risks'){ resetRiskFilters(); renderSidebar(); }
+  setView(b.dataset.view);
+});
 $('#expandAll').onclick = () => {
   state.expandAll = !state.expandAll;
   $('#expandAll').textContent = state.expandAll ? 'Minimera alla' : 'Expandera alla';
@@ -788,7 +843,7 @@ $('#expandAll').onclick = () => {
 
 $('#search').value = state.q;
 if (state.expandAll) $('#expandAll').textContent = 'Minimera alla';
-renderHead(); renderSidebar(); renderMain();
+renderHead(); renderSidebar(); setView(state.view);
 if (requestedRisk) requestAnimationFrame(() => {
   const card = document.querySelector(`[data-rid="${CSS.escape(requestedRisk.risk_id)}"]`);
   if (card) card.scrollIntoView({ block:'start' });

@@ -204,6 +204,9 @@ for (const [label, source] of applications) {
       esc: value => String(value),
       refLink: value => String(value),
       riskCard: () => '',
+      nodeRankingSummary: () => '',
+      downstreamDetail: () => '',
+      sorted: risks => risks,
     });
     const html = nodeDetailHTML('B00-SP10');
     assert.match(html, /data-goto-chart="B10"/);

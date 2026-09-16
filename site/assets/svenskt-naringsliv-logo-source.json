@@ -1,0 +1,20 @@
+{
+  "retrievedAt": "2026-09-16T12:55:15.405570+00:00",
+  "assets": [
+    {
+      "file": "svenskt-naringsliv-logo-stacked.svg",
+      "sourceUrl": "https://www.svensktnaringsliv.se/",
+      "sourceSelector": "svg.Desktop_logo__l_D4N",
+      "originalSvgSha256": "14263ac870fda7a9702cadc784cb7ab78b774df48155bafa8689667e158a9670",
+      "viewBox": "0 0 741.692 362.099"
+    },
+    {
+      "file": "svenskt-naringsliv-logo.svg",
+      "sourceUrl": "https://www.svensktnaringsliv.se/",
+      "sourceSelector": "svg.Mobile_logo__y2ob7",
+      "originalSvgSha256": "b0ee0134254d627958442e91cba379a0b7017e4952501c198baa08eb6d129dc6",
+      "viewBox": "0 0 609.02667 84.01334"
+    }
+  ],
+  "notes": "Original official SVG paths and colors preserved. The wordmark uses currentColor, matching the source; it inherits white in dark site headers. No third-party font asset is included."
+}
