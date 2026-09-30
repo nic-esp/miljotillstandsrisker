@@ -17,6 +17,7 @@ function resetRiskFilters(){
   state.q=''; $('#search').value=''; state.charts=new Set(CHARTS); state.cats=new Set(CATEGORIES); state.origins=new Set(ORIGINS); state.node=''; state.topOnly=false;
 }
 function showRisk(id){
+  if (typeof openExplorerRisk === 'function') return openExplorerRisk(id);
   resetRiskFilters(); state.q=id; $('#search').value=id; state.expandAll=true;
   $('#expandAll').textContent='Minimera alla'; renderSidebar(); setView('risks');
   $('#main').scrollIntoView({block:'start'});

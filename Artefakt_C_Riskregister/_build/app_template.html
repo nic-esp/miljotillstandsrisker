@@ -51,8 +51,8 @@ select:focus{border-color:var(--accent)}
 .btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
 .layout{display:grid;grid-template-columns:285px 1fr;gap:0;min-height:calc(100vh - 190px)}
 .layout.full{grid-template-columns:1fr}
-.layout.full aside{display:none}
-aside{border-right:1px solid var(--border);padding:20px 18px;background:var(--bg2);
+.layout.full #sidebar{display:none}
+#sidebar{border-right:1px solid var(--border);padding:20px 18px;background:var(--bg2);
   overflow-y:auto;max-height:calc(100vh - 190px);position:sticky;top:190px;align-self:start}
 main{padding:24px 32px;min-width:0}
 .fgroup{margin-bottom:22px}
@@ -157,13 +157,14 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 #procDetail{margin-top:18px}
 @media(max-width:900px){
   .layout{grid-template-columns:1fr}
-  aside{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--border)}
+  #sidebar{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--border)}
   .nodeview{grid-template-columns:1fr}
   main{padding:16px}
   header{position:static}
   .procwrap{height:68vh;min-height:480px}
 }
 /*__BRAND_CSS__*/
+/*__EXPLORATION_CSS__*/
 </style>
 </head>
 <body>
@@ -176,7 +177,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
     <div class="brand-title">
       <div class="eyebrow">Den svenska tillståndsprocessen</div>
       <h1>Miljötillståndsrisker</h1>
-      <div class="sub">Risker, sannolikhetsrangordning och processkartor · Baslinje S0 per 2026-08-20</div>
+      <div class="sub">Risker, motåtgärder och samband · Baslinje S0 per 2026-08-20</div>
     </div>
   </div>
   <div class="headstats" id="headstats"></div>
@@ -193,8 +194,10 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
       <option value="node">Sortera: Nodnamn</option>
       <option value="affects">Sortera: Flest berörda noder</option>
     </select>
-    <button class="btn active" data-view="ranking">Topp 50 &amp; rangordning</button>
-    <button class="btn" data-view="risks">Alla risker</button>
+    <button class="btn active" data-view="risks">Risker</button>
+    <button class="btn" data-view="controls">Motåtgärder</button>
+    <button class="btn" data-view="graph">Sambandskarta</button>
+    <button class="btn" data-view="ranking">Topp 50 &amp; rangordning</button>
     <button class="btn" data-view="process">Processkarta</button>
     <button class="btn" data-view="nodes">Nodbläddrare</button>
     <button class="btn" data-view="stats">Statistik</button>
@@ -203,7 +206,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   </div>
 </header>
 <div class="layout" id="layout">
-  <aside id="sidebar"></aside>
+  <button class="btn ex-filter-toggle" id="exFilterToggle" aria-expanded="false" aria-controls="sidebar">Visa filter</button><aside id="sidebar"></aside>
   <main id="main"></main>
 </div>
 
@@ -238,13 +241,11 @@ for (const r of RISKS) CHART_RISKS[r.chart_key] = (CHART_RISKS[r.chart_key] || 0
 
 // ---- state ----
 const state = { q:'', charts:new Set(CHARTS), cats:new Set(CATEGORIES), origins:new Set(ORIGINS),
-  node:'', view:'ranking', sort:'rank', topOnly:false, rankScope:'top', showDownstream:false, selNode:null, selChart:'B00', selProcNode:null, expandAll:false };
+  node:'', view:'risks', sort:'rank', topOnly:false, rankScope:'top', showDownstream:false, selNode:null, selChart:'B00', selProcNode:null, expandAll:false };
 const requestedRiskId = new URLSearchParams(location.search).get('risk');
 const requestedRisk = requestedRiskId && RISKS.find(r => r.risk_id === requestedRiskId);
 if (requestedRisk) {
   state.view = 'risks';
-  state.q = requestedRisk.risk_id;
-  state.expandAll = true;
   document.title = `${requestedRisk.risk_id} – ${requestedRisk.title}`;
   document.querySelector('#canonical').href = `https://nic-esp.github.io/miljotillstandsrisker/?risk=${encodeURIComponent(requestedRisk.risk_id)}`;
 }
@@ -391,7 +392,9 @@ function renderSidebar(){
   });
   $('#clearFilters').onclick = () => {
     state.q=''; $('#search').value=''; state.charts=new Set(CHARTS); state.cats=new Set(CATEGORIES); state.origins=new Set(ORIGINS); state.node=''; state.topOnly=false;
+    if(typeof exState!=='undefined')exState.missingControls=false;
     renderSidebar(); renderMain();
+    if(typeof exSyncRoute==='function')exSyncRoute();
   };
 }
 function riskCard(r){
@@ -421,6 +424,7 @@ function riskCard(r){
       <span class="chev">▶</span>
     </div>
     <div class="cardbody">
+      <div class="ex-actions" style="margin-top:16px"><button class="btn" data-ex-risk="${esc(r.risk_id)}">Öppna bow tie &amp; motåtgärder</button></div>
       ${rankDetail(r)}
       <div class="sect"><h4>Beskrivning</h4><p>${hl(r.description,q)}</p></div>
       <div class="grid2">
@@ -487,15 +491,17 @@ function bindDetail(root){
 }
 function setView(v){
   state.view = v;
+  $('#exFilterToggle').hidden = !['risks','nodes'].includes(v);
   $('#search').closest('.searchwrap').hidden = !['risks','nodes'].includes(v);
   $('#sort').hidden = v !== 'risks';
-  $('#expandAll').hidden = v !== 'risks';
+  $('#expandAll').hidden = true;
   document.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('active', x.dataset.view === v));
   renderMain();
 }
 
 // ---- view: risks ----
 function renderRisks(){
+  if (typeof renderCompactRisks === 'function') return renderCompactRisks();
   const rs = sorted(filtered());
   const line = `<div class="ranking-note">Rangordning från ${rankingDate()}. Orange markering = topp 50. ${RANKING.unranked.length} risk saknar rang i denna körning.</div><div class="resultline" aria-live="polite">Visar <b>${rs.length}</b> av <b>${RISKS.length}</b> risker
     ${state.topOnly ? '· endast topp 50' : ''}
@@ -817,23 +823,30 @@ window.addEventListener('pointerup', endProcessPan);
 window.addEventListener('pointercancel', endProcessPan);
 
 function renderMain(){
-  $('#layout').classList.toggle('full', ['process','ranking','stats'].includes(state.view));
+  if (typeof exState !== 'undefined' && exState.graph) { exState.graph.destroy(); exState.graph=null; }
+  $('#layout').classList.toggle('full', ['process','ranking','stats','controls','graph'].includes(state.view));
   if (state.view === 'ranking') renderRanking();
   else if (state.view === 'risks') renderRisks();
   else if (state.view === 'process') renderProcess();
   else if (state.view === 'nodes') renderNodes();
+  else if (state.view === 'controls') renderControls();
+  else if (state.view === 'graph') renderKnowledgeGraph();
   else renderStats();
 }
 
 /*__RANKING_VIEW__*/
+/*__EXPLORATION_GRAPH__*/
+/*__EXPLORATION_VIEW__*/
 
 // ---- events ----
+$('#exFilterToggle').onclick=()=>{const open=$('#exFilterToggle').getAttribute('aria-expanded')!=='true';$('#exFilterToggle').setAttribute('aria-expanded',String(open));$('#exFilterToggle').textContent=open?'Dölj filter':'Visa filter';$('#sidebar').classList.toggle('ex-filters-open',open);};
+document.addEventListener('change',e=>{if(e.target.closest('#sidebar')||e.target.id==='sort')exSyncRoute();});
 let deb;
-$('#search').addEventListener('input', e => { clearTimeout(deb); deb = setTimeout(() => { state.q = e.target.value; renderMain(); }, 120); });
+$('#search').addEventListener('input', e => { clearTimeout(deb); deb = setTimeout(() => { state.q = e.target.value; renderMain(); exSyncRoute(); }, 120); });
 $('#sort').onchange = e => { state.sort = e.target.value; renderMain(); };
 document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => {
-  if(b.dataset.view==='risks'){ resetRiskFilters(); renderSidebar(); }
   setView(b.dataset.view);
+  exSyncRoute();
 });
 $('#expandAll').onclick = () => {
   state.expandAll = !state.expandAll;
@@ -843,11 +856,7 @@ $('#expandAll').onclick = () => {
 
 $('#search').value = state.q;
 if (state.expandAll) $('#expandAll').textContent = 'Minimera alla';
-renderHead(); renderSidebar(); setView(state.view);
-if (requestedRisk) requestAnimationFrame(() => {
-  const card = document.querySelector(`[data-rid="${CSS.escape(requestedRisk.risk_id)}"]`);
-  if (card) card.scrollIntoView({ block:'start' });
-});
+renderHead(); exInit();
 </script>
 </body>
 </html>

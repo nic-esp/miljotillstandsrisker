@@ -14,11 +14,21 @@ Each risk event contains 3-5 possible trigger factors and 3-5 possible consequen
 - 342 complete risk records: https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json
 - 342 complete risk records (CSV; one row per risk with a causes-event-effects `bow_tie_json` cell): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv
 - Normalized trigger/consequence rows (CSV): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv
+- Exploration model (JSON; source controls, analytical shared controls, exact and semantic cause/effect groups, explicit targets and provenance): https://nic-esp.github.io/miljotillstandsrisker/data/exploration.json
+- Controls (CSV; risk IDs, source excerpts and explicit target relationships): https://nic-esp.github.io/miljotillstandsrisker/data/controls.csv
 - 160 risk-mappable nodes: https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json
 - Source registry: https://nic-esp.github.io/miljotillstandsrisker/data/sources.json
 - Process charts B00-B70: https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json
 
-The same JSON files and riskregister.csv are available on the MCP host under /data/. A single risk is available at /api/risks/{risk_id}.
+The original risk, node, source and process JSON files, riskregister.csv and riskregister-items.csv are also available on the MCP host under /data/. The new exploration.json and controls.csv are static GitHub Pages downloads only; the MCP tools and API contract are unchanged. A single risk is available at /api/risks/{risk_id}.
+
+## Interpreting exploration relationships
+
+Each source control preserves a risk's original mitigation text. Shared controls and semantic cause/effect groups are analytical groupings with explicit rationales and source excerpts; they have not been recorded as independently reviewed. Exact-text groups indicate matching wording, not demonstrated causal dependence. Individual occurrences retain their own source or analysis status.
+
+Control targets identify specific causes, risk events or consequences. Similarity-group membership never extends a control's target coverage. A link does not establish implementation, effectiveness, residual probability or statistical dependence. Source references attached to a control provide the surrounding risk's source context, not measured evidence of mitigation performance.
+
+The BTL ranking is relative. Connected-risk counts describe the dataset's documented reach; they are not calibrated occurrence probabilities, risk reduction estimates or a universal control-priority score. Visitors can investigate published data but cannot edit it.
 
 ## MCP retrieval
 

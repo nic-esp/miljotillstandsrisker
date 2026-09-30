@@ -1,0 +1,1681 @@
+{
+  "version": "2026-09-30.1",
+  "status": "analytical-grouping",
+  "scopeNote": "Förberedda analytiska grupper från riskregistrets uttryckliga motåtgärdstexter. Originaltexterna bevaras separat; ingen generell effektivitet eller mänsklig sakgranskning görs gällande.",
+  "controls": [
+    {
+      "id": "C-SHARED-underlagskontroll",
+      "title": "Kontrollera handlingar före inlämning",
+      "description": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren.",
+      "role": "prevention",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B50-P040-02",
+          "excerpt": "Stäm av ansökningshandlingarna mot 9 kap. 86–91 §§ PBL före inlämning."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "excerpt": "Låt en dedikerad redaktör granska ansökan för inre konsistens, verifiera att varje yrkande är mätbart och villkorsbart, och använd domstolens och delegationens checklistor för ansökningshandlingar före inlämning."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "excerpt": "Kvalitetssäkra underlaget mot MB 22 kap. och MBD innan ingivning (jfr B20-090); använd instansens egna checklistor; håll samråds- och avgränsningsmaterial spårbart kopplat till MKB-kapitlen."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "excerpt": "Använd MBD:s innehållskrav som checklista, låt oberoende sakkunnig granska underlaget före utskick, och stäm av underlagets detaljnivå med länsstyrelsen i förhand innan samrådet kungörs."
+        },
+        {
+          "riskId": "R-B40-N110-01",
+          "excerpt": "Upprätta anmälan med samma struktur som ett tillståndsunderlag: tydliga kartor, åtgärdsbeskrivning, sakägarförteckning och egen BMP-analys. Låt sakkunnig kvalitetsgranska före inlämning."
+        },
+        {
+          "riskId": "R-B50-E020-01",
+          "excerpt": "Använd Eis checklista och ansökningsvägledning vid sammanställningen och begär ett förhandsmöte med Ei innan inlämning. Verifiera fastighetsuppgifterna mot Lantmäteriets register i förväg. Kvalitetssäkra att MKB/förenklat underlag följer MBD:s krav redan i ansökningsversionen."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B50-P040-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Lov- eller anmälningsärendet är inte komplett enligt de uppgifter som byggnadsnämnden behöver."
+        },
+        {
+          "riskId": "R-B50-P040-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Kommunens lokala kravbild eller begärda fackunderlag har inte verifierats före ingivandet."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ansökan sammanställs utan preciserade yrkanden om verksamhetens omfattning, utsläppsnivåer och villkor enligt 22 kap. 1–1 g §§ miljöbalken."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Det finns inbördes motsägelser mellan den tekniska beskrivningen, miljöbedömningen och villkorsförslaget i ansökan."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Yrkanden och bilagor har tagits fram av olika delteam utan en gemensam kontroll av att de beskriver samma sökta verksamhet."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Yrkandena hänvisar till framtida detaljprojektering eller senare överenskommelser i stället för att ange den ram som ska prövas."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Miljökonsekvensbeskrivningen redovisar inte rimliga alternativ i den omfattning som krävs."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Underlaget beskriver inte relevanta kumulativa miljöeffekter."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Skyddsåtgärder eller uppföljning är otillräckligt redovisade i miljökonsekvensbeskrivningen."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Undersökningsunderlaget beskriver teknik och kapacitet för vagt eller utelämnar uppenbara effektbärare som buller, vattenavledning eller spridningsvägar."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Miljökonsekvensbeskrivningen saknar en tillräcklig redovisning av alternativa utformningar, vilket bryter mot kravet på ett tillräckligt tidigt underlag enligt praxis."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Beskrivningen av projektet är felriktad eller för grov för att länsstyrelsen ska kunna ta ställning till om betydande miljöpåverkan kan antas enligt 6 kap. 23–25 §§ MB."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Underlaget utelämnar känsliga mottagare eller naturvärden som är relevanta för bedömningen av betydande miljöpåverkan enligt miljöbedömningsförordningens kriterier."
+        },
+        {
+          "riskId": "R-B40-N110-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektet satsar minimalt på kartor, ritningar och miljöeffektbeskrivning eftersom anmälan uppfattas som enklare än en ansökan."
+        },
+        {
+          "riskId": "R-B40-N110-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Anmälan tilldelas mindre utredningsresurser än vad åtgärdens faktiska miljöpåverkan kräver."
+        },
+        {
+          "riskId": "R-B50-E020-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera fullständighet och inre konsistens mot den aktuella prövningens innehållskrav före ingivandet. Kraven skiljer sig mellan prövningsspåren. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Koncessionsansökan saknar en miljöbedömning eller annan obligatorisk ansökningsuppgift."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-gemensam-version",
+      "title": "Granska underlagen mot samma projektversion",
+      "description": "Samgranska tekniska underlag, miljöbedömning och villkorsförslag så att de beskriver samma projekt. Kopplingen omfattar versions- och spårbarhetsbrister, inte alla brister i respektive ansökan.",
+      "role": "prevention",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B20-090-01",
+          "excerpt": "Genomför en gemensam slutgranskning av MKB och teknisk ansökan med samma granskningslag före inlämning."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "excerpt": "Låt en dedikerad redaktör granska ansökan för inre konsistens"
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "excerpt": "Kvalitetssäkra underlaget mot MB 22 kap. och MBD innan ingivning (jfr B20-090); använd instansens egna checklistor; håll samråds- och avgränsningsmaterial spårbart kopplat till MKB-kapitlen."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B20-090-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Samgranska tekniska underlag, miljöbedömning och villkorsförslag så att de beskriver samma projekt. Kopplingen omfattar versions- och spårbarhetsbrister, inte alla brister i respektive ansökan. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Den tekniska beskrivningen av kapacitet eller driftfall skiljer sig från vad som framkommit under samråd och avgränsning."
+        },
+        {
+          "riskId": "R-B20-090-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Samgranska tekniska underlag, miljöbedömning och villkorsförslag så att de beskriver samma projekt. Kopplingen omfattar versions- och spårbarhetsbrister, inte alla brister i respektive ansökan. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Spårbarhetskedjan mellan samrådssynpunkter och ansökan bryts eftersom olika team har tagit fram dokumenten."
+        },
+        {
+          "riskId": "R-B20-090-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Samgranska tekniska underlag, miljöbedömning och villkorsförslag så att de beskriver samma projekt. Kopplingen omfattar versions- och spårbarhetsbrister, inte alla brister i respektive ansökan. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "MKB:n och den tekniska ansökan beskriver olika versioner av projektets omfattning, driftfall eller skyddsåtgärder."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Samgranska tekniska underlag, miljöbedömning och villkorsförslag så att de beskriver samma projekt. Kopplingen omfattar versions- och spårbarhetsbrister, inte alla brister i respektive ansökan. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Det finns inbördes motsägelser mellan den tekniska beskrivningen, miljöbedömningen och villkorsförslaget i ansökan."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Samgranska tekniska underlag, miljöbedömning och villkorsförslag så att de beskriver samma projekt. Kopplingen omfattar versions- och spårbarhetsbrister, inte alla brister i respektive ansökan. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Yrkanden och bilagor har tagits fram av olika delteam utan en gemensam kontroll av att de beskriver samma sökta verksamhet."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Samgranska tekniska underlag, miljöbedömning och villkorsförslag så att de beskriver samma projekt. Kopplingen omfattar versions- och spårbarhetsbrister, inte alla brister i respektive ansökan. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Den tekniska ansökan och miljökonsekvensbeskrivningen utgår från olika projektversioner."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-fristbevakning",
+      "title": "Dokumentera startdatum och bevaka rätt frist",
+      "description": "Dokumentera den utlösande dagen och följ den tidsregel som faktiskt gäller i varje ärende. Bevakning visar status och kan stödja uppföljning; den visar inte att orsaken till dröjsmålet förebyggs.",
+      "role": "monitoring",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B50-P040-02",
+          "excerpt": "Dokumentera ansökningsdag, varje sökandeinitierat tillägg och om ett kompletteringsföreläggande meddelats inom tre veckor, så att rätt startdag kan beräknas."
+        },
+        {
+          "riskId": "R-B50-P050-03",
+          "excerpt": "Dokumentera fristens startdag och varje lagligt förlängningsbeslut. Begär att korrekt avgiftsreduktion tillämpas om fristen överskrids och använd förvaltningslagens dröjsmålsverktyg när deras förutsättningar är uppfyllda; kalla inte reduktionen byggsanktionsavgift."
+        },
+        {
+          "riskId": "R-B20-030-01",
+          "excerpt": "Dokumentera när ett fullständigt underlag, genomfört undersökningssamråd och samrådsredogörelsen kom in. Bevaka 60-dagarsfristen och begär skriftlig information om skäl och nytt slutdatum om länsstyrelsen förlänger tiden."
+        },
+        {
+          "riskId": "R-B40-N120-02",
+          "excerpt": "Säkra mottagningsbevis med ankomstdatum, bevaka åttaveckorsfristen och begär skriftligt besked om skäl och slutdatum vid förlängning. Planera ett säsongsberoende arbete med marginal även inom fristen."
+        },
+        {
+          "riskId": "R-B30-C120-01",
+          "excerpt": "Klassificera först om anmälan omfattas av 26 a § FMH. Bevaka då sexveckorsfristen och eventuell formell förlängning. För andra ärenden ska handläggningsläget följas skriftligt och möjligheten till en begäran enligt 12 § FL bedömas när sex månader har gått."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B50-P040-02",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Dokumentera den utlösande dagen och följ den tidsregel som faktiskt gäller i varje ärende. Bevakning visar status och kan stödja uppföljning; den visar inte att orsaken till dröjsmålet förebyggs. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B50-P050-03",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Dokumentera den utlösande dagen och följ den tidsregel som faktiskt gäller i varje ärende. Bevakning visar status och kan stödja uppföljning; den visar inte att orsaken till dröjsmålet förebyggs. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B20-030-01",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Dokumentera den utlösande dagen och följ den tidsregel som faktiskt gäller i varje ärende. Bevakning visar status och kan stödja uppföljning; den visar inte att orsaken till dröjsmålet förebyggs. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B40-N120-02",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Dokumentera den utlösande dagen och följ den tidsregel som faktiskt gäller i varje ärende. Bevakning visar status och kan stödja uppföljning; den visar inte att orsaken till dröjsmålet förebyggs. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B30-C120-01",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Dokumentera den utlösande dagen och följ den tidsregel som faktiskt gäller i varje ärende. Bevakning visar status och kan stödja uppföljning; den visar inte att orsaken till dröjsmålet förebyggs. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-finalitetskontroll",
+      "title": "Verifiera beslutets rättsliga status",
+      "description": "Följ överprövning, laga kraft och startvillkor per beslut. Beslut fattat, slutligt och möjligt att använda för start hålls åtskilda; en kontroll kan inte förhindra ett överklagande.",
+      "role": "monitoring",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B70-G090-02",
+          "excerpt": "Bevaka både den vanliga överklagandetiden och länsstyrelsens treveckorsfrist. Dokumentera länsstyrelsens beslut att inte överpröva eller det slutliga utfallet av överprövningen innan planen används som lagakraftvunnen startgate."
+        },
+        {
+          "riskId": "R-B50-X040-01",
+          "excerpt": "Dokumentera beslutstyp, beslutsmyndighet, underrättelser, överprövningsbeslut och överklagandetid. Passera inte B50-X050 förrän beslutets rättsliga status och eventuella villkor är verifierade."
+        },
+        {
+          "riskId": "R-B70-START-01",
+          "excerpt": "Inför en gemensam statusdefinition (beslut fattat / överklagbar / överklagat / laga kraft / verkställbart) som varje spår måste använda. Kräv dokumenterad finalitetsverifiering per beslut, inte per spår, med datum för delgivning och kungörelse. Låt juridisk sakkunnig signera statusrapporten innan B70-010 påbörjas."
+        },
+        {
+          "riskId": "R-B70-G090-03",
+          "excerpt": "Verifiera för varje sektorsbeslut tre status separat: fattat, slutligt (laga kraft/motsvarande), och villkorsuppfyllt. Bevaka policy- och säkerhetsläget för projekttypen och försök få skriftliga besked från sektorsmyndigheterna om kvarstående hinder. Bygg beslutsberoendekedjan explicit så att sammankopplade beslut (t.ex. koncession ↔ nätanslutning) inte rapporteras som klara var för sig."
+        },
+        {
+          "riskId": "R-B50-P040-01",
+          "excerpt": "Verifiera planens status."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B70-G090-02",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Följ överprövning, laga kraft och startvillkor per beslut. Beslut fattat, slutligt och möjligt att använda för start hålls åtskilda; en kontroll kan inte förhindra ett överklagande. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B50-X040-01",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Följ överprövning, laga kraft och startvillkor per beslut. Beslut fattat, slutligt och möjligt att använda för start hålls åtskilda; en kontroll kan inte förhindra ett överklagande. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B70-START-01",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Följ överprövning, laga kraft och startvillkor per beslut. Beslut fattat, slutligt och möjligt att använda för start hålls åtskilda; en kontroll kan inte förhindra ett överklagande. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B70-G090-03",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Följ överprövning, laga kraft och startvillkor per beslut. Beslut fattat, slutligt och möjligt att använda för start hålls åtskilda; en kontroll kan inte förhindra ett överklagande. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B50-P040-01",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Följ överprövning, laga kraft och startvillkor per beslut. Beslut fattat, slutligt och möjligt att använda för start hålls åtskilda; en kontroll kan inte förhindra ett överklagande. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-tidsreserv",
+      "title": "Planera tidsreserv för handläggning och överprövning",
+      "description": "Avsätt marginaler för väntan och byggstart i projektplanen. Åtgärden är avsedd att begränsa följderna av tidsutdräkt; den gör inte myndighetens prövning kortare.",
+      "role": "consequence_reduction",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B50-P030-01",
+          "excerpt": "planera tidplanen med explicit lagakraftpuffer."
+        },
+        {
+          "riskId": "R-B40-GE120-02",
+          "excerpt": "Bygg in tidbuffert i genomförandeplanen för samrådets osäkra varaktighet."
+        },
+        {
+          "riskId": "R-B60-260-01",
+          "excerpt": "Räkna PT-väntan in i laga kraft-planeringen"
+        },
+        {
+          "riskId": "R-B40-N120-02",
+          "excerpt": "Planera ett säsongsberoende arbete med marginal även inom fristen."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B50-P030-01",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Avsätt marginaler för väntan och byggstart i projektplanen. Åtgärden är avsedd att begränsa följderna av tidsutdräkt; den gör inte myndighetens prövning kortare. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Planberoende lov, startbesked och investeringsbeslut skjuts fram."
+        },
+        {
+          "riskId": "R-B40-GE120-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Avsätt marginaler för väntan och byggstart i projektplanen. Åtgärden är avsedd att begränsa följderna av tidsutdräkt; den gör inte myndighetens prövning kortare. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektet kan förlora det planerade arbetsfönstret för vattenarbetena."
+        },
+        {
+          "riskId": "R-B40-GE120-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Avsätt marginaler för väntan och byggstart i projektplanen. Åtgärden är avsedd att begränsa följderna av tidsutdräkt; den gör inte myndighetens prövning kortare. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Den aktuella vattenrisken kan leda till merkostnad för omplanering av entreprenad."
+        },
+        {
+          "riskId": "R-B60-260-01",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Avsätt marginaler för väntan och byggstart i projektplanen. Åtgärden är avsedd att begränsa följderna av tidsutdräkt; den gör inte myndighetens prövning kortare. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektet får vänta på tillståndsbeskedet innan den fortsatta finalitetsbedömningen kan slutföras."
+        },
+        {
+          "riskId": "R-B40-N120-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Avsätt marginaler för väntan och byggstart i projektplanen. Åtgärden är avsedd att begränsa följderna av tidsutdräkt; den gör inte myndighetens prövning kortare. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektet kan förlora det planerade arbetsfönstret för vattenarbetena."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-dialog-berorda",
+      "title": "Förbered dialog och bemötande med berörda",
+      "description": "För dialog tidigt och förbered sakligt bemötande av synpunkter. Här är den dokumenterade avsikten att hantera de följder som många synpunkter skapar; demokratisk medverkan eller klagorätt behandlas inte som fel som ska tas bort.",
+      "role": "consequence_reduction",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B50-P020-01",
+          "excerpt": "Investera i tidig, genuin dialog med berörda innan formellt samråd: lokala möten, anpassningar och dokumenterad bemötande av synpunkter. Samordna budskap och underlag med miljöprövningens samråd i B20 så att allmänheten möter en enhetlig bild."
+        },
+        {
+          "riskId": "R-B20-020-02",
+          "excerpt": "Bedriv genuin dialog före formella samrådet, lyssna in lokala kunskaper tidigt, var transparent om osäkerheter och möt kritik med verifierbar data i stället för kommunikationskampanjer. Etablera en beredskapsplan för opinionshantering som inte trappar upp konflikten."
+        },
+        {
+          "riskId": "R-B60-090-02",
+          "excerpt": "Ta opinionen på allvar redan i samrådet; etablera löpande dialog med nyckelorganisationer; förbered bemötandestruktur och expertresurser innan kungörelsen går ut."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B50-P020-01",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "För dialog tidigt och förbered sakligt bemötande av synpunkter. Här är den dokumenterade avsikten att hantera de följder som många synpunkter skapar; demokratisk medverkan eller klagorätt behandlas inte som fel som ska tas bort. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Planförslaget kompletteras eller omarbetas och processen förlängs."
+        },
+        {
+          "riskId": "R-B20-020-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "För dialog tidigt och förbered sakligt bemötande av synpunkter. Här är den dokumenterade avsikten att hantera de följder som många synpunkter skapar; demokratisk medverkan eller klagorätt behandlas inte som fel som ska tas bort. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Prövningsmyndigheten får ökat utredningstryck för att hantera de organiserade synpunkterna och säkerställa att alla relevanta invändningar beaktas."
+        },
+        {
+          "riskId": "R-B20-020-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "För dialog tidigt och förbered sakligt bemötande av synpunkter. Här är den dokumenterade avsikten att hantera de följder som många synpunkter skapar; demokratisk medverkan eller klagorätt behandlas inte som fel som ska tas bort. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Samråds- och remissbehandlingen förlängs eftersom myndigheten behöver mer tid att analysera och svara på de många och komplexa synpunkterna."
+        },
+        {
+          "riskId": "R-B60-090-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "För dialog tidigt och förbered sakligt bemötande av synpunkter. Här är den dokumenterade avsikten att hantera de följder som många synpunkter skapar; demokratisk medverkan eller klagorätt behandlas inte som fel som ska tas bort. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Behovet av flera specialistbemötanden ökar ombuds- och expertkostnaderna."
+        },
+        {
+          "riskId": "R-B60-090-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "För dialog tidigt och förbered sakligt bemötande av synpunkter. Här är den dokumenterade avsikten att hantera de följder som många synpunkter skapar; demokratisk medverkan eller klagorätt behandlas inte som fel som ska tas bort. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ytterligare kommunicering förlänger beredningen."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-sasongsplan",
+      "title": "Planera fältarbete med reservfönster",
+      "description": "Lägg inventeringar och verifieringar i representativa säsonger, med tidig start och reservfönster. Åtgärden riktas mot planeringsbrister och väntans följder; den förhindrar inte extremväder.",
+      "role": "prevention",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B10-040-01",
+          "excerpt": "Backtidsplanera från planerat ansökningsdatum och identifiera varje inventerings säsongs- och repetitionskrav. Bygg in lämpliga reservfönster och stäm av utredningsplanens omfattning med länsstyrelsen före fältarbetet så att ett omstritt metodval inte undergräver insamlat underlag."
+        },
+        {
+          "riskId": "R-B20-010-02",
+          "excerpt": "Upprätta en säsongsplan med marginaler redan i B10-040, beställ fleråriga eller upprepade inventeringar där osäkerheten är stor, och dokumentera antagandens osäkerhet öppet i underlaget."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "excerpt": "Kartlägg alla säsongs- och väderberoende villkor i en egen fönsterkalender med marginaler. Genomför verifieringar i första möjliga fönster hellre än i det sista. Förhandla med tillsynsmyndigheten om alternativa verifieringsmetoder när fönstret missats."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B10-040-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Lägg inventeringar och verifieringar i representativa säsonger, med tidig start och reservfönster. Åtgärden riktas mot planeringsbrister och väntans följder; den förhindrar inte extremväder. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Utredningsplanen startar för sent eller ignorerar att vissa inventeringar endast kan utföras under specifika biologiska perioder."
+        },
+        {
+          "riskId": "R-B10-040-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Lägg inventeringar och verifieringar i representativa säsonger, med tidig start och reservfönster. Åtgärden riktas mot planeringsbrister och väntans följder; den förhindrar inte extremväder. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Utredningsplanen ger inte utrymme att samla in den säsongsberoende information som behövs för att identifiera och bedöma verksamhetens relevanta miljöeffekter."
+        },
+        {
+          "riskId": "R-B10-040-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Lägg inventeringar och verifieringar i representativa säsonger, med tidig start och reservfönster. Åtgärden riktas mot planeringsbrister och väntans följder; den förhindrar inte extremväder. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Inventeringsplanen är inte anpassad till projektets konkreta värden och de biologiska fältperioderna som gäller för platsen."
+        },
+        {
+          "riskId": "R-B20-010-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Lägg inventeringar och verifieringar i representativa säsonger, med tidig start och reservfönster. Åtgärden riktas mot planeringsbrister och väntans följder; den förhindrar inte extremväder. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Datainsamlingen påbörjas efter den biologiskt relevanta perioden, så att underlaget saknar uppgifter som behövs för att identifiera och bedöma verksamhetens miljöeffekter."
+        },
+        {
+          "riskId": "R-B20-010-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Lägg inventeringar och verifieringar i representativa säsonger, med tidig start och reservfönster. Åtgärden riktas mot planeringsbrister och väntans följder; den förhindrar inte extremväder. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektets tidsplan rymmer inte en full inventeringssäsong, vilket tvingar fram ett val mellan att skjuta upp processen eller använda sekundärdata."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Lägg inventeringar och verifieringar i representativa säsonger, med tidig start och reservfönster. Åtgärden riktas mot planeringsbrister och väntans följder; den förhindrar inte extremväder. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektet planerar verifieringen efter att den relevanta säsongen eller flödessituationen normalt har passerat."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Lägg inventeringar och verifieringar i representativa säsonger, med tidig start och reservfönster. Åtgärden riktas mot planeringsbrister och väntans följder; den förhindrar inte extremväder. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Metoden eller bemanningen är inte klar när den föreskrivna fältsituationen inträffar."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-faltberedskap",
+      "title": "Behåll fältberedskap när ett fönster missas",
+      "description": "Planera kompletterande inventeringar, alternativa metoder och fortsatt beredskap så att ett missat fältfönsters följder kan hanteras inom respektive krav.",
+      "role": "consequence_reduction",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B20-060-02",
+          "excerpt": "Planera redundans i inventeringsprogrammet: fler säsonger än minimikravet, alternativa metoder (DNA-provtagning, automatiska logger, satellitdata) som komplement, och start av fältarbete så tidigt som möjligt i B20-spåret."
+        },
+        {
+          "riskId": "R-B70-030-01",
+          "excerpt": "Upprätta en säsongsplan för alla tänkbara kompletteringsinventeringar och genomför dem förebyggande där osäkerhet finns. Upprätthåll fältberedskap och konsultavtal under hela överprövningen. Yrka i överinstansen på att befintliga data får användas där metodmässigt försvarbart."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "excerpt": "Kartlägg alla säsongs- och väderberoende villkor i en egen fönsterkalender med marginaler. Genomför verifieringar i första möjliga fönster hellre än i det sista. Förhandla med tillsynsmyndigheten om alternativa verifieringsmetoder när fönstret missats."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B20-060-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Planera kompletterande inventeringar, alternativa metoder och fortsatt beredskap så att ett missat fältfönsters följder kan hanteras inom respektive krav. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "MKB-arbetet senareläggs tills förhållandena åter är lämpliga för fältarbete."
+        },
+        {
+          "riskId": "R-B20-060-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Planera kompletterande inventeringar, alternativa metoder och fortsatt beredskap så att ett missat fältfönsters följder kan hanteras inom respektive krav. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Underlaget blir svagare om det inte kan kompletteras vid ett senare tillfälle."
+        },
+        {
+          "riskId": "R-B70-030-01",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Planera kompletterande inventeringar, alternativa metoder och fortsatt beredskap så att ett missat fältfönsters följder kan hanteras inom respektive krav. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Fältarbetet får vänta till ett lämpligt tillfälle och handläggningen senareläggs."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Planera kompletterande inventeringar, alternativa metoder och fortsatt beredskap så att ett missat fältfönsters följder kan hanteras inom respektive krav. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Byggstarten kan behöva vänta på nästa representativa fälttillfälle."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Planera kompletterande inventeringar, alternativa metoder och fortsatt beredskap så att ett missat fältfönsters följder kan hanteras inom respektive krav. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Om villkoret inte medger en alternativ metod kan verifieringen behöva vänta till ett senare representativt fälttillfälle."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-rattighetsregister",
+      "title": "Kontrollera sakägare och fastighetsrättigheter",
+      "description": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal.",
+      "role": "prevention",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B10-030-02",
+          "excerpt": "Upprätta en komplett sakägar- och rättighetsbeteckning tidigt, säkra rådighet genom avtal eller exploateringssamverkan innan ansökan, och kvalitetssäkra delgivningslistan mot fastighetsregistret inför varje kungörelsesteg."
+        },
+        {
+          "riskId": "R-B20-020-01",
+          "excerpt": "Kartlägg systematiskt angränsande tillståndshavare, koncessionsinnehavare, fastighetsägare och nyttjanderättshavare via fastighetsregister och tillståndsregister. Dokumentera bedömningen av särskild beröring per part och rådfråga länsstyrelsen om kretsen innan inbjudan skickas."
+        },
+        {
+          "riskId": "R-B40-N110-02",
+          "excerpt": "Beställ färska registerutdrag nära inlämningen och komplettera med lokalkännedom om samfällda rättigheter. Dubbelkolla ägarläget vid varje processteg."
+        },
+        {
+          "riskId": "R-B70-G070-03",
+          "excerpt": "Beställ en oberoende fastighetsrättslig slutgranskning (lagfarts-, servituts- och gemensamhetsanalys) som en egen leverans i B70, inte som en del av tillståndsarbetet. Håll rättighetsdatabasen levande under hela processen med återkommande utdrag ur fastighetsregistret."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B10-030-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Fastighetsrättigheter, servitut eller samfällighetsförhållanden som begränsar nyttjanderätten har inte kartlagts fullständigt i baslinjen."
+        },
+        {
+          "riskId": "R-B10-030-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Sakägarlistor som används för delgivning och kungörelse är ofullständiga, vilket kan medföra processuella fel i handläggningen."
+        },
+        {
+          "riskId": "R-B20-020-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Verksamhetsutövaren gör en felaktig avgränsning av vilka enskilda som kan antas bli särskilt berörda och genomför inte riktade samrådsinsatser mot dem."
+        },
+        {
+          "riskId": "R-B20-020-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "En tillståndshavare på ett angränsande havsområde som ännu inte tagit sitt tillstånd i bruk missas i avgränsningssamrådet, trots att denne kan antas bli särskilt berörd."
+        },
+        {
+          "riskId": "R-B20-020-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Samrådskretsen utelämnar enskilda som kan antas bli särskilt berörda eller andra aktörer som ska omfattas enligt 6 kap. 30 § miljöbalken."
+        },
+        {
+          "riskId": "R-B20-020-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektets bedömda påverkansområde är för snävt, så att fastigheter, rättigheter eller verksamheter utanför den ritade zonen inte tas med i samrådskretsen."
+        },
+        {
+          "riskId": "R-B40-N110-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Fastighetsförteckningen bygger på äldre registerutdrag och ägarbyten eller nya avstyckningar har hunnit ske."
+        },
+        {
+          "riskId": "R-B40-N110-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Kartor, fastighetsuppgifter eller tekniska ritningar hinner bli inaktuella före myndighetens granskning."
+        },
+        {
+          "riskId": "R-B70-G070-03",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ägar- eller inskrivningsuppgifter har ändrats efter den tidigare markgranskningen."
+        },
+        {
+          "riskId": "R-B70-G070-03",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "En äldre rättighet är otydligt beskriven eller saknar digital geometri och upptäcks först vid aktgranskning."
+        },
+        {
+          "riskId": "R-B70-G070-03",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Kontrollera register, berörda fastigheter och rättigheter och håll uppgifterna aktuella. Kopplingarna avser identifierings- och underlagsbrister; kontrollen skapar inte rådighet eller avtal. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektets rättighetsmatris kopplar inte alla anläggningsdelar till berörda fastigheter."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-tillstandsmatris",
+      "title": "Samordna en tillståndsmatris per åtgärd",
+      "description": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning.",
+      "role": "prevention",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B10-070-01",
+          "excerpt": "Låt matrisen granskas av kompetenser utanför kärnteamet (fastighetsjurist, kulturmiljöexpert, vattenjurist), spåra varje fysisk åtgärd i projektet mot ett krav i matrisen, och versionshantera matrisen så att projektändringar automatiskt utlöser omprövning av kravlistan."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "excerpt": "Upprätta en obligatorisk gränssnittsmatris tidigt med checklista över samtliga tillståndsregimer (FVV/LVV, NATURA, STRAND, SEVESO, PBL, KML, ELLAG), och samordna ansökningarna så att kombinerade mål kan prövas gemensamt i mark- och miljödomstol."
+        },
+        {
+          "riskId": "R-B40-060-03",
+          "excerpt": "Upprätta en levande tillståndsmatris med ansvarig per spår och beroendeanalys. Avstäm tidplaner mellan spåren vid varje projektbesluts punkt."
+        },
+        {
+          "riskId": "R-B50-T030-01",
+          "excerpt": "Starta alla kompletterande tillståndsärenden så snart planförslaget är stabilt – vänta inte på laga kraft. Bygg en etapperad tillståndsmatris som visar vilka beslut varje byggetapp kräver. Samordna MKB-underlaget mellan plan och tillståndsansökningar för att undvika dubbelarbete och inkonsistens."
+        },
+        {
+          "riskId": "R-B70-010-02",
+          "excerpt": "Härled beslutslistan ur den versionerade tillståndsmatrisen från B10-070 i stället för från levererade dokument. Genomför en formell gap-analys: för varje fysiskt moment, ange vilket beslut som möjliggör det. Låt fastighetsjurist och platschef gemensamt signera att inga moment saknar täckande beslut."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B10-070-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Verksamheten innebär vattenverksamhet enligt miljöbalken som kräver tillstånd eller anmälan men detta krav saknas i matrisen."
+        },
+        {
+          "riskId": "R-B10-070-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "En planerad åtgärd inom strandskyddat område träffas av strandskyddsförbuden och kräver dispens, men detta har inte identifierats som ett separat krav."
+        },
+        {
+          "riskId": "R-B10-070-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Byggåtgärder innebär ingrepp i en fornlämning eller berör ett annat objekt som omfattas av ett särskilt tillståndskrav enligt kulturmiljölagen."
+        },
+        {
+          "riskId": "R-B10-070-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Krav på bygglov, marklov eller anmälan enligt plan- och bygglagen har inte kopplats korrekt till miljöprövningen i tillståndsmatrisen."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Verksamheten kräver anläggande i vatten vilket utlöser krav på vattenverksamhetsprövning enligt 11 kap. miljöbalken, men detta identifieras inte vid låsningen av prövningsramen."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Verksamheten kan påverka ett Natura 2000-område eller omfattas av ett strandskyddsdispenskrav som kräver separat prövning eller särskild bedömning utöver den allmänna miljöprövningen."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Mängden farliga ämnen gör att verksamheten omfattas av Sevesoregler, men den anmälan, säkerhetsrapport eller samordning som gäller för den aktuella kravnivån har inte tagits med i gränssnittsmatrisen."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Planfrågor enligt PBL kräver att kommunen eller länsstyrelsen tas in i processen, men dessa gränssnitt missas i den initiala matrisen för sektorsspår."
+        },
+        {
+          "riskId": "R-B40-060-03",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Åtgärden kräver även tillstånd för dumpning av muddermassor, ledningskoncession, kulturmiljötillstånd eller PBL-prövning, och dessa spår har motstridiga villkor eller tidplaner."
+        },
+        {
+          "riskId": "R-B40-060-03",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Screeningen omfattar huvudåtgärden men inte tillfarter, ledningar, upplag eller andra följdåtgärder."
+        },
+        {
+          "riskId": "R-B50-T030-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Kompletterande spår startas först när planens slutliga konstruktion och etapper redan är låsta."
+        },
+        {
+          "riskId": "R-B70-010-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ansvar för att bevaka dispens-, koncessions- och rättighetsbeslut är fördelat mellan flera team."
+        },
+        {
+          "riskId": "R-B70-010-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Beslutsmatrisen inventerar endast beslut som uttryckligen nämns i huvudtillståndet."
+        },
+        {
+          "riskId": "R-B70-010-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Spåra fysiska åtgärder och byggetapper till varje erforderligt beslut, med ansvar och beroenden mellan spår. De angivna målen avser luckor i inventering eller samordning. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ett sektorsbeslut har ett annat projektnamn, geografiskt objekt eller diarienummer och kopplas därför inte till projektet."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-historiska-handlingar",
+      "title": "Säkra historiska beslut och tekniskt underlag",
+      "description": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa.",
+      "role": "prevention",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B10-030-01",
+          "excerpt": "Gör en djuparkivering hos länsstyrelse, kommun, domstol och fastighetsregister; använd fastighetsrättslig kartläggning parallellt med den miljörättsliga; och dokumentera spårbarheten mellan varje äldre beslut och de villkor som ska gälla efter ny prövning."
+        },
+        {
+          "riskId": "R-B30-010-02",
+          "excerpt": "Rekvirera tidigt handlingar från länsstyrelsens, domstolens och kommunens arkiv, kartlägg ägarkedjan för verksamheten, och låt dokumentera vilka beslut som inte kunnat återfinnas med en juridisk bedömning av konsekvenserna."
+        },
+        {
+          "riskId": "R-B30-O120-02",
+          "excerpt": "Påbörja teknisk dokumentationsinsamling och mätprogram långt innan omprövningstidpunkten, rekonstruera processdata ur driftjournaler och leverantörsarkiv, och förhandla om etappvis underlagslämning med prövningsinstansen."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B10-030-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Inventeringen missar äldre vattendomar eller tillstånd som ligger i kommunala eller länsvisa arkiv och inte är digitalt sökbart på samma sätt som moderna beslut."
+        },
+        {
+          "riskId": "R-B10-030-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ett gällande äldre beslut, såsom ett vattentillstånd från före miljöbalkens ikraftträdande, upptäcks först under prövningen och visar på begränsningar som inte framgick i baslinjen."
+        },
+        {
+          "riskId": "R-B10-030-01",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Prövningsramen för ett ändrings- eller omprövningsärende missbedöms eftersom det tidigare beslutets innehåll och rättsverkningar inte har beaktats korrekt."
+        },
+        {
+          "riskId": "R-B30-010-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ett äldre tillstånds klassificering och beslutsmyndighet behövs för den senare behörighetsbedömningen, men originalbeslutet eller dess bilagor saknas i den inventering som görs."
+        },
+        {
+          "riskId": "R-B30-010-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Bolagsöverlåtelser har lett till att fysiska arkiv med tekniska bilagor och bevis om delgivning inte överförts eller går att lokalisera hos den nuvarande verksamhetsutövaren."
+        },
+        {
+          "riskId": "R-B30-010-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Det saknas tydliga kopplingar i myndighetsregister mellan äldre tillståndsbeslut och dagens organisationsnummer, vilket försvårar identifieringen av rätt beslutsmyndighet."
+        },
+        {
+          "riskId": "R-B30-O120-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Anläggningens tekniska dokumentation är föråldrad, spridd mellan ägargenerationer eller aldrig upprättad i modern form."
+        },
+        {
+          "riskId": "R-B30-O120-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Sök tidigt i relevanta arkiv och rekonstruera den dokumentation som krävs för det aktuella ärendet. Skillnaden mellan tillståndshistorik och tekniska driftdata behålls i varje källa. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Det finns kunskapsluckor gällande nuvarande verksamhet som inte kan fyllas utan nya mätningar och utredningar."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-myndighetsuppfoljning",
+      "title": "Förbered och följ upp myndighetskontakter",
+      "description": "Förbered kontakter och följ det aktuella ärendets plan, remisstid eller handläggningsläge. Uppföljning dokumenterar och synliggör läget; det finns ingen generell garanterad svarstid eller uppmätt effekt.",
+      "role": "monitoring",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B60-080-02",
+          "excerpt": "Bedriv förhandsdialog med nyckelremissinstanser före kungörandet så att yttrandena är förberedda; håll ansökningsunderlaget direkt svarbart för myndigheternas frågeställningar; bevaka remisstider och påminn via instansen."
+        },
+        {
+          "riskId": "R-B40-N140-02",
+          "excerpt": "Förbered remissinstanser före den formella remissen, men utgå inte från en lagstadgad svarstid som inte finns. Bevaka i stället myndighetens beslutade remisstid och den övergripande åttaveckorsfristen."
+        },
+        {
+          "riskId": "R-B70-G050-02",
+          "excerpt": "Lämna in förstartshandlingar med den framförhållning som den aktuella myndighetsprognosen motiverar. Stäm av underlagets innehåll före inlämning och följ upp ärendet mot den plan som myndigheten lämnar."
+        },
+        {
+          "riskId": "R-B40-GE120-02",
+          "excerpt": "Skicka samrådsanmälan tidigt, med komplett underlag, och följ upp aktivt. Bygg in tidbuffert i genomförandeplanen för samrådets osäkra varaktighet."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B60-080-02",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Förbered kontakter och följ det aktuella ärendets plan, remisstid eller handläggningsläge. Uppföljning dokumenterar och synliggör läget; det finns ingen generell garanterad svarstid eller uppmätt effekt. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B40-N140-02",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Förbered kontakter och följ det aktuella ärendets plan, remisstid eller handläggningsläge. Uppföljning dokumenterar och synliggör läget; det finns ingen generell garanterad svarstid eller uppmätt effekt. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B70-G050-02",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Förbered kontakter och följ det aktuella ärendets plan, remisstid eller handläggningsläge. Uppföljning dokumenterar och synliggör läget; det finns ingen generell garanterad svarstid eller uppmätt effekt. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        },
+        {
+          "riskId": "R-B40-GE120-02",
+          "type": "event",
+          "role": "monitoring",
+          "rationale": "Förbered kontakter och följ det aktuella ärendets plan, remisstid eller handläggningsläge. Uppföljning dokumenterar och synliggör läget; det finns ingen generell garanterad svarstid eller uppmätt effekt. Kopplingen avser den angivna riskhändelsen i denna risk; källutdraget anger den lokala tillämpningen."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-oberoende-granskning",
+      "title": "Låt sakkunnig granska analysens spårbarhet",
+      "description": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna.",
+      "role": "prevention",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B20-060-03",
+          "excerpt": "Använd etablerade och granskade metoder, dokumentera osäkerheter med känslighets- och scenarieanalyser, låt oberoende experter granska modellerna före inlämning, och presentera resultaten så att icke-specialister kan följa resonemangen."
+        },
+        {
+          "riskId": "R-B50-N020-02",
+          "excerpt": "Bygg Natura-MKB:n explicit mot prövningsrekvisiten i MB 7 kap. 28 a–29 §§: alternativ, kumulativa effekter, bevarandemål, osäkerhetsanalys. Låt en oberoende granskare verifiera spårbarheten från data till slutsats innan ansökan lämnas."
+        },
+        {
+          "riskId": "R-B10-020-02",
+          "excerpt": "Driv alternativarbetet som ett reellt urval med kvantifierade miljökriterier, dokumentera förkastade alternativ och skälen, och låt oberoende sakkunniga granska alternativloggen innan den låses. Säkerställ att nollalternativet och minst ett reellt alternativ utreds i samma detaljnivå."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B20-060-03",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Modellunderlaget redovisar inte indata, antaganden och känslighetsanalyser så tydligt att prövningsinstansen kan bedöma de väsentliga miljöeffekterna."
+        },
+        {
+          "riskId": "R-B20-060-03",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Verksamhetsutövaren inte kan försvara sina metodval med transparent dokumentation."
+        },
+        {
+          "riskId": "R-B50-N020-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Natura-MKB:n saknar en tillräcklig analys av alternativ eller samverkande effekter."
+        },
+        {
+          "riskId": "R-B50-N020-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Nollalternativet och realistiska lokaliseringar jämförs inte på samma ekologiska underlag."
+        },
+        {
+          "riskId": "R-B50-N020-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Andra verksamheters påverkan redovisas var för sig men inte i en gemensam bedömning."
+        },
+        {
+          "riskId": "R-B10-020-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Alternativutredningen baseras på osäkra antaganden eller ekonomiska preferenser snarare än objektiva jämförelser av miljöeffekter."
+        },
+        {
+          "riskId": "R-B10-020-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Alternativredovisningen anses inte spårbar eller granskbar, vilket gör det omöjligt att verifiera att platsvalet är motiverat."
+        },
+        {
+          "riskId": "R-B10-020-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Låt oberoende sakkunnig granska antaganden, alternativ och underlagets väg till slutsats före inlämning. Den specifika analysfrågan skiljer sig mellan de angivna riskerna. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "En väsentlig alternativfråga lämnas utan tillräcklig bedömning i miljökonsekvensbeskrivningen."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-andringsbedomning",
+      "title": "Pröva tillståndsföljder av projektändringar",
+      "description": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet.",
+      "role": "prevention",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B20-090-02",
+          "excerpt": "Inför en ändringslogg över projektparametrar med tröskelbedömning: varje väsentlig ändring utlöser en formell prövning av behovet av förnyat samråd, dokumenterad och avstämd med länsstyrelsen. Låt kvalitetssäkringen verifiera att ansökan och samrådsunderlag beskriver samma projekt."
+        },
+        {
+          "riskId": "R-B70-060-02",
+          "excerpt": "Inför ändringsfryspunkt för tillståndsrelevanta parametrar före förstartsgodkännandena. Låt varje konstruktionsändring passera en snabb tillståndskonsekvensbedömning innan den beslutas. Håll säkerhetsberäkningen parametrisk så att beloppet kan justeras utan full omarbetning."
+        },
+        {
+          "riskId": "R-B70-080-02",
+          "excerpt": "Genomför alltid en snabb tillståndskonsekvensanalys (screening mot strandskydd, Natura 2000, KML, PBL) innan en omprojektering beslutas. Dokumentera i beslutsmatrisen exakt vilka beslut som täcker det nya läget. Behåll tvångsrättsprocessen som parallellt spår tills alternativet är tillståndsmässigt klart."
+        },
+        {
+          "riskId": "R-B70-120-02",
+          "excerpt": "Gör en formell ändringsbedömning enligt MPF 1 kap. för varje omprojekteringsalternativ innan det väljs. Dokumentera att MKB:ns effektbedömningar fortfarande är giltiga eller komplettera dem proaktivt. Behåll det prövade alternativet som fallback tills den nya lösningens tillståndsmässighet är klarlagd."
+        },
+        {
+          "riskId": "R-B50-G900-02",
+          "excerpt": "Frys designens yttergränser sent: behåll marginalzoner runt planerade åtgärder i tidiga screeningar så att små omflyttningar inte aktiverar nya spår. Gör uppföljande naturinventeringar i detaljprojekteringen, inte bara i MKB-skedet. Håll en levande tillämpbarhetsmatris som omprövas vid varje väsentlig designändring."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B20-090-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektets omfattning, teknik eller lokalisering har ändrats i det tysta mellan samråd och ansökan."
+        },
+        {
+          "riskId": "R-B20-090-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ändringen är så väsentlig att det genomförda samrådet inte längre motsvarar den sökta verksamheten."
+        },
+        {
+          "riskId": "R-B70-060-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ett villkors- eller leverantörskrav medför att förstartshandlingarnas ritningar inte längre motsvarar bygglösningen."
+        },
+        {
+          "riskId": "R-B70-060-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Den ändrade utformningen ligger utanför den variation som det befintliga tillståndet eller anmälan täcker."
+        },
+        {
+          "riskId": "R-B70-080-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Den nya lokaliseringen berör ett område där en särskild dispens eller tillståndsprövning krävs."
+        },
+        {
+          "riskId": "R-B70-080-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Den alternativa sträckningen har inte miljö- eller kulturmiljöinventerats i tidigare skeden."
+        },
+        {
+          "riskId": "R-B70-120-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Konfliktlösningen flyttar en anläggningsdel till en plats som inte bedömts i den ursprungliga miljökonsekvensbeskrivningen."
+        },
+        {
+          "riskId": "R-B70-120-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Den nya utformningen ger andra utsläpp, intrång eller kumulativa effekter än det prövade alternativet."
+        },
+        {
+          "riskId": "R-B70-120-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektets omfattning eller kapacitet ändras så att tidigare alternativjämförelse inte längre är representativ."
+        },
+        {
+          "riskId": "R-B70-120-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Ändringen är så betydande att frågan om ny miljöbedömning eller tillståndsprövning aktualiseras."
+        },
+        {
+          "riskId": "R-B50-G900-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Den slutliga projekteringen berör större yta eller andra skyddsvärden än den ursprungliga screeningen."
+        },
+        {
+          "riskId": "R-B50-G900-02",
+          "type": "cause",
+          "role": "prevention",
+          "rationale": "Bedöm hur varje väsentlig projektändring påverkar samråd, miljöbedömning och befintliga beslut innan ändringen läggs till grund för genomförandet. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "En ändring i ett parallellspår skapar ett nytt följdkrav som inte återrapporterats till matrisen."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-flexibla-ataganden",
+      "title": "Anpassa bygg- och finansieringsåtaganden till överprövning",
+      "description": "Förbered flexibla kontrakts-, finansierings- och byggvillkor under väntan på slutliga beslut. Kopplingarna avser planeringsföljder, inte en minskad rätt att överklaga.",
+      "role": "consequence_reduction",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B70-G020-01",
+          "excerpt": "Förhandla flexibla startvillkor i entreprenad- och finansieringsavtal som tål fristdagsöverklaganden."
+        },
+        {
+          "riskId": "R-B60-G210-01",
+          "excerpt": "håll bygg- och finansieringsplaner anpassningsbara under överprövningen."
+        },
+        {
+          "riskId": "R-B50-P040-01",
+          "excerpt": "Anpassa entreprenad- och finansieringsvillkor till denna osäkerhet."
+        },
+        {
+          "riskId": "R-B60-280-01",
+          "excerpt": "håll finansieringsavtal öppna för slutinstansväntan."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B70-G020-01",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Förbered flexibla kontrakts-, finansierings- och byggvillkor under väntan på slutliga beslut. Kopplingarna avser planeringsföljder, inte en minskad rätt att överklaga. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Entreprenad-, finansierings- och investeringsbeslut behöver anpassas till den nya processrisken."
+        },
+        {
+          "riskId": "R-B60-G210-01",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Förbered flexibla kontrakts-, finansierings- och byggvillkor under väntan på slutliga beslut. Kopplingarna avser planeringsföljder, inte en minskad rätt att överklaga. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Laga kraft och full byggberedskap skjuts fram i den överklagade delen."
+        },
+        {
+          "riskId": "R-B50-P040-01",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Förbered flexibla kontrakts-, finansierings- och byggvillkor under väntan på slutliga beslut. Kopplingarna avser planeringsföljder, inte en minskad rätt att överklaga. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Entreprenad- och kontraktsåtaganden behöver flyttas eller omförhandlas."
+        },
+        {
+          "riskId": "R-B60-280-01",
+          "type": "effect",
+          "role": "consequence_reduction",
+          "rationale": "Förbered flexibla kontrakts-, finansierings- och byggvillkor under väntan på slutliga beslut. Kopplingarna avser planeringsföljder, inte en minskad rätt att överklaga. Kopplingen avser den angivna konsekvensen i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Finaliteten för det överklagade avgörandet och projektets fortsatta planering kan förskjutas."
+        }
+      ]
+    },
+    {
+      "id": "C-SHARED-skriftliga-besked",
+      "title": "Begär tydliga skriftliga besked",
+      "description": "Begär specificerade skriftliga krav eller tolkningar så att underlag och åtgärder kan riktas mot rätt fråga. Ett beskeds bindande verkan måste bedömas i respektive process.",
+      "role": "monitoring",
+      "rationale": "Analytisk gruppering av närliggande handlingar i de angivna motåtgärdstexterna. Tillämpningen är begränsad till varje uttryckligt mål och dess processpecifika förutsättningar. Effekten är inte uppmätt.",
+      "sources": [
+        {
+          "riskId": "R-B60-G040-01",
+          "excerpt": "Begär skriftliga, specificerade kompletteringsförelägganden"
+        },
+        {
+          "riskId": "R-B70-060-01",
+          "excerpt": "Begär skriftlig och uttömmande avslagsmotivering vid första underkännandet."
+        },
+        {
+          "riskId": "R-B70-040-02",
+          "excerpt": "Flagga alla otydliga villkor i förstartsvillkorslistan och inhämta prövnings- eller tillsynsmyndighetens skriftliga tolkningsbesked innan arbeten planeras."
+        }
+      ],
+      "targets": [
+        {
+          "riskId": "R-B60-G040-01",
+          "type": "cause",
+          "role": "monitoring",
+          "rationale": "Begär specificerade skriftliga krav eller tolkningar så att underlag och åtgärder kan riktas mot rätt fråga. Ett beskeds bindande verkan måste bedömas i respektive process. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Föreläggandet anger inte tillräckligt tydligt vilken uppgift eller kvalitet som krävs för att frågan ska anses besvarad."
+        },
+        {
+          "riskId": "R-B70-060-01",
+          "type": "cause",
+          "role": "monitoring",
+          "rationale": "Begär specificerade skriftliga krav eller tolkningar så att underlag och åtgärder kan riktas mot rätt fråga. Ett beskeds bindande verkan måste bedömas i respektive process. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Myndighetens kompletteringsbesked kommer stegvis i stället för samlat."
+        },
+        {
+          "riskId": "R-B70-040-02",
+          "type": "cause",
+          "role": "monitoring",
+          "rationale": "Begär specificerade skriftliga krav eller tolkningar så att underlag och åtgärder kan riktas mot rätt fråga. Ett beskeds bindande verkan måste bedömas i respektive process. Kopplingen avser den angivna orsaken i denna risk; källutdraget anger den lokala tillämpningen.",
+          "text": "Projektet och tillsynsmyndigheten tolkar uttrycket \"före start\" på olika verksamhetsmoment."
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "K-SIMILAR-projektversion",
+      "kind": "cause",
+      "label": "Olika projektversioner i underlagen",
+      "rationale": "Gemensam fråga är att ritningar, teknik och miljöunderlag inte beskriver samma projekt. Prövningsspår och dokumentkrav behålls i förekomsterna. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B20-090-01",
+          "text": "MKB:n och den tekniska ansökan beskriver olika versioner av projektets omfattning, driftfall eller skyddsåtgärder."
+        },
+        {
+          "riskId": "R-B50-P040-02",
+          "text": "Ritningar, situationsplan och kontrollplansförslag beskriver olika projektversioner."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "text": "Den tekniska ansökan och miljökonsekvensbeskrivningen utgår från olika projektversioner."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "text": "Det finns inbördes motsägelser mellan den tekniska beskrivningen, miljöbedömningen och villkorsförslaget i ansökan."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "text": "Yrkanden och bilagor har tagits fram av olika delteam utan en gemensam kontroll av att de beskriver samma sökta verksamhet."
+        },
+        {
+          "riskId": "R-B50-E020-01",
+          "text": "Tekniska bilagor använder en annan ledningssträckning än miljöunderlaget."
+        },
+        {
+          "riskId": "R-B60-G040-01",
+          "text": "Kompletteringarna utgår från olika projektversioner och skapar nya inkonsekvenser."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-faltplanering",
+      "kind": "cause",
+      "label": "Planeringen missar biologiska fältfönster",
+      "rationale": "Gruppen avser tidpunkt, planeringsutrymme och förberedelser för representativ inventering, inte en gemensam biologisk säsong. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B10-040-01",
+          "text": "Utredningsplanen startar för sent eller ignorerar att vissa inventeringar endast kan utföras under specifika biologiska perioder."
+        },
+        {
+          "riskId": "R-B10-040-01",
+          "text": "Utredningsplanen ger inte utrymme att samla in den säsongsberoende information som behövs för att identifiera och bedöma verksamhetens relevanta miljöeffekter."
+        },
+        {
+          "riskId": "R-B10-040-01",
+          "text": "Inventeringsplanen är inte anpassad till projektets konkreta värden och de biologiska fältperioderna som gäller för platsen."
+        },
+        {
+          "riskId": "R-B20-010-02",
+          "text": "Art- och naturinventeringar som kräver specifika säsonger för häckning, övervintring eller vårflöde kan inte genomföras inom projektets tidplan."
+        },
+        {
+          "riskId": "R-B20-010-02",
+          "text": "Datainsamlingen påbörjas efter den biologiskt relevanta perioden, så att underlaget saknar uppgifter som behövs för att identifiera och bedöma verksamhetens miljöeffekter."
+        },
+        {
+          "riskId": "R-B20-010-02",
+          "text": "Projektets tidsplan rymmer inte en full inventeringssäsong, vilket tvingar fram ett val mellan att skjuta upp processen eller använda sekundärdata."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "text": "Projektet planerar verifieringen efter att den relevanta säsongen eller flödessituationen normalt har passerat."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "text": "Metoden eller bemanningen är inte klar när den föreskrivna fältsituationen inträffar."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-ofullstandig-ansokan",
+      "kind": "cause",
+      "label": "Obligatoriskt ansökningsunderlag saknas",
+      "rationale": "Gemensamt är att underlaget inte räcker för det aktuella beslutet; PBL, koncession, MKB och BMP har olika krav och är inte utbytbara. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B50-P040-02",
+          "text": "Lov- eller anmälningsärendet är inte komplett enligt de uppgifter som byggnadsnämnden behöver."
+        },
+        {
+          "riskId": "R-B50-E020-01",
+          "text": "Koncessionsansökan saknar en miljöbedömning eller annan obligatorisk ansökningsuppgift."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "text": "Miljökonsekvensbeskrivningen redovisar inte rimliga alternativ i den omfattning som krävs."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "text": "Underlaget beskriver inte relevanta kumulativa miljöeffekter."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "text": "Skyddsåtgärder eller uppföljning är otillräckligt redovisade i miljökonsekvensbeskrivningen."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "text": "Undersökningsunderlaget beskriver teknik och kapacitet för vagt eller utelämnar uppenbara effektbärare som buller, vattenavledning eller spridningsvägar."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "text": "Miljökonsekvensbeskrivningen saknar en tillräcklig redovisning av alternativa utformningar, vilket bryter mot kravet på ett tillräckligt tidigt underlag enligt praxis."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "text": "Beskrivningen av projektet är felriktad eller för grov för att länsstyrelsen ska kunna ta ställning till om betydande miljöpåverkan kan antas enligt 6 kap. 23–25 §§ MB."
+        },
+        {
+          "riskId": "R-B20-010-01",
+          "text": "Underlaget utelämnar känsliga mottagare eller naturvärden som är relevanta för bedömningen av betydande miljöpåverkan enligt miljöbedömningsförordningens kriterier."
+        },
+        {
+          "riskId": "R-B30-100-01",
+          "text": "Ansökan sammanställs utan preciserade yrkanden om verksamhetens omfattning, utsläppsnivåer och villkor enligt 22 kap. 1–1 g §§ miljöbalken."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-parallellspar",
+      "kind": "cause",
+      "label": "Parallella beslut eller tillståndskrav missas",
+      "rationale": "Förekomsterna delar en brist i överblicken över separata krav. Varje rättsligt krav behåller sin egen omfattning. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B10-070-01",
+          "text": "Verksamheten innebär vattenverksamhet enligt miljöbalken som kräver tillstånd eller anmälan men detta krav saknas i matrisen."
+        },
+        {
+          "riskId": "R-B10-070-01",
+          "text": "En planerad åtgärd inom strandskyddat område träffas av strandskyddsförbuden och kräver dispens, men detta har inte identifierats som ett separat krav."
+        },
+        {
+          "riskId": "R-B10-070-01",
+          "text": "Byggåtgärder innebär ingrepp i en fornlämning eller berör ett annat objekt som omfattas av ett särskilt tillståndskrav enligt kulturmiljölagen."
+        },
+        {
+          "riskId": "R-B10-070-01",
+          "text": "Krav på bygglov, marklov eller anmälan enligt plan- och bygglagen har inte kopplats korrekt till miljöprövningen i tillståndsmatrisen."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "text": "Verksamheten kräver anläggande i vatten vilket utlöser krav på vattenverksamhetsprövning enligt 11 kap. miljöbalken, men detta identifieras inte vid låsningen av prövningsramen."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "text": "Verksamheten kan påverka ett Natura 2000-område eller omfattas av ett strandskyddsdispenskrav som kräver separat prövning eller särskild bedömning utöver den allmänna miljöprövningen."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "text": "Mängden farliga ämnen gör att verksamheten omfattas av Sevesoregler, men den anmälan, säkerhetsrapport eller samordning som gäller för den aktuella kravnivån har inte tagits med i gränssnittsmatrisen."
+        },
+        {
+          "riskId": "R-B30-060-01",
+          "text": "Planfrågor enligt PBL kräver att kommunen eller länsstyrelsen tas in i processen, men dessa gränssnitt missas i den initiala matrisen för sektorsspår."
+        },
+        {
+          "riskId": "R-B70-010-02",
+          "text": "Beslutsmatrisen inventerar endast beslut som uttryckligen nämns i huvudtillståndet."
+        },
+        {
+          "riskId": "R-B70-010-02",
+          "text": "Ett sektorsbeslut har ett annat projektnamn, geografiskt objekt eller diarienummer och kopplas därför inte till projektet."
+        },
+        {
+          "riskId": "R-B50-G900-02",
+          "text": "Konvergenskontrollen visar att en åtgärd omfattas av ett ännu ohanterat tillstånds-, dispens- eller förbudskrav."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-rattighetsuppgifter",
+      "kind": "cause",
+      "label": "Ofullständiga eller inaktuella rättighetsuppgifter",
+      "rationale": "Gemensam informationsbrist kring fastigheter, rättigheter eller sakägare; delgivning och materiell rådighet hålls åtskilda i förekomsterna. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B10-030-02",
+          "text": "Fastighetsrättigheter, servitut eller samfällighetsförhållanden som begränsar nyttjanderätten har inte kartlagts fullständigt i baslinjen."
+        },
+        {
+          "riskId": "R-B10-030-02",
+          "text": "Sakägarlistor som används för delgivning och kungörelse är ofullständiga, vilket kan medföra processuella fel i handläggningen."
+        },
+        {
+          "riskId": "R-B40-N110-02",
+          "text": "Fastighetsförteckningen bygger på äldre registerutdrag och ägarbyten eller nya avstyckningar har hunnit ske."
+        },
+        {
+          "riskId": "R-B40-N110-02",
+          "text": "Kartor, fastighetsuppgifter eller tekniska ritningar hinner bli inaktuella före myndighetens granskning."
+        },
+        {
+          "riskId": "R-B70-G070-03",
+          "text": "Ägar- eller inskrivningsuppgifter har ändrats efter den tidigare markgranskningen."
+        },
+        {
+          "riskId": "R-B70-G070-03",
+          "text": "En äldre rättighet är otydligt beskriven eller saknar digital geometri och upptäcks först vid aktgranskning."
+        },
+        {
+          "riskId": "R-B70-G070-03",
+          "text": "Projektets rättighetsmatris kopplar inte alla anläggningsdelar till berörda fastigheter."
+        },
+        {
+          "riskId": "R-B50-E020-01",
+          "text": "Sakägar- eller fastighetsförteckningen är ofullständig för den sökta korridoren."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-myndighetskapacitet",
+      "kind": "cause",
+      "label": "Begränsad handläggar- eller specialistkapacitet",
+      "rationale": "Förekomsterna avser kapacitet och prioritering hos mottagande myndigheter; de innebär inte samma lagstadgade frist. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B40-GE120-02",
+          "text": "Länsstyrelsen hanterar samrådsanmälan med låg prioritet eftersom bestämmelsen saknar lagfästa handläggningstider."
+        },
+        {
+          "riskId": "R-B40-GE120-02",
+          "text": "Ärendet konkurrerar om samma specialistresurser som tillsyns- och tillståndsärenden hos länsstyrelsen."
+        },
+        {
+          "riskId": "R-B40-N120-02",
+          "text": "Länsstyrelsen eller kommunen har handläggarkö och prioriterar tillståndsärenden och tillsyn före anmälningar."
+        },
+        {
+          "riskId": "R-B40-N120-02",
+          "text": "Den mottagande myndighetens kö fördröjer fördelningen till handläggare och den första sakgranskningen."
+        },
+        {
+          "riskId": "R-B40-N140-02",
+          "text": "Kommunal nämnd, HaV eller berörda myndigheter saknar kapacitet att yttra sig inom utsatt tid, och tillsynsmyndigheten förlänger eller inväntar svar."
+        },
+        {
+          "riskId": "R-B40-N140-02",
+          "text": "Remissinstansen saknar tillgänglig specialistkapacitet inom den svarstid som myndigheten har angett."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-komplettering",
+      "kind": "effect",
+      "label": "Kompletterande underlag behöver tas fram",
+      "rationale": "Gemensamt utfall är behov av mer eller bättre underlag; orsak, omfattning och rättslig följd varierar. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B20-090-01",
+          "text": "Prövningsmyndigheten ställer kompletteringskrav på underlaget."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "text": "Prövningsinstansen kan förelägga sökanden att komplettera ansökan."
+        },
+        {
+          "riskId": "R-B10-020-02",
+          "text": "Prövningsmyndigheten ställer krav på komplettering av underlaget för att redovisa alternativa lokaliseringar."
+        },
+        {
+          "riskId": "R-B50-N020-02",
+          "text": "Underlaget behöver kompletteras så att Natura-prövningens lagkrav kan bedömas."
+        },
+        {
+          "riskId": "R-B50-E020-01",
+          "text": "Energimarknadsinspektionen behöver begära in tillräckligt underlag innan ansökan kan prövas."
+        },
+        {
+          "riskId": "R-B20-060-03",
+          "text": "Krav ställs på nya beräkningar och kompletterande utredningar för att säkerställa underlagets kvalitet."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-byggstart",
+      "kind": "effect",
+      "label": "Byggstart eller investeringsbeslut skjuts fram",
+      "rationale": "Gemensam följd är senare start eller beslut. Gruppen anger varken samma tidsförlust eller en gemensam sannolikhet. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B50-P040-02",
+          "text": "Lovbeslutet och den planerade byggstarten kommer senare."
+        },
+        {
+          "riskId": "R-B50-P030-01",
+          "text": "Planberoende lov, startbesked och investeringsbeslut skjuts fram."
+        },
+        {
+          "riskId": "R-B60-G210-01",
+          "text": "Laga kraft och full byggberedskap skjuts fram i den överklagade delen."
+        },
+        {
+          "riskId": "R-B70-G020-01",
+          "text": "Byggberedskapen för den överklagade delen skjuts fram om beslutet inte ändå får verkställas."
+        },
+        {
+          "riskId": "R-B50-T030-01",
+          "text": "Byggstarten behöver etapperas eller skjutas upp."
+        },
+        {
+          "riskId": "R-B70-060-02",
+          "text": "Byggstarten förskjuts och den konsoliderade beslutsmatrisen behöver uppdateras."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-faltvantan",
+      "kind": "effect",
+      "label": "Väntan på nästa lämpliga fälttillfälle",
+      "rationale": "Förekomsterna gäller representativa inventeringar eller verifieringar. De olika fältvillkoren och alternativen ligger kvar i källtexten. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B10-040-01",
+          "text": "Det uppstår en fördröjning till nästa lämpliga undersökningstillfälle för de missade inventeringarna."
+        },
+        {
+          "riskId": "R-B20-010-02",
+          "text": "Miljöbedömningsspåret förskjuts till nästa lämpliga inventeringstillfälle."
+        },
+        {
+          "riskId": "R-B20-060-02",
+          "text": "MKB-arbetet senareläggs tills förhållandena åter är lämpliga för fältarbete."
+        },
+        {
+          "riskId": "R-B70-030-01",
+          "text": "Fältarbetet får vänta till ett lämpligt tillfälle och handläggningen senareläggs."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "text": "Byggstarten kan behöva vänta på nästa representativa fälttillfälle."
+        },
+        {
+          "riskId": "R-B70-G140-02",
+          "text": "Om villkoret inte medger en alternativ metod kan verifieringen behöva vänta till ett senare representativt fälttillfälle."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-kostnad-underlag",
+      "kind": "effect",
+      "label": "Mer arbete och kostnader för underlag",
+      "rationale": "Gemensamt är extra projekterings-, utrednings- eller bemötandearbete. Kostnadernas storlek och fördelning är inte skattade. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B50-P040-02",
+          "text": "Kompletteringar skapar ytterligare projekterings- och samordningskostnader."
+        },
+        {
+          "riskId": "R-B60-030-01",
+          "text": "Nya utredningar ökar kostnaderna och kan göra äldre underlag inaktuellt."
+        },
+        {
+          "riskId": "R-B60-G040-01",
+          "text": "Konsult- och expertkostnader ökar för varje ny omgång."
+        },
+        {
+          "riskId": "R-B70-030-01",
+          "text": "Nya inventeringar och expertbedömningar ökar utredningskostnaderna."
+        },
+        {
+          "riskId": "R-B30-O120-02",
+          "text": "Kostnaden och arbetsbördan för ansökan ökar när historiska driftuppgifter behöver rekonstrueras eller nya mätningar genomföras."
+        },
+        {
+          "riskId": "R-B60-090-02",
+          "text": "Behovet av flera specialistbemötanden ökar ombuds- och expertkostnaderna."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-omtag",
+      "kind": "effect",
+      "label": "Omprövning av underlag eller tidigare process",
+      "rationale": "Gruppen visar olika typer av omtag i samråd, plan, lov eller miljöunderlag; den likställer inte rättsverkningarna. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B20-090-02",
+          "text": "Ett kompletterat eller förnyat samråd kan behöva genomföras."
+        },
+        {
+          "riskId": "R-B20-090-02",
+          "text": "En omarbetad miljökonsekvensbeskrivning (MKB) krävs."
+        },
+        {
+          "riskId": "R-B20-020-01",
+          "text": "Förnyat samråd kan behöva genomföras med de missade parterna, vilket kan medföra fördröjning i processen."
+        },
+        {
+          "riskId": "R-B50-P030-01",
+          "text": "Planen kan ändras eller upphävas och behöva tas om i kommunen."
+        },
+        {
+          "riskId": "R-B50-P040-01",
+          "text": "Lovärendet kan vila, avslås eller behöva göras om mot en senare plan."
+        },
+        {
+          "riskId": "R-B70-120-02",
+          "text": "Ett nytt eller ändrat prövningsunderlag behöver beskriva den aktuella verksamhetens miljöeffekter."
+        }
+      ]
+    },
+    {
+      "id": "K-SIMILAR-kontraktsfoljder",
+      "kind": "effect",
+      "label": "Entreprenad och finansiering behöver planeras om",
+      "rationale": "Gemensamt är följder för kontrakt, resurser eller entreprenadsekvens; förekomsterna specificerar vilket åtagande som påverkas. Analytisk likhetsgrupp: formuleringarna är inte identiska och riskerna är inte visat statistiskt beroende.",
+      "members": [
+        {
+          "riskId": "R-B70-G020-01",
+          "text": "Entreprenad-, finansierings- och investeringsbeslut behöver anpassas till den nya processrisken."
+        },
+        {
+          "riskId": "R-B50-P040-01",
+          "text": "Entreprenad- och kontraktsåtaganden behöver flyttas eller omförhandlas."
+        },
+        {
+          "riskId": "R-B70-060-01",
+          "text": "Entreprenadresurser och leveranser blir svårare att planera."
+        },
+        {
+          "riskId": "R-B50-T030-01",
+          "text": "Entreprenadlogistik och kostnader försämras när delsträckor inte kan öppnas i planerad ordning."
+        }
+      ]
+    }
+  ]
+}

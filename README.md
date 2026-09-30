@@ -14,6 +14,8 @@ Den senaste importerade BTL-rangordningen kommer från **16 september 2026 kl. 1
 - Riskregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json>
 - Riskregister (CSV, en rad per risk med `bow_tie_json`): <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv>
 - Orsaker och konsekvenser i normaliserad CSV: <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv>
+- Utforskningsmodell med motåtgärder, uttryckliga mål och likhetsgrupper (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/exploration.json>
+- Motåtgärder med risk-ID:n, originaltexter och målkopplingar (CSV): <https://nic-esp.github.io/miljotillstandsrisker/data/controls.csv>
 - Riskmappbara noder (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json>
 - Källregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/sources.json>
 - Processkartor B00–B70 (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json>
@@ -24,7 +26,13 @@ En risk kan länkas direkt med `?risk=RISK-ID`, till exempel:
 
 <https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B10-010-01>
 
-GitHub Actions publicerar de statiska informationssidorna, appen, fyra JSON-filer och riskregistret som CSV. Arkiv, byggmellanprodukter och `node_modules` publiceras inte.
+GitHub Actions publicerar de statiska informationssidorna, appen, fem JSON-filer och tre CSV-filer. Arkiv, byggmellanprodukter och `node_modules` publiceras inte.
+
+Utforskningsmodellen bevarar varje risks ursprungliga motåtgärdstext och lägger till analytiskt sammanställda gemensamma åtgärder. Varje uttrycklig målkoppling anger vilken orsak, riskhändelse eller konsekvens som avses. Orsaker och konsekvenser behåller sina egna källstatusar även när de visas i samma likhetsgrupp. Grupper med identisk text skiljs från analytiska grupper med liknande innebörd; analytiska kopplingar har inte registrerats som oberoende sakgranskade.
+
+Sammanföringen är partiell: 16 återkommande åtgärder med 118 uttryckliga målkopplingar omfattar 56 av 342 risker. Alla 342 ursprungliga beskrivningar finns kvar. De 63 orsaks- och konsekvensgrupperna består av 51 grupper med identisk ordalydelse och 12 analytiska likhetsgrupper.
+
+Antal kopplade risker beskriver åtgärdens dokumenterade räckvidd i registret. Det visar varken genomförandestatus, uppmätt effektivitet eller beräknad riskreduktion. En likhetsgrupp ger aldrig automatiskt en åtgärd fler målkopplingar. Besökaren kan undersöka och jämföra publicerade samband men inte ändra data.
 
 ## MCP för ChatGPT och andra AI-klienter
 
@@ -42,6 +50,8 @@ Servern använder publik, autentiseringsfri Streamable HTTP på `/mcp`. Alla ver
 - fullständig hämtning av alla 342 riskposter via `get_dataset_page`
 - noder, statistik, källor och kompletta processkartor
 - fullständiga rådata-URL:er via `get_dataset_manifest`
+
+De nya filerna `exploration.json` och `controls.csv` hämtas direkt från GitHub Pages-länkarna ovan. Den befintliga MCP-serverns verktyg, API och risk-/CSV-kontrakt påverkas inte av dessa tillägg; de nya filerna distribueras inte automatiskt till MCP-värden.
 
 Anslut ChatGPT till:
 
@@ -94,14 +104,21 @@ Kör samma kontraktstester mot en offentlig distribution med:
 MCP_URL=https://miljotillstandsrisker-mcp.fantastic-pea.workers.dev/mcp npm test
 ```
 
-## Bygg webbappen
+## Bygg och förhandsvisa webbappen
 
-Webbappen är en fristående HTML-fil med all data inbäddad. Den kompletta verifieringskedjan synkroniserar processmetadata, bygger nod- och källutdrag, genererar HTML och kör alla tester:
+Webbappen är en fristående HTML-fil med all data inbäddad. Kör följande från repots rot med Node.js 22 eller senare:
 
 ```bash
-cd Artefakt_C_Riskregister/mcp-server
-npm ci
-npm run verify
+npm --prefix Artefakt_C_Riskregister/mcp-server ci
+npm run build
+npm test
+npm run dev
 ```
 
-Varje push till `main` startar [GitHub Pages-arbetsflödet](.github/workflows/deploy-pages.yml), som kör samma kedja och stoppar publiceringen om de incheckade genererade filerna inte är synkroniserade.
+`npm run build` synkroniserar processmetadata, bygger nod-, käll- och utforskningsdata, genererar HTML och förbereder den kompletta statiska webbplatsen i `_site`. `npm test` kör den befintliga MCP-testsviten och tillagda regressionstester. Inga ytterligare frontendpaket behövs.
+
+Förhandsvisningen finns på <http://127.0.0.1:4173/miljotillstandsrisker/> och även på rotadressen <http://127.0.0.1:4173/>. Servern binder enbart till den lokala datorn. `npm run dev` (eller `npm run preview`) serverar senast byggda `_site`; kör `npm run build` igen efter en ändring. Den startar inte en automatisk byggprocess.
+
+Den statiska paketeringen i `scripts/prepare-site.mjs` används både lokalt och i GitHub Actions. Den kopierar endast appen, dokumenterade datafiler och innehållet i `site/`, inklusive logotypfiler. Den kontrollerar att alla nödvändiga filer finns innan den ersätter föregående `_site`.
+
+Varje push till `main` startar [GitHub Pages-arbetsflödet](.github/workflows/deploy-pages.yml), som bygger, testar och stoppar publiceringen om de incheckade genererade filerna inte är synkroniserade. Även `exploration.json` och `controls.csv` omfattas av kontrollen. Ursprungliga risk- och CSV-exporter behåller sina tidigare format.

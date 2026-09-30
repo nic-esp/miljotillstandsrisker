@@ -25,3 +25,9 @@ Artefakt_C_Riskregister/_build/*
 !Artefakt_C_Riskregister/_build/process_chart_export.mjs
 !Artefakt_C_Riskregister/_build/risk_fields.mjs
 !Artefakt_C_Riskregister/_build/source_register.mjs
+!Artefakt_C_Riskregister/_build/exploration_model.mjs
+!Artefakt_C_Riskregister/_build/exploration_curations.json
+!Artefakt_C_Riskregister/_build/exploration_view.mjs
+!Artefakt_C_Riskregister/_build/exploration.css
+!Artefakt_C_Riskregister/_build/exploration_graph.mjs
+!Artefakt_C_Riskregister/_build/exploration_graph.css

@@ -49,7 +49,9 @@ jobs:
         run: |
           git ls-files --error-unmatch \
             Artefakt_C_Riskregister/mcp-server/data/riskregister.csv \
-            Artefakt_C_Riskregister/mcp-server/data/riskregister-items.csv
+            Artefakt_C_Riskregister/mcp-server/data/riskregister-items.csv \
+            Artefakt_C_Riskregister/mcp-server/data/exploration.json \
+            Artefakt_C_Riskregister/mcp-server/data/controls.csv
           git diff --exit-code -- \
             Artefakt_B_Processkarta_nodordbok/Artefakt_B_processkarta_import.json \
             Artefakt_C_Riskregister/Artefakt_C_riskregister.json \
@@ -57,32 +59,12 @@ jobs:
             Artefakt_C_Riskregister/_build/mappable_nodes.json \
             Artefakt_C_Riskregister/mcp-server/data/sources.json \
             Artefakt_C_Riskregister/mcp-server/data/riskregister.csv \
-            Artefakt_C_Riskregister/mcp-server/data/riskregister-items.csv
+            Artefakt_C_Riskregister/mcp-server/data/riskregister-items.csv \
+            Artefakt_C_Riskregister/mcp-server/data/exploration.json \
+            Artefakt_C_Riskregister/mcp-server/data/controls.csv
 
       - name: Prepare static site
-        run: |
-          mkdir -p _site
-          cp -R site/. _site/
-          mkdir -p _site/data
-          cp Artefakt_C_Riskregister/Artefakt_C_riskregister.html _site/index.html
-          cp Artefakt_C_Riskregister/Artefakt_C_riskregister.json _site/data/riskregister.json
-          cp Artefakt_C_Riskregister/mcp-server/data/riskregister.csv _site/data/riskregister.csv
-          cp Artefakt_C_Riskregister/mcp-server/data/riskregister-items.csv _site/data/riskregister-items.csv
-          cp Artefakt_C_Riskregister/_build/mappable_nodes.json _site/data/nodes.json
-          cp Artefakt_C_Riskregister/mcp-server/data/sources.json _site/data/sources.json
-          cp Artefakt_B_Processkarta_nodordbok/Artefakt_B_processkarta_import.json _site/data/process-charts.json
-          touch _site/.nojekyll
-          test -s _site/index.html
-          test -s _site/data/riskregister.json
-          test -s _site/data/riskregister.csv
-          test -s _site/data/riskregister-items.csv
-          test -s _site/data/nodes.json
-          test -s _site/data/sources.json
-          test -s _site/data/process-charts.json
-          test -s _site/data/index.html
-          test -s _site/ai-access.html
-          test -s _site/llms.txt
-          test -s _site/sitemap.xml
+        run: node scripts/prepare-site.mjs
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

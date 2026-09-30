@@ -1,0 +1,11 @@
+{
+  "name": "miljotillstandsrisker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm --prefix Artefakt_C_Riskregister/mcp-server run build:all && node scripts/prepare-site.mjs",
+    "test": "npm --prefix Artefakt_C_Riskregister/mcp-server test",
+    "dev": "node scripts/preview-site.mjs",
+    "preview": "node scripts/preview-site.mjs"
+  }
+}
