@@ -7,6 +7,7 @@ import { dirname, join } from 'node:path';
 import { readSourceRegister } from './source_register.mjs';
 import { createRankingModel } from './btl_ranking.mjs';
 import { createExplorationData } from './exploration_model.mjs';
+import { loadAuthorityPackage } from './authority_controls.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -44,7 +45,7 @@ const chartNames = Object.fromEntries(imp.charts.map(chart => {
 
 const ranking = JSON.parse(readFileSync(join(here, 'btl_snapshot.json'), 'utf8'));
 createRankingModel(risks, ranking, proc); // Fail the build on stale or ambiguous risk mappings.
-const exploration = createExplorationData(risks, JSON.parse(readFileSync(join(here, 'exploration_curations.json'), 'utf8')));
+const exploration = createExplorationData(risks, JSON.parse(readFileSync(join(here, 'exploration_curations.json'), 'utf8')), loadAuthorityPackage());
 const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc, processExport: imp, ranking, exploration })
   .replace(/</g, '\\u003c');
 const processGeometry = readFileSync(join(here, 'process_geometry.mjs'), 'utf8')

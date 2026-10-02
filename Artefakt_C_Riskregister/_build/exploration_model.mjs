@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { triggerFactors, consequences } from './risk_fields.mjs';
+import { createAuthorityControls } from './authority_controls.mjs';
 
 const ROLES = new Set(['prevention', 'monitoring', 'consequence_reduction', 'combined', 'unspecified']);
 const unique = values => [...new Set(values)].sort();
@@ -42,7 +43,7 @@ export function occurrenceId(riskId, kind, text) {
  * Produce one immutable publication snapshot. Curations contain explicit selectors, never
  * similarity rules. A concept has no authority to extend a control's target coverage.
  */
-export function createExplorationData(risks, curations = {}) {
+export function createExplorationData(risks, curations = {}, authorityPackage = null) {
   if (!Array.isArray(risks)) throw new Error('risks must be an array');
   const riskById = new Map();
   const occurrences = [];
@@ -89,7 +90,7 @@ export function createExplorationData(risks, curations = {}) {
   const controls = risks.filter(r => typeof r.mitigation === 'string' && r.mitigation.trim()).map(risk => {
     const id = claimId(`C-SRC-${risk.risk_id}`);
     return { id, title: sourceControlTitle(risk.mitigation), description: risk.mitigation,
-      kind: 'source', basis: 'register', reviewStatus: 'source-import', role: 'unspecified',
+      kind: 'source', driver: 'unspecified', basis: 'register', reviewStatus: 'source-import', role: 'unspecified',
       riskIds: [risk.risk_id], sourceRiskIds: [risk.risk_id], chartKeys: [risk.chart_key],
       sourceTexts: [{ riskId: risk.risk_id, text: risk.mitigation, source_refs: [...(risk.source_refs || [])] }],
       targets: [{ id: claimId(`T-${hash(`${id}|event|${risk.risk_id}`)}`), riskId: risk.risk_id,
@@ -128,11 +129,21 @@ export function createExplorationData(risks, curations = {}) {
     if (sourceRiskIds.some(sourceId => !riskIds.includes(sourceId))) throw new Error(`Control source without explicit target: ${id}`);
     const roles = unique(targets.map(target => target.role));
     controls.push({ id, title: requireText(prepared.title, `${id} title`),
-      description: requireText(prepared.description, `${id} description`), kind: 'shared', basis: 'analysis',
+      description: requireText(prepared.description, `${id} description`), kind: 'shared', driver: 'unspecified', basis: 'analysis',
       reviewStatus: 'analytical-grouping', role: roles.length === 1 ? roles[0] : 'combined',
       riskIds, sourceRiskIds, chartKeys: unique(riskIds.map(riskId => riskFor(riskId).chart_key)),
       sourceTexts, targets: targets.sort((a, b) => a.id.localeCompare(b.id)),
       rationale: requireText(prepared.rationale, `${id} rationale`) });
+  }
+  const authority = createAuthorityControls(risks, authorityPackage, { occurrenceId, occurrenceById });
+  for (const control of authority.controls) {
+    claimId(control.id);
+    for (const target of control.targets) claimId(target.id);
+    controls.push(control);
+  }
+  for (const control of controls.filter(control => control.kind === 'source')) {
+    const assessment = authority.assessments.get(control.riskIds[0]);
+    if (assessment) control.authorityAssessment = assessment;
   }
   const exactGroups = new Map();
   for (const occurrence of occurrences) {
@@ -175,5 +186,6 @@ export function createExplorationData(risks, curations = {}) {
       curationVersion: curations.version || null,
       curationBasis: 'Analytisk sammanställning av uttryckliga registertexter. Ingen uppmätt effekt eller mänsklig sakgranskning är registrerad.',
       coverageDefinition: 'Antal olika risk-ID:n med uttrycklig målkoppling. Likhetsgrupper utökar aldrig åtgärdens omfattning.',
+      ...(authority.metadata ? { authority: authority.metadata } : {}),
     } };
 }

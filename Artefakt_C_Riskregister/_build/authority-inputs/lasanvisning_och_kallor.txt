@@ -1,0 +1,196 @@
+MYNDIGHETSKONTROLLER FÖR MILJÖTILLSTÅNDSPROCESSEN
+Bedömningsdatum: 30 september 2026. Version: 0.10, åtgärdsförslag avstämda; granskningsunderlag.
+
+RESULTAT OCH ANVÄNDNING
+Huvudfil: myndighetskontroller_riskkopplingar.csv.
+20 föreslagna kontroller, 173 atomära kopplingar till 90 befintliga risker.
+Huvudscenariot innehåller 17 kontroller och 141 kopplingar till 78 risker.
+Införandescenariot innehåller 1 kontroll och 18 kopplingar.
+Framtida, ännu inte beslutade befogenheter innehåller 2 kontroller och 14 kopplingar.
+Samma risk kan förekomma i mer än ett scenario.
+
+Filformat: semikolonseparerad CSV med UTF-8 BOM och citerade fält där det behövs.
+Importera som UTF-8 och välj semikolon som avgränsare. Identifierare ska läsas som text.
+Varje rad är EN koppling mellan en kontroll och EN befintlig orsak eller konsekvens.
+Kontroll-ID är nya förslag. Risk-, process-, nod- och målpost-ID är hämtade ur registret.
+Målpost-ID såsom R-B60-G040-01:trigger:04 finns redan i riskregister-items.csv.
+Målpostens text har bevarats exakt. Kolumnen kopplingsmotivering innehåller den nya analysen.
+Kontrollerna kan verka vid annan tidpunkt än riskens ursprungsnod; nod_id återger riskregistrets
+anknytning och utlosare_frekvens anger när kontrollen används.
+
+Filtrera scenario = S1_beslutat_uppdrag för huvudanalysen.
+Inforande_ej_S1 och Framtida_mandat_ej_beslutat ska INTE följa med i denna beräkning.
+Gruppera på kontroll_id för att få en kontrollkatalog; skapa inte en ny kontroll per rad.
+Importera koppling_id och malpost_id som relationsnycklar. Filen är ett spårbart analysunderlag;
+den har inte testats mot ett specifikt tekniskt importformat i Cardinal.
+
+risker_tackning_och_avgransning.csv redovisar alla 342 risker med bedömningsstatus.
+Ingen tilldelad koppling betyder att katalogen inte tillgodoräknar myndigheten en effekt för
+posten. Det är inte ett bevis för exakt noll indirekt samhällseffekt. Registrets kvarvarande
+orsaker och konsekvenser ska behållas i mätningen även när en annan del av risken har kontroll.
+
+AVSTÄMNING MOT REGISTRETS BEFINTLIGA ÅTGÄRDSFÖRSLAG
+Samtliga 342 mitigation-fält har lästs och bedömts. Originaltexten finns oförändrad i
+atgardsforslag_bedomning.csv och vid varje kontrollkoppling i huvudfilen.
+Bedömningen gäller om originalförslaget kan omvandlas till en myndighetskontroll:
+- 79 har en myndighetsdel som kan anpassas inom beslutad behörighet, med uttryckliga gränser.
+- 6 avser en möjlig myndighetsdel enbart under införandet, utanför stabilt S1.
+- 3 kan anpassas först om ett framtida uppdrag beslutas.
+- 254 avser åtgärder hos sökanden eller andra aktörer och övertas inte som myndighetskontroll.
+Inget originalförslag har övertagits oförändrat i sin helhet.
+
+Detta är inte samma klassificering som om RISKEN kan påverkas av någon myndighetskontroll.
+En risk med sökandeåtgärd kan samtidigt ha en självständig kontroll av myndighetens eget arbete.
+68 risker har kopplingar som kan motiveras som anpassningar av det befintliga förslaget.
+134 kopplingsrader är sådana anpassningar; 39 är självständiga kontrollförslag efter jämförelse.
+Denna klassificering beskriver saklig relation, inte ett påstående om att den första versionen
+historiskt hade härlett kontrollerna ur mitigation-fältet.
+
+13 nya atomära kopplingar till 10 ytterligare risker har tillkommit efter genomgången.
+Kontrollkatalogen har fortsatt 20 kontroller; nya riskkopplingar använder befintliga kontroll-ID.
+Allmänna möjligheter utan säker koppling till en befintlig orsak eller konsekvens har lämnats
+som möjlig_kontrollfamilj_utan_ny_koppling i bedömningsfilen. De ger ingen räknad riskreduktion.
+Särskilt har ingen generell behörighet för vattenanmälningars BMP-beslut antagits.
+
+atgardsreferens, exempelvis R-B10-030-01:mitigation, är en härledd referens till ett källfält,
+inte ett befintligt kanoniskt item_id. malpost_id i huvudfilen är fortsatt kanonisk målpost.
+Kolumnen kontrollens_relation_till_atgardsforslaget skiljer anpassning från självständig kontroll.
+Bedömningsfilen redovisar accepterad myndighetsdel, utelämnad del, motivering och specialfall.
+
+Originalens formuleringar har bevarats för spårbarhet och innebär inte ett rättsligt godkännande.
+Exempelvis ger accepterad överklaganderisk inte i sig rätt att starta; servicebesked får inte
+omvandlas till bindande förhandsbesked; återförvisning kräver fortsatt tillräcklig utredning;
+och politisk påverkan är inte en kontroll för en opartisk prövningsmyndighet.
+
+SCENARIO OCH UPPDRAG
+Huvudscenariot är en fullt fungerande myndighet med beslutat första uppdrag, efter start 2027.
+Det motsvarar projektets steady-state-inriktning, men innebär inte att alla ännu utredda
+reformförslag automatiskt ingår. Det är arbetsantagandet i avvaktan på användarens scopebesked.
+
+Dir. 2026:13 är uppdraget till organisationsutredningen KN 2026:02 att bilda myndigheten.
+Det är inte en färdig myndighetsinstruktion. Direktivet beskriver ett första övertagande av
+MPD-uppgifter, relevant kompetens, organisation, digitalisering och säker informationshantering.
+De konkreta kontrollrutinerna i CSV:n är analysförslag inom denna ram, inte ordagranna krav
+på exempelvis en viss checklista eller ett visst nyckeltal.
+
+Riksdagens beslut och SFS 2026:1442 ger en beslutad rättslig ram med huvudsakligt ikraftträdande
+1 juli 2027. Den kommande MB 19 kap. 2 a § medger viss gemensam handläggning när en annan
+kommunal eller administrativ miljöbalksprövning har samband med eget tillståndsärende,
+verksamheterna har samma verksamhetsutövare och frågan inte överklagas till regeringen.
+Detta är inte ett generellt mandat att överta domstolsmål eller andra lagars tillstånd.
+
+TILLÄGGSUPPDRAG OCH SENARE REFORMER
+Sökningar och genomgång av officiella källor identifierade följande relevanta nya utredningsspår:
+- Dir. 2026:19: fler ärendetyper och vissa frågor om regelbunden översyn enligt ramdirektivet
+  för vatten. Ett utredningsuppdrag, inte ett omedelbart utökat prövningsmandat.
+- Dir. 2026:97, beslutat 27 augusti 2026: EU-kontaktpunkter och frågan om den nya myndigheten
+  bör få en gemensam kontaktpunktsroll. Denna del och delen om fler ärendetyper ska redovisas
+  15 december 2027. Övrig utredningstid ligger fast. MPM-F02 ligger därför utanför huvudscenariot.
+- Dir. 2026:109, beslutat 3 september 2026: separat utredning om mark- och miljödomstolarnas
+  roll och processregler; redovisning 31 augusti 2028. Ingen befogenhet för myndigheten att
+  styra domstolarnas handläggning följer av detta uppdrag.
+- Uppdragen till Naturvårdsverket och Havs- och vattenmyndigheten om prövningsnivåer från juni
+  2026 är andra aktörers reformarbete. Effekter av kommande regeländringar läggs inte på MPM.
+
+Inget ytterligare publicerat tilläggsdirektiv till själva organisationsutredningen KN 2026:02
+identifierades i sökningen. Detta är en sökavgränsad slutsats, inte ett påstående om att alla
+opublicerade handlingar har granskats. Slutlig instruktion/regleringsbrev har inte verifierats;
+Dir. 2026:13 anger 30 november 2026 som tidpunkt för förslag till dessa.
+
+MYNDIGHETENS ANSVARSGRÄNS
+Legalitet, saklighet, opartiskhet och proportionalitet enligt FL 5 § är grundläggande.
+Service och samverkan enligt FL 6–8 §§ gäller inom verksamhetsområdet; de gör inte myndigheten
+till sökandens konsult eller till överordnad instans för övriga tillståndsorgan.
+Sökanden behåller utrednings- och bevisansvaret, projektering, MKB-produktion, markåtkomst,
+finansiering och ansvar för att samtliga nödvändiga tillstånd och startkrav är uppfyllda.
+
+Ingen kontroll innebär opinionsbildning, politisk påverkan, löfte om tillstånd eller eliminering
+av legitimt överklagande. Domstolar, regering, kommuner och sektorsmyndigheter behåller sina
+befogenheter. Miljökrav, Natura-skydd, försvarsintressen, rådighetskrav och tillämpliga villkor
+ska uppfyllas även när processen effektiviseras. Snabbare avslag kan vara rättsenlig och effektiv
+prövning; ett ökat antal beviljade ansökningar är därför inget fristående kvalitetsmått.
+
+MÄTNING OCH ATTRIBUTION
+Alla kontrollkopplingar är hypoteser om möjlig riskreduktion. Inga effekter eller procenttal
+har skattats och ingen implementering har verifierats. Indikatorerna är förslag på hur
+hypoteserna kan prövas, inte uppmätta resultat eller föreskrivna myndighetsmål.
+
+1. Använd samma normaliserade projekt-/ärendeportfölj i S0 och S1.
+2. Dela riskens exponering i myndighetens behöriga del och övriga delar. Kopplingen gäller bara
+   den första, med de ytterligare villkor som anges i varje rad.
+3. Behåll dagens kontroller och lagliga arbetssätt i S0. MPM kan bara tillgodoräknas förändringen
+   i faktisk kontrollprestanda. Att en lagstadgad skyldighet redan finns gör inte dess hela värde
+   till ett värde av den nya organisationen.
+4. Mät egen handläggningstid separat från sökandens kompletteringstid, externa remissers väntan,
+   domstolstid och total kalendertid. Jämför likartade ärendetyper och komplexitet.
+5. Orsakskopplingar kan påverka sannolikheten; konsekvenskopplingar begränsar följderna efter
+   händelsen. Det är en kausal hypotes som ska prövas, inte en automatisk formel per rad.
+6. Skatta riskens P × villkorade samhällsekonomiska konsekvens för S0 och S1 med samma
+   värderingsregler. Beräkna därefter skillnaden på risknivå och med spårbara effektkedjor.
+7. Summera inte radvisa effekter. MPM-05 och MPM-07 kan exempelvis påverka samma väntedagar.
+   Risker i olika noder kan också beskriva samma försening. Behåll en gemensam förlust- och
+   effektkedja, och skilj välfärdsförlust från investeringar, omsättning och jobbindikatorer.
+8. Införandeeffekter hålls separat. Att ett övergångsglapp saknas i steady state ska inte
+   tillskrivas en kontroll som permanent effektiviseringsvinst.
+
+KÄLLOR: UPPDRAG OCH OFFICIELLT RÄTTSLÄGE
+Källor lästa/kontrollerade den 30 september 2026. Direktlänkar finns även i CSV:n.
+
+Dir. 2026:13, särskilt Uppdraget att inrätta, Organisation och verksamhetsformer, Ansvaret för
+befintliga uppgifter, Informationsutbyte, Riskanalyser och Bemanning:
+https://www.riksdagen.se/sv/dokument-och-lagar/dokument/kommittedirektiv/inrattande-av-en-ny-myndighet-for-miljoprovning_heb113/
+
+Förordning (2011:1237) om miljöprövningsdelegationer, särskilt 3 §:
+https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forordning-20111237-om_sfs-2011-1237/
+
+Miljöbalk (1998:808), särskilt 2 kap. 1 §, 16 kap. 3 §, 19 kap. 2 a, 4, 5 och 5 a §§,
+inklusive de uttryckligen angivna lydelserna från 2027-07-01 och hänvisningar till 22 kap.:
+https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/miljobalk-1998808_sfs-1998-808/
+
+Förvaltningslag (2017:900), särskilt 5–9, 11, 16–18, 20, 23, 25–27, 31–33 och 44–46 §§:
+https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/forvaltningslag-2017900_sfs-2017-900/
+
+Prop. 2025/26:238 Ny myndighet för miljöprövning:
+https://regeringen.se/rattsliga-dokument/proposition/2026/04/prop.-202526238
+Riksdagens behandling 2025/26:MJU24:
+https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/ny-myndighet-for-miljoprovning_hd01mju24/html/
+Lag (2010:921) om mark- och miljödomstolar, 5 kap. 2 §:
+https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-2010921-om-mark-och-miljodomstolar_sfs-2010-921/
+
+Dir. 2026:19:
+https://www.regeringen.se/contentassets/930bfc1e70304e4cbd07fc8200b711d9/tillaggsdirektiv-till-miljotillstandsutredningen-kn-202302-dir.-202619.pdf
+Dir. 2026:97:
+https://www.regeringen.se/contentassets/75b71695f271461b8265bb5efc0a1f7e/tillaggsdirektiv-till-miljotillstandsutredningen-kn-202302-dir.-202697.pdf
+Dir. 2026:109:
+https://www.riksdagen.se/sv/dokument-och-lagar/dokument/kommittedirektiv/mark-och-miljodomstolarnas-roll-i-en-reformerad_heb1109/
+Uppdrag om prövningsnivåer till NV/HaV:
+https://www.regeringen.se/pressmeddelanden/2026/06/uppdrag-for-att-fortsatt-forenkla-och-forkorta-miljotillstandsprovningen/
+
+KÄLLOR: PROJEKTUNDERLAG OCH RISKREGISTER
+Statusrapport Svenskt Näringsliv/New Republic, 2026-08-14. Använd för Sverige-år,
+S0/S1/S2, steady state, separat kontrollkatalog och förbud mot dubbelräkning:
+https://docs.google.com/document/d/1Utz2yLQa7iwglzMEfVuJmuW4oMEODqRq/edit
+
+Område 5: Den nya miljöprövningsmyndigheten, källläge 2026-07-02. Använd för uppdragsidentitet
+och ursprunglig gräns mellan första etapp och framtida reform. Uppdaterad mot officiella källor:
+https://docs.google.com/document/d/1FJIxtarTJLpN_S-5ydUssB4uyvPYRqET/edit
+
+Riskplugin Miljötillståndsrisker, manifestversion 2.2.0:
+https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json
+https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv
+https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json
+https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json
+
+KVALITETSKONTROLL OCH ÅTERSTÅENDE GRANSKNING
+Kontrollerat: 342 unika risker; 2 532 målposter (1 275 orsaker och 1 257 konsekvenser);
+alla 173 kopplings-ID unika; samtliga referenser till befintlig risk, nod och målpost giltiga;
+målposttexter identiska med källfilen; CSV återläst med oförändrat antal rader och kolumner.
+Samtliga 342 originalåtgärder är exakt bevarade och har en uttrycklig bedömning; kontrollernas
+ursprungsmarkeringar har kontrollerats mot bedömningsfilens kontroll-ID och risk-ID.
+Scenarioindelning och begränsningar har kontrollerats mot källorna. Registrets alla ursprungliga
+rättsliga formuleringar har inte omprövats; de bevaras som måltexter, med nya avgränsningar intill.
+
+Inbyggd adversarial review saknas bland tillgängliga verktyg och har INTE genomförts.
+Detta är ett granskningsunderlag, inte en slutgranskad leverans enligt arbetsöverenskommelsen.
+Användaren har ombetts ange hur den inbyggda granskningen kan nås. Ingen fil har importerats
+i Cardinal och inget externt register har ändrats.

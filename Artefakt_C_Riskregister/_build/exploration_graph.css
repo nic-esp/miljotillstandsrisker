@@ -121,3 +121,19 @@
 @media(max-width:900px) { .kg-svg { min-width:1120px; } }
 @media(max-width:600px) { .kg-total { display:none; } .kg-intro { margin-bottom:15px; } .kg-intro h2 { font-size:24px; } .kg-intro p:not(.kg-eyebrow) { font-size:13px; } .kg-toolbar { gap:10px; padding:12px; } .kg-toolbar label:not(.kg-search-label) { flex:1 1 100%; } .kg-toolbar .btn { flex:1 1 130px; font-size:12px; } .kg-legend { gap:9px 12px; font-size:10px; } .kg-map-top { flex-wrap:wrap; } .kg-status { flex-basis:100%; } .kg-map-shell { border-radius:2px; } .kg-viewport { max-height:610px; } .kg-svg { min-width:1120px; } .kg-search-results button { grid-template-columns:60px minmax(0,1fr); gap:8px; } .kg-search-results button span { display:none; } .kg-risk-picker { max-width:100%; } }
 @media(prefers-reduced-motion:reduce) { .knowledge-graph * { scroll-behavior:auto !important; transition:none !important; } }
+/* Authority-led proposals remain distinct from imported and analytically shared controls. */
+.knowledge-graph { --kg-authority:#65518a; }
+.kg-key-authority { width:14px; height:10px; border-radius:2px; background:var(--kg-authority); }
+.kg-hub-authority rect { fill:var(--kg-authority); stroke:#51416f; }
+.kg-authority-tag { fill:#eee9f7; font-size:8px; font-weight:700; letter-spacing:.35px; pointer-events:none; }
+.kg-hub-authority .kg-control-count { fill:#eee9f7; }
+.kg-edge-authority { stroke:var(--kg-authority); }
+.kg-authority-badge,.kg-measurement-badge { display:inline-block; margin:6px 6px 0 0; border-radius:3px; padding:2px 6px; font-size:10px; font-weight:600; line-height:1.5; }
+.kg-authority-badge { background:#eee9f5; color:#554175; }
+.kg-measurement-badge { background:#eef1f3; color:#53616c; }
+.kg-authority-metadata { margin:12px 0; border-left:3px solid var(--kg-authority); background:#f7f5fa; padding:10px 12px; }
+.kg-authority-metadata dl { margin:12px 0 0; }
+.kg-authority-metadata dt { color:#62717f; font-size:10px; font-weight:700; margin:9px 0 2px; }
+.kg-authority-metadata dd { margin:0; font-size:12px; color:#33414e; }
+.kg-authority-metadata p { font-size:11px; }
+.kg-toolbar label:has(.kg-control-filter) { flex-basis:330px; }

@@ -129,3 +129,23 @@ main{padding:25px 28px 48px}
 @media(max-width:900px){.ex-filter-toggle:not([hidden]){display:block;justify-self:start;margin:15px 14px 0}.layout #sidebar.ex-filters-open{display:block;border-bottom:1px solid var(--border);max-height:60vh;overflow:auto}}
 
 .ex-export-menu{position:relative;margin-left:auto}.ex-export-menu summary{cursor:pointer;list-style:none}.ex-export-menu[open]{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.ex-export-menu summary::-webkit-details-marker{display:none}
+/* Authority ownership is separate from source/grouping and from measured effect. */
+.ex-authority-filter{display:flex;align-items:end;gap:16px;flex-wrap:wrap;padding:16px 18px;background:#edf3f6;border:1px solid #d2dfe5;border-left:3px solid #376c72;margin-bottom:18px}
+.ex-authority-filter label{display:flex;flex-direction:column;gap:6px;font-size:11px;font-weight:600;color:var(--muted)}
+.ex-authority-filter select{min-height:38px;min-width:215px;background:#fff;font-size:12px}
+.ex-authority-filter p{flex:1;min-width:230px;max-width:530px;font-size:12px;line-height:1.6;color:#536773;margin:0}
+.ex-authority-filter p strong{display:block;font-weight:600;color:#315e65}
+.ex-authority-badge{display:inline-block;font-size:10px;line-height:1.5;color:#285b61;background:#e6f0ef;border:1px solid #bdd4d3;padding:3px 7px;border-radius:3px}
+.ex-authority-secondary{background:#f2eef5;border-color:#d8cce0;color:#6b587b}
+.ex-chip-driver{display:block;font-size:9px;color:#3d6d70;margin-top:3px}
+.ex-control-table td:nth-child(2){width:35%}.ex-control-table td:nth-child(6){min-width:145px;max-width:190px}.ex-control-table td:nth-child(6) .ex-note{font-size:10px;line-height:1.5}
+.ex-authority-context{padding:19px 22px;background:#f2f6f6;border:1px solid #d1dfdf;border-left:3px solid #376c72;margin:23px 0}
+.ex-authority-context-head{display:flex;justify-content:space-between;gap:16px;align-items:start}
+.ex-authority-context-head .ex-mono{display:inline-block;margin-left:10px;color:var(--muted)}
+.ex-authority-context h3{font-size:16px;margin:13px 0 5px}.ex-authority-context h4{font-size:13px;margin:0 0 15px}
+.ex-authority-context .ex-detail-columns{margin-top:20px}.ex-authority-facts{font-size:12px;line-height:1.7}
+.ex-authority-facts dt{font-size:10px;font-weight:600;color:#4d656b;margin-top:15px}.ex-authority-facts dd{margin:4px 0 0}
+.ex-measurement-status{flex-shrink:0;border:1px solid #bcc9ce;background:#fff;color:#48616a;font-size:11px;padding:6px 11px;border-radius:2px}
+.ex-authority-context .ex-method{margin-top:16px;padding-bottom:0}.ex-target-scope{margin-top:10px;font-size:11px;color:var(--muted)}.ex-target-scope summary{cursor:pointer;color:var(--link)}
+.ex-assessment .ex-facts{grid-template-columns:135px 1fr;line-height:1.7}.ex-bow-selection .ex-authority-badge{margin:4px 0 7px}.ex-bow-selection small{display:block}
+@media(max-width:600px){.ex-authority-filter{padding:13px;gap:12px}.ex-authority-filter label{width:100%}.ex-authority-filter select{width:100%;min-width:0}.ex-authority-filter p{min-width:0}.ex-authority-context{padding:15px}.ex-authority-context-head{flex-wrap:wrap}.ex-assessment .ex-facts{grid-template-columns:1fr;gap:3px}.ex-assessment .ex-facts dt{margin-top:10px}}

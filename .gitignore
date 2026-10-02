@@ -31,3 +31,5 @@ Artefakt_C_Riskregister/_build/*
 !Artefakt_C_Riskregister/_build/exploration.css
 !Artefakt_C_Riskregister/_build/exploration_graph.mjs
 !Artefakt_C_Riskregister/_build/exploration_graph.css
+!Artefakt_C_Riskregister/_build/authority_controls.mjs
+!Artefakt_C_Riskregister/_build/authority-inputs/

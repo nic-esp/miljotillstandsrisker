@@ -16,6 +16,10 @@ Den senaste importerade BTL-rangordningen kommer från **16 september 2026 kl. 1
 - Orsaker och konsekvenser i normaliserad CSV: <https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv>
 - Utforskningsmodell med motåtgärder, uttryckliga mål och likhetsgrupper (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/exploration.json>
 - Motåtgärder med risk-ID:n, originaltexter och målkopplingar (CSV): <https://nic-esp.github.io/miljotillstandsrisker/data/controls.csv>
+- Myndighetskontrollernas ursprungliga kopplingar (CSV): <https://nic-esp.github.io/miljotillstandsrisker/data/authority-controls-source.csv>
+- Bedömning av samtliga ursprungliga åtgärdsförslag (CSV): <https://nic-esp.github.io/miljotillstandsrisker/data/authority-assessments-source.csv>
+- Myndighetsunderlagets läsanvisning och källor (TXT): <https://nic-esp.github.io/miljotillstandsrisker/data/authority-reading-guide.txt>
+- Myndighetsunderlagets version och filkontrollsummor (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/authority-source-manifest.json>
 - Riskmappbara noder (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json>
 - Källregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/sources.json>
 - Processkartor B00–B70 (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json>
@@ -26,13 +30,17 @@ En risk kan länkas direkt med `?risk=RISK-ID`, till exempel:
 
 <https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B10-010-01>
 
-GitHub Actions publicerar de statiska informationssidorna, appen, fem JSON-filer och tre CSV-filer. Arkiv, byggmellanprodukter och `node_modules` publiceras inte.
+GitHub Actions publicerar de statiska informationssidorna, appen och datautbudet med sex JSON-filer, fem CSV-filer och en TXT-fil. Arkiv, byggmellanprodukter och `node_modules` publiceras inte.
 
 Utforskningsmodellen bevarar varje risks ursprungliga motåtgärdstext och lägger till analytiskt sammanställda gemensamma åtgärder. Varje uttrycklig målkoppling anger vilken orsak, riskhändelse eller konsekvens som avses. Orsaker och konsekvenser behåller sina egna källstatusar även när de visas i samma likhetsgrupp. Grupper med identisk text skiljs från analytiska grupper med liknande innebörd; analytiska kopplingar har inte registrerats som oberoende sakgranskade.
 
 Sammanföringen är partiell: 16 återkommande åtgärder med 118 uttryckliga målkopplingar omfattar 56 av 342 risker. Alla 342 ursprungliga beskrivningar finns kvar. De 63 orsaks- och konsekvensgrupperna består av 51 grupper med identisk ordalydelse och 12 analytiska likhetsgrupper.
 
 Antal kopplade risker beskriver åtgärdens dokumenterade räckvidd i registret. Det visar varken genomförandestatus, uppmätt effektivitet eller beräknad riskreduktion. En likhetsgrupp ger aldrig automatiskt en åtgärd fler målkopplingar. Besökaren kan undersöka och jämföra publicerade samband men inte ändra data.
+
+Myndighetsunderlaget, version **0.10 från 30 september 2026**, tillför 20 föreslagna kontroller med 173 uttryckliga kopplingar till 90 risker. Kontrollistan innehåller därmed 378 poster: 342 ursprungliga beskrivningar, 16 sammanförda åtgärder och 20 myndighetsförslag. Filtrera **Drivs av → Myndigheten** för att först visa huvudscenariots 17 kontroller, 141 kopplingar och 78 risker. Scenarioväljaren ger även tillgång till införandet (1 kontroll, 18 kopplingar) och framtida mandat (2 kontroller, 14 kopplingar), som hålls separata från huvudscenariot. Sambandskartan har motsvarande myndighetsurval och behåller alla 342 risknoder.
+
+Förslagen har status **ej uppmätt**. Varken sannolikheten för införande eller riskreduktion har skattats. Originalåtgärderna har kvar sin fullständiga bedömning och klassificeras inte automatiskt som myndighetsdrivna. Stabila kontroll- och kopplingsnycklar förbereder senare mätresultat utan att skapa resultat nu. Datakontraktet, källspårningen och mätkopplingarna beskrivs i [Myndighetskontroller – datakontrakt](docs/authority-controls-data-contract.md).
 
 ## MCP för ChatGPT och andra AI-klienter
 
@@ -51,7 +59,7 @@ Servern använder publik, autentiseringsfri Streamable HTTP på `/mcp`. Alla ver
 - noder, statistik, källor och kompletta processkartor
 - fullständiga rådata-URL:er via `get_dataset_manifest`
 
-De nya filerna `exploration.json` och `controls.csv` hämtas direkt från GitHub Pages-länkarna ovan. Den befintliga MCP-serverns verktyg, API och risk-/CSV-kontrakt påverkas inte av dessa tillägg; de nya filerna distribueras inte automatiskt till MCP-värden.
+`exploration.json`, `controls.csv` och myndighetsunderlagets fyra källfiler hämtas direkt från GitHub Pages-länkarna ovan. Den befintliga MCP-serverns verktyg, API och risk-/CSV-kontrakt påverkas inte av dessa tillägg; filerna distribueras inte automatiskt till MCP-värden.
 
 Anslut ChatGPT till:
 

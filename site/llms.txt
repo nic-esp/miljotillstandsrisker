@@ -14,13 +14,17 @@ Each risk event contains 3-5 possible trigger factors and 3-5 possible consequen
 - 342 complete risk records: https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.json
 - 342 complete risk records (CSV; one row per risk with a causes-event-effects `bow_tie_json` cell): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister.csv
 - Normalized trigger/consequence rows (CSV): https://nic-esp.github.io/miljotillstandsrisker/data/riskregister-items.csv
-- Exploration model (JSON; source controls, analytical shared controls, exact and semantic cause/effect groups, explicit targets and provenance): https://nic-esp.github.io/miljotillstandsrisker/data/exploration.json
+- Exploration model (JSON; source controls, analytical shared controls, proposed authority controls, exact and semantic cause/effect groups, explicit targets and provenance): https://nic-esp.github.io/miljotillstandsrisker/data/exploration.json
 - Controls (CSV; risk IDs, source excerpts and explicit target relationships): https://nic-esp.github.io/miljotillstandsrisker/data/controls.csv
+- Original authority control links (CSV; 173 rows, 46 source columns): https://nic-esp.github.io/miljotillstandsrisker/data/authority-controls-source.csv
+- Original mitigation assessments (CSV; 342 rows, 23 source columns): https://nic-esp.github.io/miljotillstandsrisker/data/authority-assessments-source.csv
+- Authority reading guide and sources (TXT): https://nic-esp.github.io/miljotillstandsrisker/data/authority-reading-guide.txt
+- Authority source manifest (JSON; version, date, SHA256 hashes and byte lengths): https://nic-esp.github.io/miljotillstandsrisker/data/authority-source-manifest.json
 - 160 risk-mappable nodes: https://nic-esp.github.io/miljotillstandsrisker/data/nodes.json
 - Source registry: https://nic-esp.github.io/miljotillstandsrisker/data/sources.json
 - Process charts B00-B70: https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json
 
-The original risk, node, source and process JSON files, riskregister.csv and riskregister-items.csv are also available on the MCP host under /data/. The new exploration.json and controls.csv are static GitHub Pages downloads only; the MCP tools and API contract are unchanged. A single risk is available at /api/risks/{risk_id}.
+The static data catalogue contains 6 JSON, 5 CSV and 1 TXT files. The original risk, node, source and process JSON files, riskregister.csv and riskregister-items.csv are also available on the MCP host under /data/. The exploration.json, controls.csv and four authority source files are static GitHub Pages downloads only; the MCP tools and API contract are unchanged. A single risk is available at /api/risks/{risk_id}.
 
 ## Interpreting exploration relationships
 
@@ -29,6 +33,16 @@ Each source control preserves a risk's original mitigation text. Shared controls
 Control targets identify specific causes, risk events or consequences. Similarity-group membership never extends a control's target coverage. A link does not establish implementation, effectiveness, residual probability or statistical dependence. Source references attached to a control provide the surrounding risk's source context, not measured evidence of mitigation performance.
 
 The BTL ranking is relative. Connected-risk counts describe the dataset's documented reach; they are not calibrated occurrence probabilities, risk reduction estimates or a universal control-priority score. Visitors can investigate published data but cannot edit it.
+
+## Authority control proposals
+
+Source version 0.10, dated 2026-09-30, adds 20 authority controls with 173 explicit links to 90 risks. The complete control catalogue has 378 entries (342 original descriptions, 16 analytical shared controls, 20 authority proposals). Authority controls have kind="authority" and driver="authority"; existing source/shared controls retain driver="unspecified". The 342 original mitigation assessments remain losslessly available under authorityAssessment.sourceRecord on source controls. An assessment about an original mitigation does not determine whether its risk can have an independent authority control. Possible but unlinked control families do not create target links.
+
+In the control list, selecting Drivs av → Myndigheten defaults to S1_beslutat_uppdrag (priorityScope="main"): 17 controls, 141 links, 78 risks. Inforande_ej_S1 (priorityScope="transition") has 1 control and 18 links; Framtida_mandat_ej_beslutat (priorityScope="future") has 2 controls and 14 links. These separate scenarios are not included in the main selection. The graph offers authority selections while retaining all 342 risk nodes. Scenario labels describe the supplied analysis, not an independently verified legal conclusion or adoption probability.
+
+Control IDs remain MPM-*. Each target preserves the supplied koppling_id as id and malpost_id as sourceItemId; targetId resolves to the app's existing cause/effect occurrence after exact canonical validation. Full source rows, scope, applicability conditions, indicators, S0/S1 comparison guidance and overlap caveats are retained. Targets have roleBasis="hypothesis" and implementation remains unverified.
+
+Each authority control and target has measurement.key, measurement.context, status="not_measured", results=[]. The control key is its control ID; the target key is the original relation ID. Context preserves the control/scenario/source version and, for targets, the risk and source item. These keys prepare later measurement linkage. No numerical effect, zero-effect assumption, adoption probability or automatic effect calculation is provided. Do not sum relation counts or hypothetical per-link effects as risk reduction.
 
 ## MCP retrieval
 

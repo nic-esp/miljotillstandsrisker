@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { readSourceRegister } from '../_build/source_register.mjs';
 import { serializeRiskCsv, serializeRiskItemCsv } from '../_build/risk_fields.mjs';
 import { createExplorationData } from '../_build/exploration_model.mjs';
+import { loadAuthorityPackage } from '../_build/authority_controls.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const sourceFile = join(here, '../../Artefakt_B_Processkarta_nodordbok/Artefakt_B_kallregister.csv');
@@ -17,6 +18,8 @@ export const CONTROL_CSV_HEADER = Object.freeze([
   'control_id', 'title', 'description', 'kind', 'basis', 'review_status', 'role',
   'risk_ids_json', 'source_risk_ids_json', 'chart_keys_json', 'source_refs_json',
   'source_texts_json', 'targets_json', 'rationale',
+  'driver', 'scenario', 'priority_scope', 'implementation_status', 'measurement_json',
+  'authority_assessment_json', 'source_rows_json', 'provenance_json', 'authority_context_json',
 ]);
 
 function csvCell(value) {
@@ -33,6 +36,13 @@ export function serializeControlCsv(controls) {
     JSON.stringify(control.sourceRiskIds), JSON.stringify(control.chartKeys),
     JSON.stringify([...new Set(control.sourceTexts.flatMap(source => source.source_refs))].sort()),
     JSON.stringify(control.sourceTexts), JSON.stringify(control.targets), control.rationale ?? '',
+    control.driver ?? 'unspecified', control.scenario ?? '', control.priorityScope ?? '', control.implementationStatus ?? '',
+    JSON.stringify(control.measurement ?? null), JSON.stringify(control.authorityAssessment ?? null),
+    JSON.stringify(control.sourceRows ?? null), JSON.stringify(control.provenance ?? null),
+    JSON.stringify(control.kind === 'authority' ? Object.fromEntries([
+      'owner', 'scope', 'legalBasis', 'indicators', 'verificationEvidence', 'baselineDifference', 'triggerFrequency',
+      'exposure', 'overlap', 'mandateStatus', 'sourceStatus', 'sourceReviewStatus', 'mandateSources', 'roleBasis',
+    ].map(key => [key, control[key]])) : null),
   ]);
   return [CONTROL_CSV_HEADER, ...rows].map(row => row.map(csvCell).join(',')).join('\r\n') + '\r\n';
 }
@@ -42,7 +52,7 @@ export function buildData() {
   const risks = JSON.parse(readFileSync(riskFile, 'utf8'));
   const processCharts = JSON.parse(readFileSync(processFile, 'utf8'));
   const curations = JSON.parse(readFileSync(curationsFile, 'utf8'));
-  const exploration = createExplorationData(risks, curations);
+  const exploration = createExplorationData(risks, curations, loadAuthorityPackage());
   const chartNames = Object.fromEntries(processCharts.charts.map(chart => [chart.metadata.chartKey, chart.name]));
   mkdirSync(outputDirectory, { recursive: true });
   writeFileSync(join(outputDirectory, 'sources.json'), `${JSON.stringify(sources, null, 2)}\n`);

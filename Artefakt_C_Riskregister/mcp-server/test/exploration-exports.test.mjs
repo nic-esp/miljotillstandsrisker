@@ -5,6 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { createExplorationData } from '../../_build/exploration_model.mjs';
+import { loadAuthorityPackage } from '../../_build/authority_controls.mjs';
 import { CONTROL_CSV_HEADER, serializeControlCsv } from '../build-data.mjs';
 import { prepareSite, STATIC_DATA_FILES } from '../../../scripts/prepare-site.mjs';
 import { resolvePreviewFile } from '../../../scripts/preview-site.mjs';
@@ -14,7 +15,7 @@ const root = resolve(here, '../../..');
 const json = path => JSON.parse(readFileSync(join(root, path), 'utf8'));
 const risks = json('Artefakt_C_Riskregister/Artefakt_C_riskregister.json');
 const curations = json('Artefakt_C_Riskregister/_build/exploration_curations.json');
-const exploration = createExplorationData(risks, curations);
+const exploration = createExplorationData(risks, curations, loadAuthorityPackage());
 
 function parseCsv(value) {
   const rows = [];
@@ -72,6 +73,18 @@ test('control CSV round-trips every control and its explicit provenance and targ
     assert.deepEqual(JSON.parse(row.source_texts_json), control.sourceTexts);
     assert.deepEqual(JSON.parse(row.targets_json), control.targets);
     assert.equal(row.rationale, control.rationale ?? '');
+    assert.equal(row.driver, control.driver);
+    assert.equal(row.scenario, control.scenario ?? '');
+    assert.equal(row.priority_scope, control.priorityScope ?? '');
+    assert.equal(row.implementation_status, control.implementationStatus ?? '');
+    assert.deepEqual(JSON.parse(row.measurement_json), control.measurement ?? null);
+    assert.deepEqual(JSON.parse(row.authority_assessment_json), control.authorityAssessment ?? null);
+    assert.deepEqual(JSON.parse(row.source_rows_json), control.sourceRows ?? null);
+    assert.deepEqual(JSON.parse(row.provenance_json), control.provenance ?? null);
+    const context = JSON.parse(row.authority_context_json);
+    if (control.kind === 'authority') {
+      for (const [key, value] of Object.entries(context)) assert.deepEqual(value, control[key]);
+    } else assert.equal(context, null);
   }
 });
 

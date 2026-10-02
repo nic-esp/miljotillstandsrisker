@@ -23,8 +23,17 @@ export function createKnowledgeGraph(options) {
   const conceptOrder = (a, b) => validRiskIds(b).length - validRiskIds(a).length || a.label.localeCompare(b.label, 'sv');
   const causeConcepts = concepts.filter(item => item.kind === 'cause').sort(conceptOrder);
   const effectConcepts = concepts.filter(item => item.kind === 'effect').sort(conceptOrder);
-  const sharedControls = controls.filter(item => validRiskIds(item).length > 1).sort((a,b) => validRiskIds(b).filter(id => topRiskIds.has(id)).length - validRiskIds(a).filter(id => topRiskIds.has(id)).length || validRiskIds(b).length - validRiskIds(a).length || a.id.localeCompare(b.id));
-  const state = {selection:null, query:'', process:'', top:false, zoom:1, matches:null};
+  const controlOrder = (a,b) => validRiskIds(b).filter(id => topRiskIds.has(id)).length - validRiskIds(a).filter(id => topRiskIds.has(id)).length || validRiskIds(b).length - validRiskIds(a).length || a.id.localeCompare(b.id);
+  const sharedControls = controls.filter(item => item.kind === 'shared' && validRiskIds(item).length > 1).sort(controlOrder);
+  const authorityControls = controls.filter(item => item.kind === 'authority' || item.driver === 'authority').sort(controlOrder);
+  const mainScenario = 'S1_beslutat_uppdrag';
+  const mainAuthorityControls = authorityControls.filter(item => item.scenario === mainScenario);
+  const scenarioLabel = value => ({S1_beslutat_uppdrag:'Huvudscenario · beslutat uppdrag',Inforande_ej_S1:'Införande · utanför huvudscenariot',Framtida_mandat_ej_beslutat:'Framtida mandat · ej beslutat'})[value] || value || 'Scenario ej angivet';
+  const authorityBadge = item => `<span class="kg-authority-badge">Myndighetsdriven</span><span class="kg-measurement-badge">Ej uppmätt</span>`;
+  const isAuthority = item => item?.kind === 'authority' || item?.driver === 'authority';
+  const state = {selection:null, query:'', process:'', controlFilter:'all', top:false, zoom:1, matches:null};
+  const filteredControls = () => state.controlFilter === 'authority-main' ? mainAuthorityControls : state.controlFilter === 'authority-all' ? authorityControls : sharedControls;
+  const matchesControlFilter = item => state.controlFilter === 'all' || (isAuthority(item) && (state.controlFilter === 'authority-all' || item.scenario === mainScenario));
   const abort = new AbortController();
   const listenerOptions = {signal:abort.signal};
   const NS = 'http://www.w3.org/2000/svg';
@@ -35,24 +44,25 @@ export function createKnowledgeGraph(options) {
   const catalog = [
     ...risks.map(item => ({id:item.risk_id,type:'risk',label:item.title,kind:'Risk',riskIds:[item.risk_id],search:[item.risk_id,item.title,item.trigger,item.impact,item.chart_key,chartLabel(item.chart_key),item.node_label,...(data.occurrences || []).filter(occurrence => occurrence.riskId === item.risk_id).map(occurrence => occurrence.text)].join(' ')})),
     ...concepts.map(item => ({id:item.id,type:'concept',label:item.label,kind:item.kind === 'cause' ? 'Orsak' : 'Konsekvens',riskIds:validRiskIds(item),search:[item.id,item.label,...(item.occurrenceIds || []).map(id => byOccurrence.get(id)?.text || '')].join(' ')})),
-    ...controls.map(item => ({id:item.id,type:'control',label:item.title,kind:'Motåtgärd',riskIds:validRiskIds(item),search:[item.id,item.title,item.description].join(' ')})),
+    ...controls.map(item => ({id:item.id,type:'control',label:item.title,kind:isAuthority(item) ? 'Myndighetsåtgärd' : 'Motåtgärd',riskIds:validRiskIds(item),search:[item.id,item.title,item.description,item.owner,item.scenario,isAuthority(item) ? 'myndighetsdriven' : ''].join(' ')})),
   ].map(item => ({...item,search:normalize(item.search)}));
 
   container.classList.add('knowledge-graph');
   container.innerHTML = `
-    <div class="kg-overview-counts" aria-label="Kartans innehåll"><span><b>${risks.length}</b> enskilda risker</span><span><b>${concepts.length}</b> orsaks- och konsekvensgrupper</span><span><b>${sharedControls.length}</b> sammanförda motåtgärder</span><span><b>${controls.filter(c=>c.kind==='source').length}</b> originalbeskrivningar</span><span><b>${charts.length}</b> processer</span></div>
+    <div class="kg-overview-counts" aria-label="Kartans innehåll"><span><b>${risks.length}</b> enskilda risker</span><span><b>${concepts.length}</b> orsaks- och konsekvensgrupper</span><span><b>${sharedControls.length}</b> sammanförda motåtgärder</span>${authorityControls.length ? `<span><b>${mainAuthorityControls.length}</b> myndighetsåtgärder i huvudscenariot</span>` : ''}<span><b>${controls.filter(c=>c.kind==='source').length}</b> originalbeskrivningar</span><span><b>${charts.length}</b> processer</span></div>
     <div class="kg-toolbar">
       <label class="kg-search-label">Sök i hela kartan<input class="kg-search" type="search" placeholder="Risk, motåtgärd, orsak eller konsekvens…" autocomplete="off"></label>
       <label>Markera process<select class="kg-process"><option value="">Alla processer</option>${charts.map(key => `<option value="${escape(key)}">${escape(key)} · ${escape(chartLabel(key))}</option>`).join('')}</select></label>
+      ${authorityControls.length ? `<label>Visa motåtgärder<select class="kg-control-filter"><option value="all">Alla kontroller</option><option value="authority-main">Myndighetsdrivna – huvudscenario (${mainAuthorityControls.length})</option><option value="authority-all">Myndighetsdrivna – alla scenarier (${authorityControls.length})</option></select></label>` : ''}
       <button class="btn kg-top" type="button" aria-pressed="false">Markera topp 50</button>
       <button class="btn" type="button" data-kg-action="reset">Återställ vy</button>
     </div>
     <div class="kg-search-results" aria-label="Sökresultat" hidden></div>
-    <div class="kg-legend" aria-label="Teckenförklaring"><span><i class="kg-key kg-key-risk"></i>Risk</span><span><i class="kg-key kg-key-top"></i>Topp 50</span><span><i class="kg-key kg-key-cause"></i>Delad orsak</span><span><i class="kg-key kg-key-effect"></i>Delad konsekvens</span><span><i class="kg-key kg-key-control"></i>Motåtgärd</span><span class="kg-legend-line">Samma ordalydelse</span><span class="kg-legend-line kg-legend-dashed">Tematisk likhet / åtgärdskoppling</span></div>
+    <div class="kg-legend" aria-label="Teckenförklaring"><span><i class="kg-key kg-key-risk"></i>Risk</span><span><i class="kg-key kg-key-top"></i>Topp 50</span><span><i class="kg-key kg-key-cause"></i>Delad orsak</span><span><i class="kg-key kg-key-effect"></i>Delad konsekvens</span><span><i class="kg-key kg-key-control"></i>Motåtgärd</span>${authorityControls.length ? '<span><i class="kg-key kg-key-authority"></i>Myndighetsdriven åtgärd</span>' : ''}<span class="kg-legend-line">Samma ordalydelse</span><span class="kg-legend-line kg-legend-dashed">Tematisk likhet / åtgärdskoppling</span></div>
     <div class="kg-selection-summary" aria-label="Valt samband och genväg till detaljer" hidden></div>
     <div class="kg-layout"><div class="kg-map-shell"><div class="kg-map-top"><span class="kg-status" role="status" aria-live="polite"></span><div class="kg-zoom" aria-label="Kartans zoom"><button type="button" data-kg-action="zoom-out" aria-label="Zooma ut">−</button><span class="kg-zoom-level">100 %</span><button type="button" data-kg-action="zoom-in" aria-label="Zooma in">+</button><button type="button" data-kg-action="fit">Anpassa</button></div></div><div class="kg-viewport" tabindex="0" aria-label="Sambandskarta, bläddra för att flytta den förstorade kartan"></div><p class="kg-map-caption"></p></div><aside class="kg-inspector" aria-label="Valt samband"></aside></div>
     <details class="kg-accessible"><summary>Utforska som lista – alla risker och deras samband</summary><div class="kg-accessible-body"><label>Välj en risk<select class="kg-risk-picker"><option value="">Välj bland alla ${risks.length} risker</option>${[...risks].sort((a,b) => riskOrder(a.risk_id,b.risk_id)).map(risk => `<option value="${escape(risk.risk_id)}">${rankFor(risk.risk_id) ? '#'+rankFor(risk.risk_id)+' · ' : ''}${escape(risk.risk_id)} · ${escape(risk.title)}</option>`).join('')}</select></label><p>Valet markerar riskens samband i kartan och visar dem som en läsbar lista. Sökfältet ovan hittar även samtliga motåtgärder, orsaker och konsekvenser.</p></div></details>
-    <p class="kg-method">Cirklarna representerar enskilda risker. Topp 50 följer BTL-rankningen; en koppling eller ett antal anger varken sannolikhet eller åtgärdens effekt. Tematiska grupper är analytiska sammanställningar med bevarad originaltext.</p>`;
+    <p class="kg-method">Cirklarna representerar enskilda risker. Topp 50 följer BTL-rankningen; en koppling eller ett antal anger varken sannolikhet eller åtgärdens effekt. Tematiska grupper är analytiska sammanställningar med bevarad originaltext. Myndighetsåtgärderna är förslag med avgränsade scenarier; deras riskreducerande effekt är ännu inte uppmätt.</p>`;
   status = container.querySelector('.kg-status');
   inspector = container.querySelector('.kg-inspector');
   searchResults = container.querySelector('.kg-search-results');
@@ -127,7 +137,8 @@ export function createKnowledgeGraph(options) {
       if (isControl) d = `M ${from.x} ${from.y} C ${from.x} ${from.y+70}, ${to.x} ${to.y-35}, ${to.x} ${to.y}`;
       else if (kind === 'cause') d = `M ${from.x} ${from.y} C 365 ${from.y}, 390 ${to.y}, ${to.x} ${to.y}`;
       else d = `M ${to.x} ${to.y} C 1164 ${to.y}, 1198 ${from.y}, ${from.x} ${from.y}`;
-      const path = element('path',{d,class:`kg-edge${isControl ? ' kg-edge-control' : ''}${semantic ? ' kg-edge-semantic' : ''}`,'data-edge-kind':isControl ? 'explicit-control-risk' : semantic ? 'semantic-membership' : 'exact-membership','data-edge-risk-id':riskId});
+      const authority = isControl && isAuthority(byControl.get(id));
+      const path = element('path',{d,class:`kg-edge${isControl ? ' kg-edge-control' : ''}${authority ? ' kg-edge-authority' : ''}${semantic ? ' kg-edge-semantic' : ''}`,'data-edge-kind':authority ? 'proposed-authority-risk' : isControl ? 'explicit-control-risk' : semantic ? 'semantic-membership' : 'exact-membership','data-edge-risk-id':riskId});
       edges.append(path); graphEdges.push({el:path,type,id,riskId});
     }
     const visibleCauses = visibleConcepts(causeConcepts), visibleEffects = visibleConcepts(effectConcepts);
@@ -145,7 +156,8 @@ export function createKnowledgeGraph(options) {
       });
     }
     addConcepts(visibleCauses,'cause'); addConcepts(visibleEffects,'effect');
-    const visibleControls = sharedControls.slice(0,4);
+    const controlPool = filteredControls();
+    const visibleControls = controlPool.slice(0,4);
     if (state.selection?.type === 'control') {
       const chosen = byControl.get(state.selection.id);
       if (chosen && !visibleControls.includes(chosen)) visibleControls.push(chosen);
@@ -153,17 +165,19 @@ export function createKnowledgeGraph(options) {
     visibleControls.forEach((control,index) => {
       const cardWidth = visibleControls.length > 4 ? 137 : 174;
       const x = 428 + index * (cardWidth+5), y = 64;
-      const group = element('g',{class:'kg-hub kg-hub-control','data-kg-type':'control','data-kg-id':control.id,role:'button',tabindex:'-1','aria-label':control.title});
+      const group = element('g',{class:`kg-hub kg-hub-control${isAuthority(control) ? ' kg-hub-authority' : ''}`,'data-kg-type':'control','data-kg-id':control.id,role:'button',tabindex:'-1','aria-label':control.title});
       group.append(element('rect',{x,y,width:cardWidth,height:88,rx:5}));
-      wrappedLabel(group,control.title,x+11,y+19,visibleControls.length > 4 ? 17 : 21,3);
+      if (isAuthority(control)) group.append(element('text',{x:x+11,y:y+13,class:'kg-authority-tag'},`${control.id} · MYNDIGHET`));
+      wrappedLabel(group,control.title,x+11,y+(isAuthority(control) ? 29 : 19),visibleControls.length > 4 ? 17 : 21,isAuthority(control) ? 2 : 3);
       group.append(element('text',{x:x+11,y:y+76,class:'kg-control-count'},`${validRiskIds(control).length} risker · ${validRiskIds(control).filter(id => topRiskIds.has(id)).length} i topp 50`));
-      group.append(element('title',{},`${control.title}\n${control.description || ''}\nKopplingarna avser uttryckligen dokumenterade mål inom ${validRiskIds(control).length} risker.`));
+      group.append(element('title',{},`${control.title}\n${control.description || ''}\n${isAuthority(control) ? scenarioLabel(control.scenario)+' · Effekt ej uppmätt. Föreslagna kopplingar' : 'Kopplingarna avser uttryckligen dokumenterade mål'} inom ${validRiskIds(control).length} risker.`));
       nodes.append(group); graphNodes.push({el:group,type:'control',id:control.id,riskIds:validRiskIds(control)});
       validRiskIds(control).forEach(riskId => addEdge({x:x+cardWidth/2,y:y+88},riskId,'control',control.id,null,true));
     });
     if (!visibleControls.length) bands.append(element('text',{x:450,y:102,class:'kg-empty-label'},'Sök en motåtgärd för att visa dess kopplingar.'));
     viewport.replaceChildren(svg);
-    container.querySelector('.kg-map-caption').textContent = `${risks.length} av ${risks.length} risker visas alltid. ${visibleCauses.length+visibleEffects.length} av ${concepts.length} orsaks- och konsekvensgrupper samt ${visibleControls.length} av ${controls.length} motåtgärder visas som noder. Sök fram valfri grupp eller åtgärd för att lägga den i kartan. Linjer visar gruppmedlemskap eller en åtgärds uttryckliga riskkopplingar; exakta mål visas vid val.`;
+    const controlScope = state.controlFilter === 'authority-main' ? `${mainAuthorityControls.length} myndighetsåtgärder i huvudscenariot` : state.controlFilter === 'authority-all' ? `${authorityControls.length} myndighetsåtgärder i alla scenarier` : `${controls.length} motåtgärder`;
+    container.querySelector('.kg-map-caption').textContent = `${risks.length} av ${risks.length} risker visas alltid. ${visibleCauses.length+visibleEffects.length} av ${concepts.length} orsaks- och konsekvensgrupper samt ${visibleControls.length} av ${controlScope} visas som noder. ${state.controlFilter === 'all' ? 'Översikten börjar med fyra sammanförda åtgärder.' : 'Fyra åtgärder i urvalet med flest kopplingar till topp 50 visas först.'} En vald åtgärd läggs till vid behov. Sök bland alla åtgärder inom valt urval. Linjer visar gruppmedlemskap eller dokumenterade och föreslagna riskkopplingar. Antalet kopplingar anger inte åtgärdens effekt eller sannolikhet för införande.`;
     applyZoom(); updateHighlights();
   }
 
@@ -171,6 +185,10 @@ export function createKnowledgeGraph(options) {
     let active = null;
     if (state.selection) active = new Set(entityRiskIds(state.selection));
     else if (state.query) active = new Set((state.matches || []).flatMap(item => item.riskIds));
+    if (!state.selection && state.controlFilter !== 'all') {
+      const scope = new Set(filteredControls().flatMap(validRiskIds));
+      active = active ? new Set([...active].filter(id => scope.has(id))) : scope;
+    }
     if (state.process || state.top) {
       active ||= new Set(risks.map(risk => risk.risk_id));
       for (const id of active) if ((state.process && byRisk.get(id)?.chart_key !== state.process) || (state.top && !topRiskIds.has(id))) active.delete(id);
@@ -184,7 +202,7 @@ export function createKnowledgeGraph(options) {
       node.el.setAttribute('aria-pressed',String(selected));
     }
     for (const edge of graphEdges) {
-      const selectedEntityEdge = state.selection && state.selection.type !== 'risk' ? edge.type === state.selection.type && edge.id === state.selection.id : true;
+      const selectedEntityEdge = state.selection && state.selection.type !== 'risk' ? edge.type === state.selection.type && edge.id === state.selection.id : !state.selection && state.controlFilter !== 'all' ? edge.type === 'control' && matchesControlFilter(byControl.get(edge.id)) : true;
       const highlighted = !!active && active.has(edge.riskId) && selectedEntityEdge;
       edge.el.classList.toggle('kg-edge-highlighted',highlighted);
       edge.el.classList.toggle('kg-edge-muted',!!active && !highlighted);
@@ -195,26 +213,27 @@ export function createKnowledgeGraph(options) {
   function riskButtons(ids) {
     return [...ids].sort(riskOrder).map(id => { const risk = byRisk.get(id); if (!risk) return ''; return `<li><button type="button" data-kg-select="risk" data-id="${escape(id)}"><span class="kg-list-rank${topRiskIds.has(id) ? ' kg-list-top' : ''}">${rankFor(id) ? '#'+rankFor(id) : '–'}</span><span><small>${escape(id)}</small>${escape(risk.title)}</span></button></li>`; }).join('');
   }
-  function entityButton(item,type) { return `<button class="kg-entity-link" type="button" data-kg-select="${type}" data-id="${escape(item.id)}">${escape(item.title || item.label)}<small>${validRiskIds(item).length} kopplade risker</small></button>`; }
+  function entityButton(item,type) { return `<button class="kg-entity-link" type="button" data-kg-select="${type}" data-id="${escape(item.id)}">${escape(item.title || item.label)}${isAuthority(item) ? authorityBadge(item) : ''}<small>${validRiskIds(item).length} kopplade risker</small></button>`; }
   function basisLabel(basis) { return basis === 'source' ? 'Källstöd' : basis === 'register' ? 'Riskregistret' : 'Analys'; }
   function renderInspector() {
     const selection = state.selection, item = selectedEntity();
     selectionSummary.hidden = !selection || !item;
     if (!selection || !item) {
       selectionSummary.replaceChildren();
-      inspector.innerHTML = `<p class="kg-eyebrow">UTFORSKA SAMBANDEN</p><h3>Vad återkommer?</h3><p>Välj en orsak, konsekvens eller blå motåtgärd. De berörda riskerna markeras i hela registret.</p><div class="kg-inspector-tip"><strong>Hela bilden ligger kvar</strong><p>En markering dämpar övriga risker utan att ta bort dem. Riskernas positioner är fasta.</p></div><h4>Motåtgärder med bred koppling</h4>${sharedControls.slice(0,4).map(item => entityButton(item,'control')).join('') || '<p>Sök efter en motåtgärd för att undersöka dess mål.</p>'}<p class="kg-muted-copy">Antalet kopplingar visar dokumenterad räckvidd. Det är inte ett mått på genomförande eller effektivitet.</p>`;
+      inspector.innerHTML = `<p class="kg-eyebrow">UTFORSKA SAMBANDEN</p><h3>Vad återkommer?</h3><p>Välj en orsak, konsekvens eller motåtgärd. De berörda riskerna markeras i hela registret.</p><div class="kg-inspector-tip"><strong>Hela bilden ligger kvar</strong><p>En markering dämpar övriga risker utan att ta bort dem. Riskernas positioner är fasta.</p></div><h4>${state.controlFilter === 'all' ? 'Motåtgärder med bred koppling' : state.controlFilter === 'authority-main' ? 'Myndighetsåtgärder · huvudscenario' : 'Myndighetsåtgärder · alla scenarier'}</h4>${filteredControls().slice(0,4).map(item => entityButton(item,'control')).join('') || '<p>Sök efter en motåtgärd för att undersöka dess mål.</p>'}${state.controlFilter !== 'all' ? `<p class="kg-muted-copy">Alla ${filteredControls().length} åtgärder i urvalet ingår i markeringen. Här visas fyra; sök på namn eller MPM-id för att undersöka övriga. ${state.controlFilter === 'authority-main' ? 'Införandeåtgärden och framtida mandat ingår inte i huvudscenariot.' : 'Detta urval innehåller även införande och framtida mandat.'}</p><p class="kg-inspector-note">Förslag och effekthypoteser. Riskreduceringen är ej uppmätt.</p>` : ''}<p class="kg-muted-copy">Antalet kopplingar visar dokumenterad räckvidd. Det är inte ett mått på genomförande eller effektivitet.</p>`;
       return;
     }
     const ids = entityRiskIds(selection), isControl = selection.type === 'control', isConcept = selection.type === 'concept';
     const title = item.title || item.label;
-    const typeLabel = isControl ? 'MOTÅTGÄRD' : isConcept ? item.kind === 'cause' ? 'DELAD ORSAK' : 'DELAD KONSEKVENS' : 'RISK';
-    selectionSummary.innerHTML = `<div><span class="kg-selection-type">${typeLabel}</span><strong>${escape(title)}</strong><span class="kg-selection-reach">${ids.length} ${isControl || isConcept ? 'kopplade risker' : 'vald risk'} · ${ids.filter(id => topRiskIds.has(id)).length} i topp 50${!isControl && !isConcept && rankFor(item.risk_id) ? ' · BTL-rang '+rankFor(item.risk_id) : ''}</span></div><button class="btn" type="button" data-kg-action="${isControl ? 'open-control' : isConcept ? 'open-concept' : 'open-risk'}">Öppna detaljer</button>`;
+    const typeLabel = isControl ? isAuthority(item) ? 'MYNDIGHETSDRIVEN ÅTGÄRD' : 'MOTÅTGÄRD' : isConcept ? item.kind === 'cause' ? 'DELAD ORSAK' : 'DELAD KONSEKVENS' : 'RISK';
+    selectionSummary.innerHTML = `<div><span class="kg-selection-type">${typeLabel}</span><strong>${escape(title)}</strong><span class="kg-selection-reach">${ids.length} ${isControl || isConcept ? 'kopplade risker' : 'vald risk'} · ${ids.filter(id => topRiskIds.has(id)).length} i topp 50${!isControl && !isConcept && rankFor(item.risk_id) ? ' · BTL-rang '+rankFor(item.risk_id) : ''}</span>${isControl && isAuthority(item) ? `<span class="kg-selection-reach">${escape(item.owner || 'Myndigheten')} · ${escape(scenarioLabel(item.scenario))}</span>${authorityBadge(item)}` : ''}</div><button class="btn" type="button" data-kg-action="${isControl ? 'open-control' : isConcept ? 'open-concept' : 'open-risk'}">Öppna detaljer</button>`;
     let body = `<div class="kg-inspector-heading"><p class="kg-eyebrow">${typeLabel}</p><button type="button" data-kg-action="clear" aria-label="Rensa markering">×</button></div><h3>${escape(title)}</h3>`;
     if (isControl || isConcept) body += `<div class="kg-inspector-counts"><span><b>${ids.length}</b>kopplade risker</span><span><b>${ids.filter(id => topRiskIds.has(id)).length}</b>i topp 50</span><span><b>${unique(ids.map(id => byRisk.get(id).chart_key)).length}</b>processer</span></div>`;
     if (isControl) {
-      body += `<p>${escape(item.description)}</p><p class="kg-inspector-note">${item.kind === 'shared' ? 'Analytiskt sammanställd motåtgärd med uttryckligen angivna mål.' : 'Motåtgärd importerad från riskens originaltext.'} Koppling innebär inte att åtgärden är genomförd eller bevisat effektiv.</p><button class="btn kg-primary" type="button" data-kg-action="open-control">Öppna motåtgärd</button><h4>Exakta mål</h4><p class="kg-muted-copy">Endast målen nedan ingår. En gemensam orsak utökar inte åtgärdens räckvidd.</p>`;
+      if (isAuthority(item)) body += `<div class="kg-authority-metadata">${authorityBadge(item)}<dl><dt>Ansvarig aktör</dt><dd>${escape(item.owner || 'Ej angivet')}</dd><dt>Scenario</dt><dd>${escape(scenarioLabel(item.scenario))}</dd><dt>Status</dt><dd>Förslag · införande ej verifierat</dd><dt>Riskreducerande effekt</dt><dd>Ej uppmätt</dd></dl>${item.scope ? `<p>${escape(item.scope)}</p>` : ''}</div>`;
+      body += `<p>${escape(item.description)}</p><p class="kg-inspector-note">${isAuthority(item) ? 'Myndighetsåtgärd importerad från förslagsunderlaget. Kopplingarna är effekthypoteser med angivna villkor och ansvarsgränser.' : item.kind === 'shared' ? 'Analytiskt sammanställd motåtgärd med uttryckligen angivna mål.' : 'Motåtgärd importerad från riskens originaltext.'} Koppling innebär inte att åtgärden är genomförd eller bevisat effektiv.</p><button class="btn kg-primary" type="button" data-kg-action="open-control">Öppna motåtgärd</button><h4>${isAuthority(item) ? 'Föreslagna riskkopplingar' : 'Exakta mål'}</h4><p class="kg-muted-copy">${isAuthority(item) ? 'Kopplingarna visar vilka risker förslaget avser. De är inte bevis på uppmätt riskreduktion.' : 'Endast målen nedan ingår. En gemensam orsak utökar inte åtgärdens räckvidd.'}</p>`;
       const targets = item.targets || [];
-      body += targets.length ? `<ul class="kg-targets">${targets.map(target => { const occurrence = byOccurrence.get(target.targetId); return `<li><span class="kg-target-kind">${target.type === 'cause' ? 'Orsak' : target.type === 'effect' ? 'Konsekvens' : 'Riskhändelse'} · ${escape(target.riskId)}</span><p>${escape(occurrence?.text || byRisk.get(target.riskId)?.title || target.targetId)}</p><small>${escape(basisLabel(target.basis))}${target.role ? ' · '+escape(roleLabel(target.role)) : ''}</small>${target.rationale ? `<p class="kg-target-rationale">${escape(target.rationale)}</p>` : ''}</li>`; }).join('')}</ul>` : '<p>Ingen precisering av enskilda mål finns i underlaget.</p>';
+      body += targets.length ? `<ul class="kg-targets">${targets.map(target => { const occurrence = byOccurrence.get(target.targetId); return `<li><span class="kg-target-kind">${target.type === 'cause' ? 'Orsak' : target.type === 'effect' ? 'Konsekvens' : 'Riskhändelse'} · ${escape(target.riskId)}</span><p>${escape(occurrence?.text || byRisk.get(target.riskId)?.title || target.targetId)}</p><small>${escape(basisLabel(target.basis))}${target.role ? ' · '+escape(roleLabel(target.role)) : ''}</small>${target.rationale ? `<p class="kg-target-rationale">${escape(target.rationale)}</p>` : ''}${isAuthority(item) && target.effectHypothesis ? `<p class="kg-target-rationale"><b>Effekthypotes:</b> ${escape(target.effectHypothesis)}</p>` : ''}${isAuthority(item) && target.applicationConditions ? `<p class="kg-target-rationale"><b>Tillämpningsvillkor:</b> ${escape(target.applicationConditions)}</p>` : ''}</li>`; }).join('')}</ul>` : '<p>Ingen precisering av enskilda mål finns i underlaget.</p>';
       if (item.sourceTexts?.length) body += `<details><summary>Originaltexter (${item.sourceTexts.length})</summary>${item.sourceTexts.map(source => `<blockquote><small>${escape(source.riskId)}</small><p>${escape(source.text || source.excerpt)}</p></blockquote>`).join('')}</details>`;
     } else if (isConcept) {
       body += `<p class="kg-inspector-note">${item.matchType === 'exact' ? 'Samma ordalydelse förekommer i flera risker. Varje risk behåller sin egen förekomst och sitt källstöd.' : 'Tematisk likhet: en analytisk gruppering av närliggande formuleringar. Riskerna och deras originalformuleringar är separata.'}</p>${item.rationale ? `<p>${escape(item.rationale)}</p>` : ''}<button class="btn kg-primary" type="button" data-kg-action="open-concept">Undersök gruppen</button><h4>Riskernas originalformuleringar</h4><ul class="kg-targets">${(item.occurrenceIds || []).map(id => byOccurrence.get(id)).filter(Boolean).map(occurrence => `<li><button class="kg-text-button" type="button" data-kg-select="risk" data-id="${escape(occurrence.riskId)}">${escape(occurrence.riskId)}</button><p>${escape(occurrence.text)}</p><small>${escape(basisLabel(occurrence.basis))}${occurrence.source_refs?.length ? ' · '+escape(occurrence.source_refs.join(', ')) : ''}</small></li>`).join('')}</ul>`;
@@ -240,6 +259,10 @@ export function createKnowledgeGraph(options) {
     let next = typeof value === 'string' ? {id:value,type:byRisk.has(value) ? 'risk' : byControl.has(value) ? 'control' : 'concept'} : value;
     if (!next || !['risk','control','concept'].includes(next.type)) return false;
     if (!(next.type === 'risk' ? byRisk : next.type === 'control' ? byControl : byConcept).has(next.id)) return false;
+    if (next.type === 'control' && !matchesControlFilter(byControl.get(next.id))) {
+      state.controlFilter = isAuthority(byControl.get(next.id)) ? 'authority-all' : 'all';
+      if (container.querySelector('.kg-control-filter')) container.querySelector('.kg-control-filter').value = state.controlFilter;
+    }
     state.selection = {type:next.type,id:next.id}; state.process = ''; state.top = false; state.query = ''; state.matches = null;
     container.querySelector('.kg-process').value = '';
     container.querySelector('.kg-search').value = '';
@@ -259,8 +282,9 @@ export function createKnowledgeGraph(options) {
     container.querySelector('.kg-zoom-level').textContent = `${Math.round(state.zoom * 100)} %`;
   }
   function reset() {
-    state.selection = null; state.query = ''; state.process = ''; state.top = false; state.zoom = 1; state.matches = null;
+    state.selection = null; state.query = ''; state.process = ''; state.controlFilter = 'all'; state.top = false; state.zoom = 1; state.matches = null;
     container.querySelector('.kg-search').value = ''; container.querySelector('.kg-process').value = ''; container.querySelector('.kg-risk-picker').value = '';
+    if (container.querySelector('.kg-control-filter')) container.querySelector('.kg-control-filter').value = 'all';
     searchResults.hidden = true; renderGraph(); renderInspector();
     const viewport = container.querySelector('.kg-viewport'); viewport.scrollTop = 0; viewport.scrollLeft = 0;
     onSelection?.(null);
@@ -283,10 +307,14 @@ export function createKnowledgeGraph(options) {
   },listenerOptions);
   container.querySelector('.kg-search').addEventListener('input',event => {
     state.query = normalize(event.target.value).trim(); state.selection = null;
-    state.matches = state.query ? catalog.filter(item => item.search.includes(state.query)) : null;
+    state.matches = state.query ? catalog.filter(item => item.search.includes(state.query) && (item.type !== 'control' || matchesControlFilter(byControl.get(item.id)))) : null;
     searchResults.hidden = !state.query;
     if (state.query) searchResults.innerHTML = `<p>${state.matches.length} träffar. Alla risker ligger kvar i kartan.</p>${state.matches.slice(0,30).map(item => `<button type="button" data-kg-select="${item.type}" data-id="${escape(item.id)}"><small>${item.kind}</small>${escape(item.label)}<span>${item.riskIds.length} ${item.riskIds.length === 1 ? 'risk' : 'risker'}</span></button>`).join('')}${state.matches.length > 30 ? '<p>De första 30 visas. Förfina sökningen för att hitta en bestämd post.</p>' : ''}`;
     clearSelection();
+  },listenerOptions);
+  container.querySelector('.kg-control-filter')?.addEventListener('change',event => {
+    state.controlFilter = event.target.value; state.query = ''; state.matches = null;
+    container.querySelector('.kg-search').value = ''; searchResults.hidden = true; clearSelection();
   },listenerOptions);
   container.querySelector('.kg-process').addEventListener('change',event => { state.process = event.target.value; clearSelection(); },listenerOptions);
   container.querySelector('.kg-top').addEventListener('click',() => { state.top = !state.top; clearSelection(); },listenerOptions);

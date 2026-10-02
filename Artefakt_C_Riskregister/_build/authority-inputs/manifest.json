@@ -1,0 +1,29 @@
+{
+  "version": "0.10",
+  "date": "2026-09-30",
+  "registerVersion": "2.2.0",
+  "status": "user-supplied-review-material",
+  "mainScenario": "S1_beslutat_uppdrag",
+  "expected": {
+    "controls": 20,
+    "links": 173,
+    "assessments": 342
+  },
+  "files": [
+    {
+      "file": "lasanvisning_och_kallor.txt",
+      "sha256": "29d25eac834bfef799f7b4564364c9d0c0b87cdc4e576ed28fc9fb658f935a22",
+      "bytes": 14245
+    },
+    {
+      "file": "myndighetskontroller_riskkopplingar.csv",
+      "sha256": "4911a40a843a5d00024eb08a9da7142aaf483155006f53c467a3820405f97b7b",
+      "bytes": 532039
+    },
+    {
+      "file": "atgardsforslag_bedomning.csv",
+      "sha256": "e568586373ab080168ad97265b72eadaf0edcd22ced3c32e18c2c87bfe986d6f",
+      "bytes": 419343
+    }
+  ]
+}
