@@ -54,7 +54,7 @@ function renderCompactRisks() {
     <p class="ex-note">BTL-rang från ${rankingDate()}. Orange markerar topp 50. Rangordningen beskriver relativ sannolikhet; ${RANKING.unranked.length} risk saknar rang.</p>`;
   $('#exAllRisks').onclick=()=>{state.topOnly=false;renderSidebar();renderCompactRisks();exSyncRoute();};
   $('#exTopRisks').onclick=()=>{state.topOnly=true;state.sort='rank';$('#sort').value='rank';renderSidebar();renderCompactRisks();exSyncRoute();};
-  $('#exMissingControls').onchange=e=>{exState.missingControls=e.target.checked;renderCompactRisks();};
+  $('#exMissingControls').onchange=e=>{exState.missingControls=e.target.checked;renderCompactRisks();exSyncRoute();};
   $('#exRiskExport').onclick=()=>exportRisks(rs,'miljotillstandsrisks_urval.csv');
   $('#exRiskItemExport').onclick=()=>exportRiskItems(rs,'riskregister_orsaker_konsekvenser_urval.csv');
   bindRankingLinks($('#main'));
@@ -223,10 +223,14 @@ function exOpenControl(id) {if(EX_CONTROLS.has(id))exOpenDialog({type:'control',
 function exOpenConcept(id) {if(EX_CONCEPTS.has(id))exOpenDialog({type:'concept',id});}
 function exCloseDialog() {const d=$('#exDialog');exState.dialog=null;exState.stack=[];if(d?.open)d.close();exSyncRoute();}
 function exSyncRoute() {
+  if(siteRestoringRoute)return;
   const u=new URL(location.href);
-  for(const key of ['view','risk','control','concept','focus','top','q','compare','tab','action','charts','cats','origins','node','sort','driver','scenario','controlq','controlkind','controlchart','controlsort'])u.searchParams.delete(key);
+  for(const key of ['view','risk','control','concept','focus','top','q','compare','tab','action','charts','cats','origins','node','sort','driver','scenario','controlq','controlkind','controlchart','controlsort','chart','processnode','selectednode','downstream','missingcontrols'])u.searchParams.delete(key);
   if(state.view!=='risks')u.searchParams.set('view',state.view);
-  if(state.view==='risks'){if(state.topOnly)u.searchParams.set('top','1');if(state.q)u.searchParams.set('q',state.q);}
+  if(['risks','nodes'].includes(state.view)){if(state.topOnly)u.searchParams.set('top','1');if(state.q)u.searchParams.set('q',state.q);}
+  if(state.view==='risks'&&exState.missingControls)u.searchParams.set('missingcontrols','1');
+  if(state.view==='process'){u.searchParams.set('chart',state.selChart);if(state.selProcNode)u.searchParams.set('processnode',state.selProcNode);if(state.showDownstream)u.searchParams.set('downstream','1');}
+  if(state.view==='nodes'&&state.selNode)u.searchParams.set('selectednode',state.selNode);
   if(state.view==='graph'&&exState.graphSelection?.id)u.searchParams.set('focus',`${exState.graphSelection.type}:${exState.graphSelection.id}`);
   if(exState.dialog?.id)u.searchParams.set(exState.dialog.type,exState.dialog.id);
   if(exState.dialog?.type==='risk'){if(exState.dialog.tab!=='bow')u.searchParams.set('tab',exState.dialog.tab);if(exState.dialog.controlId)u.searchParams.set('action',exState.dialog.controlId);}
@@ -238,7 +242,7 @@ function exSyncRoute() {
   if(state.view==='controls'){if(exState.controlDriver!=='all')u.searchParams.set('driver',exState.controlDriver);if(exState.controlDriver==='authority')u.searchParams.set('scenario',exState.controlScenario);if(exState.controlQ)u.searchParams.set('controlq',exState.controlQ);if(exState.controlKind!=='all')u.searchParams.set('controlkind',exState.controlKind);if(exState.controlChart)u.searchParams.set('controlchart',exState.controlChart);if(exState.controlSort!=='top')u.searchParams.set('controlsort',exState.controlSort);}
   if(exState.dialog?.type==='compare')u.searchParams.set('compare',[...exState.compare].join(','));
   publicationRoute(u);
-  history.replaceState(null,'',u);
+  writeSiteRoute(u);
 }
 function exInit() {
   document.addEventListener('click',event=>{
@@ -255,6 +259,12 @@ function exInit() {
     else if(el.hasAttribute('data-ex-open-compare'))exOpenDialog({type:'compare'});
   });
   document.addEventListener('change',event=>{const el=event.target;if(el.dataset.exCompare){el.checked?exState.compare.add(el.dataset.exCompare):exState.compare.delete(el.dataset.exCompare);renderControls();const cb=document.querySelector(`[data-ex-compare="${CSS.escape(el.dataset.exCompare)}"]`);cb?.focus();}});
+  exReadRoute();
+}
+function exReadRoute() {
+  Object.assign(state,{view:'risks',topOnly:false,q:'',charts:new Set(CHARTS),cats:new Set(CATEGORIES),origins:new Set(ORIGINS),node:'',sort:'rank',selChart:'B00',selProcNode:null,selNode:null,showDownstream:false});
+  Object.assign(exState,{controlDriver:'all',controlScenario:EX_AUTHORITY_MAIN,controlKind:'all',controlChart:'',controlSort:'top',controlQ:'',graphSelection:null,compare:new Set(),dialog:null,stack:[],missingControls:false});
+  publicationReadRoute();
   const params=new URLSearchParams(location.search);
   if(['all','authority','other'].includes(params.get('driver')))exState.controlDriver=params.get('driver');
   if(params.get('scenario')==='all'||EX_AUTHORITY_SCENARIOS[params.get('scenario')])exState.controlScenario=params.get('scenario');
@@ -265,6 +275,11 @@ function exInit() {
   const initialView=params.get('view');
   if(['risks','ranking','controls','graph','process','nodes','stats','analysis','report'].includes(initialView))state.view=initialView;
   state.topOnly=params.get('top')==='1';state.q=params.get('q')||'';$('#search').value=state.q;
+  exState.missingControls=params.get('missingcontrols')==='1';
+  if(PROC[params.get('chart')])state.selChart=params.get('chart');
+  if(PROC_NODE[params.get('processnode')]){state.selProcNode=params.get('processnode');state.selChart=PROC_NODE[state.selProcNode].chart;}
+  if(NODE_BY_ID[params.get('selectednode')])state.selNode=params.get('selectednode');
+  state.showDownstream=params.get('downstream')==='1';
   const focus=params.get('focus');if(focus){const split=focus.indexOf(':');exState.graphSelection={type:focus.slice(0,split),id:focus.slice(split+1)};}
   if(params.get('compare')) for(const id of params.get('compare').split(','))if(EX_CONTROLS.has(id)&&exState.compare.size<3)exState.compare.add(id);
   for(const [key,values] of [['charts',CHARTS],['cats',CATEGORIES],['origins',ORIGINS]])if(params.has(key))state[key]=new Set(params.get(key).split(',').filter(v=>values.includes(v)));

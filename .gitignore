@@ -38,3 +38,6 @@ Artefakt_C_Riskregister/_build/*
 !Artefakt_C_Riskregister/_build/measurement_view.mjs
 !Artefakt_C_Riskregister/_build/measurement.css
 !Artefakt_C_Riskregister/_build/report_model.mjs
+
+!Artefakt_C_Riskregister/_build/site_navigation.mjs
+!Artefakt_C_Riskregister/_build/navigation_view.mjs

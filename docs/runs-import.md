@@ -32,6 +32,19 @@ Om native Monte Carlo-exporten enbart innehåller sannolikhets- och konsekvensdr
 
 ## Enheter och modeller
 
+### Median/P50 i Runs-exporterna
+
+Kodgranskning 2026-10-21 av den lokala Cardinal-versionen visar följande. De nya mätfilerna har ännu inte levererats, så innehållet måste verifieras mot den faktiskt avslutade körningen.
+
+- Export av en **enskild** Monte Carlo-Run av typen `risk_exposure` skriver CSV-kolumnerna `Risk ID,Mean,P50,P90,P99`. P50 kommer från `data.exposures[].quantiles.p50`. Mass-export av Runs-listan är däremot en förteckning över körningarna, inte deras fullständiga mätresultat.
+- Fullständiga Run-data innehåller `data`, `provenance` och `stats`. Den typade occurrence-delen kan innehålla `data.occurrence.results[].probability.median` och `annualRate.median`, med respektive medelvärde, spridning och kvantiler.
+- BTL:s förenklade ranking-CSV har `Risk ID,Score,Rank,Uncertainty`, utan median. Ett score eller en absolut punkt får inte märkas som medelvärde/median utan sin dokumenterade definition.
+- CSV-exporten tar inte med dimension, enhet, kalibreringsstatus, occurrence-blocket eller lineage. Den granskade implementationen använder dessutom `value || ''`, vilket skriver numeriska nollor som tomma celler. Använd fullständiga data och metadata från samma Run för importen; tolka aldrig tom CSV-cell som noll eller som bevis för saknat resultat.
+- Likelihood-exponeringarnas P50 kan vara en relativ diagnostisk rankingfördelning. Den är inte automatiskt median för händelsesannolikheten. Impact-P50 kan vara kostnad per händelse endast när enhet och kalibrering stöder det. Monetär förlust-P50 kräver en förlustfördelning över den angivna perioden.
+- Sajten har redan stöd för P50 i en importerad monetär förlustfördelning. Medelvärde och median ska bevaras separat. Summan av enskilda riskers medianer är inte generellt portföljens median; produkten av sannolikhetens och konsekvensens medianer är inte generellt förlustens median. `Förväntad förlust` fortsätter att beteckna medelvärdet, även om median blir ett separat presentationsval.
+
+Kodpunkter i Cardinal: `lib/services/run-service.ts` (`exportRun`), `app/(logged-in)/[orgSlug]/runs/[id]/page.tsx` (CSV-export), `lib/execution/functions/monte-carlo.ts` (exposures och occurrence).
+
 - `absolute.unit`: `probability` eller `events_per_year` för händelsemått, `SEK_per_event` (eller vald valuta) för konsekvens. Ett värde över ett i frekvenskolumnen är inte en ogiltig procentsannolikhet.
 - Bara `eligibleForAbsolute: true` och `calibrationStatus: anchor_scaled` ger absoluta visningsvärden. Relativa poäng och begränsade/ogiltiga värden förblir separata. Modellkalibrering kallas inte empirisk validering.
 - En konsekvenspunkt är inte automatiskt ett villkorat medelvärde. `absolute.statistic: conditional_mean` ska bara anges om definitionen faktiskt stöder det.

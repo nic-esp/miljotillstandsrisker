@@ -103,12 +103,14 @@ function withSiteFixture(callback) {
     ...Object.values(STATIC_DATA_FILES),
     'site/data/index.html', 'site/ai-access.html', 'site/llms.txt', 'site/sitemap.xml',
     'site/assets/svenskt-naringsliv-logo.svg', 'site/assets/svenskt-naringsliv-logo-stacked.svg',
+    'site/assets/site-navigation.css',
     'site/favicon.ico',
   ];
   for (const path of files) {
     mkdirSync(dirname(join(directory, path)), { recursive: true });
     writeFileSync(join(directory, path), `fixture: ${path}`);
   }
+  writeFileSync(join(directory, 'report/manuscript.json'), JSON.stringify({chapters:[{id:'sammanfattning'}]}));
   writeFileSync(join(directory, 'private-source.txt'), 'Do not publish');
   try { return callback(directory); }
   finally { rmSync(directory, { recursive: true, force: true }); }

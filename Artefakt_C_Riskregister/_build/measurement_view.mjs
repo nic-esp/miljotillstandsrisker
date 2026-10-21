@@ -66,7 +66,7 @@ function renderRiskAnalysis() {
   $('#msAnalysisTop').onchange=e=>{publicationState.analysisTop=e.target.checked;renderRiskAnalysis();exSyncRoute();};
 }
 function measurementControlTabs() {
-  return `<div class="ms-subnav" role="tablist" aria-label="Motåtgärdernas vyer"><button role="tab" aria-selected="${publicationState.controlTab==='register'}" data-pub-control-tab="register">Register</button><button role="tab" aria-selected="${publicationState.controlTab==='analysis'}" data-pub-control-tab="analysis">Analys</button></div>`;
+  return ''; // Section navigation is rendered once in the shared header.
 }
 function measurementScenarioFigure(s) {
   if(!s)return measurementEmpty('Effekt på riskkostnaden','En exporterad scenarioberäkning för exakt de valda kontrollerna behövs. Latenta effekter summeras inte till en kostnadsreduktion.');
@@ -93,12 +93,13 @@ function renderReport() {
   if(!chapter) {
     $('#main').innerHTML=`<div class="rp-cover"><div><div class="rp-section-label">Analysrapport · ${reportStatus(REPORT.status)}</div><h2>${esc(REPORT.title)}</h2><p class="rp-cover-lead">${esc(REPORT.description)}</p><div class="ex-actions"><button class="btn active" data-pub-chapter="sammanfattning">Börja läsa</button><a class="btn" href="report/rapportmall.pdf" target="_blank">Ladda ner rapportmall (PDF)</a><a class="ex-text-link" href="report/" target="_blank">Utskriftsvänlig läsversion</a></div><p class="ex-note">Arbetsutgåva · ${esc(REPORT.date)} · Mätresultat och intervjumaterial inväntas</p></div><aside><strong class="rp-big-number">${RISKS.length}</strong><p>risker i ett sammanhängande underlag.</p><div class="rp-cover-index"><span class="rp-section-label">I rapporten</span>${[...new Set(REPORT.chapters.map(c=>c.part))].map((part,i)=>`<button class="ex-text-link" data-pub-chapter="${REPORT.chapters.find(c=>c.part===part).id}"><span>${String(i+1).padStart(2,'0')}</span>${esc(part)}</button>`).join('')}</div></aside></div><div class="rp-three"><section><span>01</span><div><h3>Riskbild och processer</h3><p>Rang, händelsemått, kostnad och osäkerhet med spårbara resultat.</p></div></section><section><span>02</span><div><h3>Myndighetens åtgärder</h3><p>Scenarier, överlapp och genomförandeförutsättningar.</p></div></section><section><span>03</span><div><h3>Intervjuer och samlad analys</h3><p>Erfarenheter vävs in i analys och diskussion med godkända citat.</p></div></section></div><section class="rp-manuscript-note"><h3>Ett längre manus med plats för fördjupning</h3><p>${REPORT.chapters.length} kapitel och bilagor. ${esc(REPORT.extent)} Dispositionen kan utökas när intervjumaterialet kommer.</p><p class="ex-note">${interviewCount?`${interviewCount} godkända intervjukällor finns införda.`:'Intervjukapitlen är förberedda. Inga citat eller intervjufynd har konstruerats.'}</p></section>`;
   } else {
-    const index=REPORT.chapters.indexOf(chapter),next=REPORT.chapters[index+1];
-    $('#main').innerHTML=`<div class="rp-reader"><aside class="rp-toc"><button class="ex-text-link" data-pub-report-cover>Rapportens startsida</button><h3>I rapporten</h3><p>${index+1} av ${REPORT.chapters.length} avsnitt</p><progress value="${index+1}" max="${REPORT.chapters.length}"></progress><button class="btn rp-mobile-toc-toggle" data-pub-toggle-toc aria-expanded="false" aria-controls="rpChapterNav">Innehåll · avsnitt ${index+1} av ${REPORT.chapters.length}</button><nav id="rpChapterNav" aria-label="Rapportens kapitel">${REPORT.chapters.map((c,i)=>`${i===0||REPORT.chapters[i-1].part!==c.part?`<div class="rp-toc-part">${esc(c.part)}</div>`:''}<button class="${c.id===chapter.id?'active':''}" ${c.id===chapter.id?'aria-current="page"':''} data-pub-chapter="${esc(c.id)}"><span>${esc(c.number)}</span>${esc(c.title)}</button>`).join('')}</nav><a class="btn" href="report/rapportmall.pdf" target="_blank">Rapportmall (PDF)</a></aside><article class="rp-article">${renderReportChapter(chapter,REPORT,INTERVIEWS,{figure:reportFigure})}<footer class="rp-chapter-footer"><span>${esc(REPORT.editionId)}</span>${next?`<button class="ex-text-link" data-pub-chapter="${esc(next.id)}">Nästa: ${esc(next.title)}</button>`:'<button class="ex-text-link" data-pub-report-cover>Till rapportens startsida</button>'}</footer></article></div>`;
+    const index=REPORT.chapters.indexOf(chapter),next=REPORT.chapters[index+1],previous=REPORT.chapters[index-1];
+    $('#main').innerHTML=`<div class="rp-reader"><aside class="rp-toc"><button class="ex-text-link" data-pub-report-cover>Rapportens startsida</button><h3>I rapporten</h3><p>${index+1} av ${REPORT.chapters.length} avsnitt</p><progress value="${index+1}" max="${REPORT.chapters.length}"></progress><button class="btn rp-mobile-toc-toggle" data-pub-toggle-toc aria-expanded="false" aria-controls="rpChapterNav">Innehåll · avsnitt ${index+1} av ${REPORT.chapters.length}</button><nav id="rpChapterNav" aria-label="Rapportens kapitel">${REPORT.chapters.map((c,i)=>`${i===0||REPORT.chapters[i-1].part!==c.part?`<div class="rp-toc-part">${esc(c.part)}</div>`:''}<button class="${c.id===chapter.id?'active':''}" ${c.id===chapter.id?'aria-current="page"':''} data-pub-chapter="${esc(c.id)}"><span>${esc(c.number)}</span>${esc(c.title)}</button>`).join('')}</nav><a class="btn" href="report/rapportmall.pdf" target="_blank">Rapportmall (PDF)</a></aside><article class="rp-article">${renderReportChapter(chapter,REPORT,INTERVIEWS,{figure:reportFigure})}<footer class="rp-chapter-footer"><span>${esc(REPORT.editionId)}</span><nav aria-label="Bläddra i rapporten">${previous?`<button class="ex-text-link" data-pub-chapter="${esc(previous.id)}">← Föregående: ${esc(previous.title)}</button>`:''}${next?`<button class="ex-text-link" data-pub-chapter="${esc(next.id)}">Nästa: ${esc(next.title)}</button>`:'<button class="ex-text-link" data-pub-report-cover>Till rapportens startsida</button>'}</nav></footer></article></div>`;
   }
 }
-function publicationInit() {
+function publicationReadRoute() {
   const p=new URLSearchParams(location.search);
+  Object.assign(publicationState,{controlTab:'register',selected:new Set(),controlDriver:'authority',analysisChart:'',analysisTop:false,chapter:null,expandedRisk:null});
   const units=new Set([...MEASUREMENT.byRisk.values()].filter(r=>r.likelihood).map(r=>r.likelihood.unit));
   if(units.size>1){const option=$('#sort').querySelector('[value=likelihood]');option.disabled=true;option.textContent='Händelsemått: olika enheter kan inte jämföras';}
   if(p.get('view')==='controls'&&(p.get('controltab')==='analysis'||!p.has('risk')&&p.get('tab')==='analysis'))publicationState.controlTab='analysis';
@@ -108,6 +109,9 @@ function publicationInit() {
   publicationState.analysisTop=p.get('analysistop')==='1';
   if(p.get('analysisscenario')==='all'||EX_AUTHORITY_SCENARIOS[p.get('analysisscenario')])exState.controlScenario=p.get('analysisscenario');
   if(REPORT.chapters.some(c=>c.id===p.get('chapter')))publicationState.chapter=p.get('chapter');
+}
+function publicationInit() {
+  publicationReadRoute();
   document.addEventListener('click',e=> {
     const el=e.target.closest('button');if(!el)return;
     if(el.dataset.pubAnalyseControl){publicationState.selected=new Set([el.dataset.pubAnalyseControl]);publicationState.controlTab='analysis';publicationState.controlDriver=exAuthority(EX_CONTROLS.get(el.dataset.pubAnalyseControl))?'authority':'all';exCloseDialog();setView('controls');exSyncRoute();}
@@ -116,8 +120,8 @@ function publicationInit() {
     else if(el.dataset.pubDriver){publicationState.controlDriver=el.dataset.pubDriver;renderControlAnalysis();exSyncRoute();}
     else if(el.hasAttribute('data-pub-toggle-toc')){const aside=el.closest('.rp-toc');const open=aside.classList.toggle('open');el.setAttribute('aria-expanded',String(open));if(open)aside.querySelector('[aria-current]')?.scrollIntoView({block:'nearest'});}
     else if(el.hasAttribute('data-pub-scenario-results')){$('#msScenarioResults')?.scrollIntoView({behavior:'smooth',block:'start'});}
-    else if(el.dataset.pubChapter){publicationState.chapter=el.dataset.pubChapter;setView('report');window.scrollTo(0,0);exSyncRoute();}
-    else if(el.hasAttribute('data-pub-report-cover')){publicationState.chapter=null;renderReport();window.scrollTo(0,0);exSyncRoute();}
+    else if(el.dataset.pubChapter){publicationState.chapter=el.dataset.pubChapter;setView('report');window.scrollTo({top:0,left:0,behavior:'instant'});exSyncRoute();}
+    else if(el.hasAttribute('data-pub-report-cover')){publicationState.chapter=null;setView('report');window.scrollTo({top:0,left:0,behavior:'instant'});exSyncRoute();}
     else if(el.dataset.pubExpandRisk){publicationState.expandedRisk=publicationState.expandedRisk===el.dataset.pubExpandRisk?null:el.dataset.pubExpandRisk;renderCompactRisks();}
   });
   document.addEventListener('keydown',e=>{const el=e.target.closest('[data-pub-control-tab]');if(!el||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();publicationState.controlTab=e.key==='Home'?'register':e.key==='End'?'analysis':publicationState.controlTab==='analysis'?'register':'analysis';renderControls();exSyncRoute();document.querySelector(`[data-pub-control-tab="${publicationState.controlTab}"]`)?.focus();});

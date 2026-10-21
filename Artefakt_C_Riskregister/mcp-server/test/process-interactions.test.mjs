@@ -95,9 +95,11 @@ for (const [label, source] of applications) {
     };
     const state = { selProcNode: null };
     let boundDetail = null;
+    let routedNode = null;
     const context = {
       procCtx: { moved: false },
       state,
+      exSyncRoute: () => { routedNode = state.selProcNode; },
       g: { querySelectorAll: () => [first, second] },
       $: selector => {
         assert.equal(selector, '#procDetail');
@@ -110,6 +112,7 @@ for (const [label, source] of applications) {
     nodeClickCallback(source, context)(first);
 
     assert.equal(state.selProcNode, 'B10-010');
+    assert.equal(routedNode, 'B10-010');
     assert.equal(first.classList.contains('sel'), true);
     assert.equal(second.classList.contains('sel'), false);
     assert.equal(detail.innerHTML, '<article>B10-010</article>');

@@ -917,25 +917,87 @@ main{padding:25px 28px 48px}
 @media(max-width:760px){.rp-toc>.rp-mobile-toc-toggle{display:block}}
 @media(min-width:941px) and (max-width:1100px){.ms-control-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.ms-control-metrics>div:nth-child(3),.ms-control-metrics>div:nth-child(4){border-top:0;border-left:1px solid var(--border)}}
 
+/* Shared site frame. Scoped rules override the older page-specific headers. */
+html{scrollbar-gutter:stable}
+.site-header{position:relative;z-index:10;max-width:none;margin:0;padding:0 28px;background:#1f272f;color:#fff;border:0;border-bottom:1px solid #cfd4d8;font:14px/1.5 Arial,"Helvetica Neue",sans-serif}
+.site-header>*{max-width:none}
+.site-header .site-brand{display:flex;align-items:center;gap:24px;min-height:80px;padding:14px 0;box-sizing:border-box}
+.site-header .site-logo{display:block;width:164px;flex:0 0 164px;color:white}
+.site-header .site-logo svg{display:block;width:100%;height:auto}
+.site-header .site-brand>div{padding-left:24px;border-left:1px solid #53606b;min-width:0}
+.site-header .site-title{color:#fff;font-size:24px;line-height:1.2;letter-spacing:-.45px;font-weight:700;text-decoration:none}
+.site-header .site-brand p{margin:4px 0 0;color:#cfd4d8;font-size:11px;line-height:1.5}
+.site-header nav{display:flex;align-items:stretch;gap:5px;margin:0;flex-wrap:nowrap}
+.site-header nav a{display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;padding:10px 16px;border:0;border-bottom:3px solid transparent;border-radius:0;font:600 13px/1.4 Arial,"Helvetica Neue",sans-serif;white-space:nowrap;text-decoration:none;overflow-wrap:normal;color:#e2e6e9;background:transparent}
+.site-header .site-primary-nav a:hover{background:#33414e;color:white}
+.site-header .site-primary-nav a[aria-current]{color:#ffc26f;border-bottom-color:#ea8f12;background:transparent}
+.site-header .site-primary-nav a:last-child{margin-left:auto}
+.site-header .site-section-nav{margin:0 -28px;padding:0 28px;background:#fff;box-shadow:0 -1px #53606b;min-height:47px;overflow-x:auto;scrollbar-width:thin}
+.site-header .site-section-nav a{color:#526474;min-height:47px;font-size:12px;padding:11px 16px}
+.site-header .site-section-nav a:hover{background:#f3f4f5;color:#1f272f}
+.site-header .site-section-nav a[aria-current]{color:#1f272f;border-bottom-color:#ea8f12;background:#fff7eb}
+.site-header a:focus-visible{outline:3px solid #ea8f12;outline-offset:-3px}
+.site-skip{position:absolute;left:28px;top:-90px;background:#fff;color:#1f272f;padding:12px 18px;z-index:100}
+.site-skip:focus{top:10px}
+#main:focus{outline:none}
+body .layout,body .layout.full{grid-template-columns:minmax(0,1fr)}
+body .layout #sidebar{display:none}
+body .layout:has(.ex-filters-open):not(.full){grid-template-columns:minmax(0,1fr)}
+body .layout:not(.full) #sidebar.ex-filters-open{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;position:static;max-height:none;margin:0 0 20px;padding:20px;border:1px solid #cfd4d8}
+body #sidebar .fgroup{margin:0}
+body #sidebar .clearbtn{align-self:end}
+body .layout main{min-width:0;padding:25px 28px 48px}
+body[data-view=risks] .ex-page-head{padding-right:0}
+.site-risk-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 20px;padding:14px;background:#fff;border:1px solid #cfd4d8}
+.site-risk-tools .searchwrap{position:relative;flex:1 1 300px;min-width:150px;margin:0}
+.site-risk-tools input,.site-risk-tools select{font:13px Arial,sans-serif;min-height:42px;border:1px solid #bac4cd;background:white;color:#33414e;border-radius:2px}
+.site-risk-tools input{width:100%;padding:10px 12px 10px 35px}
+.site-risk-tools select{padding:10px;max-width:100%}
+body[data-view] .site-risk-tools .ex-filter-toggle{display:block;position:static;min-height:42px;margin:0;font-size:12px;flex-shrink:0}
+.site-risk-tools [hidden]{display:none!important}
+.site-risk-tools .icon{position:absolute;left:12px;top:10px;color:#62717f}
+.site-static-main{max-width:1120px;margin:0 auto;padding:30px 28px 60px}
+.site-static-main article{border-radius:2px}
+.rp-print-actions{position:static!important;margin-bottom:25px;flex-wrap:wrap}
+.rp-print-actions>a,.rp-print-actions>button{display:inline-flex;align-items:center;min-height:42px;padding:9px 14px;background:#fff;border:1px solid #cfd4d8;border-radius:0;color:#33414e;text-decoration:none;font:600 12px/1.5 Arial,sans-serif;cursor:pointer}
+.rp-print-logo{color:#fff}
+.rp-chapter-footer nav{display:flex;flex-wrap:wrap;gap:20px}
+@media(max-width:760px){
+ .site-header{padding:0 18px}
+ .site-header .site-brand{gap:12px;min-height:98px;display:block;padding:14px 0 12px}
+ .site-header .site-logo{width:142px;max-width:none;margin-bottom:10px}
+ .site-header .site-brand>div{padding:0;border:0}
+ .site-header .site-title{font-size:22px}
+ .site-header .site-brand p{display:none}
+ .site-header .site-primary-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+ .site-header .site-primary-nav a{padding:10px 4px;font-size:12px;min-height:44px}
+ .site-header .site-primary-nav a:last-child{margin-left:0}
+ .site-header .site-section-nav{margin:0 -18px;padding:0 10px;gap:0}
+ .site-header .site-section-nav a{padding:11px 12px;font-size:12px}
+ body .layout main{padding:22px 18px 40px}
+ body .layout:has(.ex-filters-open):not(.full){grid-template-columns:minmax(0,1fr)}
+ body .layout:not(.full) #sidebar.ex-filters-open{grid-template-columns:1fr;padding:18px}
+ .site-risk-tools{gap:8px;padding:10px}
+ .site-risk-tools .searchwrap{flex-basis:100%}
+ .site-risk-tools select{min-width:0;flex:1;width:180px;font-size:12px}
+ .site-static-main{padding:22px 18px 40px}
+ .rp-print-document{padding:22px 18px!important}.rp-print-cover h1{font-size:36px!important}.rp-print-actions{padding:12px!important;gap:8px!important}
+}
+@media print{.site-header,.site-skip,.site-risk-tools{display:none!important}}
+.nodeitem{display:block;width:100%;text-align:left;font-family:inherit;color:inherit;background:transparent;border:0;border-bottom:1px solid #dce2e7;border-radius:0;cursor:pointer}
+.nodeitem:focus-visible{outline:3px solid #ea8f12;outline-offset:-3px}
+
 </style>
 </head>
 <body>
-<header>
-  <div class="brand-heading">
-    <a class="brand-logo" href="https://www.svensktnaringsliv.se/" aria-label="Svenskt Näringsliv" target="_blank" rel="noopener">
-      <span class="brand-logo-stacked" aria-hidden="true"><!-- Official original SVG from https://www.svensktnaringsliv.se/; Desktop_logo__l_D4N; paths and colors unchanged. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 741.692 362.099" class="Desktop_logo__l_D4N"><path fill="currentColor" d="M179.783 344.037s8.808-.036 12.944-.036c3.15 0 7.513-.858 7.965-4.88.812-7.23-19-7.967-17.42-22.054 1.003-8.962 9.442-12.438 17.288-12.438 4.447 0 13.535.543 13.535.543l-1.037 6.906s-7.587-.146-11.478-.146c-2.348 0-5.913.933-6.234 3.836-.76 6.73 19.78 7.6 18.14 22.177-.507 4.514-3.86 13.47-19.798 13.47-5.746 0-14.905-.073-14.905-.073l1-7.303zM.996 344.714s8.81-.024 12.948-.024c3.15 0 7.508-.872 7.963-4.885.81-7.237-19.003-7.974-17.42-22.055 1.008-8.962 9.44-12.434 17.285-12.434 4.452 0 13.534.545 13.534.545l-1.03 6.896s-7.594-.136-11.483-.136c-2.345 0-5.915.927-6.235 3.824-.758 6.742 19.778 7.605 18.144 22.183-.507 4.514-3.86 13.47-19.8 13.47C9.16 352.1 0 352.028 0 352.028l.996-7.313zM41.473 305.984h12.67l8.08 32.555h.126l15.145-32.556H85.4l-20.826 44.663H52.65l-11.177-44.663zM92.84 305.984h30.523l-.83 7.41h-18.596l-1.224 10.873h18.34l-.75 6.672h-18.338l-1.38 12.29h20.08l-.833 7.42h-32l5.01-44.666zM135.78 305.984h9.947l15.954 26.806h.124l3.01-26.806h8.958l-5.013 44.663h-9.893l-16.012-26.812h-.125l-3.01 26.812h-8.956l5.017-44.663zM226.936 305.984h11.922l-2.41 21.43h.13l18.1-21.43h9.267l-16.515 19.393 15.077 25.27H248.24l-11.87-21.375h-.125l-2.4 21.375H221.92l5.016-44.663zM281.788 313.455h-13.875l.835-7.47h38.914l-.84 7.47h-13.108l-4.176 37.192h-11.922l4.172-37.192zM596.376 344.037s7.5-.036 11.637-.036c3.15 0 7.513-.858 7.958-4.88.816-7.23-18.99-7.967-17.414-22.054 1.01-8.962 9.44-12.438 17.287-12.438 4.448 0 13.536.543 13.536.543l-1.034 6.906s-7.585-.146-11.483-.146c-2.348 0-5.906.933-6.234 3.836-.756 6.73 19.78 7.6 18.143 22.177-.507 4.514-3.86 13.47-19.8 13.47-5.746 0-13.595-.073-13.595-.073l.998-7.303zM333.137 305.984h9.945l15.955 26.806h.124l3.008-26.806h8.963l-5.015 44.663h-9.884l-16.017-26.812h-.123l-3.007 26.812h-8.962l5.017-44.663zM389.75 332.228l7.83-15.803 4.277 15.803H389.75zm.812-30.154h7.717l.862-7.715h-7.714l-.866 7.714zm12.956 0h7.71l.872-7.715h-7.715l-.867 7.714zm-30.85 48.573h7.975l5.658-11.37h17.49l3.044 11.37h11.985l-12.103-44.663h-11.922l-22.126 44.663zM440.62 313.392h3.645c5.313 0 7.31 2.482 6.964 5.51-.367 3.272-1.925 7.216-8.08 7.216h-3.955l1.425-12.726zm-15.363 37.255h11.182l2.005-17.857h4.202l9.84 17.857h12.186l-11.297-19.383c5.077-2.278 8.553-6.36 9.06-14.104.536-8.092-5.356-11.176-10.915-11.176H430.27l-5.01 44.663zM477.573 305.984h11.924l-5.017 44.663h-11.92l5.013-44.663zM502.827 305.984h9.945l15.955 26.806h.126l3.006-26.806h8.957l-5.015 44.663h-9.88l-16.02-26.812h-.125l-3.01 26.812h-8.955l5.015-44.663zM585.833 351.342s-9.887.312-16.063.312c-14.518 0-23.257-8.476-21.59-23.306 1.66-14.824 12.337-23.586 26.853-23.586 5.93 0 14.052.646 14.052.646l-1.07 7.14s-6.59-.26-11.16-.26c-10.807 0-15.075 7.722-15.98 15.75-1.12 10.01 3.422 16.314 13.8 16.314l1.654-14.71h11.92l-2.417 21.7zM642.218 305.984h11.928l-4.178 37.244h16.995l-.837 7.42h-28.913l5.005-44.664zM678.582 305.984h11.926l-5.015 44.663h-11.928l5.017-44.663zM697.766 305.984h12.666l8.08 32.555h.127l15.143-32.556h7.91l-20.83 44.663H708.94l-11.174-44.663z"></path><path fill="#FFDB00" d="M188.498 171.205c-27.576-.093-61.306 4.295-83.17 8.87-21.865 4.573-21.346 8.33.877 8.385 8.77.023 59.844.092 118.465.17 19.536-2.45 85.367-10.423 141.222-17.167-68.07-.083-160.358-.2-177.394-.258z"></path><path fill="#FFD100" d="M365.893 171.462c-55.855 6.746-121.687 14.718-141.222 17.167-2.382.297-4.084.515-4.986.636-31.056 4.204-60.725 11.94-81.626 18.977-21.155 7.122-20.2 10.934 2.02 8.2 8.856-1.09 56.782-6.91 111.23-13.515 12.06-3.067 81.5-20.307 137.79-34.267l-23.205 2.802z"></path><path fill="#FDC300" d="M389.1 168.66c-56.292 13.96-125.732 31.2-137.792 34.267l-.22.056c-19.71 5.02-52.83 16.56-76.55 28.314-19.43 9.63-18.1 13.145 3.15 7.898 8.938-2.206 56.328-13.98 108.238-26.878.917-.37 1.838-.747 2.74-1.097 14.043-5.465 79.564-30.6 129.077-49.663L389.1 168.66z"></path><path fill="#FBB800" d="M417.742 161.557c-49.512 19.062-115.034 44.198-129.077 49.663-.9.35-1.822.727-2.74 1.097-22.322 9.007-48.66 23.37-65.887 35.018-17.094 11.56-15.227 14.94 4.192 7.46 9.068-3.494 56.95-21.918 105.418-40.566 1.495-.85 2.97-1.672 4.41-2.438 14.796-7.875 79.437-42.603 118.938-63.83-9.7 3.753-21.897 8.454-35.254 13.595z"></path><path fill="#F8AA00" d="M453 147.962c-39.5 21.228-104.143 55.954-118.94 63.83-1.438.767-2.916 1.59-4.41 2.438-18.967 10.775-41.895 27.815-55.362 40.02-14.528 13.167-12.218 16.13 5.17 6.912 8.7-4.612 47.228-25.298 83.558-44.82 3.74-3.113 7.336-5.93 10.587-8.234 10.812-7.662 67.598-48.23 99.077-70.723-5.235 2.81-11.985 6.44-19.68 10.577z"></path><path fill="#F59E00" d="M472.678 137.384c-31.478 22.492-88.263 63.06-99.077 70.723-3.25 2.304-6.845 5.12-10.586 8.234-13.66 11.37-29.36 26.92-38.238 37.937-11.31 14.035-8.706 16.762 6.04 6.254 13.34-9.502 62.992-44.96 72.356-51.647 4.778-5.794 9.85-11.395 14.812-16.025 5.767-5.377 38.44-35.79 75.762-70.53-.054.038-8.568 6.125-21.068 15.056z"></path><g><path fill="#C11C1C" d="M448.79 188.923c2.578.004 32.11.062 45.167.062 22.197 0 54.706-3.3 80.364-8.28 25.658-4.977 24.22-8.958 1.947-8.967-16.682-.007-103.386-.154-108.794-.165l-6.366 5.913c-4.188 3.888-8.3 7.71-12.317 11.437z"></path><path fill="#D51317" d="M461.107 177.487c3.257-.374 40.252-4.64 65.52-7.965 26.452-3.48 56.572-10.658 78.924-18.026 24.83-8.185 22.868-11.835.686-9.147-21.456 2.6-117.212 14.228-123.434 14.984-2.973 2.762-5.95 5.527-8.9 8.27-4.315 4.007-8.59 7.976-12.795 11.883z"></path><path fill="#E30613" d="M619.604 111.43c-20.444 5.056-112.455 27.94-119.304 29.643l-2.895 2.692c-3.717 3.457-7.45 6.926-11.182 10.392L473.9 165.604c4.414-1.09 52.1-12.895 72.31-17.964 21.202-5.317 50.91-16.008 74.04-27.086 23.126-11.078 20.593-14.38-.646-9.125z"></path><path fill="#E74011" d="M627.872 80.568c-19.058 7.29-100.747 38.765-106.636 41.032-4.524 4.208-9.136 8.5-13.815 12.85-3.314 3.083-6.66 6.192-10.015 9.314-3.717 3.457-7.45 6.926-11.182 10.392 4.274-1.64 59.795-22.942 76.23-29.33 17.098-6.644 44.304-20.07 67.448-35.177 20.484-13.37 17.745-16.646-2.028-9.082z"></path><path fill="#EA5B0C" d="M631.776 52.13l-84.863 45.563c-11.885 11.075-25.433 23.683-39.493 36.757l-10.016 9.314 81.263-43.616c16.86-9.052 42.206-26.9 56.325-39.66l1.814-1.636c14.112-12.756 11.84-15.777-5.03-6.723z"></path><path fill="#EE7601" d="M628.59 26.06c-13.164 9.435-26.038 18.59-28.53 20.363-3.36 3.792-7.1 7.796-11.32 12.04-3.784 3.806-40.39 37.93-81.32 75.988 9.395-6.678 65.64-46.677 78.39-55.968 16.853-12.282 33.78-28.298 47.37-44.38 13.542-16.028 10.067-18.55-4.59-8.043z"></path></g><path fill="#F39400" d="M618.04 6.646S550.512 69.49 493.747 122.328c-37.32 34.738-69.995 65.152-75.762 70.53-4.964 4.628-10.035 10.23-14.812 16.024-9.215 11.178-17.316 23.094-21.295 30.26-7.67 13.806-4.672 16.135 6.814 5.525 11.49-10.61 191.402-177.513 200.047-186.205 20.652-20.763 30.274-36.095 36.088-46.294 7.807-13.69 4.72-16.252-6.79-5.522z"></path></svg></span>
-      <span class="brand-logo-horizontal" aria-hidden="true"><!-- Official original SVG from https://www.svensktnaringsliv.se/; Mobile_logo__y2ob7; paths and colors unchanged. -->
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 609.02667 84.01334" class="Mobile_logo__y2ob7"><path fill="currentColor" d="M286.50933 54.66853s4.98266-.0208 7.324-.0208c1.78 0 4.252-.486 4.504-2.7604.46133-4.0912-10.74667-4.50786-9.85067-12.47813.56533-5.07133 5.33867-7.09893 9.776-7.09893 2.51733 0 7.65867.30613 7.65867.30613l-.58667 3.90893s-4.29067-.0208-6.49467-.0208c-1.328 0-3.34266.52707-3.52533 2.1692-.432 3.80987 11.18933 4.30054 10.26267 12.54694-.28934 2.55466-2.18267 7.62493-11.2 7.62493-3.25334 0-8.43467-.04427-8.43467-.04427l.56667-4.1328M185.53866 55.05133s4.984-.012 7.32534-.012c1.784 0 4.24666-.4948 4.50533-2.764.45867-4.0964-10.75333-4.51306-9.85733-12.4808.57066-5.07026 5.34133-7.0948 9.77866-7.0948 2.52134 0 7.65867.30574 7.65867.30574l-.58267 3.90373s-4.3-.0156-6.49466-.0156c-1.32534 0-3.34667.5224-3.52934 2.1656-.42933 3.81093 11.19067 4.302 10.26667 12.54947-.28667 2.55306-2.18534 7.62346-11.204 7.62346-3.24933 0-8.42933-.0428-8.42933-.0428l.56266-4.138M524.61199 54.66853s4.24-.0208 6.58133-.0208c1.78267 0 4.252-.486 4.504-2.7604.45867-4.0912-10.74667-4.50786-9.856-12.47813.57067-5.07133 5.344-7.09893 9.784-7.09893 2.51467 0 7.65867.30613 7.65867.30613l-.58667 3.90893s-4.29333-.0208-6.49733-.0208c-1.32534 0-3.33867.52707-3.528 2.1692-.42667 3.80987 11.19466 4.30054 10.26533 12.54694-.28667 2.55466-2.18 7.62493-11.19733 7.62493-3.25334 0-7.696-.04427-7.696-.04427l.568-4.1328M208.74666 33.13733h7.172l4.57067 18.4176h.06933l8.57067-18.4176h4.472L221.81466 58.4076h-6.748l-6.32-25.27027M237.38 33.13733h17.27333l-.47734 4.19107h-10.51733l-.69067 6.15373h10.37467l-.424 3.776h-10.37733l-.77867 6.95214h11.35867l-.47067 4.19733h-18.10667l2.836-25.27027M261.91866 33.13733h5.63067l9.02533 15.1676h.06533l1.70534-15.1676h5.07066L280.58 58.4076h-5.59866l-9.05734-15.17027h-.076l-1.7 15.17027h-5.06533l2.836-25.27027M313.24666 33.13733h6.748l-1.364 12.1276h.07467l10.24-12.1276h5.24533l-9.34667 10.97494 8.53067 14.29533h-8.068l-6.72267-12.0932h-.06533l-1.36 12.0932h-6.748l2.836-25.27027M344.16132 37.3664h-7.85466l.47733-4.22907H358.8l-.47467 4.22907H350.912l-2.36533 21.0412h-6.744l2.35866-21.0412M375.05732 33.13733h5.63334l9.02 15.1676h.07333l1.70267-15.1676h5.07066L393.716 58.4076h-5.59067l-9.06266-15.17027h-.068l-1.70267 15.17027h-5.068l2.83333-25.27027M397.91466 58.4076h4.51466l3.20134-6.43333h9.89333l1.724 6.43333h6.78267l-6.85067-25.27027h-6.74267zm17.716-28.2416h4.18933l.47467-4.19693h-4.196zm-7.16934 0h4.2l.46667-4.19693h-4.19333zm-.88266 17.8228 4.43466-8.94427 2.41867 8.94427zM428.77599 58.4076h6.328l1.13333-10.10267h2.37734l5.568 10.10267h6.89333l-6.388-10.9672c2.872-1.28907 4.83867-3.59893 5.12667-7.9792.29733-4.57907-3.03067-6.32387-6.176-6.32387h-12.02667zm8.69067-21.0792h2.064c3.00533 0 4.13866 1.40787 3.93866 3.1188-.20666 1.8516-1.08666 4.08173-4.57066 4.08173h-2.24l.808-7.20053M458.25466 33.13733h6.75066l-2.844 25.27027h-6.74266l2.836-25.27027M472.17199 33.13733h5.62533l9.02533 15.1676h.07334l1.70533-15.1676h5.06267l-2.836 25.27027h-5.59067l-9.06267-15.17027h-.068l-1.70533 15.17027H469.336l2.836-25.27027M518.38532 58.85453s-5.58.18227-9.076.18227c-8.21333 0-13.16133-4.85413-12.21067-13.2448.93467-8.388 6.97734-13.28227 15.19334-13.28227 3.35066 0 7.95066.30467 7.95066.30467l-.60666 4.0364s-3.72667-.1448-6.316-.1448c-6.11467 0-8.528 4.3688-9.03867 8.90893-.63867 5.6656 1.93733 9.23174 7.80667 9.23174l.93333-8.32134h6.74667l-1.38267 12.3292M551.70265 33.13733h6.748L556.088 54.21027h9.61466l-.47333 4.19733h-16.36267l2.836-25.27027M572.15065 33.13733h6.748l-2.836 25.27027h-6.748l2.836-25.27027M584.17465 33.13733h7.16934l4.57066 18.4176h.072l8.57067-18.4176h4.47066L597.24265 58.4076h-6.748l-6.32-25.27027"></path><path fill="#c32229" d="M127.41613 59.49507c7.0292.0104 18.41587-1.16147 25.29453-2.6068l.88667-.18227c6.88-1.44267 6.756-2.6328-.272-2.63907l-34.33267-.052-5.8604 5.462 14.28387.01814"></path><path fill="#fdda04" d="M31.26253 53.8988c-7.0328-.00787-18.41409 1.16293-25.29586 2.60667l-.88542.18493c-6.88021 1.44013-6.76042 2.63027.27604 2.63907l99.48697.13173 5.86094-5.45307-79.44267-.10933"></path><path fill="#fcce06" d="M114.25213 50.70493 41.0776 59.5836c-7.00413.85427-18.18907 3.40627-24.84013 5.68133l-.85414.29267c-6.65885 2.26827-6.36978 3.4364.63547 2.58067l91.4244-11.09467 3.262-3.03547 3.54693-3.3032"></path><path fill="#db1f26" d="m116.99266 55.88307 20.70334-2.5156c7.008-.84627 18.192-3.4036 24.84666-5.6744l.85734-.29014c6.65466-2.2776 6.36666-3.43906-.63867-2.59013l-38.95867 4.73173-4.81 4.4704-2 1.86814"></path><path fill="#fbbc09" d="m114.25213 50.70493 3.69893-3.4468-66.9896 16.6432c-6.67973 1.6604-17.16773 5.49374-23.30213 8.52086l-.79426.39218c-6.1312 3.0297-5.68587 4.14688.99226 2.48699l81.8036-20.32443 1.04427-.9688 3.54693-3.3032"></path><path fill="#ed1c24" d="m166.964 35.08267-37.6848 9.36453-5.47654 5.09733-2.8152 2.61827 22.8752-5.68333c6.68267-1.66147 17.168-5.49067 23.30667-8.526l.78667-.3828c6.136-3.03134 5.69333-4.14854-.992-2.488"></path><path fill="#f9b00b" d="m117.95106 47.25813 3.6484-3.3932L62.7912 66.49507c-6.1136 2.3516-15.52347 7.25524-20.91147 10.90264l-.68906.46458c-5.38907 3.64844-4.79534 4.70574 1.31773 2.34896l68.25773-26.26298 3.486-3.24334 3.69893-3.4468"></path><path fill="#f03c1f" d="m169.568 25.36747-33.67734 12.9584-6.5724 6.12133-4.42973 4.1208 24.08747-9.2692c6.20666-2.3896 15.764-7.37147 21.23066-11.07187l.704-.4724c5.47067-3.7032 4.86667-4.7776-1.34266-2.38706"></path><path fill="#f8a10e" d="m110.7052 54.00813.06093-.05986 3.486-3.24334 3.69893-3.4468 3.6484-3.3932 2.76307-2.57293L77.0828 66.6748c-5.46507 2.93227-13.6656 8.70832-18.22813 12.83332l-.58587.53125c-4.5688 4.125-3.836 5.10677 1.62493 2.17448l48.448-26.01305 1.3192-1.22387 1.04427-.9688"></path><path fill="#f1511b" d="M170.796 16.41693 143.66533 30.9836l-8.004 7.4516-6.304 5.8636-1.27867 1.18853 26-13.9568c5.30667-2.84786 13.288-8.46773 17.732-12.48333l.57067-.5156c4.44133-4.0156 3.72667-4.96613-1.58533-2.11467"></path><path fill="#f79410" d="m104.84426 59.4612 2.59894-2.4176.89853-.8428 1.3192-1.22387 1.04427-.9688.06093-.05986 3.486-3.24334 3.69893-3.4468 3.6484-3.3932 2.76307-2.57293 2.98693-2.77867-37.82293 27.0016c-4.62493 3.30054-11.33333 9.58695-14.9072 13.96976l-.46.5651C70.5812 84.43 71.438 85.31959 76.0604 82.01593l22.77506-16.2578c1.60414-1.93226 3.23534-3.7172 4.664-5.04426l1.3448-1.25267"></path><path fill="#f46b17" d="m169.79466 8.20867-8.87733 6.33853c-1.276 1.47027-2.53467 2.80987-3.66667 3.862L143.984 30.75813l-8.22667 7.66147-4.5276 4.20987 25.0996-17.91827c4.62-3.29947 11.33333-9.58693 14.91067-13.97133l.456-.56254c3.57333-4.38533 2.72133-5.2692-1.90134-1.96866"></path><path fill="#f68912" d="m166.47333 2.09667-39.12387 36.41666-2.98693 2.77867-2.76307 2.57293-3.6484 3.3932-3.69893 3.4468-3.486 3.24334-.06093.05986-1.04427.9688-1.3192 1.22387-.89853.8428-2.59894 2.4176-1.3448 1.25267c-1.42866 1.32706-3.05986 3.112-4.664 5.04426-2.48186 2.98694-4.90266 6.3427-6.38186 8.97291l-.32294.55312c-2.44266 4.3323-1.48173 5.11615 2.15 1.73959l18.8516-17.54682 3.8604-3.59386 2-1.86814 1.9948-1.85213 2.8152-2.61827 1.11867-1.0416 3.04267-2.836 1.3152-1.21973 1.95053-1.81773 4.5276-4.20987 8.22667-7.66147 13.26666-12.34893c1.132-1.05213 2.39067-2.39173 3.66667-3.862C163.728 11.292 166.612 7.37693 168.3 4.38987l.31066-.5536c2.452-4.33333 1.484-5.11467-2.13733-1.7396"></path></svg></span>
-    </a>
-    <div class="brand-title">
-      <div class="eyebrow">Den svenska tillståndsprocessen</div>
-      <h1>Miljötillståndsrisker</h1>
-      <div class="sub">Risker, motåtgärder och samband · Baslinje S0 per 2026-08-20</div>
-    </div>
-  </div>
-  <div class="headstats" id="headstats"></div>
-  <div class="controls">
+<a class="site-skip" href="#main">Hoppa till innehållet</a><header class="site-header">
+    <div class="site-brand"><a class="site-logo" href="https://www.svensktnaringsliv.se/" aria-label="Svenskt Näringsliv" target="_blank" rel="noopener"><!-- Official original SVG from https://www.svensktnaringsliv.se/; Mobile_logo__y2ob7; paths and colors unchanged. -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 609.02667 84.01334" class="Mobile_logo__y2ob7"><path fill="currentColor" d="M286.50933 54.66853s4.98266-.0208 7.324-.0208c1.78 0 4.252-.486 4.504-2.7604.46133-4.0912-10.74667-4.50786-9.85067-12.47813.56533-5.07133 5.33867-7.09893 9.776-7.09893 2.51733 0 7.65867.30613 7.65867.30613l-.58667 3.90893s-4.29067-.0208-6.49467-.0208c-1.328 0-3.34266.52707-3.52533 2.1692-.432 3.80987 11.18933 4.30054 10.26267 12.54694-.28934 2.55466-2.18267 7.62493-11.2 7.62493-3.25334 0-8.43467-.04427-8.43467-.04427l.56667-4.1328M185.53866 55.05133s4.984-.012 7.32534-.012c1.784 0 4.24666-.4948 4.50533-2.764.45867-4.0964-10.75333-4.51306-9.85733-12.4808.57066-5.07026 5.34133-7.0948 9.77866-7.0948 2.52134 0 7.65867.30574 7.65867.30574l-.58267 3.90373s-4.3-.0156-6.49466-.0156c-1.32534 0-3.34667.5224-3.52934 2.1656-.42933 3.81093 11.19067 4.302 10.26667 12.54947-.28667 2.55306-2.18534 7.62346-11.204 7.62346-3.24933 0-8.42933-.0428-8.42933-.0428l.56266-4.138M524.61199 54.66853s4.24-.0208 6.58133-.0208c1.78267 0 4.252-.486 4.504-2.7604.45867-4.0912-10.74667-4.50786-9.856-12.47813.57067-5.07133 5.344-7.09893 9.784-7.09893 2.51467 0 7.65867.30613 7.65867.30613l-.58667 3.90893s-4.29333-.0208-6.49733-.0208c-1.32534 0-3.33867.52707-3.528 2.1692-.42667 3.80987 11.19466 4.30054 10.26533 12.54694-.28667 2.55466-2.18 7.62493-11.19733 7.62493-3.25334 0-7.696-.04427-7.696-.04427l.568-4.1328M208.74666 33.13733h7.172l4.57067 18.4176h.06933l8.57067-18.4176h4.472L221.81466 58.4076h-6.748l-6.32-25.27027M237.38 33.13733h17.27333l-.47734 4.19107h-10.51733l-.69067 6.15373h10.37467l-.424 3.776h-10.37733l-.77867 6.95214h11.35867l-.47067 4.19733h-18.10667l2.836-25.27027M261.91866 33.13733h5.63067l9.02533 15.1676h.06533l1.70534-15.1676h5.07066L280.58 58.4076h-5.59866l-9.05734-15.17027h-.076l-1.7 15.17027h-5.06533l2.836-25.27027M313.24666 33.13733h6.748l-1.364 12.1276h.07467l10.24-12.1276h5.24533l-9.34667 10.97494 8.53067 14.29533h-8.068l-6.72267-12.0932h-.06533l-1.36 12.0932h-6.748l2.836-25.27027M344.16132 37.3664h-7.85466l.47733-4.22907H358.8l-.47467 4.22907H350.912l-2.36533 21.0412h-6.744l2.35866-21.0412M375.05732 33.13733h5.63334l9.02 15.1676h.07333l1.70267-15.1676h5.07066L393.716 58.4076h-5.59067l-9.06266-15.17027h-.068l-1.70267 15.17027h-5.068l2.83333-25.27027M397.91466 58.4076h4.51466l3.20134-6.43333h9.89333l1.724 6.43333h6.78267l-6.85067-25.27027h-6.74267zm17.716-28.2416h4.18933l.47467-4.19693h-4.196zm-7.16934 0h4.2l.46667-4.19693h-4.19333zm-.88266 17.8228 4.43466-8.94427 2.41867 8.94427zM428.77599 58.4076h6.328l1.13333-10.10267h2.37734l5.568 10.10267h6.89333l-6.388-10.9672c2.872-1.28907 4.83867-3.59893 5.12667-7.9792.29733-4.57907-3.03067-6.32387-6.176-6.32387h-12.02667zm8.69067-21.0792h2.064c3.00533 0 4.13866 1.40787 3.93866 3.1188-.20666 1.8516-1.08666 4.08173-4.57066 4.08173h-2.24l.808-7.20053M458.25466 33.13733h6.75066l-2.844 25.27027h-6.74266l2.836-25.27027M472.17199 33.13733h5.62533l9.02533 15.1676h.07334l1.70533-15.1676h5.06267l-2.836 25.27027h-5.59067l-9.06267-15.17027h-.068l-1.70533 15.17027H469.336l2.836-25.27027M518.38532 58.85453s-5.58.18227-9.076.18227c-8.21333 0-13.16133-4.85413-12.21067-13.2448.93467-8.388 6.97734-13.28227 15.19334-13.28227 3.35066 0 7.95066.30467 7.95066.30467l-.60666 4.0364s-3.72667-.1448-6.316-.1448c-6.11467 0-8.528 4.3688-9.03867 8.90893-.63867 5.6656 1.93733 9.23174 7.80667 9.23174l.93333-8.32134h6.74667l-1.38267 12.3292M551.70265 33.13733h6.748L556.088 54.21027h9.61466l-.47333 4.19733h-16.36267l2.836-25.27027M572.15065 33.13733h6.748l-2.836 25.27027h-6.748l2.836-25.27027M584.17465 33.13733h7.16934l4.57066 18.4176h.072l8.57067-18.4176h4.47066L597.24265 58.4076h-6.748l-6.32-25.27027"></path><path fill="#c32229" d="M127.41613 59.49507c7.0292.0104 18.41587-1.16147 25.29453-2.6068l.88667-.18227c6.88-1.44267 6.756-2.6328-.272-2.63907l-34.33267-.052-5.8604 5.462 14.28387.01814"></path><path fill="#fdda04" d="M31.26253 53.8988c-7.0328-.00787-18.41409 1.16293-25.29586 2.60667l-.88542.18493c-6.88021 1.44013-6.76042 2.63027.27604 2.63907l99.48697.13173 5.86094-5.45307-79.44267-.10933"></path><path fill="#fcce06" d="M114.25213 50.70493 41.0776 59.5836c-7.00413.85427-18.18907 3.40627-24.84013 5.68133l-.85414.29267c-6.65885 2.26827-6.36978 3.4364.63547 2.58067l91.4244-11.09467 3.262-3.03547 3.54693-3.3032"></path><path fill="#db1f26" d="m116.99266 55.88307 20.70334-2.5156c7.008-.84627 18.192-3.4036 24.84666-5.6744l.85734-.29014c6.65466-2.2776 6.36666-3.43906-.63867-2.59013l-38.95867 4.73173-4.81 4.4704-2 1.86814"></path><path fill="#fbbc09" d="m114.25213 50.70493 3.69893-3.4468-66.9896 16.6432c-6.67973 1.6604-17.16773 5.49374-23.30213 8.52086l-.79426.39218c-6.1312 3.0297-5.68587 4.14688.99226 2.48699l81.8036-20.32443 1.04427-.9688 3.54693-3.3032"></path><path fill="#ed1c24" d="m166.964 35.08267-37.6848 9.36453-5.47654 5.09733-2.8152 2.61827 22.8752-5.68333c6.68267-1.66147 17.168-5.49067 23.30667-8.526l.78667-.3828c6.136-3.03134 5.69333-4.14854-.992-2.488"></path><path fill="#f9b00b" d="m117.95106 47.25813 3.6484-3.3932L62.7912 66.49507c-6.1136 2.3516-15.52347 7.25524-20.91147 10.90264l-.68906.46458c-5.38907 3.64844-4.79534 4.70574 1.31773 2.34896l68.25773-26.26298 3.486-3.24334 3.69893-3.4468"></path><path fill="#f03c1f" d="m169.568 25.36747-33.67734 12.9584-6.5724 6.12133-4.42973 4.1208 24.08747-9.2692c6.20666-2.3896 15.764-7.37147 21.23066-11.07187l.704-.4724c5.47067-3.7032 4.86667-4.7776-1.34266-2.38706"></path><path fill="#f8a10e" d="m110.7052 54.00813.06093-.05986 3.486-3.24334 3.69893-3.4468 3.6484-3.3932 2.76307-2.57293L77.0828 66.6748c-5.46507 2.93227-13.6656 8.70832-18.22813 12.83332l-.58587.53125c-4.5688 4.125-3.836 5.10677 1.62493 2.17448l48.448-26.01305 1.3192-1.22387 1.04427-.9688"></path><path fill="#f1511b" d="M170.796 16.41693 143.66533 30.9836l-8.004 7.4516-6.304 5.8636-1.27867 1.18853 26-13.9568c5.30667-2.84786 13.288-8.46773 17.732-12.48333l.57067-.5156c4.44133-4.0156 3.72667-4.96613-1.58533-2.11467"></path><path fill="#f79410" d="m104.84426 59.4612 2.59894-2.4176.89853-.8428 1.3192-1.22387 1.04427-.9688.06093-.05986 3.486-3.24334 3.69893-3.4468 3.6484-3.3932 2.76307-2.57293 2.98693-2.77867-37.82293 27.0016c-4.62493 3.30054-11.33333 9.58695-14.9072 13.96976l-.46.5651C70.5812 84.43 71.438 85.31959 76.0604 82.01593l22.77506-16.2578c1.60414-1.93226 3.23534-3.7172 4.664-5.04426l1.3448-1.25267"></path><path fill="#f46b17" d="m169.79466 8.20867-8.87733 6.33853c-1.276 1.47027-2.53467 2.80987-3.66667 3.862L143.984 30.75813l-8.22667 7.66147-4.5276 4.20987 25.0996-17.91827c4.62-3.29947 11.33333-9.58693 14.91067-13.97133l.456-.56254c3.57333-4.38533 2.72133-5.2692-1.90134-1.96866"></path><path fill="#f68912" d="m166.47333 2.09667-39.12387 36.41666-2.98693 2.77867-2.76307 2.57293-3.6484 3.3932-3.69893 3.4468-3.486 3.24334-.06093.05986-1.04427.9688-1.3192 1.22387-.89853.8428-2.59894 2.4176-1.3448 1.25267c-1.42866 1.32706-3.05986 3.112-4.664 5.04426-2.48186 2.98694-4.90266 6.3427-6.38186 8.97291l-.32294.55312c-2.44266 4.3323-1.48173 5.11615 2.15 1.73959l18.8516-17.54682 3.8604-3.59386 2-1.86814 1.9948-1.85213 2.8152-2.61827 1.11867-1.0416 3.04267-2.836 1.3152-1.21973 1.95053-1.81773 4.5276-4.20987 8.22667-7.66147 13.26666-12.34893c1.132-1.05213 2.39067-2.39173 3.66667-3.862C163.728 11.292 166.612 7.37693 168.3 4.38987l.31066-.5536c2.452-4.33333 1.484-5.11467-2.13733-1.7396"></path></svg></a><div><a class="site-title" href="?view=risks" data-site-page="risks">Miljötillståndsrisker</a><p>Risker, motåtgärder och samband · Baslinje S0 per 2026-08-20</p></div></div>
+    <nav class="site-primary-nav" aria-label="Huvudnavigation"><a href="?view=risks" data-site-section="risks" data-site-page="risks" aria-current="true">Risker</a><a href="?view=controls" data-site-section="controls" data-site-page="controls">Motåtgärder</a><a href="?view=process" data-site-section="process" data-site-page="process">Processer</a><a href="?view=graph" data-site-section="graph" data-site-page="graph">Sambandskarta</a><a href="?view=report" data-site-section="report" data-site-page="report">Rapport</a><a href="data/" data-site-section="data" data-site-page="data">Data & källor</a></nav>
+    <nav class="site-section-nav" aria-label="Risker – vyer"><a href="?view=risks" data-site-page="risks" aria-current="page">Register</a><a href="?view=analysis" data-site-page="analysis">Analys</a><a href="?view=ranking" data-site-page="ranking">Rangordning</a><a href="?view=stats" data-site-page="stats">Statistik</a></nav>
+  </header>
+<div id="headstats" hidden></div>
+<div id="siteToolParking" hidden><div id="riskTools" class="site-risk-tools" aria-label="Sök och filtrera">
     <div class="searchwrap">
       <span class="icon">⌕</span>
       <input aria-label="Sök risker" id="search" type="search" placeholder="Sök i titel, beskrivning, motivation, påverkan, åtgärder…" autocomplete="off">
@@ -951,24 +1013,11 @@ main{padding:25px 28px 48px}
       <option value="node">Sortera: Nodnamn</option>
       <option value="affects">Sortera: Flest berörda noder</option>
     </select>
-    <button class="btn active" data-view="risks">Risker</button>
-    <button class="btn" data-view="controls">Motåtgärder</button>
-    <button class="btn" data-view="graph">Sambandskarta</button>
-    <button class="btn" data-view="analysis">Analys</button>
-    <button class="btn" data-view="report">Rapport</button>
-    <details class="ms-more-nav"><summary class="btn">Fler vyer</summary><div>
-      <button class="btn" data-view="ranking">Topp 50 &amp; rangordning</button>
-      <button class="btn" data-view="process">Processkarta</button>
-      <button class="btn" data-view="nodes">Nodbläddrare</button>
-      <button class="btn" data-view="stats">Statistik</button>
-      <a class="btn" href="ai-access.html">AI &amp; rådata</a>
-    </div></details>
-    <button class="btn" id="expandAll">Expandera alla</button>
-  </div>
-</header>
+<button class="btn ex-filter-toggle" id="exFilterToggle" aria-expanded="false" aria-controls="sidebar">Visa filter</button></div></div>
+<button id="expandAll" hidden>Expandera alla</button>
 <div class="layout" id="layout">
-  <button class="btn ex-filter-toggle" id="exFilterToggle" aria-expanded="false" aria-controls="sidebar">Visa filter</button><aside id="sidebar"></aside>
-  <main id="main"></main>
+  <aside id="sidebar"></aside>
+  <main id="main" tabindex="-1"></main>
 </div>
 
 <script>
@@ -1348,6 +1397,49 @@ function renderReportChapter(chapter, report, interviews, {figure=()=>'',linkBas
   }).join('');
   const thematicQuotes=[...quotes.values()].filter(q=>(q.topicIds||[]).includes(chapter.id));
   return `<div class="rp-chapter-meta"><span>Kapitel ${e(chapter.number)}</span><span>${e(reportStatus(chapter.status))}</span></div><h2>${e(chapter.title)}</h2>${chapter.lead?`<p class="rp-lead">${e(chapter.lead)}</p>`:''}${blocks}${thematicQuotes.length?`<section class="rp-interview-evidence"><h3>Röster ur intervjumaterialet</h3>${thematicQuotes.map(q=>`<figure class="rp-quote"><blockquote>${e(q.text)}</blockquote><figcaption>${e(q.interview.publicLabel)} · ${e(q.interview.role)} · ${e(q.locator)} [${e(q.id)}]</figcaption></figure>`).join('')}</section>`:''}${chapter.id==='referenser'?`<ol class="rp-sources">${(report.sources||[]).map(s=>`<li id="source-${e(s.id)}"><strong>[${e(s.id)}] ${e(s.title)}</strong><p>${e(s.description||'')}${s.url?` <a href="${e(s.url)}">Öppna källa</a>`:''}</p></li>`).join('')}${(interviews?.interviews||[]).map(i=>`<li id="source-${e(i.id)}"><strong>[${e(i.id)}] ${e(i.publicLabel)}</strong><p>${e(i.role)} · ${e(i.date||'Datum ej publicerat')} · Godkända utdrag: ${i.excerpts.length}</p></li>`).join('')}</ol>`:''}`;
+}
+
+// One navigation contract for the application and its standalone reading/data pages.
+const SITE_SECTIONS = [
+  {id:'risks',label:'Risker',view:'risks',items:[['risks','Register'],['analysis','Analys'],['ranking','Rangordning'],['stats','Statistik']]},
+  {id:'controls',label:'Motåtgärder',view:'controls',items:[['controls','Register'],['control-analysis','Analys']]},
+  {id:'process',label:'Processer',view:'process',items:[['process','Processkarta'],['nodes','Nodbläddrare']]},
+  {id:'graph',label:'Sambandskarta',view:'graph',items:[['graph','Översikt']]},
+  {id:'report',label:'Rapport',view:'report',items:[['report','Översikt'],['report-reader','Läsrapport'],['report-print','Utskriftsvy']]},
+  {id:'data',label:'Data & källor',view:'data',items:[['data','Datafiler'],['ai','AI-åtkomst']]},
+];
+function sitePage(view,controlTab='register',chapter=null) {
+  return view==='controls'&&controlTab==='analysis'?'control-analysis':view==='report'&&chapter?'report-reader':view;
+}
+function siteSection(page) {
+  return SITE_SECTIONS.find(s=>s.items.some(([id])=>id===page))||SITE_SECTIONS[0];
+}
+function siteHref(page,base='',firstChapter='sammanfattning') {
+  if(page==='data')return `${base}data/`;
+  if(page==='ai')return `${base}ai-access.html`;
+  if(page==='report-print')return `${base}report/`;
+  if(page==='control-analysis')return `${base}?view=controls&tab=analysis`;
+  if(page==='report-reader')return `${base}?view=report&chapter=${encodeURIComponent(firstChapter)}`;
+  return `${base}?view=${page}`;
+}
+const navEscape=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+function renderSectionNavigation(page,{base='',firstChapter}={}) {
+  const section=siteSection(page);
+  return section.items.map(([id,label])=>`<a href="${navEscape(siteHref(id,base,firstChapter))}" data-site-page="${id}"${id===page?' aria-current="page"':''}>${label}</a>`).join('');
+}
+function renderSiteHeader({page='risks',base='',logo='',firstChapter}={}) {
+  const section=siteSection(page);
+  return `<a class="site-skip" href="#main">Hoppa till innehållet</a><header class="site-header">
+    <div class="site-brand"><a class="site-logo" href="https://www.svensktnaringsliv.se/" aria-label="Svenskt Näringsliv" target="_blank" rel="noopener">${logo}</a><div><a class="site-title" href="${base}?view=risks" data-site-page="risks">Miljötillståndsrisker</a><p>Risker, motåtgärder och samband · Baslinje S0 per 2026-08-20</p></div></div>
+    <nav class="site-primary-nav" aria-label="Huvudnavigation">${SITE_SECTIONS.map(s=>`<a href="${navEscape(siteHref(s.view,base,firstChapter))}" data-site-section="${s.id}" data-site-page="${s.view}"${section.id===s.id?' aria-current="true"':''}>${s.label}</a>`).join('')}</nav>
+    <nav class="site-section-nav" aria-label="${section.label} – vyer">${renderSectionNavigation(page,{base,firstChapter})}</nav>
+  </header>`;
+}
+
+// Changes of view, detail and chapter create history; typing/filtering updates that entry.
+function siteRouteKey(url) {
+  const p=new URL(url,'https://example.invalid').searchParams;
+  return ['view','risk','control','concept','tab','controltab','chapter','compare','chart','processnode','selectednode'].map(k=>`${k}=${p.get(k)||(k==='view'?'risks':'')}`).join('&');
 }
 
 const DEFAULT_DIMENSIONS = Object.freeze({
@@ -2635,13 +2727,14 @@ function bindDetail(root){
 function setView(v){
   state.view = v;
   document.body.dataset.view=v;
-  document.querySelectorAll('.ms-more-nav').forEach(menu=>menu.open=false);
+
   $('#exFilterToggle').hidden = !['risks','nodes'].includes(v);
   $('#search').closest('.searchwrap').hidden = !['risks','nodes'].includes(v);
   $('#sort').hidden = v !== 'risks';
   $('#expandAll').hidden = true;
-  document.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('active', x.dataset.view === v));
+  syncSiteNavigation();
   renderMain();
+  exSyncRoute();
 }
 
 // ---- view: risks ----
@@ -2665,14 +2758,14 @@ function renderNodes(){
   const matchingNodes = new Set(filtered().map(r=>r.node_id));
   const ns = NODES.filter(n => matchingNodes.has(n.node_id));
   if (!state.selNode || !ns.some(n => n.node_id === state.selNode)) state.selNode = ns[0]?.node_id;
-  const list = ns.map(x => `<div class="nodeitem ${x.node_id===state.selNode?'sel':''}" data-nid="${esc(x.node_id)}">
-      <div class="nid">${esc(x.node_id)} · ${RISK_COUNT[x.node_id]||0} risker${RANKING.nodeExposure.get(x.node_id)?.topDirectCount ? ` · ${RANKING.nodeExposure.get(x.node_id).topDirectCount} i topp 50` : ''}</div>${esc(x.label)}</div>`).join('');
-  $('#main').innerHTML = `<div class="resultline">Nodbläddrare
-      <button class="btn" id="csvNodes">Exportera alla noder (CSV)</button></div>
+  const list = ns.map(x => `<button class="nodeitem ${x.node_id===state.selNode?'sel':''}" data-nid="${esc(x.node_id)}">
+      <div class="nid">${esc(x.node_id)} · ${RISK_COUNT[x.node_id]||0} risker${RANKING.nodeExposure.get(x.node_id)?.topDirectCount ? ` · ${RANKING.nodeExposure.get(x.node_id).topDirectCount} i topp 50` : ''}</div>${esc(x.label)}</button>`).join('');
+  $('#main').innerHTML = `<div class="ex-page-head"><div><div class="eyebrow">Processer</div><h2>Utforska processernas noder</h2><p>Se risker och samband för varje steg i tillståndsprocessen.</p></div><button class="btn" id="csvNodes">Exportera noder (CSV)</button></div>
     <div class="nodeview"><div class="nodelist">${list}</div><div class="nodedetail" id="nodeDetail">${nodeDetailHTML(state.selNode)}</div></div>`;
   $('#csvNodes').onclick = exportNodes;
   document.querySelectorAll('.nodeitem').forEach(el => el.onclick = () => {
     state.selNode = el.dataset.nid;
+    exSyncRoute();
     document.querySelectorAll('.nodeitem').forEach(x => x.classList.toggle('sel', x === el));
     $('#nodeDetail').innerHTML = nodeDetailHTML(state.selNode);
     bindDetail($('#nodeDetail'));
@@ -2700,7 +2793,7 @@ function renderStats(){
   const topNodes = Object.entries(byNode).sort((a,b)=>b[1]-a[1]).slice(0,15);
   const avg = (RISKS.length / NODES.length).toFixed(1);
   $('#main').innerHTML = `
-    <div class="resultline">Statistik <button class="btn" id="csvStats">Exportera statistik (CSV)</button></div>
+    <div class="ex-page-head"><div><div class="eyebrow">Riskregistret</div><h2>Hur är riskerna fördelade?</h2><p>Registerstatistik över processer, orsaker och riskernas ursprung.</p></div><button class="btn" id="csvStats">Exportera statistik (CSV)</button></div>
     <div class="statbox"><h3>Orsaks- och konsekvensmodell</h3>
       <p style="color:var(--muted);font-size:14px">${allFactors.length} utlösande faktorer (${sourceFactors} källförankrade premisser) · ${allEffects.length} möjliga konsekvenser (${sourceEffects} källförankrade premisser) · i snitt ${(allFactors.length/RISKS.length).toFixed(1)} respektive ${(allEffects.length/RISKS.length).toFixed(1)} poster per risk.</p></div>
     <div class="statbox"><h3>Risker per ursprung</h3>
@@ -2826,8 +2919,8 @@ function renderProcess(){
   }
 
   $('#main').innerHTML = `
-    <h2 class="process-heading">Var finns de högst rankade riskerna?</h2>
-    <p class="ranking-note">Topp 50 efter relativ sannolikhet · ${rankingDate()}. Antal kopplade risker och deras rang visar var uppmärksamheten behövs; nodernas egen störningssannolikhet är inte beräknad.</p>
+    <div class="ex-page-head"><div><div class="eyebrow">Processer</div><h2>Var finns de högst rankade riskerna?</h2>
+    <p>Topp 50 efter relativ sannolikhet · ${rankingDate()}. Antal kopplade risker och deras rang visar var uppmärksamheten behövs; nodernas egen störningssannolikhet är inte beräknad.</p></div></div>
     <div class="charttabs">${tabs}</div>
     ${processRankingPanel(ck)}
     <div class="proctoolbar">
@@ -2863,10 +2956,10 @@ function renderProcess(){
 
   // chart tabs
   document.querySelectorAll('[data-chart-tab]').forEach(bt => bt.onclick = () => {
-    state.selChart = bt.dataset.chartTab; state.selProcNode = null; renderProcess();
+    state.selChart = bt.dataset.chartTab; state.selProcNode = null; renderProcess(); exSyncRoute();
   });
   bindRankingLinks($('#main'));
-  $('#showDownstream').onchange = e => { state.showDownstream=e.target.checked; renderProcess(); };
+  $('#showDownstream').onchange = e => { state.showDownstream=e.target.checked; renderProcess(); exSyncRoute(); };
   $('#jsonProcessChart').onclick = () => exportProcessChart(ck);
 
   // zoom/pan via viewBox manipulation; context shared with one-time global listeners
@@ -2927,6 +3020,7 @@ function renderProcess(){
   g.querySelectorAll('.pnode').forEach(el => el.addEventListener('click', () => {
     if (procCtx && procCtx.moved) return;
     state.selProcNode = el.dataset.nid;
+    exSyncRoute();
     g.querySelectorAll('.pnode').forEach(x => x.classList.toggle('sel', x === el));
     const det = $('#procDetail');
     det.innerHTML = nodeDetailHTML(state.selProcNode);
@@ -2968,6 +3062,7 @@ window.addEventListener('pointerup', endProcessPan);
 window.addEventListener('pointercancel', endProcessPan);
 
 function renderMain(){
+  parkRiskTools();
   if (typeof exState !== 'undefined' && exState.graph) { exState.graph.destroy(); exState.graph=null; }
   $('#layout').classList.toggle('full', ['process','ranking','stats','controls','graph','analysis','report'].includes(state.view));
   if (state.view === 'ranking') renderRanking();
@@ -2979,6 +3074,7 @@ function renderMain(){
   else if (state.view === 'analysis') renderRiskAnalysis();
   else if (state.view === 'report') renderReport();
   else renderStats();
+  placeRiskTools();
 }
 
 // Inlined into the self-contained app. All views share the validated ranking model.
@@ -3483,7 +3579,7 @@ function renderCompactRisks() {
     <p class="ex-note">BTL-rang från ${rankingDate()}. Orange markerar topp 50. Rangordningen beskriver relativ sannolikhet; ${RANKING.unranked.length} risk saknar rang.</p>`;
   $('#exAllRisks').onclick=()=>{state.topOnly=false;renderSidebar();renderCompactRisks();exSyncRoute();};
   $('#exTopRisks').onclick=()=>{state.topOnly=true;state.sort='rank';$('#sort').value='rank';renderSidebar();renderCompactRisks();exSyncRoute();};
-  $('#exMissingControls').onchange=e=>{exState.missingControls=e.target.checked;renderCompactRisks();};
+  $('#exMissingControls').onchange=e=>{exState.missingControls=e.target.checked;renderCompactRisks();exSyncRoute();};
   $('#exRiskExport').onclick=()=>exportRisks(rs,'miljotillstandsrisks_urval.csv');
   $('#exRiskItemExport').onclick=()=>exportRiskItems(rs,'riskregister_orsaker_konsekvenser_urval.csv');
   bindRankingLinks($('#main'));
@@ -3652,10 +3748,14 @@ function exOpenControl(id) {if(EX_CONTROLS.has(id))exOpenDialog({type:'control',
 function exOpenConcept(id) {if(EX_CONCEPTS.has(id))exOpenDialog({type:'concept',id});}
 function exCloseDialog() {const d=$('#exDialog');exState.dialog=null;exState.stack=[];if(d?.open)d.close();exSyncRoute();}
 function exSyncRoute() {
+  if(siteRestoringRoute)return;
   const u=new URL(location.href);
-  for(const key of ['view','risk','control','concept','focus','top','q','compare','tab','action','charts','cats','origins','node','sort','driver','scenario','controlq','controlkind','controlchart','controlsort'])u.searchParams.delete(key);
+  for(const key of ['view','risk','control','concept','focus','top','q','compare','tab','action','charts','cats','origins','node','sort','driver','scenario','controlq','controlkind','controlchart','controlsort','chart','processnode','selectednode','downstream','missingcontrols'])u.searchParams.delete(key);
   if(state.view!=='risks')u.searchParams.set('view',state.view);
-  if(state.view==='risks'){if(state.topOnly)u.searchParams.set('top','1');if(state.q)u.searchParams.set('q',state.q);}
+  if(['risks','nodes'].includes(state.view)){if(state.topOnly)u.searchParams.set('top','1');if(state.q)u.searchParams.set('q',state.q);}
+  if(state.view==='risks'&&exState.missingControls)u.searchParams.set('missingcontrols','1');
+  if(state.view==='process'){u.searchParams.set('chart',state.selChart);if(state.selProcNode)u.searchParams.set('processnode',state.selProcNode);if(state.showDownstream)u.searchParams.set('downstream','1');}
+  if(state.view==='nodes'&&state.selNode)u.searchParams.set('selectednode',state.selNode);
   if(state.view==='graph'&&exState.graphSelection?.id)u.searchParams.set('focus',`${exState.graphSelection.type}:${exState.graphSelection.id}`);
   if(exState.dialog?.id)u.searchParams.set(exState.dialog.type,exState.dialog.id);
   if(exState.dialog?.type==='risk'){if(exState.dialog.tab!=='bow')u.searchParams.set('tab',exState.dialog.tab);if(exState.dialog.controlId)u.searchParams.set('action',exState.dialog.controlId);}
@@ -3667,7 +3767,7 @@ function exSyncRoute() {
   if(state.view==='controls'){if(exState.controlDriver!=='all')u.searchParams.set('driver',exState.controlDriver);if(exState.controlDriver==='authority')u.searchParams.set('scenario',exState.controlScenario);if(exState.controlQ)u.searchParams.set('controlq',exState.controlQ);if(exState.controlKind!=='all')u.searchParams.set('controlkind',exState.controlKind);if(exState.controlChart)u.searchParams.set('controlchart',exState.controlChart);if(exState.controlSort!=='top')u.searchParams.set('controlsort',exState.controlSort);}
   if(exState.dialog?.type==='compare')u.searchParams.set('compare',[...exState.compare].join(','));
   publicationRoute(u);
-  history.replaceState(null,'',u);
+  writeSiteRoute(u);
 }
 function exInit() {
   document.addEventListener('click',event=>{
@@ -3684,6 +3784,12 @@ function exInit() {
     else if(el.hasAttribute('data-ex-open-compare'))exOpenDialog({type:'compare'});
   });
   document.addEventListener('change',event=>{const el=event.target;if(el.dataset.exCompare){el.checked?exState.compare.add(el.dataset.exCompare):exState.compare.delete(el.dataset.exCompare);renderControls();const cb=document.querySelector(`[data-ex-compare="${CSS.escape(el.dataset.exCompare)}"]`);cb?.focus();}});
+  exReadRoute();
+}
+function exReadRoute() {
+  Object.assign(state,{view:'risks',topOnly:false,q:'',charts:new Set(CHARTS),cats:new Set(CATEGORIES),origins:new Set(ORIGINS),node:'',sort:'rank',selChart:'B00',selProcNode:null,selNode:null,showDownstream:false});
+  Object.assign(exState,{controlDriver:'all',controlScenario:EX_AUTHORITY_MAIN,controlKind:'all',controlChart:'',controlSort:'top',controlQ:'',graphSelection:null,compare:new Set(),dialog:null,stack:[],missingControls:false});
+  publicationReadRoute();
   const params=new URLSearchParams(location.search);
   if(['all','authority','other'].includes(params.get('driver')))exState.controlDriver=params.get('driver');
   if(params.get('scenario')==='all'||EX_AUTHORITY_SCENARIOS[params.get('scenario')])exState.controlScenario=params.get('scenario');
@@ -3694,6 +3800,11 @@ function exInit() {
   const initialView=params.get('view');
   if(['risks','ranking','controls','graph','process','nodes','stats','analysis','report'].includes(initialView))state.view=initialView;
   state.topOnly=params.get('top')==='1';state.q=params.get('q')||'';$('#search').value=state.q;
+  exState.missingControls=params.get('missingcontrols')==='1';
+  if(PROC[params.get('chart')])state.selChart=params.get('chart');
+  if(PROC_NODE[params.get('processnode')]){state.selProcNode=params.get('processnode');state.selChart=PROC_NODE[state.selProcNode].chart;}
+  if(NODE_BY_ID[params.get('selectednode')])state.selNode=params.get('selectednode');
+  state.showDownstream=params.get('downstream')==='1';
   const focus=params.get('focus');if(focus){const split=focus.indexOf(':');exState.graphSelection={type:focus.slice(0,split),id:focus.slice(split+1)};}
   if(params.get('compare')) for(const id of params.get('compare').split(','))if(EX_CONTROLS.has(id)&&exState.compare.size<3)exState.compare.add(id);
   for(const [key,values] of [['charts',CHARTS],['cats',CATEGORIES],['origins',ORIGINS]])if(params.has(key))state[key]=new Set(params.get(key).split(',').filter(v=>values.includes(v)));
@@ -3775,7 +3886,7 @@ function renderRiskAnalysis() {
   $('#msAnalysisTop').onchange=e=>{publicationState.analysisTop=e.target.checked;renderRiskAnalysis();exSyncRoute();};
 }
 function measurementControlTabs() {
-  return `<div class="ms-subnav" role="tablist" aria-label="Motåtgärdernas vyer"><button role="tab" aria-selected="${publicationState.controlTab==='register'}" data-pub-control-tab="register">Register</button><button role="tab" aria-selected="${publicationState.controlTab==='analysis'}" data-pub-control-tab="analysis">Analys</button></div>`;
+  return ''; // Section navigation is rendered once in the shared header.
 }
 function measurementScenarioFigure(s) {
   if(!s)return measurementEmpty('Effekt på riskkostnaden','En exporterad scenarioberäkning för exakt de valda kontrollerna behövs. Latenta effekter summeras inte till en kostnadsreduktion.');
@@ -3802,12 +3913,13 @@ function renderReport() {
   if(!chapter) {
     $('#main').innerHTML=`<div class="rp-cover"><div><div class="rp-section-label">Analysrapport · ${reportStatus(REPORT.status)}</div><h2>${esc(REPORT.title)}</h2><p class="rp-cover-lead">${esc(REPORT.description)}</p><div class="ex-actions"><button class="btn active" data-pub-chapter="sammanfattning">Börja läsa</button><a class="btn" href="report/rapportmall.pdf" target="_blank">Ladda ner rapportmall (PDF)</a><a class="ex-text-link" href="report/" target="_blank">Utskriftsvänlig läsversion</a></div><p class="ex-note">Arbetsutgåva · ${esc(REPORT.date)} · Mätresultat och intervjumaterial inväntas</p></div><aside><strong class="rp-big-number">${RISKS.length}</strong><p>risker i ett sammanhängande underlag.</p><div class="rp-cover-index"><span class="rp-section-label">I rapporten</span>${[...new Set(REPORT.chapters.map(c=>c.part))].map((part,i)=>`<button class="ex-text-link" data-pub-chapter="${REPORT.chapters.find(c=>c.part===part).id}"><span>${String(i+1).padStart(2,'0')}</span>${esc(part)}</button>`).join('')}</div></aside></div><div class="rp-three"><section><span>01</span><div><h3>Riskbild och processer</h3><p>Rang, händelsemått, kostnad och osäkerhet med spårbara resultat.</p></div></section><section><span>02</span><div><h3>Myndighetens åtgärder</h3><p>Scenarier, överlapp och genomförandeförutsättningar.</p></div></section><section><span>03</span><div><h3>Intervjuer och samlad analys</h3><p>Erfarenheter vävs in i analys och diskussion med godkända citat.</p></div></section></div><section class="rp-manuscript-note"><h3>Ett längre manus med plats för fördjupning</h3><p>${REPORT.chapters.length} kapitel och bilagor. ${esc(REPORT.extent)} Dispositionen kan utökas när intervjumaterialet kommer.</p><p class="ex-note">${interviewCount?`${interviewCount} godkända intervjukällor finns införda.`:'Intervjukapitlen är förberedda. Inga citat eller intervjufynd har konstruerats.'}</p></section>`;
   } else {
-    const index=REPORT.chapters.indexOf(chapter),next=REPORT.chapters[index+1];
-    $('#main').innerHTML=`<div class="rp-reader"><aside class="rp-toc"><button class="ex-text-link" data-pub-report-cover>Rapportens startsida</button><h3>I rapporten</h3><p>${index+1} av ${REPORT.chapters.length} avsnitt</p><progress value="${index+1}" max="${REPORT.chapters.length}"></progress><button class="btn rp-mobile-toc-toggle" data-pub-toggle-toc aria-expanded="false" aria-controls="rpChapterNav">Innehåll · avsnitt ${index+1} av ${REPORT.chapters.length}</button><nav id="rpChapterNav" aria-label="Rapportens kapitel">${REPORT.chapters.map((c,i)=>`${i===0||REPORT.chapters[i-1].part!==c.part?`<div class="rp-toc-part">${esc(c.part)}</div>`:''}<button class="${c.id===chapter.id?'active':''}" ${c.id===chapter.id?'aria-current="page"':''} data-pub-chapter="${esc(c.id)}"><span>${esc(c.number)}</span>${esc(c.title)}</button>`).join('')}</nav><a class="btn" href="report/rapportmall.pdf" target="_blank">Rapportmall (PDF)</a></aside><article class="rp-article">${renderReportChapter(chapter,REPORT,INTERVIEWS,{figure:reportFigure})}<footer class="rp-chapter-footer"><span>${esc(REPORT.editionId)}</span>${next?`<button class="ex-text-link" data-pub-chapter="${esc(next.id)}">Nästa: ${esc(next.title)}</button>`:'<button class="ex-text-link" data-pub-report-cover>Till rapportens startsida</button>'}</footer></article></div>`;
+    const index=REPORT.chapters.indexOf(chapter),next=REPORT.chapters[index+1],previous=REPORT.chapters[index-1];
+    $('#main').innerHTML=`<div class="rp-reader"><aside class="rp-toc"><button class="ex-text-link" data-pub-report-cover>Rapportens startsida</button><h3>I rapporten</h3><p>${index+1} av ${REPORT.chapters.length} avsnitt</p><progress value="${index+1}" max="${REPORT.chapters.length}"></progress><button class="btn rp-mobile-toc-toggle" data-pub-toggle-toc aria-expanded="false" aria-controls="rpChapterNav">Innehåll · avsnitt ${index+1} av ${REPORT.chapters.length}</button><nav id="rpChapterNav" aria-label="Rapportens kapitel">${REPORT.chapters.map((c,i)=>`${i===0||REPORT.chapters[i-1].part!==c.part?`<div class="rp-toc-part">${esc(c.part)}</div>`:''}<button class="${c.id===chapter.id?'active':''}" ${c.id===chapter.id?'aria-current="page"':''} data-pub-chapter="${esc(c.id)}"><span>${esc(c.number)}</span>${esc(c.title)}</button>`).join('')}</nav><a class="btn" href="report/rapportmall.pdf" target="_blank">Rapportmall (PDF)</a></aside><article class="rp-article">${renderReportChapter(chapter,REPORT,INTERVIEWS,{figure:reportFigure})}<footer class="rp-chapter-footer"><span>${esc(REPORT.editionId)}</span><nav aria-label="Bläddra i rapporten">${previous?`<button class="ex-text-link" data-pub-chapter="${esc(previous.id)}">← Föregående: ${esc(previous.title)}</button>`:''}${next?`<button class="ex-text-link" data-pub-chapter="${esc(next.id)}">Nästa: ${esc(next.title)}</button>`:'<button class="ex-text-link" data-pub-report-cover>Till rapportens startsida</button>'}</nav></footer></article></div>`;
   }
 }
-function publicationInit() {
+function publicationReadRoute() {
   const p=new URLSearchParams(location.search);
+  Object.assign(publicationState,{controlTab:'register',selected:new Set(),controlDriver:'authority',analysisChart:'',analysisTop:false,chapter:null,expandedRisk:null});
   const units=new Set([...MEASUREMENT.byRisk.values()].filter(r=>r.likelihood).map(r=>r.likelihood.unit));
   if(units.size>1){const option=$('#sort').querySelector('[value=likelihood]');option.disabled=true;option.textContent='Händelsemått: olika enheter kan inte jämföras';}
   if(p.get('view')==='controls'&&(p.get('controltab')==='analysis'||!p.has('risk')&&p.get('tab')==='analysis'))publicationState.controlTab='analysis';
@@ -3817,6 +3929,9 @@ function publicationInit() {
   publicationState.analysisTop=p.get('analysistop')==='1';
   if(p.get('analysisscenario')==='all'||EX_AUTHORITY_SCENARIOS[p.get('analysisscenario')])exState.controlScenario=p.get('analysisscenario');
   if(REPORT.chapters.some(c=>c.id===p.get('chapter')))publicationState.chapter=p.get('chapter');
+}
+function publicationInit() {
+  publicationReadRoute();
   document.addEventListener('click',e=> {
     const el=e.target.closest('button');if(!el)return;
     if(el.dataset.pubAnalyseControl){publicationState.selected=new Set([el.dataset.pubAnalyseControl]);publicationState.controlTab='analysis';publicationState.controlDriver=exAuthority(EX_CONTROLS.get(el.dataset.pubAnalyseControl))?'authority':'all';exCloseDialog();setView('controls');exSyncRoute();}
@@ -3825,8 +3940,8 @@ function publicationInit() {
     else if(el.dataset.pubDriver){publicationState.controlDriver=el.dataset.pubDriver;renderControlAnalysis();exSyncRoute();}
     else if(el.hasAttribute('data-pub-toggle-toc')){const aside=el.closest('.rp-toc');const open=aside.classList.toggle('open');el.setAttribute('aria-expanded',String(open));if(open)aside.querySelector('[aria-current]')?.scrollIntoView({block:'nearest'});}
     else if(el.hasAttribute('data-pub-scenario-results')){$('#msScenarioResults')?.scrollIntoView({behavior:'smooth',block:'start'});}
-    else if(el.dataset.pubChapter){publicationState.chapter=el.dataset.pubChapter;setView('report');window.scrollTo(0,0);exSyncRoute();}
-    else if(el.hasAttribute('data-pub-report-cover')){publicationState.chapter=null;renderReport();window.scrollTo(0,0);exSyncRoute();}
+    else if(el.dataset.pubChapter){publicationState.chapter=el.dataset.pubChapter;setView('report');window.scrollTo({top:0,left:0,behavior:'instant'});exSyncRoute();}
+    else if(el.hasAttribute('data-pub-report-cover')){publicationState.chapter=null;setView('report');window.scrollTo({top:0,left:0,behavior:'instant'});exSyncRoute();}
     else if(el.dataset.pubExpandRisk){publicationState.expandedRisk=publicationState.expandedRisk===el.dataset.pubExpandRisk?null:el.dataset.pubExpandRisk;renderCompactRisks();}
   });
   document.addEventListener('keydown',e=>{const el=e.target.closest('[data-pub-control-tab]');if(!el||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();publicationState.controlTab=e.key==='Home'?'register':e.key==='End'?'analysis':publicationState.controlTab==='analysis'?'register':'analysis';renderControls();exSyncRoute();document.querySelector(`[data-pub-control-tab="${publicationState.controlTab}"]`)?.focus();});
@@ -3847,6 +3962,73 @@ function publicationRoute(u) {
   if(state.view==='report'&&publicationState.chapter)u.searchParams.set('chapter',publicationState.chapter);
 }
 
+let siteRouteReady=false;
+let siteRestoringRoute=false;
+let siteToolFocus=null;
+function syncSiteNavigation() {
+  const page=sitePage(state.view,publicationState.controlTab,publicationState.chapter);
+  const section=siteSection(page);
+  document.querySelectorAll('[data-site-section]').forEach(a=>{
+    if(a.dataset.siteSection===section.id)a.setAttribute('aria-current','true');
+    else a.removeAttribute('aria-current');
+  });
+  const nav=document.querySelector('.site-section-nav');
+  nav.setAttribute('aria-label',`${section.label} – vyer`);
+  nav.innerHTML=renderSectionNavigation(page,{firstChapter:REPORT.chapters[0].id});
+  document.title=`${section.label} · Miljötillståndsrisker`;
+}
+function parkRiskTools() {
+  const active=document.activeElement;
+  if(active?.closest('#riskTools'))siteToolFocus={id:active.id,start:active.selectionStart,end:active.selectionEnd};
+  $('#siteToolParking').append($('#riskTools'));
+  $('#siteToolParking').append($('#sidebar'));
+}
+function placeRiskTools() {
+  if(!['risks','nodes'].includes(state.view))return;
+  const head=$('#main').querySelector('.ex-page-head');
+  if(head)head.after($('#riskTools'));else $('#main').prepend($('#riskTools'));
+  $('#riskTools').after($('#sidebar'));
+  if(siteToolFocus){const el=document.getElementById(siteToolFocus.id);el?.focus({preventScroll:true});if(el?.type==='search'&&siteToolFocus.start!=null)el.setSelectionRange(siteToolFocus.start,siteToolFocus.end);siteToolFocus=null;}
+}
+// Some filters redraw a view directly rather than through renderMain.
+const siteCompactRiskRenderer=renderCompactRisks;
+renderCompactRisks=function(){parkRiskTools();siteCompactRiskRenderer();placeRiskTools();};
+const siteNodeRenderer=renderNodes;
+renderNodes=function(){parkRiskTools();siteNodeRenderer();placeRiskTools();};
+function writeSiteRoute(url) {
+  const next=url.href;
+  const current=new URL(location.href);
+  const changed=siteRouteKey(current)!==siteRouteKey(next);
+  if(next!==location.href){
+    if(siteRouteReady&&changed)history.pushState(null,'',next);
+    else history.replaceState(null,'',next);
+  }
+  if(siteRouteReady&&changed&&!exState.dialog&&(current.searchParams.get('view')!==url.searchParams.get('view')||current.searchParams.get('chapter')!==url.searchParams.get('chapter')||current.searchParams.get('tab')!==url.searchParams.get('tab'))){
+    window.scrollTo({top:0,left:0,behavior:'instant'});$('#main').focus({preventScroll:true});
+  }
+}
+function initSiteNavigation() {
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('a[data-site-page]');
+    if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    const page=link.dataset.sitePage;
+    if(['data','ai','report-print'].includes(page))return;
+    event.preventDefault();
+    if(page==='controls'||page==='control-analysis')publicationState.controlTab=page==='controls'?'register':'analysis';
+    if(page==='report'||page==='report-reader')publicationState.chapter=page==='report'?null:publicationState.chapter||REPORT.chapters[0].id;
+    const view=page==='control-analysis'?'controls':page==='report-reader'?'report':page;
+    setView(view);exSyncRoute();
+    window.scrollTo({top:0,left:0,behavior:'instant'});
+  });
+  window.addEventListener('popstate',()=>{
+    siteRestoringRoute=true;
+    try {
+      const dialog=$('#exDialog');if(dialog?.open)dialog.close();
+      exReadRoute();
+    } finally {siteRestoringRoute=false;}
+  });
+}
+
 
 // ---- events ----
 $('#exFilterToggle').onclick=()=>{const open=$('#exFilterToggle').getAttribute('aria-expanded')!=='true';$('#exFilterToggle').setAttribute('aria-expanded',String(open));$('#exFilterToggle').textContent=open?'Dölj filter':'Visa filter';$('#sidebar').classList.toggle('ex-filters-open',open);};
@@ -3854,10 +4036,7 @@ document.addEventListener('change',e=>{if(e.target.closest('#sidebar')||e.target
 let deb;
 $('#search').addEventListener('input', e => { clearTimeout(deb); deb = setTimeout(() => { state.q = e.target.value; renderMain(); exSyncRoute(); }, 120); });
 $('#sort').onchange = e => { state.sort = e.target.value; renderMain(); };
-document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => {
-  setView(b.dataset.view);
-  exSyncRoute();
-});
+initSiteNavigation();
 $('#expandAll').onclick = () => {
   state.expandAll = !state.expandAll;
   $('#expandAll').textContent = state.expandAll ? 'Minimera alla' : 'Expandera alla';
@@ -3867,6 +4046,7 @@ $('#expandAll').onclick = () => {
 $('#search').value = state.q;
 if (state.expandAll) $('#expandAll').textContent = 'Minimera alla';
 publicationInit(); renderHead(); exInit();
+siteRouteReady=true;
 </script>
 </body>
 </html>

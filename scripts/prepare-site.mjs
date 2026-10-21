@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { copyFileSync, cpSync, mkdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { readFileSync, copyFileSync, cpSync, mkdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildReport } from './build-report.mjs';
+import { renderSiteHeader } from '../Artefakt_C_Riskregister/_build/site_navigation.mjs';
 
 const rootDirectory = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -37,6 +38,7 @@ export function prepareSite(root = rootDirectory) {
     'site/sitemap.xml',
     'site/assets/svenskt-naringsliv-logo.svg',
     'site/assets/svenskt-naringsliv-logo-stacked.svg',
+    'site/assets/site-navigation.css',
   ];
   // Verify all build inputs before replacing the previous preview.
   for (const relativePath of required) {
@@ -45,6 +47,12 @@ export function prepareSite(root = rootDirectory) {
   }
   rmSync(output, { recursive: true, force: true });
   cpSync(join(root, 'site'), output, { recursive: true });
+  const logo=readFileSync(join(root,'site/assets/svenskt-naringsliv-logo.svg'),'utf8');
+  const firstChapter=JSON.parse(readFileSync(join(root,'report/manuscript.json'),'utf8')).chapters[0].id;
+  for(const [file,page,base] of [['data/index.html','data','../'],['ai-access.html','ai','./']]) {
+    const path=join(output,file);
+    writeFileSync(path,readFileSync(path,'utf8').replace('<!--__SITE_HEADER__-->',()=>renderSiteHeader({page,base,logo,firstChapter})));
+  }
   mkdirSync(join(output, 'data'), { recursive: true });
   copyFileSync(join(root, required[0]), join(output, 'index.html'));
   for (const [filename, source] of Object.entries(STATIC_DATA_FILES)) {

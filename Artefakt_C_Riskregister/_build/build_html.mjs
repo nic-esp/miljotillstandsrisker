@@ -10,6 +10,7 @@ import { createExplorationData } from './exploration_model.mjs';
 import { loadAuthorityPackage } from './authority_controls.mjs';
 import { validateMeasurement } from './measurement_model.mjs';
 import { validateReport } from './report_model.mjs';
+import { renderSiteHeader } from './site_navigation.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -73,24 +74,24 @@ const rankingView = readFileSync(join(here, 'ranking_view.mjs'), 'utf8');
 const brandCss = readFileSync(join(here, 'svenskt-naringsliv.css'), 'utf8');
 const explorationView = readFileSync(join(here, 'exploration_view.mjs'), 'utf8');
 const explorationGraph = readFileSync(join(here, 'exploration_graph.mjs'), 'utf8').replace(/\bexport\s+(?=function|const|class)/g, '').replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
-const explorationCss = readFileSync(join(here, 'exploration.css'), 'utf8') + '\n' + readFileSync(join(here, 'exploration_graph.css'), 'utf8') + '\n' + readFileSync(join(here, 'measurement.css'), 'utf8');
-const logoStacked = readFileSync(join(root, '../site/assets/svenskt-naringsliv-logo-stacked.svg'), 'utf8').trim();
+const explorationCss = readFileSync(join(here, 'exploration.css'), 'utf8') + '\n' + readFileSync(join(here, 'exploration_graph.css'), 'utf8') + '\n' + readFileSync(join(here, 'measurement.css'), 'utf8') + '\n' + readFileSync(join(root,'../site/assets/site-navigation.css'),'utf8');
 const logoHorizontal = readFileSync(join(root, '../site/assets/svenskt-naringsliv-logo.svg'), 'utf8').trim();
 if (!template.includes('/*__PAYLOAD__*/')) throw new Error('Mall saknar /*__PAYLOAD__*/-placeholder');
 if (!template.includes('/*__PROCESS_GEOMETRY__*/')) throw new Error('Mall saknar /*__PROCESS_GEOMETRY__*/-placeholder');
 if (!template.includes('/*__RISK_FIELDS__*/')) throw new Error('Mall saknar /*__RISK_FIELDS__*/-placeholder');
 if (!template.includes('/*__PROCESS_CHART_EXPORT__*/')) throw new Error('Mall saknar /*__PROCESS_CHART_EXPORT__*/-placeholder');
-for (const marker of ['/*__BRAND_CSS__*/', '/*__RANKING_MODEL__*/', '/*__RANKING_VIEW__*/', '<!--__SN_LOGO_STACKED__-->', '<!--__SN_LOGO_HORIZONTAL__-->']) {
+for (const marker of ['/*__BRAND_CSS__*/', '/*__RANKING_MODEL__*/', '/*__RANKING_VIEW__*/', '<!--__SITE_HEADER__-->']) {
   if (!template.includes(marker)) throw new Error(`Mall saknar ${marker}-placeholder`);
 }
 for (const marker of ['/*__EXPLORATION_CSS__*/','/*__EXPLORATION_VIEW__*/','/*__EXPLORATION_GRAPH__*/']) {
   if (!template.includes(marker)) throw new Error(`Mall saknar ${marker}-placeholder`);
 }
 const html = template
+  .replace('<!--__SITE_HEADER__-->',()=>renderSiteHeader({logo:logoHorizontal,firstChapter:report.chapters[0].id}))
+  .replace('/*__SITE_NAVIGATION__*/',()=>readFileSync(join(here,'site_navigation.mjs'),'utf8').replace(/^export /gm,''))
+  .replace('/*__NAVIGATION_VIEW__*/',()=>readFileSync(join(here,'navigation_view.mjs'),'utf8'))
   .replace('/*__PUBLICATION_MODEL__*/', () => publicationModel)
   .replace('/*__MEASUREMENT_VIEW__*/', () => readFileSync(join(here,'measurement_view.mjs'),'utf8'))
-  .replace('<!--__SN_LOGO_STACKED__-->', () => logoStacked)
-  .replace('<!--__SN_LOGO_HORIZONTAL__-->', () => logoHorizontal)
   .replace('/*__BRAND_CSS__*/', () => brandCss)
   .replace('/*__EXPLORATION_CSS__*/', () => explorationCss)
   .replace('/*__EXPLORATION_GRAPH__*/', () => explorationGraph)

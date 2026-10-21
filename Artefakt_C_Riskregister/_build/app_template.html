@@ -168,20 +168,9 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand-heading">
-    <a class="brand-logo" href="https://www.svensktnaringsliv.se/" aria-label="Svenskt Näringsliv" target="_blank" rel="noopener">
-      <span class="brand-logo-stacked" aria-hidden="true"><!--__SN_LOGO_STACKED__--></span>
-      <span class="brand-logo-horizontal" aria-hidden="true"><!--__SN_LOGO_HORIZONTAL__--></span>
-    </a>
-    <div class="brand-title">
-      <div class="eyebrow">Den svenska tillståndsprocessen</div>
-      <h1>Miljötillståndsrisker</h1>
-      <div class="sub">Risker, motåtgärder och samband · Baslinje S0 per 2026-08-20</div>
-    </div>
-  </div>
-  <div class="headstats" id="headstats"></div>
-  <div class="controls">
+<!--__SITE_HEADER__-->
+<div id="headstats" hidden></div>
+<div id="siteToolParking" hidden><div id="riskTools" class="site-risk-tools" aria-label="Sök och filtrera">
     <div class="searchwrap">
       <span class="icon">⌕</span>
       <input aria-label="Sök risker" id="search" type="search" placeholder="Sök i titel, beskrivning, motivation, påverkan, åtgärder…" autocomplete="off">
@@ -197,29 +186,17 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
       <option value="node">Sortera: Nodnamn</option>
       <option value="affects">Sortera: Flest berörda noder</option>
     </select>
-    <button class="btn active" data-view="risks">Risker</button>
-    <button class="btn" data-view="controls">Motåtgärder</button>
-    <button class="btn" data-view="graph">Sambandskarta</button>
-    <button class="btn" data-view="analysis">Analys</button>
-    <button class="btn" data-view="report">Rapport</button>
-    <details class="ms-more-nav"><summary class="btn">Fler vyer</summary><div>
-      <button class="btn" data-view="ranking">Topp 50 &amp; rangordning</button>
-      <button class="btn" data-view="process">Processkarta</button>
-      <button class="btn" data-view="nodes">Nodbläddrare</button>
-      <button class="btn" data-view="stats">Statistik</button>
-      <a class="btn" href="ai-access.html">AI &amp; rådata</a>
-    </div></details>
-    <button class="btn" id="expandAll">Expandera alla</button>
-  </div>
-</header>
+<button class="btn ex-filter-toggle" id="exFilterToggle" aria-expanded="false" aria-controls="sidebar">Visa filter</button></div></div>
+<button id="expandAll" hidden>Expandera alla</button>
 <div class="layout" id="layout">
-  <button class="btn ex-filter-toggle" id="exFilterToggle" aria-expanded="false" aria-controls="sidebar">Visa filter</button><aside id="sidebar"></aside>
-  <main id="main"></main>
+  <aside id="sidebar"></aside>
+  <main id="main" tabindex="-1"></main>
 </div>
 
 <script>
 /*__RANKING_MODEL__*/
 /*__PUBLICATION_MODEL__*/
+/*__SITE_NAVIGATION__*/
 /*__PROCESS_GEOMETRY__*/
 /*__RISK_FIELDS__*/
 /*__PROCESS_CHART_EXPORT__*/
@@ -504,13 +481,14 @@ function bindDetail(root){
 function setView(v){
   state.view = v;
   document.body.dataset.view=v;
-  document.querySelectorAll('.ms-more-nav').forEach(menu=>menu.open=false);
+
   $('#exFilterToggle').hidden = !['risks','nodes'].includes(v);
   $('#search').closest('.searchwrap').hidden = !['risks','nodes'].includes(v);
   $('#sort').hidden = v !== 'risks';
   $('#expandAll').hidden = true;
-  document.querySelectorAll('[data-view]').forEach(x => x.classList.toggle('active', x.dataset.view === v));
+  syncSiteNavigation();
   renderMain();
+  exSyncRoute();
 }
 
 // ---- view: risks ----
@@ -534,14 +512,14 @@ function renderNodes(){
   const matchingNodes = new Set(filtered().map(r=>r.node_id));
   const ns = NODES.filter(n => matchingNodes.has(n.node_id));
   if (!state.selNode || !ns.some(n => n.node_id === state.selNode)) state.selNode = ns[0]?.node_id;
-  const list = ns.map(x => `<div class="nodeitem ${x.node_id===state.selNode?'sel':''}" data-nid="${esc(x.node_id)}">
-      <div class="nid">${esc(x.node_id)} · ${RISK_COUNT[x.node_id]||0} risker${RANKING.nodeExposure.get(x.node_id)?.topDirectCount ? ` · ${RANKING.nodeExposure.get(x.node_id).topDirectCount} i topp 50` : ''}</div>${esc(x.label)}</div>`).join('');
-  $('#main').innerHTML = `<div class="resultline">Nodbläddrare
-      <button class="btn" id="csvNodes">Exportera alla noder (CSV)</button></div>
+  const list = ns.map(x => `<button class="nodeitem ${x.node_id===state.selNode?'sel':''}" data-nid="${esc(x.node_id)}">
+      <div class="nid">${esc(x.node_id)} · ${RISK_COUNT[x.node_id]||0} risker${RANKING.nodeExposure.get(x.node_id)?.topDirectCount ? ` · ${RANKING.nodeExposure.get(x.node_id).topDirectCount} i topp 50` : ''}</div>${esc(x.label)}</button>`).join('');
+  $('#main').innerHTML = `<div class="ex-page-head"><div><div class="eyebrow">Processer</div><h2>Utforska processernas noder</h2><p>Se risker och samband för varje steg i tillståndsprocessen.</p></div><button class="btn" id="csvNodes">Exportera noder (CSV)</button></div>
     <div class="nodeview"><div class="nodelist">${list}</div><div class="nodedetail" id="nodeDetail">${nodeDetailHTML(state.selNode)}</div></div>`;
   $('#csvNodes').onclick = exportNodes;
   document.querySelectorAll('.nodeitem').forEach(el => el.onclick = () => {
     state.selNode = el.dataset.nid;
+    exSyncRoute();
     document.querySelectorAll('.nodeitem').forEach(x => x.classList.toggle('sel', x === el));
     $('#nodeDetail').innerHTML = nodeDetailHTML(state.selNode);
     bindDetail($('#nodeDetail'));
@@ -569,7 +547,7 @@ function renderStats(){
   const topNodes = Object.entries(byNode).sort((a,b)=>b[1]-a[1]).slice(0,15);
   const avg = (RISKS.length / NODES.length).toFixed(1);
   $('#main').innerHTML = `
-    <div class="resultline">Statistik <button class="btn" id="csvStats">Exportera statistik (CSV)</button></div>
+    <div class="ex-page-head"><div><div class="eyebrow">Riskregistret</div><h2>Hur är riskerna fördelade?</h2><p>Registerstatistik över processer, orsaker och riskernas ursprung.</p></div><button class="btn" id="csvStats">Exportera statistik (CSV)</button></div>
     <div class="statbox"><h3>Orsaks- och konsekvensmodell</h3>
       <p style="color:var(--muted);font-size:14px">${allFactors.length} utlösande faktorer (${sourceFactors} källförankrade premisser) · ${allEffects.length} möjliga konsekvenser (${sourceEffects} källförankrade premisser) · i snitt ${(allFactors.length/RISKS.length).toFixed(1)} respektive ${(allEffects.length/RISKS.length).toFixed(1)} poster per risk.</p></div>
     <div class="statbox"><h3>Risker per ursprung</h3>
@@ -695,8 +673,8 @@ function renderProcess(){
   }
 
   $('#main').innerHTML = `
-    <h2 class="process-heading">Var finns de högst rankade riskerna?</h2>
-    <p class="ranking-note">Topp 50 efter relativ sannolikhet · ${rankingDate()}. Antal kopplade risker och deras rang visar var uppmärksamheten behövs; nodernas egen störningssannolikhet är inte beräknad.</p>
+    <div class="ex-page-head"><div><div class="eyebrow">Processer</div><h2>Var finns de högst rankade riskerna?</h2>
+    <p>Topp 50 efter relativ sannolikhet · ${rankingDate()}. Antal kopplade risker och deras rang visar var uppmärksamheten behövs; nodernas egen störningssannolikhet är inte beräknad.</p></div></div>
     <div class="charttabs">${tabs}</div>
     ${processRankingPanel(ck)}
     <div class="proctoolbar">
@@ -732,10 +710,10 @@ function renderProcess(){
 
   // chart tabs
   document.querySelectorAll('[data-chart-tab]').forEach(bt => bt.onclick = () => {
-    state.selChart = bt.dataset.chartTab; state.selProcNode = null; renderProcess();
+    state.selChart = bt.dataset.chartTab; state.selProcNode = null; renderProcess(); exSyncRoute();
   });
   bindRankingLinks($('#main'));
-  $('#showDownstream').onchange = e => { state.showDownstream=e.target.checked; renderProcess(); };
+  $('#showDownstream').onchange = e => { state.showDownstream=e.target.checked; renderProcess(); exSyncRoute(); };
   $('#jsonProcessChart').onclick = () => exportProcessChart(ck);
 
   // zoom/pan via viewBox manipulation; context shared with one-time global listeners
@@ -796,6 +774,7 @@ function renderProcess(){
   g.querySelectorAll('.pnode').forEach(el => el.addEventListener('click', () => {
     if (procCtx && procCtx.moved) return;
     state.selProcNode = el.dataset.nid;
+    exSyncRoute();
     g.querySelectorAll('.pnode').forEach(x => x.classList.toggle('sel', x === el));
     const det = $('#procDetail');
     det.innerHTML = nodeDetailHTML(state.selProcNode);
@@ -837,6 +816,7 @@ window.addEventListener('pointerup', endProcessPan);
 window.addEventListener('pointercancel', endProcessPan);
 
 function renderMain(){
+  parkRiskTools();
   if (typeof exState !== 'undefined' && exState.graph) { exState.graph.destroy(); exState.graph=null; }
   $('#layout').classList.toggle('full', ['process','ranking','stats','controls','graph','analysis','report'].includes(state.view));
   if (state.view === 'ranking') renderRanking();
@@ -848,12 +828,14 @@ function renderMain(){
   else if (state.view === 'analysis') renderRiskAnalysis();
   else if (state.view === 'report') renderReport();
   else renderStats();
+  placeRiskTools();
 }
 
 /*__RANKING_VIEW__*/
 /*__EXPLORATION_GRAPH__*/
 /*__EXPLORATION_VIEW__*/
 /*__MEASUREMENT_VIEW__*/
+/*__NAVIGATION_VIEW__*/
 
 // ---- events ----
 $('#exFilterToggle').onclick=()=>{const open=$('#exFilterToggle').getAttribute('aria-expanded')!=='true';$('#exFilterToggle').setAttribute('aria-expanded',String(open));$('#exFilterToggle').textContent=open?'Dölj filter':'Visa filter';$('#sidebar').classList.toggle('ex-filters-open',open);};
@@ -861,10 +843,7 @@ document.addEventListener('change',e=>{if(e.target.closest('#sidebar')||e.target
 let deb;
 $('#search').addEventListener('input', e => { clearTimeout(deb); deb = setTimeout(() => { state.q = e.target.value; renderMain(); exSyncRoute(); }, 120); });
 $('#sort').onchange = e => { state.sort = e.target.value; renderMain(); };
-document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => {
-  setView(b.dataset.view);
-  exSyncRoute();
-});
+initSiteNavigation();
 $('#expandAll').onclick = () => {
   state.expandAll = !state.expandAll;
   $('#expandAll').textContent = state.expandAll ? 'Minimera alla' : 'Expandera alla';
@@ -874,6 +853,7 @@ $('#expandAll').onclick = () => {
 $('#search').value = state.q;
 if (state.expandAll) $('#expandAll').textContent = 'Minimera alla';
 publicationInit(); renderHead(); exInit();
+siteRouteReady=true;
 </script>
 </body>
 </html>
