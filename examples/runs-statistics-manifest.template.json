@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "editionId": "FYLL_I_NY_MATUTGAVA",
+  "label": "FYLL_I_KORNINGENS_NAMN",
+  "orgId": "FYLL_I",
+  "experimentId": "FYLL_I",
+  "executionId": "FYLL_I",
+  "mappingVersion": "KOR_npm_run_import:runs_--_mapping-version",
+  "currency": "SEK",
+  "horizonYears": 1,
+  "scope": {
+    "description": "FYLL_I_VILKA_PROCESSVAGAR_OCH_RISKER_SOM_INGAR",
+    "exposureBasis": "FYLL_I_ANTAL_ARENDEN_ELLER_ANNAN_EXPONERINGSBAS"
+  },
+  "crosswalkFile": "crosswalk.json",
+  "runs": [
+    {
+      "runId": "BTL_LIKELIHOOD_RUN_ID",
+      "functionId": "FYLL_I",
+      "kind": "btl_likelihood",
+      "file": "btl_likelihood_run_id.json",
+      "sha256": "FYLL_I_ORIGINALFILENS_SHA256",
+      "status": "completed",
+      "completedAt": "FYLL_I_ISO_DATUM",
+      "inputRunIds": [],
+      "recordPath": "data.ranks",
+      "absolute": {
+        "valuePath": "absolute.point",
+        "unit": "probability"
+      }
+    },
+    {
+      "runId": "MC_LIKELIHOOD_RUN_ID",
+      "functionId": "FYLL_I",
+      "kind": "monte_carlo_likelihood",
+      "file": "mc_likelihood_run_id.json",
+      "sha256": "FYLL_I_ORIGINALFILENS_SHA256",
+      "status": "completed",
+      "completedAt": "FYLL_I_ISO_DATUM",
+      "inputRunIds": [
+        "BTL_LIKELIHOOD_RUN_ID"
+      ],
+      "adapter": "cardinal_occurrence_v2",
+      "occurrencePath": "data.occurrence",
+      "unit": "probability",
+      "calibrationRunId": "BTL_LIKELIHOOD_RUN_ID"
+    },
+    {
+      "runId": "MC_IMPACT_RUN_ID",
+      "functionId": "FYLL_I",
+      "kind": "monte_carlo_impact",
+      "file": "mc_impact_run_id.json",
+      "sha256": "FYLL_I_ORIGINALFILENS_SHA256",
+      "status": "completed",
+      "completedAt": "FYLL_I_ISO_DATUM",
+      "inputRunIds": [],
+      "adapter": "cardinal_impact_exposure",
+      "recordPath": "data.exposures",
+      "unit": "SEK_per_event",
+      "fields": {
+        "mean": "mean",
+        "median": "quantiles.p50"
+      }
+    },
+    {
+      "runId": "MONETARY_LOSS_RUN_ID",
+      "functionId": "FYLL_I",
+      "kind": "monte_carlo_loss",
+      "file": "monetary_loss_run_id.json",
+      "sha256": "FYLL_I_ORIGINALFILENS_SHA256",
+      "status": "completed",
+      "completedAt": "FYLL_I_ISO_DATUM",
+      "inputRunIds": [],
+      "recordPath": "FYLL_I_MONETARA_FORLUSTPOSTERNAS_SOKVAG",
+      "unit": "SEK",
+      "horizonYears": 1,
+      "lossDefinition": "FYLL_I_DEN_MONETARA_FORLUSTENS_DEFINITION",
+      "distribution": false,
+      "fields": {
+        "riskId": "riskId",
+        "mean": "mean",
+        "median": "p50"
+      }
+    },
+    {
+      "runId": "PORTFOLIO_LOSS_RUN_ID",
+      "functionId": "FYLL_I",
+      "kind": "portfolio_loss",
+      "file": "portfolio_loss_run_id.json",
+      "sha256": "FYLL_I_ORIGINALFILENS_SHA256",
+      "status": "completed",
+      "completedAt": "FYLL_I_ISO_DATUM",
+      "inputRunIds": [],
+      "recordPath": "FYLL_I_DEN_GEMENSAMMA_FORLUSTENS_SOKVAG",
+      "unit": "SEK",
+      "horizonYears": 1,
+      "dependenceAssumption": "FYLL_I_BEROENDEMODELLEN",
+      "distribution": false,
+      "fields": {
+        "riskIds": "riskIds",
+        "mean": "mean",
+        "median": "p50"
+      }
+    }
+  ],
+  "expectedLossRules": []
+}

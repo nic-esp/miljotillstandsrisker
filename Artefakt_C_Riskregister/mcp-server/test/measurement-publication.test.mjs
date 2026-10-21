@@ -16,7 +16,7 @@ const run=(id,kind,extra={})=>({runId:id,kind,functionId:`function-${id}`,status
 const rank=(riskId,value,extra={})=>({riskId,rank:riskId==='R1'?1:2,score:riskId==='R1'?0.6:0.4,eligibleForAbsolute:true,calibrationStatus:'anchor_scaled',absolute:{point:value},...extra});
 function measured() {
   const m=manifest();
-  m.runs=[run('L','btl_likelihood',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'probability'}}),run('I','btl_impact',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'SEK_per_event',statistic:'conditional_mean'}})];
+  m.runs=[run('L','btl_likelihood',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'probability',statistic:'mean'}}),run('I','btl_impact',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'SEK_per_event',statistic:'conditional_mean'}})];
   m.expectedLossRules=[{riskId:'R1',method:'product_of_means',assumption:'independent_frequency_and_severity'}];
   return convertRuns(m,new Map([['L',{ranks:[rank('R1',.3)]}],['I',{ranks:[rank('R1',6e6)]}]]),canonical).snapshot;
 }
@@ -30,14 +30,14 @@ test('native BTL ranks preserve relative scores and explicitly calibrated absolu
   assert.deepEqual(a.missing,['R2']);
 });
 test('relative/bounded/ineligible BTL is never promoted to a probability',()=>{
-  const m=manifest();m.runs=[run('L','btl_likelihood',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'probability'}})];
+  const m=manifest();m.runs=[run('L','btl_likelihood',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'probability',statistic:'mean'}})];
   const result=convertRuns(m,new Map([['L',{ranks:[rank('R1',.6,{eligibleForAbsolute:false,calibrationStatus:'bounded'})]}]]),canonical);
   assert.equal(result.snapshot.risks[0].likelihood,undefined);
   assert.equal(result.report.absoluteLikelihood,0);assert.equal(result.snapshot.ranking.entries[0].score,.6);
 });
 test('frequency preserves events/year and scales loss by declared horizon',()=>{
   const m=manifest();m.horizonYears=2;
-  m.runs=[run('L','btl_likelihood',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'events_per_year'}}),run('I','btl_impact',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'SEK_per_event',statistic:'conditional_mean'}})];
+  m.runs=[run('L','btl_likelihood',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'events_per_year',statistic:'mean'}}),run('I','btl_impact',{recordPath:'ranks',absolute:{valuePath:'absolute.point',unit:'SEK_per_event',statistic:'conditional_mean'}})];
   m.expectedLossRules=[{riskId:'R1',method:'product_of_means',assumption:'independent_frequency_and_severity'}];
   const result=convertRuns(m,new Map([['L',{ranks:[rank('R1',3)]}],['I',{ranks:[rank('R1',100)]}]]),canonical);
   assert.equal(result.snapshot.risks[0].expectedLoss.value,600);

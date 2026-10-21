@@ -8,7 +8,7 @@ import { readSourceRegister } from './source_register.mjs';
 import { createRankingModel } from './btl_ranking.mjs';
 import { createExplorationData } from './exploration_model.mjs';
 import { loadAuthorityPackage } from './authority_controls.mjs';
-import { validateMeasurement } from './measurement_model.mjs';
+import { validateMeasurement, validatePresentation } from './measurement_model.mjs';
 import { validateReport } from './report_model.mjs';
 import { renderSiteHeader } from './site_navigation.mjs';
 
@@ -47,6 +47,7 @@ const chartNames = Object.fromEntries(imp.charts.map(chart => {
 }));
 
 const measurement = JSON.parse(readFileSync(join(root, '../publication/measurement.json'), 'utf8'));
+const presentation = validatePresentation(JSON.parse(readFileSync(join(root,'../publication/presentation.json'),'utf8')));
 const ranking = measurement.ranking || JSON.parse(readFileSync(join(here, 'btl_snapshot.json'), 'utf8'));
 createRankingModel(risks, ranking, proc); // Fail the build on stale or ambiguous risk mappings.
 const exploration = createExplorationData(risks, JSON.parse(readFileSync(join(here, 'exploration_curations.json'), 'utf8')), loadAuthorityPackage());
@@ -58,7 +59,7 @@ const reportInterviews = JSON.parse(readFileSync(join(root,'../report/interviews
 validateMeasurement(reportMeasurement,risks.map(r=>r.risk_id),exploration.controls.map(c=>c.id));
 if(report.measurementEditionId!==reportMeasurement.editionId)throw new Error('Rapportmanus och låst mätutgåva skiljer sig');
 validateReport(report,reportInterviews,risks.map(r=>r.risk_id),exploration.controls.map(c=>c.id));
-const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc, processExport: imp, ranking, exploration, measurement, report, interviews, reportMeasurement, reportInterviews })
+const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc, processExport: imp, ranking, exploration, measurement, presentation, report, interviews, reportMeasurement, reportInterviews })
   .replace(/</g, '\\u003c');
 const processGeometry = readFileSync(join(here, 'process_geometry.mjs'), 'utf8')
   .replace(/^export\s*\{\s*createProcessGeometry\s*\};?\s*$/m, '');

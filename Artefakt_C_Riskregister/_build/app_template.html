@@ -318,7 +318,7 @@ function sorted(rs){
   const arr = [...rs];
   if (['loss','likelihood','impact'].includes(state.sort)) {
     const key=state.sort==='loss'?'expectedLoss':state.sort;
-    return arr.sort((a,b)=>(MEASUREMENT.byRisk.get(b.risk_id)?.[key]?.value ?? -Infinity)-(MEASUREMENT.byRisk.get(a.risk_id)?.[key]?.value ?? -Infinity)||a.risk_id.localeCompare(b.risk_id));
+    return arr.sort((a,b)=>(riskMetric(b.risk_id,key)?.value ?? -Infinity)-(riskMetric(a.risk_id,key)?.value ?? -Infinity)||a.risk_id.localeCompare(b.risk_id));
   }
   if (state.sort === 'rank') arr.sort((a,b)=>(RANKING.byRiskId.get(a.risk_id)?.rank ?? Infinity)-(RANKING.byRiskId.get(b.risk_id)?.rank ?? Infinity) || a.risk_id.localeCompare(b.risk_id));
   else if (state.sort === 'category') arr.sort((a,b)=>a.category.localeCompare(b.category,'sv') || a.risk_id.localeCompare(b.risk_id));

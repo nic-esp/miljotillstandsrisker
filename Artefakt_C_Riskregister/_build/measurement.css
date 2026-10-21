@@ -22,3 +22,5 @@
 [data-pub-driver="authority"].active,[data-pub-driver="authority"][aria-pressed="true"]{background:var(--success);border-color:var(--success);color:#fff}
 @media(max-width:760px){.rp-toc>.rp-mobile-toc-toggle{display:block}}
 @media(min-width:941px) and (max-width:1100px){.ms-control-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.ms-control-metrics>div:nth-child(3),.ms-control-metrics>div:nth-child(4){border-top:0;border-left:1px solid var(--border)}}
+
+.ms-statistic-note{display:flex;align-items:baseline;gap:12px;padding:11px 14px;margin:0 0 14px;border-left:3px solid var(--accent);background:#fff7eb;font-size:12px;line-height:1.6;color:var(--text)}.ms-statistic-note strong{white-space:nowrap}.ms-statistic-note>span{color:var(--muted)}.ms-quantiles .ms-selected-statistic{border-left:3px solid var(--accent);padding-left:12px}@media(max-width:760px){.ms-statistic-note{flex-direction:column;gap:2px}.ms-filter-row label{max-width:100%;min-width:0}.ms-filter-row select{min-width:0;max-width:100%;flex:1}.ms-quantiles{flex-wrap:wrap}.ms-quantiles>span{min-width:100px}}

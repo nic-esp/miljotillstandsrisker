@@ -21,6 +21,7 @@ export const STATIC_DATA_FILES = Object.freeze({
   'sources.json': 'Artefakt_C_Riskregister/mcp-server/data/sources.json',
   'process-charts.json': 'Artefakt_B_Processkarta_nodordbok/Artefakt_B_processkarta_import.json',
   'measurement.json':'publication/measurement.json',
+  'presentation.json':'publication/presentation.json',
   'interviews.json':'publication/interviews.json',
   'report-manuscript.json':'report/manuscript.json',
   'report-measurement.json':'report/measurement.json',

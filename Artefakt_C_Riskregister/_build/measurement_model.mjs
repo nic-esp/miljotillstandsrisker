@@ -1,4 +1,23 @@
 // Shared by the offline importer and the browser. Missing values remain missing.
+export function validatePresentation(settings) {
+  if(settings?.schemaVersion!==1||!['median','mean'].includes(settings.riskStatistic))throw new Error('Visningsinställning: riskStatistic måste vara median eller mean');
+  return settings;
+}
+export function riskStatistic(row,dimension,statistic) {
+  if(!['mean','median'].includes(statistic))throw new Error('Okänt riskmått');
+  const summary=row?.summaries?.[dimension];
+  if(summary?.[statistic]!=null)return {...summary,value:summary[statistic],statistic};
+  if(dimension==='expectedLoss') {
+    if(statistic==='mean'&&row?.expectedLoss)return {...row.expectedLoss,statistic};
+    if(statistic==='median'&&row?.lossDistribution?.p50!=null)return {...row.lossDistribution,value:row.lossDistribution.p50,statistic};
+  } else {
+    const point=row?.[dimension];
+    const declared=point?.statistic==='conditional_mean'?'mean':point?.statistic==='p50'?'median':point?.statistic;
+    if(point&&declared===statistic)return {...point,statistic};
+  }
+  return null;
+}
+
 export function validateMeasurement(snapshot, riskIds, controlIds) {
   const fail = text => { throw new Error(`Mätpaket: ${text}`); };
   const ids = (values, allowed, label) => {
@@ -11,7 +30,7 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
   ids((snapshot.risks || []).map(r => r.riskId), risks, 'risk-ID');
   ids((snapshot.controls || []).map(c => c.controlId), controls, 'kontroll-ID');
   if (snapshot.status === 'awaiting_measurement') {
-    if (snapshot.risks?.length || snapshot.controls?.length || snapshot.portfolio || snapshot.scenarios?.length || snapshot.ranking) fail('väntande paket får inte innehålla mätresultat');
+    if (snapshot.risks?.length || snapshot.controls?.length || snapshot.portfolio || snapshot.portfolios?.length || snapshot.scenarios?.length || snapshot.ranking) fail('väntande paket får inte innehålla mätresultat');
     return snapshot;
   }
   const p = snapshot.provenance;
@@ -29,6 +48,14 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
   const dependsOn=(id,ancestor)=>runById.get(id).inputRunIds.some(input=>input===ancestor||dependsOn(input,ancestor));
   for(const r of p.runs)if(r.executionId!==p.executionId&&!p.runs.some(target=>target.executionId===p.executionId&&r.upstreamOf?.includes(target.runId)&&dependsOn(target.runId,r.runId)))fail('deklarerad upstream-Run saknar verifierbar inputkedja');
   const source = value => { if (!value?.runId || !runIds.has(value.runId)) fail('resultat saknar känt Run-ID'); };
+  const summary = (s,dimension) => {
+    source(s);
+    if(!['mean','median'].some(k=>s[k]!=null)||['mean','median'].some(k=>s[k]!=null&&!finite(s[k])))fail('ogiltig median eller medelvärde');
+    if(s.horizonYears!==p.horizonYears||!s.definition)fail('statistikens period eller definition saknas');
+    if(dimension==='likelihood'&&(!['probability','events_per_year'].includes(s.unit)||s.unit==='probability'&&['mean','median'].some(k=>s[k]>1)))fail('ogiltig sannolikhet/frekvens i statistik');
+    if(dimension==='impact'&&s.unit!==`${p.currency}_per_event`||dimension==='expectedLoss'&&s.unit!==p.currency)fail('statistikens valuta/enhet avviker');
+    if(dimension!=='expectedLoss'&&(s.eligible!==true||s.calibrationStatus!=='anchor_scaled'))fail('absolut statistik kräver anchor_scaled och eligibleForAbsolute');
+  };
   const distribution = d => {
     if (!d) return;
     source(d);
@@ -42,6 +69,14 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
     if (d.p50 < d.bins[0].lower || d.p95 > d.bins.at(-1).upper) fail('kvantiler utanför fördelningens intervall');
   };
   for (const r of snapshot.risks) {
+    for(const [dimension,s] of Object.entries(r.summaries||{})) {
+      if(!['likelihood','impact','expectedLoss'].includes(dimension))fail('okänd statistikdimension');
+      summary(s,dimension);
+      if(r[dimension]?.unit&&r[dimension].unit!==s.unit)fail('punkt och statistik har olika enheter');
+      if(s.calibrationSourceRunId) {
+        if(dimension!=='likelihood'||r.likelihood?.runId!==s.calibrationSourceRunId||!dependsOn(s.runId,s.calibrationSourceRunId))fail('occurrence-statistik saknar kalibrerad inputkedja');
+      }
+    }
     for (const dimension of ['likelihood', 'impact']) {
       const m = r[dimension]; if (!m) continue;
       source(m);
@@ -55,12 +90,15 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
       source(r.expectedLoss);
       if (!finite(r.expectedLoss.value) || r.expectedLoss.horizonYears !== p.horizonYears) fail('ogiltig förväntad förlust');
       if (r.expectedLoss.method === 'product_of_means') {
-        if (!r.likelihood || !r.impact || r.impact.statistic !== 'conditional_mean' || r.expectedLoss.assumption !== 'independent_frequency_and_severity') fail('produktberäkning saknar villkorat medelvärde eller oberoendeantagande');
-        const expected = r.likelihood.value * r.impact.value * (r.likelihood.unit === 'events_per_year' ? p.horizonYears : 1);
+        const likelihood=riskStatistic(r,'likelihood','mean'),impact=riskStatistic(r,'impact','mean');
+        if (!likelihood || !impact || r.expectedLoss.assumption !== 'independent_frequency_and_severity') fail('produktberäkning saknar villkorat medelvärde eller oberoendeantagande');
+        const expected = likelihood.value * impact.value * (likelihood.unit === 'events_per_year' ? p.horizonYears : 1);
         if (Math.abs(expected - r.expectedLoss.value) > Math.max(0.01, expected * 1e-8)) fail('förväntad förlust stämmer inte med formeln');
       } else if (r.expectedLoss.method !== 'exported_loss_mean') fail('okänd förlustmetod');
     }
     distribution(r.lossDistribution);
+    if(r.summaries?.expectedLoss?.mean!=null&&r.expectedLoss?.value!==r.summaries.expectedLoss.mean)fail('förlustmedelvärden skiljer sig');
+    if(r.summaries?.expectedLoss?.median!=null&&r.lossDistribution&&r.lossDistribution.p50!==r.summaries.expectedLoss.median)fail('förlustmedianer skiljer sig');
     if (r.sensitivity) {
       source(r.sensitivity);
       if (!r.sensitivity.method || !Array.isArray(r.sensitivity.items) || r.sensitivity.items.some(i => !i.label || !finite(i.value) || i.value > 1)) fail('ogiltig känslighetsanalys');
@@ -72,10 +110,15 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
       if (!risks.has(e.riskId) || !['likelihood', 'impact'].includes(e.dimension) || typeof e.delta !== 'number' || !Number.isFinite(e.delta)) fail('ogiltig latent kontrolleffekt');
     }
   }
-  const portfolios = snapshot.portfolio ? [snapshot.portfolio] : [];
+  const portfolios = [...(snapshot.portfolio ? [snapshot.portfolio] : []),...(snapshot.portfolios||[])],portfolioScopes=new Set();
   for (const a of portfolios) {
     ids(a.riskIds, risks, 'portföljrisker'); source(a);
-    if (!a.riskIds.length || !finite(a.expectedLoss) || !a.dependenceAssumption || !a.scopeDescription) fail('portföljens avgränsning/beroendemodell saknas');
+    const key=[...a.riskIds].sort().join('|');if(portfolioScopes.has(key))fail('dubblerat portföljurval');portfolioScopes.add(key);
+    if (!a.riskIds.length || a.expectedLoss!=null&&!finite(a.expectedLoss) || !a.dependenceAssumption || !a.scopeDescription) fail('portföljens avgränsning/beroendemodell saknas');
+    if(a.summary)summary(a.summary,'expectedLoss');
+    if(a.expectedLoss==null&&a.summary?.median==null&&a.lossDistribution?.p50==null)fail('portföljen saknar statistik');
+    if(a.summary?.mean!=null&&a.summary.mean!==a.expectedLoss)fail('portföljens medelvärden skiljer sig');
+    if(a.summary?.median!=null&&a.lossDistribution&&a.summary.median!==a.lossDistribution.p50)fail('portföljens medianer skiljer sig');
     distribution(a.lossDistribution);
   }
   const scenarioIds = new Set(), combinations = new Set();
@@ -101,12 +144,16 @@ export function createMeasurementModel(snapshot, riskIds, controlIds) {
   const sameIds = (a,b) => a.length === b.length && [...a].sort().join('|') === [...b].sort().join('|');
   return {
     snapshot, byRisk, byControl,
-    aggregate(ids) {
-      const rows = ids.map(id => byRisk.get(id)).filter(r => r?.expectedLoss);
-      const portfolio = snapshot.portfolio && sameIds(ids, snapshot.portfolio.riskIds) ? snapshot.portfolio : null;
-      return { rows, quantified:rows.length, total:ids.length, missing:ids.filter(id=>!byRisk.get(id)?.expectedLoss),
-        expectedLoss:portfolio?.expectedLoss ?? (rows.length ? rows.reduce((a,r)=>a+r.expectedLoss.value,0) : null),
-        portfolio, partial:rows.length !== ids.length };
+    metric(id,dimension,statistic) { return riskStatistic(byRisk.get(id),dimension,statistic); },
+    aggregate(ids,statistic='mean') {
+      const rows = ids.map(id => byRisk.get(id)).filter(r => riskStatistic(r,'expectedLoss',statistic));
+      const portfolio = [snapshot.portfolio,...(snapshot.portfolios||[])].find(p=>p&&sameIds(ids,p.riskIds))||null;
+      const expectedLoss=portfolio?.expectedLoss ?? (ids.some(id=>byRisk.get(id)?.expectedLoss)?ids.reduce((a,id)=>a+(byRisk.get(id)?.expectedLoss?.value??0),0):null);
+      const median=portfolio?.summary?.median??portfolio?.lossDistribution?.p50??(ids.length===1?riskStatistic(byRisk.get(ids[0]),'expectedLoss','median')?.value:null)??null;
+      const fromPortfolio=statistic==='median'?(portfolio?.summary?.median??portfolio?.lossDistribution?.p50)!=null:portfolio?.expectedLoss!=null;
+      return { rows, quantified:rows.length, total:ids.length, missing:ids.filter(id=>!riskStatistic(byRisk.get(id),'expectedLoss',statistic)),
+        expectedLoss,median,value:statistic==='median'?median:expectedLoss,statistic,
+        portfolio, fromPortfolio, partial:rows.length !== ids.length };
     },
     scenario(ids) { return (snapshot.scenarios || []).find(s => sameIds(ids,s.controlIds)) || null; },
   };

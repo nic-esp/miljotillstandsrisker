@@ -13,20 +13,37 @@ Importen är lokal och startar inga mätningar. Cardinal ändras inte. Råexport
 
 Aktivering ändrar bara lokala visningsdata. Den skickar inget till GitHub och ändrar inte rapportens fastställda manus eller mätutgåva.
 
+## Administratörens val av median eller medelvärde
+
+`publication/presentation.json` styr vilket mått som visas i riskregistret, på riskkorten och i riskanalysen:
+
+```json
+{"schemaVersion": 1, "riskStatistic": "median"}
+```
+
+Utgångsläget är `median`. En administratör med skrivrätt till repot kan ändra `riskStatistic` till `mean`, köra `npm run build` och `npm test` och publicera ändringen. Inställningen byggs in i sidan; besökaren har ingen växlingsknapp och kan inte ändra den via URL eller sparade webbläsarinställningar. Sajten är statisk och kräver ingen ny inloggning eller server för detta.
+
+Importen bevarar båda måtten oberoende av visningsinställningen. Noll är ett giltigt resultat. Om det valda måttet saknas visas **Median saknas** respektive **Medelvärde saknas**; sajten ersätter inte det med det andra måttet eller en odefinierad punkt. Sortering och täckning följer det valda måttet. BTL:s relativa rangordning påverkas inte.
+
+Medianläget använder den exporterade monetära förlustens P50. Det multiplicerar inte sannolikhetens median med kostnadens median. Samlad median, även per process eller för ett filtrerat urval, kräver en gemensamt simulerad förlust för exakt det riskurvalet. Individuella medianer summeras aldrig. Medelvärdesläget kan summera förlustmedelvärden; ofullständig täckning anges.
+
+Kontrollernas separata analys visar uttryckligen **förväntad förlust/medelvärde** från exporterade scenarier. Den omtolkar inte dessa resultat som medianer. Rapporten behåller sin egen fastställda mätutgåva.
+
 ## Stödda Run-slag
 
 | kind | Underlag | Publik användning |
 | --- | --- | --- |
 | `btl_likelihood` | Komplett BTL `ranks`, fältvägar kan anges | Relativ rang och endast berättigade absoluta mått |
 | `btl_impact` | Komplett BTL `ranks` | Absolut konsekvens med deklarerad valuta/enhet |
-| `monte_carlo_likelihood`, `monte_carlo_impact` | Fullständig originalexport | Arkiveras med checksumma och lineage; ingen konstruerad förlustkurva |
-| `monte_carlo_loss` | Monetära förlustresultat per risk | Histogram, P50/P95 och exporterad förlustmedelpunkt |
+| `monte_carlo_likelihood` | Typad occurrence med explicit adapter | Händelsesannolikhet eller frekvens, medelvärde och median; annars endast arkivering |
+| `monte_carlo_impact` | Kalibrerade monetära exposures med explicit adapter | Kostnad per händelse, medelvärde och median; annars endast arkivering |
+| `monte_carlo_loss` | Monetära förlustresultat per risk | Förlustmedelvärde och median samt tillgängligt histogram/P95 |
 | `control_effects` | Native `effects` | Latenta effekter med oförändrade riskkopplingar |
 | `portfolio_loss` | Gemensam monetär portföljförlust | Totalfördelning för exakt angivet urval och beroendemodell |
 | `scenarios` | Exporterade monetära scenarioutfall | Exakta kontrollkombinationer, kvarvarande risk, reduktion och eventuellt känd kostnad |
 | `lineage` | Uppströms metadataresultat | Proveniens och privat arkivering |
 
-Om native Monte Carlo-exporten enbart innehåller sannolikhets- och konsekvensdragningar ska den importeras som arkiverat underlag. En adapter för en härledd gemensam förlustfördelning behöver då granskas mot den faktiska modellen innan kurvor publiceras. Inga otestade draw-format eller omvandlingar har lagts in. Den gränsen är avsiktlig tills de nya Runs-filerna finns.
+Likelihood och impact blir aldrig automatiskt en monetär förlustfördelning. Adaptrarna nedan läser exporterade statistikfält; de simulerar inga nya utfall. En eventuell härledning av gemensam förlust från råa dragningar behöver granskas mot den faktiska modellen innan sådana kurvor publiceras.
 
 `identityPaths` kan ange fält för att kontrollera Run-identiteten mot exportens omslag, exempelvis `{"runId":"id","executionId":"execution_id"}`. Använd endast de fältvägar som faktiskt finns. Om resultatfilen saknar omslag ska identiteten och inställningarna dokumenteras från samma Runs-post i manifestet och granskas innan aktivering. Metadata kan inte verifieras mot en export som saknar den.
 
@@ -41,14 +58,27 @@ Kodgranskning 2026-10-21 av den lokala Cardinal-versionen visar följande. De ny
 - BTL:s förenklade ranking-CSV har `Risk ID,Score,Rank,Uncertainty`, utan median. Ett score eller en absolut punkt får inte märkas som medelvärde/median utan sin dokumenterade definition.
 - CSV-exporten tar inte med dimension, enhet, kalibreringsstatus, occurrence-blocket eller lineage. Den granskade implementationen använder dessutom `value || ''`, vilket skriver numeriska nollor som tomma celler. Använd fullständiga data och metadata från samma Run för importen; tolka aldrig tom CSV-cell som noll eller som bevis för saknat resultat.
 - Likelihood-exponeringarnas P50 kan vara en relativ diagnostisk rankingfördelning. Den är inte automatiskt median för händelsesannolikheten. Impact-P50 kan vara kostnad per händelse endast när enhet och kalibrering stöder det. Monetär förlust-P50 kräver en förlustfördelning över den angivna perioden.
-- Sajten har redan stöd för P50 i en importerad monetär förlustfördelning. Medelvärde och median ska bevaras separat. Summan av enskilda riskers medianer är inte generellt portföljens median; produkten av sannolikhetens och konsekvensens medianer är inte generellt förlustens median. `Förväntad förlust` fortsätter att beteckna medelvärdet, även om median blir ett separat presentationsval.
+- Importören bevarar medelvärde och median separat i `summaries`. `Förväntad förlust` betecknar medelvärdet; medianläget använder etiketten `Medianförlust`. `validation.json` redovisar täckning och saknade risk-ID:n för båda måtten i varje dimension.
 
 Kodpunkter i Cardinal: `lib/services/run-service.ts` (`exportRun`), `app/(logged-in)/[orgSlug]/runs/[id]/page.tsx` (CSV-export), `lib/execution/functions/monte-carlo.ts` (exposures och occurrence).
+
+### Explicit import av Monte Carlo-statistik
+
+`examples/runs-statistics-manifest.template.json` visar manifestposter för båda native-adaptrarna och monetära förlustresultat. Mallens identiteter, hashvärden, period och fältvägar måste ersättas efter granskning av den verkliga exporten.
+
+- **Likelihood:** `adapter: cardinal_occurrence_v2` läser `data.occurrence` (kan anges med `occurrencePath`). Kräver `semanticsVersion: v2`, modellversion och samma horisont som manifestet. Med `unit: probability` läses `probability.mean`/`probability.median`; med `events_per_year` läses `annualRate.mean`/`annualRate.median`. `calibrationRunId` ska peka på den importerade, absoluta och kalibrerade BTL-källan, som måste finnas i Monte Carlo-körningens inputkedja. Legacy `exposures` används inte som sannolikhet.
+- **Impact:** `adapter: cardinal_impact_exposure` läser poster på angiven `recordPath`. Kräver `unit: SEK_per_event` (eller manifestets valuta), `eligibleForAbsolute: true`, `calibrationStatus: anchor_scaled` och `inputMeaning: currency_per_event`. `mean` och `quantiles.p50` bevaras; relativa eller ej berättigade poster redovisas som uteslutna.
+- **Monetär förlust:** `monte_carlo_loss` kräver explicit valuta, horisont och `lossDefinition`. `fields.mean` och `fields.median` anger exporterade fältvägar; standard är `mean` och `p50`. Median kan också anges som `fields.p50`. Om endast sammanfattande statistik finns anges `distribution: false`; annars valideras även histogram och kvantiler. Samma möjlighet finns för `portfolio_loss`. Varken ett saknat medelvärde eller en saknad median konstrueras.
+- **Flera urval:** flera `portfolio_loss`-poster kan importeras för olika processer/urval. Varje post kräver exakta `riskIds` och ett `dependenceAssumption`. Dubblerade riskurval avvisas. Sajten använder endast den portfölj som matchar det aktuella urvalet exakt.
+
+Utan en explicit native-adapter arkiveras likelihood-/impact-Monte Carlo med proveniens, som tidigare. De nya adaptrarna är kontrollerade mot Cardinals lokala kod och testfall. De faktiska nya Runs-filerna ska fortfarande verifieras före aktivering.
+
+### Tolkning och beräkningar
 
 - `absolute.unit`: `probability` eller `events_per_year` för händelsemått, `SEK_per_event` (eller vald valuta) för konsekvens. Ett värde över ett i frekvenskolumnen är inte en ogiltig procentsannolikhet.
 - Bara `eligibleForAbsolute: true` och `calibrationStatus: anchor_scaled` ger absoluta visningsvärden. Relativa poäng och begränsade/ogiltiga värden förblir separata. Modellkalibrering kallas inte empirisk validering.
 - En konsekvenspunkt är inte automatiskt ett villkorat medelvärde. `absolute.statistic: conditional_mean` ska bara anges om definitionen faktiskt stöder det.
-- `expectedLossRules` kan explicit tillåta produkten av händelsemått och villkorad medelkostnad, med antagandet `independent_frequency_and_severity`. Annars krävs exporterad gemensam förlustmedelpunkt.
+- `expectedLossRules` kan explicit tillåta produkten av händelsemåttets **medelvärde** och villkorad medelkostnad, med antagandet `independent_frequency_and_severity`. Båda måste vara definierade som medelvärden. Medianer och odefinierade punkter avvisas. Annars krävs exporterat gemensamt förlustmedelvärde.
 - `monte_carlo_loss`: en post per `riskId` med `mean`, `sampleCount`, `p50`, `p95`, `bins: [{lower,upper,count}]`. Fältvägar kan mappas. `sensitivity` är frivillig och innehåller `method` samt `items: [{label,value}]` där värde är en andel 0–1. Ange metodens verkliga betydelse.
 - `portfolio_loss`: `riskIds`, `mean` och samma fördelningsfält. `dependenceAssumption` och manifestets exponeringsbas krävs. Portföljens P95 får aldrig ersättas med summerade per-risk-P95.
 - `scenarios`: lista med `id`, `title`, `controlIds`, `riskIds`, `referenceExpectedLoss`, `residualExpectedLoss`, `method`, `overlapTreatment`. Kostnad används endast om `costStatus: known`; annars visas okänd även om källan innehåller ett tekniskt nollvärde. `contributions` måste summera till reduktionen för exakt det scenariot. `riskEffects` kan ge referens och kvarvarande förlust per risk.
