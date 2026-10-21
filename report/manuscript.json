@@ -1,0 +1,625 @@
+{
+  "schemaVersion": 1,
+  "editionId": "rapport-arbetsmanus-2026-10-21",
+  "measurementEditionId": null,
+  "status": "draft",
+  "date": "2026-10-21",
+  "title": "Miljötillståndens risker och vägen till en mer förutsägbar prövning",
+  "subtitle": "Riskbild, kostnader och myndigheternas möjligheter att minska riskerna",
+  "description": "En sammanhängande analys av risker i tillståndsprocessen. Kvantitativa mätningar kombineras med dokumentunderlag och intervjuer för att förstå både riskernas storlek och mekanismerna bakom dem.",
+  "extent": "Arbetsram: 50–80 sidor samt bilagor. Den slutliga omfattningen följer underlaget.",
+  "findings": [],
+  "sources": [
+    {
+      "id": "REG",
+      "title": "Riskregister och processkartor",
+      "description": "Sajtens versionshanterade grundmaterial. Risker, ursprungliga motåtgärder, processnoder och källhänvisningar bevaras i respektive post."
+    },
+    {
+      "id": "MYN",
+      "title": "Myndighetskontroller och bedömningar, version 0.10",
+      "description": "Prioriterade kontrollförslag, riskkopplingar, läsanvisning och bedömningar. Bedömningsdatum 30 september 2026. Genomförande och effekt är inte verifierade genom detta dokumentunderlag."
+    },
+    {
+      "id": "MET",
+      "title": "Metodram för resultatimport och rapport",
+      "description": "Denna utgåvas metodram. Den nya mätningens faktiska modellkonfiguration, kalibrering och körningsreferenser ska föras in före sakgranskning."
+    }
+  ],
+  "chapters": [
+    {
+      "id": "sammanfattning",
+      "number": "01",
+      "part": "Överblick",
+      "title": "Sammanfattning",
+      "status": "awaiting_integration",
+      "lead": "Vilka risker väger tyngst, vilka processer berörs och vad kan myndigheterna göra åt dem?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Rapporten ska ge ett gemensamt beslutsunderlag för att prioritera risker och motåtgärder i miljötillståndsprocessen. Den följer riskerna från deras orsaker till möjliga konsekvenser och vidare till de åtgärder som är avsedda att möta dem.",
+          "sourceIds": [
+            "REG"
+          ]
+        },
+        {
+          "type": "note",
+          "title": "Arbetsutgåva",
+          "text": "Detta är rapportens disposition och metodram. Nya mätresultat och intervjumaterial har ännu inte införts. Sammanfattningens resultat, prioriteringar och rekommendationer skrivs efter den samlade analysen."
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "lasanvisning",
+      "number": "02",
+      "part": "Överblick",
+      "title": "Så läser du rapporten",
+      "status": "draft",
+      "lead": "Från den samlade bilden till varje enskilt belägg.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Rapportens första del anger syfte, avgränsning och material. Metodkapitlen beskriver hur rangordning, absoluta riskmått, osäkerhet och intervjuanalys hålls samman. Resultatdelen behandlar risker, processer och åtgärder. I den avslutande delen vägs underlagen samman och diskuteras före slutsatserna."
+        },
+        {
+          "type": "p",
+          "text": "En siffra, en intervjuutsaga och en redaktionell tolkning fyller olika funktioner. Mätresultat får en angiven körningsreferens. Citat får en godkänd attribution och källposition. Tolkningar ska redovisa vilket underlag de bygger på och vad som talar emot dem."
+        },
+        {
+          "type": "table",
+          "title": "Tre slags underlag",
+          "columns": [
+            "Underlag",
+            "Bidrar med",
+            "Kan inte ensamt visa"
+          ],
+          "rows": [
+            [
+              "Modellmätning",
+              "Rang, absoluta mått och osäkerhet inom angiven modell",
+              "Empiriskt säkerställd framtida utveckling"
+            ],
+            [
+              "Intervju",
+              "Erfarenheter, mekanismer och villkor i ett sammanhang",
+              "Populationens sannolikheter eller kausal effektstorlek"
+            ],
+            [
+              "Dokument och kopplingar",
+              "Definitioner, avgränsningar och avsedda samband",
+              "Uppmätt effekt av en föreslagen åtgärd"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "syfte",
+      "number": "03",
+      "part": "Utgångspunkter",
+      "title": "Syfte och frågor",
+      "status": "draft",
+      "lead": "Ett beslutsunderlag som förenar riskernas storlek med förklaringar till hur de uppstår.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Analysen ska belysa var riskexponeringen finns och vilka åtgärder som kan vara mest angelägna att undersöka eller genomföra. Fokus ligger på att göra prioriteringar begripliga och möjliga att granska, snarare än att reducera bedömningen till en enda ranglista."
+        },
+        {
+          "type": "h3",
+          "text": "Frågor som rapporten ska besvara"
+        },
+        {
+          "type": "p",
+          "text": "Vilka risker har störst modellerad sannolikhet eller frekvens, vilka har störst kostnad vid en händelse och vilka bidrar mest till förväntad förlust? Var i processerna uppstår exponeringen? Vilka myndighetsdrivna åtgärder kan adressera flera av riskerna, och under vilka villkor? Hur förhåller sig mätresultaten till intervjupersonernas erfarenheter?"
+        },
+        {
+          "type": "p",
+          "text": "Rapporten ska även identifiera vad underlaget ännu inte kan avgöra. Ett beslut kan behöva väga modellresultat mot genomförbarhet, mandat, resursbehov och andra mål. Dessa avvägningar görs synliga i diskussionen."
+        }
+      ]
+    },
+    {
+      "id": "processer",
+      "number": "04",
+      "part": "Utgångspunkter",
+      "title": "Tillståndsprocessen och analysens gränser",
+      "status": "draft",
+      "lead": "Riskerna behöver läsas i sitt processammanhang.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Riskregistret är kopplat till processkartornas noder. Kopplingarna gör det möjligt att följa var en risk är registrerad och vilka andra delar som uttryckligen anges som berörda. Att flera risker berör samma nod innebär inte att deras sannolikheter kan adderas.",
+          "sourceIds": [
+            "REG"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Population och exponering"
+        },
+        {
+          "type": "p",
+          "text": "Inför resultatredovisningen ska det anges vilka ärenden, processvägar och tidsperioder analysen avser. Alternativa prövningsspår får inte utan vidare behandlas som om de inträffar i samma ärende. En summering av registerposter är inte i sig en uppskattning av nationell samhällskostnad eller ett typiskt projekts kostnad."
+        },
+        {
+          "type": "note",
+          "title": "Avgränsning att fastställa",
+          "text": "Exponeringsbas, valda processvägar och berörda aktörer dokumenteras tillsammans med den nya mätningen. Resultatens giltighetsområde följer den avgränsningen."
+        }
+      ]
+    },
+    {
+      "id": "material",
+      "number": "05",
+      "part": "Material och metod",
+      "title": "Material, källor och spårbarhet",
+      "status": "draft",
+      "lead": "Ett underlag som går att följa tillbaka till sina delar.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Grundmaterialet består av riskregistret, processkartorna, källhänvisningarna och de dokumenterade kontrollkopplingarna. Ursprungliga motåtgärder skiljs från analytiskt sammanförda åtgärder och särskilt klassificerade myndighetsförslag.",
+          "sourceIds": [
+            "REG",
+            "MYN"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Den kvantitativa resultatdelen ska använda en angiven mätutgåva från Cardinal. En gemensam körningskedja, enheter och tidsperiod kontrolleras före införandet. Ofullständig täckning redovisas med antal och saknade poster. Källfilerna bevaras separat från den offentliga presentationen.",
+          "sourceIds": [
+            "MET"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Intervjumaterialet får ett eget källregister. Publicerade utdrag länkas till en bestämd källa och position i materialet. Identifierande uppgifter och fullständiga transkript behöver inte publiceras för att de godkända utdragen ska kunna granskas inom projektet."
+        }
+      ]
+    },
+    {
+      "id": "kvantitativ-metod",
+      "number": "06",
+      "part": "Material och metod",
+      "title": "Kvantitativ metod och riskmått",
+      "status": "draft",
+      "lead": "Rang, sannolikhet, frekvens och kostnad svarar på olika frågor.",
+      "blocks": [
+        {
+          "type": "h3",
+          "text": "Relativ rangordning och absoluta mått"
+        },
+        {
+          "type": "p",
+          "text": "BTL-rangordningen beskriver relativa bedömningar. BTL-poängen kan inte direkt läsas som en sannolikhet i procent. Absoluta mått redovisas endast när resultatet har giltig kalibreringsproveniens och den aktuella risken är berättigad till absolut skattning. Modellkalibrering innebär inte i sig empirisk validering.",
+          "sourceIds": [
+            "MET"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Förväntad förlust"
+        },
+        {
+          "type": "p",
+          "text": "För en modell med högst en relevant händelse under perioden kan förväntad förlust uttryckas som händelsens sannolikhet multiplicerad med förväntad kostnad givet händelsen. Om måttet i stället är en händelsefrekvens används frekvens, tidsperiod och kostnad per händelse. En produkt av medelvärden kräver att modellens beroendeantaganden motiverar det. Exporterad gemensam förlustberäkning kan därför behöva användas i stället."
+        },
+        {
+          "type": "note",
+          "title": "Faktisk mätkonfiguration återstår",
+          "text": "Modell, bedömningsfrågor, ankare, kalibrering, antal bedömningar, period, valuta och avvikande fall redovisas när den nya mätningen har levererats. Inga sådana uppgifter fylls i med antaganden."
+        }
+      ]
+    },
+    {
+      "id": "osakerhetsmetod",
+      "number": "07",
+      "part": "Material och metod",
+      "title": "Monte Carlo och osäkerhet",
+      "status": "draft",
+      "lead": "Fördelningen visar möjliga utfall inom modellens antaganden.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "En Monte Carlo-analys använder upprepade dragningar för att beskriva en fördelning av utfall. För rapportens kostnadsfigurer krävs monetära förlustutfall för den angivna perioden. Simulerade sannolikheter eller konsekvenser var för sig är inte automatiskt en fördelning av förluster."
+        },
+        {
+          "type": "p",
+          "text": "Medianen, P50, ligger i mitten av den simulerade fördelningen. P95 är den nivå som 95 procent av de simulerade utfallen ligger vid eller under. P95 är inte ett löfte om framtida kostnad, och summan av enskilda riskers P95 är inte portföljens P95. Den samlade fördelningen beror också på samband mellan riskerna."
+        },
+        {
+          "type": "p",
+          "text": "Redovisningen ska skilja mellan variation i möjliga händelseutfall och osäkerhet om modellens parametrar. Känslighetsanalysen beskriver vilka antaganden som driver resultaten. Metod, beroendemodell och antal simuleringar anges vid respektive figur."
+        },
+        {
+          "type": "figure",
+          "figureId": "portfolio-distribution",
+          "title": "Samlad förlustfördelning",
+          "caption": "Figur 7.1. Fördelning, kvantiler och täckning för den fastställda exponeringsbasen."
+        }
+      ]
+    },
+    {
+      "id": "intervjumetod",
+      "number": "08",
+      "part": "Material och metod",
+      "title": "Intervjuernas urval och analys",
+      "status": "awaiting_interviews",
+      "lead": "Erfarenheter ska hjälpa oss att förstå mekanismer, variation och genomförbarhet.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Intervjuanalysen ska beskriva hur deltagarna valts, vilka roller och erfarenheter som täcks, hur samtalen genomförts och hur materialet har bearbetats. Urvalets storlek, bortfall och möjliga snedvridningar redovisas först när materialet finns tillgängligt."
+        },
+        {
+          "type": "h3",
+          "text": "Tematisk analys med motexempel"
+        },
+        {
+          "type": "p",
+          "text": "Utsagor kan kodas mot gemensamma teman, processdelar, risker och åtgärder. Samma tema kan omfatta både återkommande erfarenheter och tydliga skillnader mellan aktörer. Analysen ska söka efter motexempel och skilja enskilda erfarenheter från bredare mönster i det faktiskt insamlade materialet."
+        },
+        {
+          "type": "p",
+          "text": "Intervjuer kan ge stöd åt en mekanism eller ifrågasätta en modellförutsättning. De används inte ensamma för att fastställa sannolikheter, kausala effekter eller hur vanligt ett problem är i hela populationen. Antal omnämnanden blir inte ett representativt frekvensmått utan ett motiverat urval."
+        },
+        {
+          "type": "note",
+          "title": "Citat och anonymisering",
+          "text": "Exakta citat, attribution och anonymiseringsnivå ska granskas före publicering. Varje utdrag bevarar sin källposition. Förkortningar eller redigeringar får inte ändra utsagans innebörd."
+        }
+      ]
+    },
+    {
+      "id": "riskresultat",
+      "number": "09",
+      "part": "Resultat",
+      "title": "Riskernas sannolikhet och kostnad",
+      "status": "awaiting_measurement",
+      "lead": "Den kvantitativa riskbilden redovisas i flera perspektiv.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Resultatkapitlet ska jämföra relativ rangordning, absoluta händelsemått, kostnad vid händelse och förväntad förlust. Det gör det möjligt att skilja vanliga men mindre kostsamma händelser från sällsynta händelser med stora konsekvenser."
+        },
+        {
+          "type": "figure",
+          "figureId": "risk-contributions",
+          "title": "Riskernas bidrag till förväntad förlust",
+          "caption": "Figur 9.1. Rangordnade bidrag med angiven mättäckning. Figuren fylls med den nya mätningen."
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "processresultat",
+      "number": "10",
+      "part": "Resultat",
+      "title": "Var i processerna finns exponeringen?",
+      "status": "awaiting_measurement",
+      "lead": "Riskvärdena placeras i processernas sammanhang.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Processanalysen ska visa hur de kvantifierade riskerna fördelas över processdelar och vilka noder som berörs. Samma risk hålls samman även om flera noder är kopplade. Upprepade nodkopplingar ska inte ge upphov till dubblerade förlustbelopp."
+        },
+        {
+          "type": "figure",
+          "figureId": "process-contributions",
+          "title": "Förväntad förlust per process",
+          "caption": "Figur 10.1. Processfördelning inom mätningens exponeringsbas."
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "myndighetsatgarder",
+      "number": "11",
+      "part": "Resultat",
+      "title": "Myndighetens åtgärder och handlingsutrymme",
+      "status": "awaiting_measurement",
+      "lead": "Avsedda riskkopplingar och uppmätta effekter behöver redovisas var för sig.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Myndighetsförslagen är kategoriserade efter ansvar och scenario. Underlagets huvudscenario hålls isär från införandeåtgärder och åtgärder som förutsätter ett framtida mandat. Klassificeringen är en del av dokumentunderlaget; den ersätter inte bedömning av faktiskt mandat eller genomförande.",
+          "sourceIds": [
+            "MYN"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "En åtgärd kan vara kopplad till flera risker, orsaker eller konsekvenser. Antalet sådana kopplingar visar räckvidd i registret. Det visar inte hur stor reduktionen blir eller om åtgärden är genomförd. Effektresultaten ska därför redovisas tillsammans med kopplingarnas villkor och mätningens begränsningar."
+        },
+        {
+          "type": "highlight",
+          "text": "En åtgärd kan adressera flera risker. Den samlade effekten behöver bedömas med hänsyn till överlapp och sammanhang.",
+          "sourceIds": [
+            "MYN",
+            "MET"
+          ]
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "scenarier",
+      "number": "12",
+      "part": "Resultat",
+      "title": "Riskkostnad med och utan valda åtgärder",
+      "status": "awaiting_measurement",
+      "lead": "En jämförelse som beaktar överlapp och den valda kombinationen.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Scenarierna ska jämföra samma riskpopulation och period med respektive utan den angivna kombinationen av kontroller. Samlad reduktion får inte beräknas genom att okritiskt summera separata åtgärdseffekter. Den faktiska scenariomodellens behandling av överlapp och beroenden redovisas."
+        },
+        {
+          "type": "figure",
+          "figureId": "control-scenario",
+          "title": "Referensscenario och myndighetsscenario",
+          "caption": "Figur 12.1. Förväntad förlust före och efter en exporterad, definierad åtgärdskombination."
+        },
+        {
+          "type": "p",
+          "text": "Kvarvarande risk och modellerad reduktion hålls isär från åtgärdernas kostnad. Om kostnadsunderlag saknas kan nettovinst eller lönsamhet inte fastställas. Tekniska nollvärden för ej angivna kontrollkostnader behandlas som okända."
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "intervjufynd",
+      "number": "13",
+      "part": "Resultat",
+      "title": "Intervjufynd: erfarenheter och mekanismer",
+      "status": "awaiting_interviews",
+      "lead": "Teman, skillnader och konkreta erfarenheter ur det kommande intervjumaterialet.",
+      "blocks": [
+        {
+          "type": "note",
+          "title": "Materialet har ännu inte införts",
+          "text": "Detta kapitel kommer att utvecklas efter tematisk analys av det insamlade materialet. Inga intervjuutsagor, deltagare eller teman har konstruerats i arbetsutgåvan."
+        },
+        {
+          "type": "p",
+          "text": "Resultaten ska presenteras som sammanhängande teman med tydliga källbelägg. Skillnader mellan roller och processammanhang synliggörs där underlaget tillåter det. Citat väljs för att belysa analysen, inte som ersättning för den."
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "samlad-analys",
+      "number": "14",
+      "part": "Analys och diskussion",
+      "title": "När mätning och erfarenhet möts",
+      "status": "awaiting_integration",
+      "lead": "Vad förstärks, vad motsägs och vad återstår att undersöka?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Den samlade analysen ska pröva kvantitativa resultat mot intervjufynd och dokumentunderlag. När olika underlag pekar åt samma håll redovisas vad samstämmigheten faktiskt gäller. När de skiljer sig åt undersöks alternativa förklaringar, exempelvis olika exponering, roller, tidsperspektiv eller begreppsanvändning."
+        },
+        {
+          "type": "table",
+          "title": "Analysmatris som fylls efter mätning och intervjuer",
+          "columns": [
+            "Mätresultat",
+            "Intervjutema och källbelägg",
+            "Relation",
+            "Tolkning och begränsning"
+          ],
+          "rows": [
+            [
+              "Inväntas",
+              "Inväntas",
+              "Samstämmighet / skillnad / lucka",
+              "Formuleras från det samlade underlaget"
+            ]
+          ]
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "kanslighet",
+      "number": "15",
+      "part": "Analys och diskussion",
+      "title": "Känslighet, osäkerhet och begränsningar",
+      "status": "awaiting_integration",
+      "lead": "Vilka slutsatser håller när antagandena ändras?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Analysen ska skilja osäkerhet i indata från strukturella begränsningar i modellen. Täckning, saknade mätningar, ankarnas relevans, beroenden och exponeringsbas kan påverka resultaten. Smala intervall eller en jämn fördelningskurva bevisar inte att modellen är väl kalibrerad mot utfall."
+        },
+        {
+          "type": "p",
+          "text": "Intervjuerna har egna begränsningar: urval, minnesbilder, rollperspektiv och hur frågor ställts. Rapporten ska diskutera hur dessa kan påverka tolkningarna och vilka aktörer eller erfarenheter som saknas. Påståenden om överförbarhet knyts till det faktiska materialet."
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "diskussion",
+      "number": "16",
+      "part": "Analys och diskussion",
+      "title": "Diskussion: prioriteringar och avvägningar",
+      "status": "awaiting_integration",
+      "lead": "Vad betyder resultaten för en mer förutsägbar prövning?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Diskussionen ska behandla varför vissa risker eller åtgärder framstår som särskilt angelägna, vilka alternativa tolkningar som finns och hur handlingsutrymmet påverkar prioriteringen. Modellens storleksordningar, intervjupersonernas erfarenheter och åtgärdernas genomförandeförutsättningar behöver vägas samman utan att blandas ihop."
+        },
+        {
+          "type": "p",
+          "text": "En rekommendation kan påverkas av fler omständigheter än förväntad förlust: osäkerhet, resursbehov, fördelning av nytta och kostnad, mandat samt möjlighet att följa upp genomförandet. De kriterier som faktiskt används ska anges öppet."
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "slutsatser",
+      "number": "17",
+      "part": "Slutsatser",
+      "title": "Slutsatser och rekommendationer",
+      "status": "awaiting_integration",
+      "lead": "Prioriteringar som går att följa tillbaka till analysen.",
+      "blocks": [
+        {
+          "type": "note",
+          "title": "Slutsatser fastställs efter analys",
+          "text": "Här formuleras rapportens belagda slutsatser och avgränsade rekommendationer. Varje rekommendation ska ange vilket problem den möter, vilket underlag den vilar på och vilka villkor eller osäkerheter som kvarstår."
+        },
+        {
+          "type": "integration"
+        }
+      ]
+    },
+    {
+      "id": "uppfoljning",
+      "number": "18",
+      "part": "Slutsatser",
+      "title": "Genomförande och fortsatt uppföljning",
+      "status": "awaiting_integration",
+      "lead": "Från prioritering till prövbar förbättring.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "En genomförandeagenda behöver ange ansvar, ordningsföljd, resursbehov och hur effekten kan följas upp. Föreslagna indikatorer skiljs från uppmätt effekt. Där det är möjligt bör framtida utfall användas för att pröva och förbättra modellens antaganden."
+        },
+        {
+          "type": "p",
+          "text": "Nya mätningar ska behandlas som nya utgåvor. Ändrade värden och figurer följs av en granskning av berörda tolkningar och slutsatser. Ett uppdaterat datamaterial ändrar inte automatiskt en fastställd rapporttext."
+        }
+      ]
+    },
+    {
+      "id": "referenser",
+      "number": "19",
+      "part": "Referenser och bilagor",
+      "title": "Referenser och källregister",
+      "status": "draft",
+      "lead": "Källor för grundmaterial, metod och publicerade intervjuutdrag.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Riskernas ursprungliga källhänvisningar finns i respektive riskpost. Rapportens slutliga litteratur- och källförteckning kompletteras och kontrolleras när resultat och intervjumaterial har införts."
+        }
+      ]
+    },
+    {
+      "id": "begrepp",
+      "number": "A",
+      "part": "Referenser och bilagor",
+      "title": "Begrepp och läsnyckel",
+      "status": "draft",
+      "blocks": [
+        {
+          "type": "table",
+          "title": "Centrala begrepp",
+          "columns": [
+            "Begrepp",
+            "Betydelse i rapporten"
+          ],
+          "rows": [
+            [
+              "BTL-rang",
+              "Relativ rangordning, inte procentuell sannolikhet"
+            ],
+            [
+              "Sannolikhet",
+              "Sannolikhet för angiven händelse under bestämd period"
+            ],
+            [
+              "Frekvens",
+              "Förväntat antal händelser per tidsenhet"
+            ],
+            [
+              "Konsekvenskostnad",
+              "Kostnad givet att en händelse inträffar"
+            ],
+            [
+              "Förväntad förlust",
+              "Medelvärdet av förlust under den angivna modellen och perioden"
+            ],
+            [
+              "P95",
+              "95-procentskvantil i den redovisade fördelningen"
+            ],
+            [
+              "Kontrollkoppling",
+              "Dokumenterad avsikt att möta en risk, orsak eller konsekvens"
+            ],
+            [
+              "Latent effekt",
+              "Effekt på modellskala, inte direkt procentuell kostnadsreduktion"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "matbilaga",
+      "number": "B",
+      "part": "Referenser och bilagor",
+      "title": "Mätmanifest och fullständiga resultattabeller",
+      "status": "awaiting_measurement",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Bilagan ska ange organisation, experiment, execution, Runs, indatarelationer, versioner, valuta, period och täckning. Fullständiga resultattabeller gör det möjligt att följa varje publicerad siffra till dess källresultat."
+        }
+      ]
+    },
+    {
+      "id": "intervjubilaga",
+      "number": "C",
+      "part": "Referenser och bilagor",
+      "title": "Intervjuguide, kodning och analysmatris",
+      "status": "awaiting_interviews",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Här dokumenteras intervjuguide, urvalsprinciper, genomförande och kodningsram. Den publicerade versionen får endast innehålla godkända uppgifter. Fullständiga transkript och identifieringsnycklar förvaras separat. Analysmatrisen visar hur teman och utdrag kopplats till risker, åtgärder och tolkningar."
+        }
+      ]
+    },
+    {
+      "id": "kontrollbilaga",
+      "number": "D",
+      "part": "Referenser och bilagor",
+      "title": "Kontroller, scenarier och avgränsningar",
+      "status": "draft",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Bilagan redovisar åtgärdernas stabila identiteter, myndighetsklassificering, scenariotillhörighet och dokumenterade mål. Resultat per åtgärd och kombination kompletteras efter mätningen. Kostnader som saknas markeras som okända, och olika mandatförutsättningar hålls isär.",
+          "sourceIds": [
+            "MYN"
+          ]
+        }
+      ]
+    }
+  ]
+}

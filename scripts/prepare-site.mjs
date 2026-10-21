@@ -2,6 +2,7 @@
 import { copyFileSync, cpSync, mkdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildReport } from './build-report.mjs';
 
 const rootDirectory = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -18,6 +19,11 @@ export const STATIC_DATA_FILES = Object.freeze({
   'nodes.json': 'Artefakt_C_Riskregister/_build/mappable_nodes.json',
   'sources.json': 'Artefakt_C_Riskregister/mcp-server/data/sources.json',
   'process-charts.json': 'Artefakt_B_Processkarta_nodordbok/Artefakt_B_processkarta_import.json',
+  'measurement.json':'publication/measurement.json',
+  'interviews.json':'publication/interviews.json',
+  'report-manuscript.json':'report/manuscript.json',
+  'report-measurement.json':'report/measurement.json',
+  'report-interviews.json':'report/interviews.json',
 });
 
 export function prepareSite(root = rootDirectory) {
@@ -45,6 +51,7 @@ export function prepareSite(root = rootDirectory) {
     copyFileSync(join(root, source), join(output, 'data', filename));
   }
   writeFileSync(join(output, '.nojekyll'), '');
+  buildReport(join(output,'report'));
   return output;
 }
 

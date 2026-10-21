@@ -1,2 +1,5 @@
 # CSV exports intentionally use RFC-compatible CRLF row endings.
 *.csv whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
+# Preserve generated PDF bytes; PDF syntax is not source text.
+*.pdf binary

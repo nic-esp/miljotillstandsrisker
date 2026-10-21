@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "editionId": "FYLL_I_NY_MATUTGAVA",
+  "label": "FYLL_I_KORNINGENS_NAMN",
+  "orgId": "FYLL_I",
+  "experimentId": "FYLL_I",
+  "executionId": "FYLL_I",
+  "mappingVersion": "KOR_npm_run_import:runs_--_mapping-version",
+  "currency": "SEK",
+  "horizonYears": 1,
+  "scope": {
+    "description": "FYLL_I_VILKA_PROCESSVAGAR_OCH_RISKER_SOM_INGAR",
+    "exposureBasis": "FYLL_I_ANTAL_ARENDEN_ELLER_ANNAN_EXPONERINGSBAS"
+  },
+  "crosswalkFile": "crosswalk.json",
+  "runs": [
+    {
+      "runId": "FYLL_I",
+      "functionId": "FYLL_I",
+      "kind": "btl_likelihood",
+      "file": "likelihood-run.json",
+      "sha256": "FYLL_I_ORIGINALFILENS_SHA256",
+      "status": "completed",
+      "completedAt": "FYLL_I_ISO_DATUM",
+      "inputRunIds": [],
+      "recordPath": "ranks",
+      "fields": {"riskId": "riskId", "rank": "rank", "score": "score", "uncertainty": "uncertainty"}
+    }
+  ],
+  "expectedLossRules": []
+}

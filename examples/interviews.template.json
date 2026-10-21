@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "interviews": [
+    {
+      "id": "FYLL_I_STABILT_INTERVJU_ID",
+      "publicLabel": "FYLL_I_GODKAND_ATTRIBUTION",
+      "role": "FYLL_I_GODKAND_ROLL",
+      "sector": null,
+      "date": null,
+      "publishDate": false,
+      "publicationAllowed": false,
+      "reviewStatus": "draft",
+      "excerpts": [
+        {
+          "id": "FYLL_I_STABILT_CITAT_ID",
+          "text": "FYLL_I_EXAKT_KONTROLLERAT_UTDRAG",
+          "locator": "FYLL_I_SIDA_STYCKE_ELLER_TIDSKOD",
+          "publicationAllowed": false,
+          "reviewStatus": "draft",
+          "topicIds": ["intervjufynd", "samlad-analys"],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        }
+      ]
+    }
+  ]
+}

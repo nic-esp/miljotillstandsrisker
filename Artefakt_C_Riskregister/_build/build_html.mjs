@@ -8,6 +8,8 @@ import { readSourceRegister } from './source_register.mjs';
 import { createRankingModel } from './btl_ranking.mjs';
 import { createExplorationData } from './exploration_model.mjs';
 import { loadAuthorityPackage } from './authority_controls.mjs';
+import { validateMeasurement } from './measurement_model.mjs';
+import { validateReport } from './report_model.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -43,10 +45,19 @@ const chartNames = Object.fromEntries(imp.charts.map(chart => {
   return [key, chart.name];
 }));
 
-const ranking = JSON.parse(readFileSync(join(here, 'btl_snapshot.json'), 'utf8'));
+const measurement = JSON.parse(readFileSync(join(root, '../publication/measurement.json'), 'utf8'));
+const ranking = measurement.ranking || JSON.parse(readFileSync(join(here, 'btl_snapshot.json'), 'utf8'));
 createRankingModel(risks, ranking, proc); // Fail the build on stale or ambiguous risk mappings.
 const exploration = createExplorationData(risks, JSON.parse(readFileSync(join(here, 'exploration_curations.json'), 'utf8')), loadAuthorityPackage());
-const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc, processExport: imp, ranking, exploration })
+validateMeasurement(measurement, risks.map(r=>r.risk_id), exploration.controls.map(c=>c.id));
+const report = JSON.parse(readFileSync(join(root,'../report/manuscript.json'),'utf8'));
+const interviews = JSON.parse(readFileSync(join(root,'../publication/interviews.json'),'utf8'));
+const reportMeasurement = JSON.parse(readFileSync(join(root,'../report/measurement.json'),'utf8'));
+const reportInterviews = JSON.parse(readFileSync(join(root,'../report/interviews.json'),'utf8'));
+validateMeasurement(reportMeasurement,risks.map(r=>r.risk_id),exploration.controls.map(c=>c.id));
+if(report.measurementEditionId!==reportMeasurement.editionId)throw new Error('Rapportmanus och låst mätutgåva skiljer sig');
+validateReport(report,reportInterviews,risks.map(r=>r.risk_id),exploration.controls.map(c=>c.id));
+const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc, processExport: imp, ranking, exploration, measurement, report, interviews, reportMeasurement, reportInterviews })
   .replace(/</g, '\\u003c');
 const processGeometry = readFileSync(join(here, 'process_geometry.mjs'), 'utf8')
   .replace(/^export\s*\{\s*createProcessGeometry\s*\};?\s*$/m, '');
@@ -56,12 +67,13 @@ const processChartExport = readFileSync(join(here, 'process_chart_export.mjs'), 
   .replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
 
 const template = readFileSync(join(here, 'app_template.html'), 'utf8');
+const publicationModel = ['measurement_model.mjs','report_model.mjs'].map(file=>readFileSync(join(here,file),'utf8').replace(/^export /gm,'')).join('\n');
 const rankingModel = readFileSync(join(here, 'btl_ranking.mjs'), 'utf8').replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
 const rankingView = readFileSync(join(here, 'ranking_view.mjs'), 'utf8');
 const brandCss = readFileSync(join(here, 'svenskt-naringsliv.css'), 'utf8');
 const explorationView = readFileSync(join(here, 'exploration_view.mjs'), 'utf8');
 const explorationGraph = readFileSync(join(here, 'exploration_graph.mjs'), 'utf8').replace(/\bexport\s+(?=function|const|class)/g, '').replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
-const explorationCss = readFileSync(join(here, 'exploration.css'), 'utf8') + '\n' + readFileSync(join(here, 'exploration_graph.css'), 'utf8');
+const explorationCss = readFileSync(join(here, 'exploration.css'), 'utf8') + '\n' + readFileSync(join(here, 'exploration_graph.css'), 'utf8') + '\n' + readFileSync(join(here, 'measurement.css'), 'utf8');
 const logoStacked = readFileSync(join(root, '../site/assets/svenskt-naringsliv-logo-stacked.svg'), 'utf8').trim();
 const logoHorizontal = readFileSync(join(root, '../site/assets/svenskt-naringsliv-logo.svg'), 'utf8').trim();
 if (!template.includes('/*__PAYLOAD__*/')) throw new Error('Mall saknar /*__PAYLOAD__*/-placeholder');
@@ -75,6 +87,8 @@ for (const marker of ['/*__EXPLORATION_CSS__*/','/*__EXPLORATION_VIEW__*/','/*__
   if (!template.includes(marker)) throw new Error(`Mall saknar ${marker}-placeholder`);
 }
 const html = template
+  .replace('/*__PUBLICATION_MODEL__*/', () => publicationModel)
+  .replace('/*__MEASUREMENT_VIEW__*/', () => readFileSync(join(here,'measurement_view.mjs'),'utf8'))
   .replace('<!--__SN_LOGO_STACKED__-->', () => logoStacked)
   .replace('<!--__SN_LOGO_HORIZONTAL__-->', () => logoHorizontal)
   .replace('/*__BRAND_CSS__*/', () => brandCss)

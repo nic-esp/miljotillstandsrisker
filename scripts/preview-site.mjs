@@ -101,13 +101,16 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     console.error('Ingen byggd webbplats finns. Kör npm run build först.');
     process.exitCode = 1;
   } else {
-    const server = createPreviewServer();
+    const args=process.argv.slice(2);
+    const option=(name,fallback)=>{const at=args.indexOf(name);return at<0?fallback:args[at+1];};
+    const port=Number(option('--port','4173')),host=option('--host','127.0.0.1');
+    const server = createPreviewServer(resolve(option('--root',defaultDirectory)));
     server.on('error', error => {
       console.error(`Förhandsvisningen kunde inte startas: ${error.message}`);
       process.exitCode = 1;
     });
-    server.listen(4173, '127.0.0.1', () => {
-      console.log('Förhandsvisning: http://127.0.0.1:4173/miljotillstandsrisker/');
+    server.listen(port, host, () => {
+      console.log(`Förhandsvisning: http://${host}:${port}/miljotillstandsrisker/`);
       console.log('Kör npm run build igen efter ändringar; servern levererar filerna från _site.');
     });
   }

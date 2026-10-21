@@ -1,0 +1,113 @@
+// Shared by the offline importer and the browser. Missing values remain missing.
+export function validateMeasurement(snapshot, riskIds, controlIds) {
+  const fail = text => { throw new Error(`Mätpaket: ${text}`); };
+  const ids = (values, allowed, label) => {
+    if (!Array.isArray(values) || new Set(values).size !== values.length || values.some(id => !allowed.has(id))) fail(`okända eller dubbla ${label}`);
+  };
+  const finite = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;
+  if (snapshot?.schemaVersion !== 1) fail('okänd formatversion');
+  if (!['awaiting_measurement', 'ready'].includes(snapshot.status)) fail('ogiltig status');
+  const risks = new Set(riskIds), controls = new Set(controlIds);
+  ids((snapshot.risks || []).map(r => r.riskId), risks, 'risk-ID');
+  ids((snapshot.controls || []).map(c => c.controlId), controls, 'kontroll-ID');
+  if (snapshot.status === 'awaiting_measurement') {
+    if (snapshot.risks?.length || snapshot.controls?.length || snapshot.portfolio || snapshot.scenarios?.length || snapshot.ranking) fail('väntande paket får inte innehålla mätresultat');
+    return snapshot;
+  }
+  const p = snapshot.provenance;
+  if (!snapshot.editionId || !p?.executionId || !p.experimentId || !p.orgId || !p.currency || !finite(p.horizonYears) || p.horizonYears === 0 || !Array.isArray(p.runs) || !p.runs.length || !p.scope?.description || !p.scope.exposureBasis) fail('körningsidentitet, valuta, period och exponeringsbas krävs');
+  const runIds = new Set(p.runs.map(r => r.runId));
+  if (runIds.size !== p.runs.length) fail('dubbla Runs');
+  for (const r of p.runs) {
+    if (!/^[a-zA-Z0-9_-]+$/.test(r.runId||'') || !r.functionId || r.status !== 'completed' || !Number.isFinite(Date.parse(r.completedAt)) || !/^[a-f0-9]{64}$/.test(r.sha256 || '')) fail('ofullständig Run-proveniens');
+    if (r.executionId !== p.executionId && !r.upstreamOf?.some(id => runIds.has(id))) fail('Run från annan execution saknar deklarerad lineage');
+    if (!Array.isArray(r.inputRunIds) || r.inputRunIds.some(id => !runIds.has(id))) fail('input-Run saknas i paketet');
+  }
+  const visiting=new Set(),visited=new Set(),runById=new Map(p.runs.map(r=>[r.runId,r]));
+  const visit=id=>{if(visiting.has(id))fail('cykel i Run-lineage');if(visited.has(id))return;visiting.add(id);for(const input of runById.get(id).inputRunIds)visit(input);visiting.delete(id);visited.add(id);};
+  for(const id of runIds)visit(id);
+  const dependsOn=(id,ancestor)=>runById.get(id).inputRunIds.some(input=>input===ancestor||dependsOn(input,ancestor));
+  for(const r of p.runs)if(r.executionId!==p.executionId&&!p.runs.some(target=>target.executionId===p.executionId&&r.upstreamOf?.includes(target.runId)&&dependsOn(target.runId,r.runId)))fail('deklarerad upstream-Run saknar verifierbar inputkedja');
+  const source = value => { if (!value?.runId || !runIds.has(value.runId)) fail('resultat saknar känt Run-ID'); };
+  const distribution = d => {
+    if (!d) return;
+    source(d);
+    if (!Number.isSafeInteger(d.sampleCount) || d.sampleCount < 1 || !finite(d.p50) || !finite(d.p95) || d.p95 < d.p50 || !Array.isArray(d.bins) || !d.bins.length) fail('ofullständig förlustfördelning');
+    let count = 0, previous = -Infinity;
+    for (const b of d.bins) {
+      if (!finite(b.lower) || !finite(b.upper) || b.upper < b.lower || b.lower < previous || !Number.isSafeInteger(b.count) || b.count < 0) fail('ogiltiga histogramintervall');
+      previous = b.upper; count += b.count;
+    }
+    if (count !== d.sampleCount) fail('histogrammets antal avviker från sampleCount');
+    if (d.p50 < d.bins[0].lower || d.p95 > d.bins.at(-1).upper) fail('kvantiler utanför fördelningens intervall');
+  };
+  for (const r of snapshot.risks) {
+    for (const dimension of ['likelihood', 'impact']) {
+      const m = r[dimension]; if (!m) continue;
+      source(m);
+      if (!finite(m.value) || m.eligible !== true || m.calibrationStatus !== 'anchor_scaled') fail('absoluta mått kräver anchor_scaled och eligibleForAbsolute');
+      if (dimension === 'likelihood' && (!['probability', 'events_per_year'].includes(m.unit) || (m.unit === 'probability' && m.value > 1))) fail('ogiltig sannolikhet/frekvens');
+      if (m.horizonYears !== p.horizonYears) fail('perioderna skiljer sig');
+      if (dimension === 'impact' && m.unit !== `${p.currency}_per_event`) fail('konsekvensens valuta/enhet avviker');
+      if (m.interval90 && (!Array.isArray(m.interval90) || m.interval90.length !== 2 || m.interval90.some(v => !finite(v)) || m.interval90[1] < m.interval90[0])) fail('ogiltigt osäkerhetsintervall');
+    }
+    if (r.expectedLoss) {
+      source(r.expectedLoss);
+      if (!finite(r.expectedLoss.value) || r.expectedLoss.horizonYears !== p.horizonYears) fail('ogiltig förväntad förlust');
+      if (r.expectedLoss.method === 'product_of_means') {
+        if (!r.likelihood || !r.impact || r.impact.statistic !== 'conditional_mean' || r.expectedLoss.assumption !== 'independent_frequency_and_severity') fail('produktberäkning saknar villkorat medelvärde eller oberoendeantagande');
+        const expected = r.likelihood.value * r.impact.value * (r.likelihood.unit === 'events_per_year' ? p.horizonYears : 1);
+        if (Math.abs(expected - r.expectedLoss.value) > Math.max(0.01, expected * 1e-8)) fail('förväntad förlust stämmer inte med formeln');
+      } else if (r.expectedLoss.method !== 'exported_loss_mean') fail('okänd förlustmetod');
+    }
+    distribution(r.lossDistribution);
+    if (r.sensitivity) {
+      source(r.sensitivity);
+      if (!r.sensitivity.method || !Array.isArray(r.sensitivity.items) || r.sensitivity.items.some(i => !i.label || !finite(i.value) || i.value > 1)) fail('ogiltig känslighetsanalys');
+    }
+  }
+  for (const c of snapshot.controls || []) {
+    for (const e of c.effects || []) {
+      source(e);
+      if (!risks.has(e.riskId) || !['likelihood', 'impact'].includes(e.dimension) || typeof e.delta !== 'number' || !Number.isFinite(e.delta)) fail('ogiltig latent kontrolleffekt');
+    }
+  }
+  const portfolios = snapshot.portfolio ? [snapshot.portfolio] : [];
+  for (const a of portfolios) {
+    ids(a.riskIds, risks, 'portföljrisker'); source(a);
+    if (!a.riskIds.length || !finite(a.expectedLoss) || !a.dependenceAssumption || !a.scopeDescription) fail('portföljens avgränsning/beroendemodell saknas');
+    distribution(a.lossDistribution);
+  }
+  const scenarioIds = new Set(), combinations = new Set();
+  for (const s of snapshot.scenarios || []) {
+    ids(s.controlIds, controls, 'scenariokontroller'); ids(s.riskIds, risks, 'scenariorisker'); source(s);
+    const combination = [...s.controlIds].sort().join('|');
+    if (!s.id || scenarioIds.has(s.id) || combinations.has(combination) || !s.controlIds.length || !s.riskIds.length || !s.method || !s.overlapTreatment || !finite(s.referenceExpectedLoss) || !finite(s.residualExpectedLoss) || (s.controlCost != null && !finite(s.controlCost))) fail('ogiltigt eller dubblerat scenario');
+    scenarioIds.add(s.id); combinations.add(combination);
+    if (s.contributions?.length) {
+      if (s.contributions.some(c => !s.controlIds.includes(c.controlId) || !finite(c.reduction))) fail('ogiltiga scenariobidrag');
+      const sum = s.contributions.reduce((a,c) => a+c.reduction, 0);
+      if (Math.abs(sum - (s.referenceExpectedLoss-s.residualExpectedLoss)) > Math.max(0.01, Math.abs(sum)*1e-6)) fail('vattenfallsbidragen stämmer inte med scenariot');
+    }
+    if (s.riskEffects?.some(e => !s.riskIds.includes(e.riskId) || !finite(e.referenceExpectedLoss) || !finite(e.residualExpectedLoss))) fail('ogiltiga riskbidrag i scenario');
+  }
+  return snapshot;
+}
+
+export function createMeasurementModel(snapshot, riskIds, controlIds) {
+  validateMeasurement(snapshot, riskIds, controlIds);
+  const byRisk = new Map((snapshot.risks || []).map(r => [r.riskId, r]));
+  const byControl = new Map((snapshot.controls || []).map(c => [c.controlId, c]));
+  const sameIds = (a,b) => a.length === b.length && [...a].sort().join('|') === [...b].sort().join('|');
+  return {
+    snapshot, byRisk, byControl,
+    aggregate(ids) {
+      const rows = ids.map(id => byRisk.get(id)).filter(r => r?.expectedLoss);
+      const portfolio = snapshot.portfolio && sameIds(ids, snapshot.portfolio.riskIds) ? snapshot.portfolio : null;
+      return { rows, quantified:rows.length, total:ids.length, missing:ids.filter(id=>!byRisk.get(id)?.expectedLoss),
+        expectedLoss:portfolio?.expectedLoss ?? (rows.length ? rows.reduce((a,r)=>a+r.expectedLoss.value,0) : null),
+        portfolio, partial:rows.length !== ids.length };
+    },
+    scenario(ids) { return (snapshot.scenarios || []).find(s => sameIds(ids,s.controlIds)) || null; },
+  };
+}

@@ -4,6 +4,7 @@ node_modules/
 _site/
 .wrangler/
 *.zip
+work/
 
 # Keep the repository focused on the published app and its deployment inputs.
 Artefakt_B_Processkarta_nodordbok/*
@@ -33,3 +34,7 @@ Artefakt_C_Riskregister/_build/*
 !Artefakt_C_Riskregister/_build/exploration_graph.css
 !Artefakt_C_Riskregister/_build/authority_controls.mjs
 !Artefakt_C_Riskregister/_build/authority-inputs/
+!Artefakt_C_Riskregister/_build/measurement_model.mjs
+!Artefakt_C_Riskregister/_build/measurement_view.mjs
+!Artefakt_C_Riskregister/_build/measurement.css
+!Artefakt_C_Riskregister/_build/report_model.mjs

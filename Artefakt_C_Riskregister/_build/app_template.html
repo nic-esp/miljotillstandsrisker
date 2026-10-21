@@ -188,6 +188,9 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
     </div>
     <select id="sort" aria-label="Sortera risker">
       <option value="rank">Sortera: BTL-rangordning</option>
+      <option value="loss">Sortera: Högst förväntad förlust</option>
+      <option value="likelihood">Sortera: Högst händelsemått</option>
+      <option value="impact">Sortera: Högst kostnad vid händelse</option>
       <option value="id">Sortera: Diagram / nod</option>
       <option value="category">Sortera: Kategori</option>
       <option value="origin">Sortera: Ursprung</option>
@@ -197,12 +200,16 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
     <button class="btn active" data-view="risks">Risker</button>
     <button class="btn" data-view="controls">Motåtgärder</button>
     <button class="btn" data-view="graph">Sambandskarta</button>
-    <button class="btn" data-view="ranking">Topp 50 &amp; rangordning</button>
-    <button class="btn" data-view="process">Processkarta</button>
-    <button class="btn" data-view="nodes">Nodbläddrare</button>
-    <button class="btn" data-view="stats">Statistik</button>
+    <button class="btn" data-view="analysis">Analys</button>
+    <button class="btn" data-view="report">Rapport</button>
+    <details class="ms-more-nav"><summary class="btn">Fler vyer</summary><div>
+      <button class="btn" data-view="ranking">Topp 50 &amp; rangordning</button>
+      <button class="btn" data-view="process">Processkarta</button>
+      <button class="btn" data-view="nodes">Nodbläddrare</button>
+      <button class="btn" data-view="stats">Statistik</button>
+      <a class="btn" href="ai-access.html">AI &amp; rådata</a>
+    </div></details>
     <button class="btn" id="expandAll">Expandera alla</button>
-    <a class="btn" href="https://nic-esp.github.io/miljotillstandsrisker/ai-access.html">AI &amp; rådata</a>
   </div>
 </header>
 <div class="layout" id="layout">
@@ -212,6 +219,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
 
 <script>
 /*__RANKING_MODEL__*/
+/*__PUBLICATION_MODEL__*/
 /*__PROCESS_GEOMETRY__*/
 /*__RISK_FIELDS__*/
 /*__PROCESS_CHART_EXPORT__*/
@@ -331,6 +339,10 @@ function filtered(){
 }
 function sorted(rs){
   const arr = [...rs];
+  if (['loss','likelihood','impact'].includes(state.sort)) {
+    const key=state.sort==='loss'?'expectedLoss':state.sort;
+    return arr.sort((a,b)=>(MEASUREMENT.byRisk.get(b.risk_id)?.[key]?.value ?? -Infinity)-(MEASUREMENT.byRisk.get(a.risk_id)?.[key]?.value ?? -Infinity)||a.risk_id.localeCompare(b.risk_id));
+  }
   if (state.sort === 'rank') arr.sort((a,b)=>(RANKING.byRiskId.get(a.risk_id)?.rank ?? Infinity)-(RANKING.byRiskId.get(b.risk_id)?.rank ?? Infinity) || a.risk_id.localeCompare(b.risk_id));
   else if (state.sort === 'category') arr.sort((a,b)=>a.category.localeCompare(b.category,'sv') || a.risk_id.localeCompare(b.risk_id));
   else if (state.sort === 'origin') arr.sort((a,b)=>ORIGINS.indexOf(a.origin)-ORIGINS.indexOf(b.origin) || a.risk_id.localeCompare(b.risk_id));
@@ -491,6 +503,8 @@ function bindDetail(root){
 }
 function setView(v){
   state.view = v;
+  document.body.dataset.view=v;
+  document.querySelectorAll('.ms-more-nav').forEach(menu=>menu.open=false);
   $('#exFilterToggle').hidden = !['risks','nodes'].includes(v);
   $('#search').closest('.searchwrap').hidden = !['risks','nodes'].includes(v);
   $('#sort').hidden = v !== 'risks';
@@ -824,19 +838,22 @@ window.addEventListener('pointercancel', endProcessPan);
 
 function renderMain(){
   if (typeof exState !== 'undefined' && exState.graph) { exState.graph.destroy(); exState.graph=null; }
-  $('#layout').classList.toggle('full', ['process','ranking','stats','controls','graph'].includes(state.view));
+  $('#layout').classList.toggle('full', ['process','ranking','stats','controls','graph','analysis','report'].includes(state.view));
   if (state.view === 'ranking') renderRanking();
   else if (state.view === 'risks') renderRisks();
   else if (state.view === 'process') renderProcess();
   else if (state.view === 'nodes') renderNodes();
   else if (state.view === 'controls') renderControls();
   else if (state.view === 'graph') renderKnowledgeGraph();
+  else if (state.view === 'analysis') renderRiskAnalysis();
+  else if (state.view === 'report') renderReport();
   else renderStats();
 }
 
 /*__RANKING_VIEW__*/
 /*__EXPLORATION_GRAPH__*/
 /*__EXPLORATION_VIEW__*/
+/*__MEASUREMENT_VIEW__*/
 
 // ---- events ----
 $('#exFilterToggle').onclick=()=>{const open=$('#exFilterToggle').getAttribute('aria-expanded')!=='true';$('#exFilterToggle').setAttribute('aria-expanded',String(open));$('#exFilterToggle').textContent=open?'Dölj filter':'Visa filter';$('#sidebar').classList.toggle('ex-filters-open',open);};
@@ -856,7 +873,7 @@ $('#expandAll').onclick = () => {
 
 $('#search').value = state.q;
 if (state.expandAll) $('#expandAll').textContent = 'Minimera alla';
-renderHead(); exInit();
+publicationInit(); renderHead(); exInit();
 </script>
 </body>
 </html>
