@@ -81,10 +81,11 @@ test('authority search and process filters intersect rather than overriding scen
   assert.equal(view.filter({ controlScenario:main, controlQ:'MPM-06 nonexistent-term' }).length, 0, 'All search terms must match');
 });
 
-test('authority detail preserves unmeasured status, scope, baseline and each canonical target/relation ID', () => {
+test('authority detail keeps implementation unverified and preserves scope, baseline and canonical target IDs', () => {
   const control = exploration.controls.find(item => item.id === 'MPM-05');
   const html = loadView().content(control);
-  assert.ok(html.includes('Ej uppmätt'));
+  assert.ok(html.includes('Införande ej verifierat'));
+  assert.ok(html.includes('Tillgängliga modellresultat och deras begränsningar'));
   for (const field of ['scope', 'owner', 'triggerFrequency', 'indicators', 'verificationEvidence', 'baselineDifference', 'exposure', 'overlap']) {
     assert.ok(html.includes(esc(control[field])), `Missing authority detail field ${field}`);
   }

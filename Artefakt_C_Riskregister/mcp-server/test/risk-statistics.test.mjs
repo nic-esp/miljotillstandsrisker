@@ -106,7 +106,7 @@ test('administrative setting validates; risk cards display the configured metric
   for(const statistic of ['median','mean']){
     const context=vm.createContext({DATA:{measurement:snapshot,presentation:{schemaVersion:1,riskStatistic:statistic}},RISKS:canonical.risks,EX_DATA:{controls:[]},createMeasurementModel,validatePresentation,esc:s=>String(s)});
     vm.runInContext(source+"\nthis.card=measurementStrip('R1');this.formula=measurementFormula('R1');",context);
-    assert.match(context.card,statistic==='median'?/Medianförlust/:/Förväntad förlust/);
+    assert.match(context.card,statistic==='median'?/Medianförlust/:/Förväntad kostnad/);
     assert.match(context.card,statistic==='median'?/<strong>0 mnkr<\/strong>/:/<strong>10 mnkr<\/strong>/);
     assert.doesNotMatch(context.card,/<button|<select|<input/);
     assert.match(context.formula,statistic==='median'?/multipliceras inte/:/Exporterat medelvärde/);

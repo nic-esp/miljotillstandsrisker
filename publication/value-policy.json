@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "cosmic-rhino-review-2026-10-22",
+  "maxMeanMedianRatio": 10,
+  "maxAnnualFrequency": 10000,
+  "maxCostPerEventSEK": 10000000000,
+  "maxExpectedAnnualCostSEK": 10000000000,
+  "description": "Redaktionella granskningsgränser för denna utgåva. Berörda medelvärden och härledda årskostnader lämnas odefinierade. Medianer behålls när deras egen storleksordning inte överskrider gränsen. Gränserna är försiktiga publiceringsval, inte bevis för fel eller naturliga övre gränser. Teknisk godkänd import innebär inte empirisk validering.",
+  "descriptionEstimates": []
+}

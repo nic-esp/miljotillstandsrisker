@@ -8,6 +8,8 @@
     "dev": "node scripts/preview-site.mjs",
     "preview": "node scripts/preview-site.mjs",
     "import:runs": "node scripts/import-runs.mjs",
+    "export:cardinal": "node scripts/export-cardinal.mjs",
+    "import:cardinal": "node scripts/import-cardinal.mjs",
     "import:interviews": "node scripts/import-interviews.mjs",
     "report:pdf": "node scripts/build-report-pdf.mjs",
     "report:draft": "node scripts/draft-report-edition.mjs"

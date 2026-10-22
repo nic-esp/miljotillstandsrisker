@@ -1,168 +1,672 @@
 {
   "schemaVersion": 1,
-  "editionId": "rapport-arbetsmanus-2026-10-21",
-  "measurementEditionId": null,
-  "status": "draft",
-  "date": "2026-10-21",
-  "title": "Miljötillståndens risker och vägen till en mer förutsägbar prövning",
-  "subtitle": "Riskbild, kostnader och myndigheternas möjligheter att minska riskerna",
-  "description": "En sammanhängande analys av risker i tillståndsprocessen. Kvantitativa mätningar kombineras med dokumentunderlag och intervjuer för att förstå både riskernas storlek och mekanismerna bakom dem.",
-  "extent": "Arbetsram: 50–80 sidor samt bilagor. Den slutliga omfattningen följer underlaget.",
+  "editionId": "miljotillstandsrisks-2026-10-22",
+  "measurementEditionId": "cosmic-rhino-2026-10-22-cosmic-rhino-review-2026-10-22",
+  "status": "published",
+  "date": "2026-10-22",
+  "title": "Miljötillståndsrisker",
+  "subtitle": "Kostnader, processer och åtgärder för en mer förutsägbar prövning",
+  "description": "En analys för Svenskt Näringsliv av 342 risker i miljötillståndsprocessen, med modellresultat från Cosmic Rhino och erfarenheter från fem intervjukällor.",
+  "extent": "Analys, rekommendationer och åtta metod- och registerbilagor.",
   "findings": [],
   "sources": [
     {
       "id": "REG",
-      "title": "Riskregister och processkartor",
-      "description": "Sajtens versionshanterade grundmaterial. Risker, ursprungliga motåtgärder, processnoder och källhänvisningar bevaras i respektive post."
+      "title": "Riskregister, processkartor och kontrollregister",
+      "description": "Versionslåst underlag för denna utgåva: 342 risker, 378 motåtgärder, 500 unika risk–kontrollpar och 633 riktade kontrollkopplingar. Grundmaterialets rättsliga referenser finns kvar på varje risk och processnod. Baslinjen S0 är daterad 20 augusti 2026; reformscenarier redovisas separat."
+    },
+    {
+      "id": "CR",
+      "title": "Cardinal: Cosmic Rhino, slutförd 22 oktober 2026",
+      "description": "Execution 41398273-5724-4f08-8fef-ed92832f527b. Experiment a0b342cd-1e87-4c80-aeeb-091777cb7129. 21 avslutade Runs, 341 risker i fryst urval. Kontrollbas residual_implemented_controls enligt körningen. Källarkivet har lästs utan ändringar eller ny mätning. Exportens SHA-256: 7c439bd30d142ba370afd4e235e2fbbd2a81b6331fa0ea3b3728d091a76667a1"
+    },
+    {
+      "id": "CODE",
+      "title": "Cardinals beräkningskontrakt och rapportens reproducerbara import",
+      "description": "Granskade kodvägar: btl.ts, rank-inputs.ts, severity-beliefs.ts och severity-belief.ts. Rapportens projektion använder scripts/project-cardinal-snapshot.mjs i sajtens källkod, med versionsstyrda granskningsgränser i publication/value-policy.json. Ingen ny Monte Carlo-körning har gjorts.",
+      "url": "https://github.com/nic-esp/miljotillstandsrisker/blob/main/scripts/project-cardinal-snapshot.mjs"
     },
     {
       "id": "MYN",
-      "title": "Myndighetskontroller och bedömningar, version 0.10",
-      "description": "Prioriterade kontrollförslag, riskkopplingar, läsanvisning och bedömningar. Bedömningsdatum 30 september 2026. Genomförande och effekt är inte verifierade genom detta dokumentunderlag."
+      "title": "Prioriterade myndighetsåtgärder, version 0.10",
+      "description": "Tillhandahållna tabeller myndighetskontroller_riskkopplingar.csv och atgardsforslag_bedomning.csv med läsanvisning. Bedömningsdatum 30 september 2026. Innehåller 17 åtgärder i S1, en införandeåtgärd och två förslag som förutsätter framtida mandat. Klassningen beskriver förslagens tillämpning och ska inte likställas med verifierat genomförande."
     },
     {
-      "id": "MET",
-      "title": "Metodram för resultatimport och rapport",
-      "description": "Denna utgåvas metodram. Den nya mätningens faktiska modellkonfiguration, kalibrering och körningsreferenser ska föras in före sakgranskning."
+      "id": "RIX",
+      "title": "Riksdagen: Ny myndighet för miljöprövning, betänkande 2025/26:MJU24",
+      "description": "Miljö- och jordbruksutskottets behandling av proposition 2025/26:238. Underlag för beskrivningen av reformens inriktning och avgränsning. Kontrollerad 22 oktober 2026.",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/ny-myndighet-for-miljoprovning_hd01mju24/html/"
+    },
+    {
+      "id": "LST",
+      "title": "Länsstyrelsen Västra Götaland: Ny myndighet för miljöprövning får kontor i Göteborg",
+      "description": "Publicerad 19 augusti 2026. Bekräftar planerad myndighetsstart den 1 juli 2027 och kontor i Stockholm, Göteborg och Umeå. Kontrollerad 22 oktober 2026.",
+      "url": "https://www.lansstyrelsen.se/vastra-gotaland/om-oss/nyheter-och-press/nyheter---vastra-gotaland/2026-08-19-ny-myndighet-for-miljoprovning-far-kontor-i-goteborg.html"
+    },
+    {
+      "id": "NIST",
+      "title": "NIST/SEMATECH e-Handbook: Lognormal Distribution",
+      "description": "Referens för lognormalfördelningens parametrisering, medelvärde, median och kvantiler. Tillämpningen på Cardinal bygger på den exporterade modellens egen semantik.",
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda3669.htm"
     }
   ],
   "chapters": [
     {
       "id": "sammanfattning",
       "number": "01",
-      "part": "Överblick",
       "title": "Sammanfattning",
-      "status": "awaiting_integration",
-      "lead": "Vilka risker väger tyngst, vilka processer berörs och vad kan myndigheterna göra åt dem?",
+      "part": "Överblick",
+      "status": "published",
+      "lead": "En mer förutsägbar miljöprövning kräver tydliga underlag, kontinuitet i handläggningen och samordning fram till byggstart.",
       "blocks": [
         {
           "type": "p",
-          "text": "Rapporten ska ge ett gemensamt beslutsunderlag för att prioritera risker och motåtgärder i miljötillståndsprocessen. Den följer riskerna från deras orsaker till möjliga konsekvenser och vidare till de åtgärder som är avsedda att möta dem.",
+          "text": "Rapporten analyserar 342 risker och 378 motåtgärder i miljötillståndsprocessen. Den förenar processkartläggning, modellberäkningen Cosmic Rhino och fem intervjudokument med sex medverkande personer. Syftet är att ge Svenskt Näringsliv ett underlag för att prioritera förbättringar och följa deras resultat. Analysen omfattar både företagens förberedelser och myndigheternas handläggning, liksom de beroenden mellan beslut som avgör när ett projekt kan genomföras.",
+          "sourceIds": [
+            "REG",
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Det samlade underlaget pekar på tre återkommande problem: oklarhet om vilket underlag som behövs, bristande kontinuitet mellan handläggningssteg och parallella beslut som blir klara vid olika tidpunkter. Intervjuerna beskriver hur sådana förlopp kan leda till omarbete, förlorade undersökningssäsonger och osäkerhet om investeringar. De innehåller också positiva erfarenheter av tidig dialog, kunniga handläggare och tydliga besked. Dessa skillnader är viktiga när förbättringar utformas.",
+          "sourceIds": [
+            "I02",
+            "I03",
+            "I04",
+            "I05"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Cosmic Rhino rangordnar 341 av registerriskerna. För denna utgåva används förväntad årlig kostnad som huvudsaklig ekonomisk prioriteringsgrund. Efter redovisade granskningsregler finns kostnadsunderlag för 145 risker; 196 har värden som behöver granskas och en risk ingår inte i körningen. De 50 högst kostnadsrankade är därför ett urval bland dessa 145. En utelämnad risk kan ha hög kostnad. Tillgängliga medianer för frekvens och kostnad per händelse behålls även när ett instabilt medelvärde gör årskostnaden odefinierad.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "figure",
+          "figureId": "cost-top-process",
+          "title": "Figur 1. Kostnadstopp 50 fördelad på delprocesser",
+          "caption": "Antal risker, hänförda till sin direkta processnod. Underlaget beskriver urvalets sammansättning och utgör inte en skattning av processernas störningssannolikhet."
+        },
+        {
+          "type": "p",
+          "text": "Sektorsspåren B50 står för 19 av de 50 kostnadsprioriterade riskerna och vattenverksamhet B40 för 12. Resultatet visar att en användbar prioritering behöver följa hela projektets beslutskedja. Samtidigt är kostnadstäckningen ojämn mellan processerna. Fördelningen bör användas för att välja fördjupningar och granska beroenden, tillsammans med samtliga riskbeskrivningar och intervjuernas erfarenheter.",
+          "sourceIds": [
+            "REG",
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "De 20 myndighetsdrivna åtgärderna bör hanteras utifrån sitt mandat och sin tidpunkt för genomförande. Rapporten föreslår att arbetet inleds med samlad fullständighetsgranskning, dokumenterad överlämning, aktiv tidsplanering och tillgång till rätt specialistkompetens. Dessa åtgärder har konkreta kopplingar till dokumenterade risker och till mekanismer som intervjuerna beskriver. Deras ekonomiska effekt behöver därefter prövas med jämförbara före- och efterunderlag.",
+          "sourceIds": [
+            "MYN",
+            "I01",
+            "I04",
+            "I05"
+          ]
+        },
+        {
+          "type": "note",
+          "title": "Hur siffrorna ska användas",
+          "text": "Beloppen är modellskattningar för prioritering. En nationell nettokostnad, monetär effekt av valfria kontrollkombinationer och en gemensam årsförlustfördelning kan inte fastställas med detta exportunderlag. Rapporten redovisar därför ingen sådan totalskattning eller simulering.",
+          "sourceIds": [
+            "CR"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inledning",
+      "number": "02",
+      "title": "Inledning",
+      "part": "Utgångspunkter",
+      "status": "published",
+      "lead": "Tillståndsprocessens ekonomiska betydelse följer av hur beslut, tid och projektets genomförande hänger samman.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Ett miljötillstånd är ofta en förutsättning för att en investering ska kunna tas i bruk. Företaget behöver samtidigt ordna andra tillstånd, rättigheter, finansiering och praktiska förberedelser. En förskjutning i ett led kan därför påverka flera senare beslut även när själva prövningen endast gäller en avgränsad fråga. Riskregistrets processkartor gör dessa gränssnitt synliga och ger varje identifierad risk en bestämd plats i förloppet.",
           "sourceIds": [
             "REG"
           ]
         },
         {
-          "type": "note",
-          "title": "Arbetsutgåva",
-          "text": "Detta är rapportens disposition och metodram. Nya mätresultat och intervjumaterial har ännu inte införts. Sammanfattningens resultat, prioriteringar och rekommendationer skrivs efter den samlade analysen."
-        },
-        {
-          "type": "integration"
-        }
-      ]
-    },
-    {
-      "id": "lasanvisning",
-      "number": "02",
-      "part": "Överblick",
-      "title": "Så läser du rapporten",
-      "status": "draft",
-      "lead": "Från den samlade bilden till varje enskilt belägg.",
-      "blocks": [
-        {
           "type": "p",
-          "text": "Rapportens första del anger syfte, avgränsning och material. Metodkapitlen beskriver hur rangordning, absoluta riskmått, osäkerhet och intervjuanalys hålls samman. Resultatdelen behandlar risker, processer och åtgärder. I den avslutande delen vägs underlagen samman och diskuteras före slutsatserna."
-        },
-        {
-          "type": "p",
-          "text": "En siffra, en intervjuutsaga och en redaktionell tolkning fyller olika funktioner. Mätresultat får en angiven körningsreferens. Citat får en godkänd attribution och källposition. Tolkningar ska redovisa vilket underlag de bygger på och vad som talar emot dem."
-        },
-        {
-          "type": "table",
-          "title": "Tre slags underlag",
-          "columns": [
-            "Underlag",
-            "Bidrar med",
-            "Kan inte ensamt visa"
-          ],
-          "rows": [
-            [
-              "Modellmätning",
-              "Rang, absoluta mått och osäkerhet inom angiven modell",
-              "Empiriskt säkerställd framtida utveckling"
-            ],
-            [
-              "Intervju",
-              "Erfarenheter, mekanismer och villkor i ett sammanhang",
-              "Populationens sannolikheter eller kausal effektstorlek"
-            ],
-            [
-              "Dokument och kopplingar",
-              "Definitioner, avgränsningar och avsedda samband",
-              "Uppmätt effekt av en föreslagen åtgärd"
-            ]
+          "text": "För näringslivet är förutsebarheten central. Ett företag kan planera för en känd utredningsuppgift och en rimligt bestämd tidsåtgång, medan sena förändringar i kraven kan tvinga fram omtag efter att resurser redan bundits. Intervjumaterialet återkommer till osäkerheten om när handläggningen börjar, vilka kompletteringar som återstår och hur tidigare besked följer med till nästa steg. Detta motiverar att analysen omfattar tiden före en formellt komplett ansökan och tiden mellan tillstånd och faktisk byggstart.",
+          "sourceIds": [
+            "I03",
+            "I04",
+            "I05"
           ]
+        },
+        {
+          "type": "p",
+          "text": "Rapporten behandlar också de företagsspecifika förutsättningar som påverkar hur samma processrisk kan hanteras. Ett företag med egen specialistkompetens kan lättare bedöma underlagskrav och föra en preciserad dialog. Ett mindre eller mindre erfaret företag kan vara mer beroende av externa råd. Materialet ger stöd för att undersöka denna skillnad, men innehåller inte ett representativt urval som medger en beräkning av hur stor skillnaden är.",
+          "sourceIds": [
+            "I04"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Den ekonomiska prioriteringen kompletteras därför med en analys av mekanismer och möjliga åtgärder. Ett högt kostnadsvärde motiverar att risken undersöks närmare. Valet av åtgärd kräver även kunskap om ansvar, rättslig möjlighet, praktiskt genomförande och vilken del av riskförloppet åtgärden faktiskt kan påverka. Denna koppling utvecklas i resultat- och rekommendationskapitlen.",
+          "sourceIds": []
         }
       ]
     },
     {
       "id": "syfte",
       "number": "03",
+      "title": "Syfte, frågor och avgränsning",
       "part": "Utgångspunkter",
-      "title": "Syfte och frågor",
-      "status": "draft",
-      "lead": "Ett beslutsunderlag som förenar riskernas storlek med förklaringar till hur de uppstår.",
+      "status": "published",
+      "lead": "Analysen ska stödja prioritering av förbättringar och ge en gemensam grund för senare effektmätning.",
       "blocks": [
         {
           "type": "p",
-          "text": "Analysen ska belysa var riskexponeringen finns och vilka åtgärder som kan vara mest angelägna att undersöka eller genomföra. Fokus ligger på att göra prioriteringar begripliga och möjliga att granska, snarare än att reducera bedömningen till en enda ranglista."
-        },
-        {
-          "type": "h3",
-          "text": "Frågor som rapporten ska besvara"
+          "text": "Den första frågan är vilka risker som framstår som ekonomiskt betydelsefulla inom den valda bedömningsramen. Den andra är var i processen dessa risker uppstår och vilka andra steg de kan påverka. Den tredje gäller vilka motåtgärder som kan möta riskerna, särskilt sådana som myndigheter kan genomföra. Den fjärde är vilket ytterligare underlag som behövs för att bedöma faktisk riskreduktion och kostnadseffektivitet.",
+          "sourceIds": []
         },
         {
           "type": "p",
-          "text": "Vilka risker har störst modellerad sannolikhet eller frekvens, vilka har störst kostnad vid en händelse och vilka bidrar mest till förväntad förlust? Var i processerna uppstår exponeringen? Vilka myndighetsdrivna åtgärder kan adressera flera av riskerna, och under vilka villkor? Hur förhåller sig mätresultaten till intervjupersonernas erfarenheter?"
+          "text": "En händelse definieras i Cosmic Rhinos frysta omfattning som att en risk inträffar en gång i ett enskilt prövningsärende eller projekt. Frekvensen avser antal sådana händelser per år i Sverige. Konsekvensen avser kostnaden för den enskilda händelsen i det berörda projektet. Denna avgränsning är avgörande: en nationell händelsefrekvens kan inte läsas som sannolikheten för ett visst företag, och en kostnad per händelse är inte en årskostnad.",
+          "sourceIds": [
+            "CR"
+          ]
         },
         {
           "type": "p",
-          "text": "Rapporten ska även identifiera vad underlaget ännu inte kan avgöra. Ett beslut kan behöva väga modellresultat mot genomförbarhet, mandat, resursbehov och andra mål. Dessa avvägningar görs synliga i diskussionen."
+          "text": "Bedömningsramen omfattar förlorat förädlingsvärde under försening, kapitalbindning, utrednings- och processkostnader samt projektrelaterade följder för skatteintäkter och klimatnytta. Den utesluter makroekonomiska multiplikatorer och kostnader som redan räknats i en annan risk. I det tillgängliga materialet finns dock ingen projektvis kostnadsbok som visar att sådana överlapp faktiskt har avlägsnats. Rapportens aggregering begränsas därför till redovisade summor av separata registerposter.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Riskregistret är bredare än den nya Miljöprövningsmyndighetens uppgifter. Det omfattar bland annat vattenfrågor, plan- och byggfrågor, sektorsbeslut och villkor inför genomförandet. Föreslagna åtgärder behöver därför fördelas mellan berörda beslutsorgan och verksamhetsutövare. Rapporten bedömer processförbättringar och ger inte stöd för att ett visst tillstånd ska beviljas eller att materiella miljökrav ska åsidosättas.",
+          "sourceIds": [
+            "REG",
+            "I01"
+          ]
+        },
+        {
+          "type": "note",
+          "title": "Tid och status",
+          "text": "Processernas baslinje och reformscenarier har egna datum. Mätningen slutfördes den 22 oktober 2026 klockan 01.40 svensk tid. Intervjuernas uppgifter beskriver erfarenheter vid respektive samtal och ska inte uppfattas som löpande uppdaterade uppgifter om ett enskilt ärende.",
+          "sourceIds": [
+            "REG",
+            "CR"
+          ]
         }
       ]
     },
     {
-      "id": "processer",
+      "id": "reform",
       "number": "04",
+      "title": "Institutionell bakgrund",
       "part": "Utgångspunkter",
-      "title": "Tillståndsprocessen och analysens gränser",
-      "status": "draft",
-      "lead": "Riskerna behöver läsas i sitt processammanhang.",
+      "status": "published",
+      "lead": "En gemensam organisation behöver förenas med fungerande gränssnitt till övriga delar av tillståndsprocessen.",
       "blocks": [
         {
           "type": "p",
-          "text": "Riskregistret är kopplat till processkartornas noder. Kopplingarna gör det möjligt att följa var en risk är registrerad och vilka andra delar som uttryckligen anges som berörda. Att flera risker berör samma nod innebär inte att deras sannolikheter kan adderas.",
+          "text": "Miljöprövningsmyndigheten planeras starta den 1 juli 2027 och ta över uppgifter som i dag ligger hos miljöprövningsdelegationerna. Kontor ska finnas i Stockholm, Göteborg och Umeå. Riksdagens beredningsunderlag beskriver reformens inriktning mot en effektivare och mer likvärdig prövning. Rapportens analys tar denna organisatoriska förändring som bakgrund och skiljer den från förslag om ett vidare framtida mandat.",
           "sourceIds": [
-            "REG"
+            "RIX",
+            "LST"
           ]
         },
         {
-          "type": "h3",
-          "text": "Population och exponering"
+          "type": "p",
+          "text": "Intervjukälla I01 betonar att mer enhetlig handläggning behöver förenas med hänsyn till varierande lokala miljöförutsättningar. Analytiskt innebär detta att gemensamma rutiner bör gälla hur frågor identifieras, dokumenteras och prövas. Utfallet i två ärenden kan fortfarande skilja sig när deras sakförhållanden är olika. Uppföljning av likvärdighet behöver därför kontrollera för ärendenas innehåll.",
+          "sourceIds": [
+            "I01"
+          ]
         },
         {
           "type": "p",
-          "text": "Inför resultatredovisningen ska det anges vilka ärenden, processvägar och tidsperioder analysen avser. Alternativa prövningsspår får inte utan vidare behandlas som om de inträffar i samma ärende. En summering av registerposter är inte i sig en uppskattning av nationell samhällskostnad eller ett typiskt projekts kostnad."
+          "text": "Överföring av pågående ärenden skapar ett särskilt genomförandebehov. Kunskap om tidigare avgränsningar, kompletteringar och projektversioner behöver vara tillgänglig för den som tar över ärendet. Om organisationen ändras samtidigt som ansvar och IT-stöd är oklara kan samma sakfrågor behöva behandlas på nytt. Rapporten föreslår därför en särskild uppföljning av överlämning och kontinuitet under införandet.",
+          "sourceIds": [
+            "I01",
+            "I02",
+            "I05"
+          ]
         },
         {
-          "type": "note",
-          "title": "Avgränsning att fastställa",
-          "text": "Exponeringsbas, valda processvägar och berörda aktörer dokumenteras tillsammans med den nya mätningen. Resultatens giltighetsområde följer den avgränsningen."
+          "type": "p",
+          "text": "Åtgärdsregistret skiljer mellan 17 förslag inom det klassificerade huvudscenariot S1, en åtgärd för införandet och två förslag som förutsätter framtida mandat. Denna indelning bevaras genom analysen. Den gör det möjligt att prioritera genomförbara arbetssätt och samtidigt redovisa vilka bredare samordningsfrågor som behöver beredas av andra ansvariga.",
+          "sourceIds": [
+            "MYN"
+          ]
         }
       ]
     },
     {
       "id": "material",
       "number": "05",
+      "title": "Material och källvärdering",
       "part": "Material och metod",
-      "title": "Material, källor och spårbarhet",
-      "status": "draft",
-      "lead": "Ett underlag som går att följa tillbaka till sina delar.",
+      "status": "published",
+      "lead": "Tre typer av underlag bidrar med olika kunskap: strukturerade processbeskrivningar, modellskattningar och erfarenheter från intervjuer.",
+      "blocks": [
+        {
+          "type": "table",
+          "title": "Tabell 1. Underlagets omfattning",
+          "columns": [
+            "Underlag",
+            "Omfattning",
+            "Användning"
+          ],
+          "rows": [
+            [
+              "Riskregister",
+              "342 risker i sju delprocesser",
+              "Beskrivning, orsaker, konsekvenser och direkta nodkopplingar"
+            ],
+            [
+              "Kontrollregister",
+              "378 motåtgärder; 20 myndighetsdrivna",
+              "Tillämpning, mandat och kopplingar till risker"
+            ],
+            [
+              "Kontrollkopplingar",
+              "500 risk–kontrollpar; 633 riktade kopplingar",
+              "Vilka risker och bow tie-element en åtgärd avser"
+            ],
+            [
+              "Cosmic Rhino",
+              "341 risker; 21 avslutade Runs",
+              "Rangordning och absoluta modellmått"
+            ],
+            [
+              "Intervjumaterial",
+              "Fem dokument; sex medverkande personer",
+              "Mekanismer, erfarenheter, motexempel och genomförandevillkor"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Riskregistrets stabila ID används genom hela webbplatsen och rapporten. Det gör det möjligt att följa en slutsats från en process eller åtgärd till en enskild risk och vidare till dess dokumenterade källor. Kopplingarna beskriver avsedd relevans. De visar inte i sig att en kontroll är införd, att den fungerar eller att dess effekt är lika stor i alla kopplade situationer.",
+          "sourceIds": [
+            "REG"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Cosmic Rhino är en modellbaserad bedömning med relativ rangordning och absolut kalibrering. Körningen innehåller inte ett register över observerade inträffade händelser. Modellens bedömningar kan därför användas för att strukturera en prioritering, men behöver jämföras med empiriska ärendedata innan beloppen används som underlag för bindande ekonomiska beslut. Exporten anger uttryckligen att responsmodellen inte är validerad.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Intervjumaterialet består av anteckningar och sammanställningar med varierande återgivningsform. Några dokument innehåller svar skrivna i första person, medan andra sammanfattar intervjupersonens uppfattning. Rapporten skiljer därför mellan dokumentcitat och redaktionell sammanfattning. Citat återges som utdrag ur intervjuanteckningar med styckehänvisning, utan antagande om att de är ordagranna transkriptioner av inspelade samtal.",
+          "sourceIds": [
+            "I01",
+            "I02",
+            "I03",
+            "I04",
+            "I05"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Materialet har flera begränsningar. Det är litet och ändamålsvalt, och erfarenheterna omfattar olika branscher och typer av prövning. I två av dokumenten presenteras en tidigare rangordnings tre högsta risker före svaren. Det kan styra vad som uppmärksammas. Intervjuerna används därför för att pröva mekanismer och genomförbarhet, med särskild uppmärksamhet på motexempel, och inte för att statistiskt bekräfta Cosmic Rhinos rangordning.",
+          "sourceIds": [
+            "I04",
+            "I05"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "metod",
+      "number": "06",
+      "title": "Metod i huvuddrag",
+      "part": "Material och metod",
+      "status": "published",
+      "lead": "Prioriteringen bygger på jämförbara enheter, spårbara källor och en tydlig uppdelning mellan redovisade värden och sådant som behöver granskas.",
       "blocks": [
         {
           "type": "p",
-          "text": "Grundmaterialet består av riskregistret, processkartorna, källhänvisningarna och de dokumenterade kontrollkopplingarna. Ursprungliga motåtgärder skiljs från analytiskt sammanförda åtgärder och särskilt klassificerade myndighetsförslag.",
+          "text": "Arbetet har genomförts i fyra steg. Först har risker, kontrollkopplingar och processnoder matchats mellan webbplatsen och Cardinal med bevarade ID. Därefter har Cosmic Rhinos avslutade Runs och deras beroenden lästs mot körningens frysta omfattning. I det tredje steget har absoluta värden kontrollerats och granskningskrävande värden avskilts. Slutligen har de kvarvarande kostnadsvärdena rangordnats och analyserats tillsammans med process- och intervjumaterialet.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "För varje risk redovisas tillgänglig frekvens och kostnad per händelse. Medianen används i första hand på riskkorten eftersom den ger ett mer stabilt läge i de ofta sneda fördelningarna. Förväntad årskostnad använder däremot medelvärden, vilket följer av måttets definition. Rapporten beräknar därför aldrig en förlustmedian genom att multiplicera två medianer. De två statistikmåtten har skilda användningar och redovisas med egna benämningar.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "equation",
+          "formula": "Förväntad årskostnad = medelfrekvens per år × medelkostnad per händelse",
+          "caption": "Produkten används under antagandet att bedömningen av frekvens och kostnad per händelse är oberoende. Den matematiska formuleringen och begränsningarna finns i bilaga A.",
+          "id": "equation-1"
+        },
+        {
+          "type": "p",
+          "text": "Granskningen använder teknisk behörighet till absolut beräkning, fördelningarnas skevhet och ett antal uttryckliga storleksgränser. Ett medelvärde som överstiger medianen mer än tio gånger förs till granskning. Detsamma gäller mycket stora frekvenser och kostnader. Dessa gränser är redaktionella publiceringsval för denna utgåva, med syfte att undvika att oklara extremvärden styr huvudbudskapet. De bevisar inte att ett större värde är fel. Bilaga B visar exakt hur reglerna tillämpas.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "En granskning påverkar det berörda måttet. En tillgänglig median kan alltså stå kvar när medelvärdet inte används i årskostnaden. Samtliga ursprungliga medelvärden och medianer finns bevarade i dataexporten, tillsammans med orsaken till avgränsningen. Riskbeskrivningarna har även sökts efter belopp som skulle kunna ersätta en tveksam skattning. Ingen tydligt jämförbar monetär uppskattning har identifierats, varför inga sådana ersättningar görs i denna utgåva.",
+          "sourceIds": [
+            "REG",
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Monte Carlo-resultaten används endast för den fråga de faktiskt besvarar. Frekvensens kvantiler beskriver modellens osäkerhet om händelser per år. De tillgängliga Runs innehåller ingen gemensam monetär årsförlustfördelning för portföljen. Rapporten lägger därför inte till en sådan simulering. Fördjupningen beskriver vad som skulle krävas för att beräkna den och varför den inte behövs för att läsa huvudresultaten.",
+          "sourceIds": [
+            "CR"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "riskresultat",
+      "number": "07",
+      "title": "Resultat: kostnader och relativ sannolikhet",
+      "part": "Resultat",
+      "status": "published",
+      "lead": "Kostnadsrangordningen visar var en närmare ekonomisk granskning bör börja, inom den del av registret som har användbart kostnadsunderlag.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "De högsta publicerade kostnadsvärdena omfattar flera slags risker: hinder för att uppfylla Natura 2000- och artskyddskrav, rättigheter som inte är klara inför byggstart, otydliga yrkanden och motstridiga myndighetsyttranden. Gemensamt är att de kan påverka ett projekts möjlighet att komma vidare, kräva omfattande omarbetning eller binda resurser under en längre tid. Rapportens tolkning bygger på riskbeskrivningarna; modellbeloppen anger den relativa ekonomiska tyngden under angivna antaganden.",
+          "sourceIds": [
+            "REG",
+            "CR"
+          ]
+        },
+        {
+          "type": "figure",
+          "figureId": "risk-contributions",
+          "title": "Figur 2. De tio högsta publicerade årskostnaderna",
+          "caption": "Modellberäknat medelvärde, miljoner kronor per år i Sverige. Rangordningen omfattar 145 risker efter granskning och visar inte de uteslutna riskernas möjliga placering."
+        },
+        {
+          "type": "p",
+          "text": "Den högst placerade publicerade risken gäller att Natura 2000- eller artskyddskraven inte kan uppfyllas, R-B60-180-01. För denna risk är den bedömda medelfrekvensen 9,5 händelser per år och den bedömda medelkostnaden 1 021,2 miljoner kronor per händelse. Produkten blir 9 700,7 miljoner kronor per år. Siffrorna är nationella modellparametrar. De beskriver inte kostnaden för varje tillståndsärende och inte heller en sannolikhet för ett enskilt projekt.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Den ekonomiska innebörden skiljer sig mellan riskerna. Ett avslag kan göra en viss lokalisering eller utformning ogenomförbar, medan bristande dokumentation kan leda till ett mer avgränsat omtag. Ett högt modellvärde motiverar därför olika slags arbete: tidig prövning av projektets förutsättningar, förbättrad avgränsning av ansökan eller säkrare samordning mellan beslut. Den direkta kostnadsrangordningen behöver läsas tillsammans med riskens mekanism och de åtgärder som kan påverka den.",
+          "sourceIds": [
+            "REG"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Rangordning efter relativ sannolikhet finns kvar som ett separat perspektiv. En ofta återkommande risk med låg kostnad per händelse kan ligga högt där och lägre i kostnadsrangordningen. En ovanligare risk som stoppar ett stort projekt kan få motsatt placering. Dessa skillnader är förväntade när måtten besvarar olika frågor och bör inte döljas genom en gemensam poängskala.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "note",
+          "title": "Värden som kan förändra prioriteringen",
+          "text": "Flera stora råvärden har förts till granskning. Risker kopplade till fullständighetsbedömning, kompletteringsomgångar och handläggningstid hör till dem som kan få en annan ekonomisk placering efter sakgranskning. Intervjuernas beskrivningar av dessa förlopp förblir relevanta även när en publicerbar årskostnad saknas.",
+          "sourceIds": [
+            "CR",
+            "I03",
+            "I04",
+            "I05"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "processresultat",
+      "number": "08",
+      "title": "Resultat: processer och beslutskedjor",
+      "part": "Resultat",
+      "status": "published",
+      "lead": "Riskernas direkta processkoppling ger en överblick över var problem uppstår, medan följdpåverkan visar vilka senare steg som kan beröras.",
+      "blocks": [
+        {
+          "type": "figure",
+          "figureId": "process-coverage",
+          "title": "Figur 3. Risker med kostnadsunderlag per delprocess",
+          "caption": "Antal risker med publicerad förväntad årskostnad. Fullständiga nämnare redovisas i tabell 2."
+        },
+        {
+          "type": "table",
+          "title": "Tabell 2. Täckning och prioritering per delprocess",
+          "columns": [
+            "Process",
+            "Registerrisker",
+            "Kostnadsunderlag",
+            "Kostnadstopp 50"
+          ],
+          "rows": [
+            [
+              "B10",
+              "23",
+              "5",
+              "1"
+            ],
+            [
+              "B20",
+              "26",
+              "16",
+              "2"
+            ],
+            [
+              "B30",
+              "44",
+              "23",
+              "4"
+            ],
+            [
+              "B40",
+              "72",
+              "29",
+              "12"
+            ],
+            [
+              "B50",
+              "82",
+              "40",
+              "19"
+            ],
+            [
+              "B60",
+              "58",
+              "20",
+              "6"
+            ],
+            [
+              "B70",
+              "37",
+              "12",
+              "6"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "B50 innehåller flest risker i registret och flest i kostnadstopp 50. Det är förenligt med att sektorsspåren omfattar flera typer av beslut och rättigheter. Resultatet ger stöd för att pröva samordningen mellan spår, men antalet risker påverkas också av hur detaljerat varje delprocess har beskrivits. Ett omfattande processavsnitt får fler möjliga riskposter än ett kortfattat avsnitt. Antalen bör därför inte jämföras som om de vore observerade skadefrekvenser.",
+          "sourceIds": [
+            "REG",
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "B40:s vattenfrågor står för tolv av de kostnadsprioriterade riskerna. I dessa processer kan prövningen behöva hantera tekniska underlag, rättigheter och flera berörda intressen. Den ekonomiska prioriteringen bör användas för att välja konkreta ärendetyper där kostnadens mekanism går att följa. En fortsatt granskning bör exempelvis skilja kostnaden för en nödvändig utredning från den merkostnad som uppstår när behovet identifieras sent.",
+          "sourceIds": [
+            "REG"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "B70 beskriver villkor och beroenden nära genomförandet. Här kan ett projekt ha kommit långt i prövningen men fortfarande sakna ett beslut, en rättighet eller ett förstartsgodkännande. Denna del är viktig för uppföljningen eftersom en myndighets avslutade ärende inte alltid innebär att projektet kan börja byggas. Ett processmått som stannar vid beslutstidpunkten riskerar då att missa en del av den tid som är ekonomiskt relevant för företaget.",
+          "sourceIds": [
+            "REG",
+            "I03"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "I processkartorna markeras noder som är direkt kopplade till kostnadstopp 50. Besökaren kan även visa uttryckligen dokumenterad följdpåverkan. En sådan koppling innebär att riskbeskrivningen anger påverkan på en annan nod. Den utgör inte en uppskattning av hur ofta påverkan sprids eller hur stor den blir. Inga ytterligare nedströmskopplingar har konstruerats för att förstärka visualiseringen.",
+          "sourceIds": [
+            "REG"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fullstandighet",
+      "number": "09",
+      "title": "Fullständighet, avgränsning och sena krav",
+      "part": "Analys av återkommande förlopp",
+      "status": "published",
+      "lead": "När underlagsbehovet blir tydligt sent i processen kan merkostnaden bestå av både omarbete och förlorad tid.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Intervjukälla I03 beskriver ett ärende där företaget länge saknade besked om ansökan var komplett. Företaget hade fått en tidsuppgift som förutsatte fullständigt underlag, men uppfattade att tiden fram till denna bedömning låg utanför den praktiska prognosen. Berättelsen visar varför en tidsangivelse behöver ha en tydlig startpunkt och kompletteras med information om vad som återstår före denna punkt. Den angivna ärendehistoriken har inte kontrollerats mot en myndighetsakt i detta arbete.",
+          "sourceIds": [
+            "I03"
+          ]
+        },
+        {
+          "type": "quote",
+          "excerptId": "I03-13"
+        },
+        {
+          "type": "p",
+          "text": "I04 lägger större vikt vid kompletteringskravens relevans och omfattning än vid den formella tidsfristens start. Intervjuanteckningen beskriver hur bristande sakkunskap kan leda till fler frågor och hur företagets egen kompetens påverkar möjligheten att bedöma kraven. Detta ger en möjlig förklaring till att likartade processsteg kan upplevas mycket olika av olika företag. Det ger däremot inget mått på hur stor del av alla kompletteringar som är omotiverade.",
+          "sourceIds": [
+            "I04"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "I05 beskriver sent tillkommande inventeringar som behöver genomföras under en viss årstid. När tidsfönstret har passerat kan nästa möjliga undersökning ligga långt fram i tiden. Kostnaden ökar då i ett steg och kan omfatta både fortsatt kapitalbindning och omplanering av andra aktiviteter. En kontroll som identifierar ett säsongsberoende behov tidigt kan därför vara relevant även när själva undersökningskostnaden är begränsad.",
+          "sourceIds": [
+            "I05"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Dessa mekanismer talar för att fullständighetsgranskning bör vara samlad, preciserad och spårbar. MPM-05 avser en sådan granskning och MPM-06 avser tidig identifiering av säsongsberoende underlag. Åtgärderna behöver samordnas med sökandens underlagskontroll, C-SHARED-underlagskontroll. En gemensam redovisning av fråga, rättslig relevans, ansvarig och tidpunkt kan göra det lättare att skilja nya sakförhållanden från frågor som redan har behandlats.",
+          "sourceIds": [
+            "MYN",
+            "REG"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Det finns samtidigt legitima skäl att komplettera ett underlag när ny information kommer fram eller projektet ändras. Uppföljningen bör därför skilja kompletteringar efter orsak. Ett mål om färre kompletteringar utan denna uppdelning kan ge fel drivkrafter, till exempel att ofullständiga underlag godtas för tidigt. Ett bättre underlag visar hur ofta tidigare kända behov identifieras sent och vilken merkostnad just detta medför.",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "kompetens",
+      "number": "10",
+      "title": "Kompetens, kontinuitet och regional variation",
+      "part": "Analys av återkommande förlopp",
+      "status": "published",
+      "lead": "Tillgång till rätt kompetens och ett väl dokumenterat ärende kan minska personberoendet utan att den lokala sakbedömningen går förlorad.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "I02, I03 och I04 beskriver skillnader mellan regioner och handläggare. Skillnaderna gäller både tidsåtgång, framdrift och vilka frågor som ställs. I03 återger samtidigt ett annat ärende med tydligare återkoppling och en upplevelse av god kompetens. Det positiva exemplet är relevant eftersom det visar att respondenten skiljer mellan arbetssätt inom samma breda system. Underlaget ger anledning att undersöka variationens orsaker, men medger ingen fördelning av ansvar mellan bemanning, ärendekomplexitet och organisation.",
+          "sourceIds": [
+            "I02",
+            "I03",
+            "I04"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "I04 beskriver ett fall där handläggningen enligt intervjupersonen inte påbörjades förrän efter ett år på grund av personalbrist. En väl förberedd ansökan kan begränsa vissa omtag, medan väntan på tillgänglig handläggare kräver andra åtgärder. Det är därför viktigt att skilja kötid från aktiv handläggning och att ge båda delarna en tydlig plats i uppföljningen.",
+          "sourceIds": [
+            "I04"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Vid byte av handläggare behöver tidigare ställningstaganden kunna förstås och prövas i sitt sammanhang. I05 beskriver hur frågor som verksamhetsutövaren uppfattat som avklarade kan aktualiseras igen efter ett ansvarsbyte. En dokumenterad överlämning bör därför omfatta avgränsningar, identifierade osäkerheter, underlagets version och skälen till tidigare bedömningar. Den bör också ange vilka frågor som fortfarande är öppna.",
+          "sourceIds": [
+            "I05"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Kontrollerna MPM-08, MPM-10 och MPM-14 avser specialistfördelning, spårbar ärendeakt respektive överlämnande. Deras roller kompletterar varandra: kapacitet avgör om någon kan arbeta med ärendet, kompetens påverkar vilka frågor som behöver utredas och dokumentation gör arbetet överförbart. En insats bör därför utformas som ett sammanhängande arbetssätt med tydliga ansvar, snarare än en fristående checklista som saknar tid och bemanning för att användas.",
+          "sourceIds": [
+            "MYN"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Intervjukälla I01 pekar på behovet att förena enhetlig handläggning med sakligt motiverade lokala skillnader. I02 understryker värdet av lokalkännedom. Dessa synpunkter ger ett viktigt villkor för nationell specialisering: den behöver ge handläggaren tillgång till både generell ämneskunskap och relevant platsinformation. Ett standardiserat underlag kan stödja denna kombination om det lämnar utrymme för att dokumentera de lokala förhållandena.",
+          "sourceIds": [
+            "I01",
+            "I02"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "beroenden",
+      "number": "11",
+      "title": "Parallella beslut och kostnader som följer av tid",
+      "part": "Analys av återkommande förlopp",
+      "status": "published",
+      "lead": "För ett projekt med flera nödvändiga beslut bestäms möjlig byggstart ofta av det sist färdiga villkoret.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Processkartorna visar flera förlopp där miljöprövningen löper parallellt med planläggning, sektorsbeslut eller rättighetsfrågor. Om ett nödvändigt spår blir klart senare än de andra kan förberedda resurser och beslut få begränsat värde under väntetiden. Riskerna behöver därför följas genom hela beslutskedjan, med särskild uppmärksamhet på de steg som hindrar genomförande även när andra ärenden är avslutade.",
+          "sourceIds": [
+            "REG"
+          ]
+        },
+        {
+          "type": "equation",
+          "formula": "Tidigaste möjliga start ≈ max(tidpunkt för beslut 1, …, tidpunkt för beslut k)",
+          "caption": "Förenklad beskrivning av en grind där alla k villkor måste vara uppfyllda. Sambandet används för att förklara processen; rapporten har inte beräknat en projektspecifik tidplan.",
+          "id": "equation-2"
+        },
+        {
+          "type": "p",
+          "text": "I03 beskriver kopplingar mellan tillståndens rättsliga status, tilldelning av eleffekt och villkor för investeringsstöd. Om processerna har olika tidslogik kan en försening i prövningen påverka förutsättningarna för finansiering eller anslutning. Rapporten behandlar detta som en beskriven riskmekanism i ett företags erfarenhet. Den fastställer varken ett visst stödutfall eller en generell regel om hur nätkapacitet fördelas.",
+          "sourceIds": [
+            "I03"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "I05 beskriver större projekt där flera prövningar och överklaganden behöver hanteras innan genomförandet kan fortsätta. En kostnadsbedömning bör här skilja mellan en gemensam försening och flera separata förseningar. Om två hinder löper samtidigt kan deras fulla tidskostnader överlappa. Om det ena hindret gör att ett säsongsfönster missas kan följden i stället bli större än summan av de ursprungliga handläggningstiderna.",
+          "sourceIds": [
+            "I05",
+            "REG"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "C-SHARED-tillstandsmatris avser att samordna en tillståndsmatris per åtgärd. MPM-04 avser överenskomna gränssnitt med andra beslutsorgan. Dessa kontroller kan ge en gemensam bild av vilka beslut som återstår, vilka underlag som delas och när olika ansvariga behöver agera. Deras nytta behöver bedömas mot konkreta projektförlopp, eftersom en dokumenterad matris ensam inte förkortar en rättsligt nödvändig prövning.",
           "sourceIds": [
             "REG",
             "MYN"
@@ -170,453 +674,2584 @@
         },
         {
           "type": "p",
-          "text": "Den kvantitativa resultatdelen ska använda en angiven mätutgåva från Cardinal. En gemensam körningskedja, enheter och tidsperiod kontrolleras före införandet. Ofullständig täckning redovisas med antal och saknade poster. Källfilerna bevaras separat från den offentliga presentationen.",
+          "text": "En fortsatt ekonomisk analys bör knyta kostnader till identifierade förseningsperioder och kostnadsslag. Därigenom kan kapitalbindning, omarbete och utebliven produktion redovisas utan att samma belopp kopieras mellan flera riskposter. Detta är en förutsättning för en meningsfull totalberäkning och för att senare kontrollscenarier ska kunna jämföras på samma grund.",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "atgardsresultat",
+      "number": "12",
+      "title": "Resultat: motåtgärdernas räckvidd",
+      "part": "Åtgärder och genomförande",
+      "status": "published",
+      "lead": "En åtgärds värde beror på vilka förlopp den påverkar, hur den genomförs och om den tillför något utöver befintliga arbetssätt.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Kontrollregistret innehåller 378 motåtgärder och 500 unika kopplingar mellan risk och kontroll. En del åtgärder är knutna till en enskild risk, medan gemensamma åtgärder möter återkommande orsaker i flera risker. De 633 riktade kopplingarna anger var i en risks bow tie en åtgärd är avsedd att verka: på orsak, händelse eller konsekvens. Denna uppdelning gör det möjligt att undersöka hur åtgärder kompletterar varandra.",
           "sourceIds": [
-            "MET"
+            "REG"
           ]
         },
         {
-          "type": "p",
-          "text": "Intervjumaterialet får ett eget källregister. Publicerade utdrag länkas till en bestämd källa och position i materialet. Identifierande uppgifter och fullständiga transkript behöver inte publiceras för att de godkända utdragen ska kunna granskas inom projektet."
-        }
-      ]
-    },
-    {
-      "id": "kvantitativ-metod",
-      "number": "06",
-      "part": "Material och metod",
-      "title": "Kvantitativ metod och riskmått",
-      "status": "draft",
-      "lead": "Rang, sannolikhet, frekvens och kostnad svarar på olika frågor.",
-      "blocks": [
-        {
-          "type": "h3",
-          "text": "Relativ rangordning och absoluta mått"
-        },
-        {
-          "type": "p",
-          "text": "BTL-rangordningen beskriver relativa bedömningar. BTL-poängen kan inte direkt läsas som en sannolikhet i procent. Absoluta mått redovisas endast när resultatet har giltig kalibreringsproveniens och den aktuella risken är berättigad till absolut skattning. Modellkalibrering innebär inte i sig empirisk validering.",
-          "sourceIds": [
-            "MET"
-          ]
-        },
-        {
-          "type": "h3",
-          "text": "Förväntad förlust"
-        },
-        {
-          "type": "p",
-          "text": "För en modell med högst en relevant händelse under perioden kan förväntad förlust uttryckas som händelsens sannolikhet multiplicerad med förväntad kostnad givet händelsen. Om måttet i stället är en händelsefrekvens används frekvens, tidsperiod och kostnad per händelse. En produkt av medelvärden kräver att modellens beroendeantaganden motiverar det. Exporterad gemensam förlustberäkning kan därför behöva användas i stället."
-        },
-        {
-          "type": "note",
-          "title": "Faktisk mätkonfiguration återstår",
-          "text": "Modell, bedömningsfrågor, ankare, kalibrering, antal bedömningar, period, valuta och avvikande fall redovisas när den nya mätningen har levererats. Inga sådana uppgifter fylls i med antaganden."
-        }
-      ]
-    },
-    {
-      "id": "osakerhetsmetod",
-      "number": "07",
-      "part": "Material och metod",
-      "title": "Monte Carlo och osäkerhet",
-      "status": "draft",
-      "lead": "Fördelningen visar möjliga utfall inom modellens antaganden.",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "En Monte Carlo-analys använder upprepade dragningar för att beskriva en fördelning av utfall. För rapportens kostnadsfigurer krävs monetära förlustutfall för den angivna perioden. Simulerade sannolikheter eller konsekvenser var för sig är inte automatiskt en fördelning av förluster."
-        },
-        {
-          "type": "p",
-          "text": "Medianen, P50, ligger i mitten av den simulerade fördelningen. P95 är den nivå som 95 procent av de simulerade utfallen ligger vid eller under. P95 är inte ett löfte om framtida kostnad, och summan av enskilda riskers P95 är inte portföljens P95. Den samlade fördelningen beror också på samband mellan riskerna."
-        },
-        {
-          "type": "p",
-          "text": "Redovisningen ska skilja mellan variation i möjliga händelseutfall och osäkerhet om modellens parametrar. Känslighetsanalysen beskriver vilka antaganden som driver resultaten. Metod, beroendemodell och antal simuleringar anges vid respektive figur."
-        },
-        {
           "type": "figure",
-          "figureId": "portfolio-distribution",
-          "title": "Samlad förlustfördelning",
-          "caption": "Figur 7.1. Fördelning, kvantiler och täckning för den fastställda exponeringsbasen."
-        }
-      ]
-    },
-    {
-      "id": "intervjumetod",
-      "number": "08",
-      "part": "Material och metod",
-      "title": "Intervjuernas urval och analys",
-      "status": "awaiting_interviews",
-      "lead": "Erfarenheter ska hjälpa oss att förstå mekanismer, variation och genomförbarhet.",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Intervjuanalysen ska beskriva hur deltagarna valts, vilka roller och erfarenheter som täcks, hur samtalen genomförts och hur materialet har bearbetats. Urvalets storlek, bortfall och möjliga snedvridningar redovisas först när materialet finns tillgängligt."
-        },
-        {
-          "type": "h3",
-          "text": "Tematisk analys med motexempel"
+          "figureId": "authority-reach",
+          "title": "Figur 4. Myndighetsåtgärder med störst dokumenterad räckvidd",
+          "caption": "Antal olika kopplade risker. Måttet beskriver åtgärdens avsedda täckning och har inte omräknats till ekonomisk besparing."
         },
         {
           "type": "p",
-          "text": "Utsagor kan kodas mot gemensamma teman, processdelar, risker och åtgärder. Samma tema kan omfatta både återkommande erfarenheter och tydliga skillnader mellan aktörer. Analysen ska söka efter motexempel och skilja enskilda erfarenheter från bredare mönster i det faktiskt insamlade materialet."
-        },
-        {
-          "type": "p",
-          "text": "Intervjuer kan ge stöd åt en mekanism eller ifrågasätta en modellförutsättning. De används inte ensamma för att fastställa sannolikheter, kausala effekter eller hur vanligt ett problem är i hela populationen. Antal omnämnanden blir inte ett representativt frekvensmått utan ett motiverat urval."
-        },
-        {
-          "type": "note",
-          "title": "Citat och anonymisering",
-          "text": "Exakta citat, attribution och anonymiseringsnivå ska granskas före publicering. Varje utdrag bevarar sin källposition. Förkortningar eller redigeringar får inte ändra utsagans innebörd."
-        }
-      ]
-    },
-    {
-      "id": "riskresultat",
-      "number": "09",
-      "part": "Resultat",
-      "title": "Riskernas sannolikhet och kostnad",
-      "status": "awaiting_measurement",
-      "lead": "Den kvantitativa riskbilden redovisas i flera perspektiv.",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Resultatkapitlet ska jämföra relativ rangordning, absoluta händelsemått, kostnad vid händelse och förväntad förlust. Det gör det möjligt att skilja vanliga men mindre kostsamma händelser från sällsynta händelser med stora konsekvenser."
-        },
-        {
-          "type": "figure",
-          "figureId": "risk-contributions",
-          "title": "Riskernas bidrag till förväntad förlust",
-          "caption": "Figur 9.1. Rangordnade bidrag med angiven mättäckning. Figuren fylls med den nya mätningen."
-        },
-        {
-          "type": "integration"
-        }
-      ]
-    },
-    {
-      "id": "processresultat",
-      "number": "10",
-      "part": "Resultat",
-      "title": "Var i processerna finns exponeringen?",
-      "status": "awaiting_measurement",
-      "lead": "Riskvärdena placeras i processernas sammanhang.",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Processanalysen ska visa hur de kvantifierade riskerna fördelas över processdelar och vilka noder som berörs. Samma risk hålls samman även om flera noder är kopplade. Upprepade nodkopplingar ska inte ge upphov till dubblerade förlustbelopp."
-        },
-        {
-          "type": "figure",
-          "figureId": "process-contributions",
-          "title": "Förväntad förlust per process",
-          "caption": "Figur 10.1. Processfördelning inom mätningens exponeringsbas."
-        },
-        {
-          "type": "integration"
-        }
-      ]
-    },
-    {
-      "id": "myndighetsatgarder",
-      "number": "11",
-      "part": "Resultat",
-      "title": "Myndighetens åtgärder och handlingsutrymme",
-      "status": "awaiting_measurement",
-      "lead": "Avsedda riskkopplingar och uppmätta effekter behöver redovisas var för sig.",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Myndighetsförslagen är kategoriserade efter ansvar och scenario. Underlagets huvudscenario hålls isär från införandeåtgärder och åtgärder som förutsätter ett framtida mandat. Klassificeringen är en del av dokumentunderlaget; den ersätter inte bedömning av faktiskt mandat eller genomförande.",
+          "text": "MPM-01, dokumenterad processvägledning, är kopplad till elva risker och MPM-02, tidig kontroll av behörighet och prövningsram, till tio. Den särskilda införandeåtgärden MPM-T01 når nio risker. En bred räckvidd kan göra en åtgärd relevant för gemensam utveckling, men kräver också att åtgärdens tillämpning preciseras i varje situation. Antalet riskkopplingar kan inte användas som ersättning för en effektbedömning.",
           "sourceIds": [
             "MYN"
           ]
         },
         {
           "type": "p",
-          "text": "En åtgärd kan vara kopplad till flera risker, orsaker eller konsekvenser. Antalet sådana kopplingar visar räckvidd i registret. Det visar inte hur stor reduktionen blir eller om åtgärden är genomförd. Effektresultaten ska därför redovisas tillsammans med kopplingarnas villkor och mätningens begränsningar."
+          "text": "Kostnadstopp 50 fångar en begränsad del av myndighetsåtgärdernas riskkopplingar. Det beror bland annat på att många risker med instabila medelvärden inte ingår i kostnadsrangordningen. En åtgärd utan koppling till topp 50 kan därför fortfarande vara viktig för återkommande problem som intervjuerna beskriver. Rapportens rekommendationer väger samman ekonomisk prioritering, dokumenterad mekanism, räckvidd och genomförbarhet.",
+          "sourceIds": [
+            "CR",
+            "MYN"
+          ]
         },
         {
-          "type": "highlight",
-          "text": "En åtgärd kan adressera flera risker. Den samlade effekten behöver bedömas med hänsyn till överlapp och sammanhang.",
+          "type": "p",
+          "text": "Cosmic Rhino innehåller 998 effektposter för 377 kontroller, fördelade över frekvens och konsekvens. Dessa värden ligger på modellens latenta skala. De bevaras i kontrollernas analysflik och kan följas till risk och Run, men kan inte direkt läsas som procentuell eller monetär reduktion. Den återstående kontrollen finns kvar i registret med sina kopplingar även när den saknar motsvarande effektpost i körningen.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Kontrollernas införandekostnad behöver ett eget underlag. De tekniska kostnadsfält som användes vid överföringen till Cardinal innehåller nollvärden där en verklig kostnad inte var känd. Rapporten behandlar dessa som okänd kostnad. Någon nettonytta eller avkastning beräknas därför inte från dessa fält. Det minskar risken att åtgärder ser kostnadsfria ut enbart på grund av ett importformat.",
+          "sourceIds": [
+            "CODE",
+            "MYN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "genomforande",
+      "number": "13",
+      "title": "Genomförande inom olika mandat",
+      "part": "Åtgärder och genomförande",
+      "status": "published",
+      "lead": "Ansvar och tillämpningsområde behöver vara tydliga innan en åtgärd ges ett effektmål.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "I huvudscenariot bör åtgärderna börja där den handläggande organisationen har direkt rådighet: hur en ansökan tas emot, hur underlagsbehov identifieras, hur ärendet planeras och hur beslut kvalitetssäkras. Gemensamma rutiner bör ange vad som ska dokumenteras och vem som ansvarar för att arbetet förs vidare. Det bör även finnas en väg för att avgöra frågor som kräver särskild juridisk eller teknisk kompetens.",
+          "sourceIds": [
+            "MYN"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Samlad fullständighetsgranskning och aktiv tidsplanering kan genomföras som ett gemensamt arbetssätt. Den första delen klargör kvarstående underlagsbehov, medan den andra ger en plan för ärendets fortsättning och förnyad återkoppling om planeringen ändras. MPM-05 och MPM-07 bör därför prövas tillsammans i ett avgränsat ärendeurval, med dokumentation av utgångsläge och faktisk användning.",
+          "sourceIds": [
+            "MYN"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Införandet av en ny organisation behöver följas separat. MPM-T01 avser verifierad överföring vid myndighetsstart. Den kan konkretiseras i en kontroll av att ärendeakt, ansvarig, planering, frister och öppna sakfrågor har följt med. Bedömningen av denna åtgärd bör avse överföringsförloppet och inte sammanblandas med den långsiktiga effekten av andra rutiner.",
           "sourceIds": [
             "MYN",
-            "MET"
+            "I01",
+            "I05"
           ]
         },
         {
-          "type": "integration"
-        }
-      ]
-    },
-    {
-      "id": "scenarier",
-      "number": "12",
-      "part": "Resultat",
-      "title": "Riskkostnad med och utan valda åtgärder",
-      "status": "awaiting_measurement",
-      "lead": "En jämförelse som beaktar överlapp och den valda kombinationen.",
-      "blocks": [
-        {
           "type": "p",
-          "text": "Scenarierna ska jämföra samma riskpopulation och period med respektive utan den angivna kombinationen av kontroller. Samlad reduktion får inte beräknas genom att okritiskt summera separata åtgärdseffekter. Den faktiska scenariomodellens behandling av överlapp och beroenden redovisas."
-        },
-        {
-          "type": "figure",
-          "figureId": "control-scenario",
-          "title": "Referensscenario och myndighetsscenario",
-          "caption": "Figur 12.1. Förväntad förlust före och efter en exporterad, definierad åtgärdskombination."
-        },
-        {
-          "type": "p",
-          "text": "Kvarvarande risk och modellerad reduktion hålls isär från åtgärdernas kostnad. Om kostnadsunderlag saknas kan nettovinst eller lönsamhet inte fastställas. Tekniska nollvärden för ej angivna kontrollkostnader behandlas som okända."
-        },
-        {
-          "type": "integration"
-        }
-      ]
-    },
-    {
-      "id": "intervjufynd",
-      "number": "13",
-      "part": "Resultat",
-      "title": "Intervjufynd: erfarenheter och mekanismer",
-      "status": "awaiting_interviews",
-      "lead": "Teman, skillnader och konkreta erfarenheter ur det kommande intervjumaterialet.",
-      "blocks": [
-        {
-          "type": "note",
-          "title": "Materialet har ännu inte införts",
-          "text": "Detta kapitel kommer att utvecklas efter tematisk analys av det insamlade materialet. Inga intervjuutsagor, deltagare eller teman har konstruerats i arbetsutgåvan."
-        },
-        {
-          "type": "p",
-          "text": "Resultaten ska presenteras som sammanhängande teman med tydliga källbelägg. Skillnader mellan roller och processammanhang synliggörs där underlaget tillåter det. Citat väljs för att belysa analysen, inte som ersättning för den."
-        },
-        {
-          "type": "integration"
-        }
-      ]
-    },
-    {
-      "id": "samlad-analys",
-      "number": "14",
-      "part": "Analys och diskussion",
-      "title": "När mätning och erfarenhet möts",
-      "status": "awaiting_integration",
-      "lead": "Vad förstärks, vad motsägs och vad återstår att undersöka?",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Den samlade analysen ska pröva kvantitativa resultat mot intervjufynd och dokumentunderlag. När olika underlag pekar åt samma håll redovisas vad samstämmigheten faktiskt gäller. När de skiljer sig åt undersöks alternativa förklaringar, exempelvis olika exponering, roller, tidsperspektiv eller begreppsanvändning."
-        },
-        {
-          "type": "table",
-          "title": "Analysmatris som fylls efter mätning och intervjuer",
-          "columns": [
-            "Mätresultat",
-            "Intervjutema och källbelägg",
-            "Relation",
-            "Tolkning och begränsning"
-          ],
-          "rows": [
-            [
-              "Inväntas",
-              "Inväntas",
-              "Samstämmighet / skillnad / lucka",
-              "Formuleras från det samlade underlaget"
-            ]
+          "text": "Förslagen MPM-F01 och MPM-F02 gäller ett vidare samlat ansvar för avgränsning respektive kontaktpunkt mellan tillståndsspår. I underlaget är de uttryckligen klassificerade som framtida mandat. De kan användas för fortsatt beredning och jämförelse, men deras riskreduktion bör inte räknas in som om åtgärderna redan var genomförbara inom huvudscenariot.",
+          "sourceIds": [
+            "MYN"
           ]
         },
         {
-          "type": "integration"
-        }
-      ]
-    },
-    {
-      "id": "kanslighet",
-      "number": "15",
-      "part": "Analys och diskussion",
-      "title": "Känslighet, osäkerhet och begränsningar",
-      "status": "awaiting_integration",
-      "lead": "Vilka slutsatser håller när antagandena ändras?",
-      "blocks": [
-        {
           "type": "p",
-          "text": "Analysen ska skilja osäkerhet i indata från strukturella begränsningar i modellen. Täckning, saknade mätningar, ankarnas relevans, beroenden och exponeringsbas kan påverka resultaten. Smala intervall eller en jämn fördelningskurva bevisar inte att modellen är väl kalibrerad mot utfall."
-        },
-        {
-          "type": "p",
-          "text": "Intervjuerna har egna begränsningar: urval, minnesbilder, rollperspektiv och hur frågor ställts. Rapporten ska diskutera hur dessa kan påverka tolkningarna och vilka aktörer eller erfarenheter som saknas. Påståenden om överförbarhet knyts till det faktiska materialet."
-        },
-        {
-          "type": "integration"
+          "text": "Företagens förberedelser är en viktig del av genomförandet. Tydliga projektversioner, genomarbetade ansökningar och en ordnad tillståndsmatris kan underlätta handläggningen. Intervjuerna visar samtidigt att denna förmåga varierar och att goda förberedelser inte eliminerar myndigheters kapacitetsproblem. Utvärderingen bör därför skilja mellan förbättringar i sökandens underlag och förändringar i handläggningens förutsättningar.",
+          "sourceIds": [
+            "REG",
+            "I04",
+            "I05"
+          ]
         }
       ]
     },
     {
       "id": "diskussion",
-      "number": "16",
-      "part": "Analys och diskussion",
-      "title": "Diskussion: prioriteringar och avvägningar",
-      "status": "awaiting_integration",
-      "lead": "Vad betyder resultaten för en mer förutsägbar prövning?",
+      "number": "14",
+      "title": "Diskussion och tolkning",
+      "part": "Bedömning och rekommendationer",
+      "status": "published",
+      "lead": "Prioriteringen behöver tåla att både modellvärden och praktiska erfarenheter innehåller osäkerhet.",
       "blocks": [
         {
           "type": "p",
-          "text": "Diskussionen ska behandla varför vissa risker eller åtgärder framstår som särskilt angelägna, vilka alternativa tolkningar som finns och hur handlingsutrymmet påverkar prioriteringen. Modellens storleksordningar, intervjupersonernas erfarenheter och åtgärdernas genomförandeförutsättningar behöver vägas samman utan att blandas ihop."
+          "text": "En styrka i materialet är att riskerna kan följas från beskrivning och processnod till en möjlig motåtgärd. Detta gör det möjligt att formulera prövbara förbättringsförslag. I stället för att utgå från en allmän önskan om snabbare prövning kan man avgränsa exempelvis sena utredningsbehov, oklara överlämningar eller väntan på ett parallellt beslut och undersöka vilken åtgärd som kan påverka just detta förlopp.",
+          "sourceIds": [
+            "REG"
+          ]
         },
         {
           "type": "p",
-          "text": "En rekommendation kan påverkas av fler omständigheter än förväntad förlust: osäkerhet, resursbehov, fördelning av nytta och kostnad, mandat samt möjlighet att följa upp genomförandet. De kriterier som faktiskt används ska anges öppet."
+          "text": "Den största kvantitativa begränsningen är känsligheten för fördelningarnas svansar. Ett medelvärde kan bli stort även när medianen är måttlig, och produkten av två medelvärden kan förstärka detta. De publiceringsgränser som används här minskar extremvärdenas påverkan på huvudrangordningen men skapar samtidigt ett selekterat urval. Resultatet är därför inte en fullständig ekonomisk ordning för alla 342 risker. Att fortsätta granska de bortvalda värdena är en central del av det fortsatta arbetet.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
         },
         {
-          "type": "integration"
+          "type": "p",
+          "text": "Den kvalitativa analysen visar varför en kostnadslista behöver kompletteras med processkunskap. Otydlig fullständighet, kompetensbrist och sena kompletteringar kan återkomma på flera platser och påverka olika risker. En åtgärd som förbättrar ett sådant gemensamt arbetssätt kan vara relevant även om den enskilda kopplade riskens kostnad ännu är odefinierad. Rapporten använder dessa samband som argument för att pröva åtgärden, utan att tilldela den en obestyrkt besparing.",
+          "sourceIds": [
+            "I03",
+            "I04",
+            "I05"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Intervjuerna innehåller också skäl till försiktighet. I04 beskriver ett allvarligt fall med en detaljplan som inte var klar, men uppger att detta endast inträffat vid ett tillfälle i den egna erfarenheten. I03 beskriver både ett ärende med stor osäkerhet och ett annat med tydlig framdrift. Dessa uppgifter visar variation som en samlad modell behöver kunna förklara. De stödjer inte ett antagande om att varje process fungerar dåligt eller att samma risk alltid är viktigast.",
+          "sourceIds": [
+            "I03",
+            "I04"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Flera personer bedömer att en nationell organisation kan ge bättre förutsättningar för kompetens och enhetlighet, samtidigt som de ser risker med övergången. Organisationens utformning behöver därför värderas genom det arbete den möjliggör: tillgång till specialiststöd, fungerande överlämningar och förutsägbar kontakt med sökanden. Sådana frågor kan följas från införandet och ge tidig information om vilka rutiner som behöver justeras.",
+          "sourceIds": [
+            "I01",
+            "I02",
+            "I04",
+            "I05"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Kostnader behöver slutligen relateras till prövningens uppgift. En ekonomiskt betungande utredning kan vara motiverad av en väsentlig miljörisk. Analysen bör därför söka den merkostnad som kan undvikas med bättre framförhållning, relevanta krav eller tydligare ansvar, samtidigt som det underlag som behövs för en rättssäker sakprövning bevaras. Detta kräver ärendenära bedömning och kan inte avgöras genom ett modellbelopp ensamt.",
+          "sourceIds": []
         }
       ]
     },
     {
       "id": "slutsatser",
-      "number": "17",
-      "part": "Slutsatser",
-      "title": "Slutsatser och rekommendationer",
-      "status": "awaiting_integration",
-      "lead": "Prioriteringar som går att följa tillbaka till analysen.",
+      "number": "15",
+      "title": "Slutsatser",
+      "part": "Bedömning och rekommendationer",
+      "status": "published",
+      "lead": "Underlaget ger en grund för riktade förbättringar och visar samtidigt var den ekonomiska bedömningen behöver fördjupas.",
       "blocks": [
         {
-          "type": "note",
-          "title": "Slutsatser fastställs efter analys",
-          "text": "Här formuleras rapportens belagda slutsatser och avgränsade rekommendationer. Varje rekommendation ska ange vilket problem den möter, vilket underlag den vilar på och vilka villkor eller osäkerheter som kvarstår."
+          "type": "p",
+          "text": "Den första slutsatsen är att prioriteringen bör följa projektets samlade beslutskedja. Sektorsspår, vattenfrågor och förutsättningar inför byggstart har en tydlig plats i det kostnadsprioriterade urvalet. En förbättring av en enskild myndighets handläggning kan få begränsad betydelse om ett annat nödvändigt steg fortsätter att fördröja genomförandet.",
+          "sourceIds": [
+            "REG",
+            "CR"
+          ]
         },
         {
-          "type": "integration"
+          "type": "p",
+          "text": "Den andra slutsatsen är att tidig avgränsning och kontinuitet bör ges hög praktisk prioritet. Intervjuerna beskriver flera förlopp där sena krav, oklar fullständighet och återkommande frågor leder till omarbete eller väntan. Kontroller för samlad granskning, dokumenterad ärendeakt och tydlig överlämning har därför en begriplig verkningsmekanism som kan prövas och följas upp.",
+          "sourceIds": [
+            "I03",
+            "I04",
+            "I05",
+            "MYN"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Den tredje slutsatsen är att kostnadsrangordningen behöver användas med sin täckning synlig. Den publicerade topp 50-listan är en ekonomisk prioritering inom 145 risker med användbara årsmedelvärden enligt utgåvans regler. De övriga riskerna finns kvar med beskrivningar, kopplingar och tillgängliga medianer. Deras betydelse kan inte bedömas genom frånvaron av ett belopp.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Den fjärde slutsatsen är att åtgärdernas räckvidd och effekt behöver hållas isär. Registret ger ett rikt underlag för vilka risker en åtgärd kan möta. Det räcker för att välja pilotinsatser och formulera effektfrågor. För att rangordna kontroller efter ekonomisk nytta behövs dessutom jämförbara scenarier, faktiska införandekostnader och en hantering av överlapp.",
+          "sourceIds": [
+            "REG",
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Den femte slutsatsen gäller mätningens fortsatta utveckling. En begriplig presentation bör utgå från frekvens, kostnad per händelse och förväntad årskostnad. Mer avancerad osäkerhetsanalys bör tillföras när den besvarar en bestämd fråga och kan stödjas av ett jämförbart underlag. För denna utgåva räcker de exporterade parameterfördelningarna för att visa varför vissa medelvärden behöver granskas.",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "rekommendationer",
+      "number": "16",
+      "title": "Rekommendationer",
+      "part": "Bedömning och rekommendationer",
+      "status": "published",
+      "lead": "Börja med avgränsade arbetssätt som har tydliga riskkopplingar och kan följas med ärendedata.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Svenskt Näringsliv bör använda underlaget för att samla berörda aktörer kring ett begränsat antal förbättringsfrågor. För varje insats bör det finnas en uttalad riskmekanism, en ansvarig för genomförandet och ett underlag som visar vad som räknas som förändring. En sådan avgränsning gör det möjligt att skilja effekten av arbetssättet från skillnader i vilka ärenden som råkar behandlas under en viss period.",
+          "sourceIds": []
+        },
+        {
+          "type": "table",
+          "title": "Tabell 3. Föreslagen inriktning för det första förbättringsarbetet",
+          "columns": [
+            "Prioritet",
+            "Arbetssätt och kopplade kontroller",
+            "Vad som bör följas"
+          ],
+          "rows": [
+            [
+              "1",
+              "Samlad fullständighetsgranskning och tidiga säsongsbehov: MPM-05, MPM-06",
+              "Tid till första samlade besked; sena kända behov; omarbete"
+            ],
+            [
+              "2",
+              "Kontinuitet och spårbar överlämning: MPM-10, MPM-14, MPM-T01",
+              "Andel kompletta överlämningar; återöppnade frågor och skäl"
+            ],
+            [
+              "3",
+              "Aktiv tidsplanering och specialiststöd: MPM-07, MPM-08",
+              "Kötid, aktiv tid, prognosavvikelse och tillgång till rätt kompetens"
+            ],
+            [
+              "4",
+              "Gränssnitt och förutsättningar för byggstart: MPM-04, C-SHARED-tillstandsmatris",
+              "Väntan mellan beslut; sista kvarstående villkor; överlappande underlag"
+            ],
+            [
+              "5",
+              "Riktad sakgranskning av stora kostnadsvärden",
+              "Ärendevolym, kostnadsslag, fördelningssvans och möjlig dubbelräkning"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Prioritetsordningen i tabellen är en samlad rekommendation, grundad på kopplingarnas innehåll och intervjuernas återkommande mekanismer. Den är inte en beräknad rangordning av åtgärdernas avkastning. Den ekonomiska risklistan bör användas för att välja vilka ärendetyper och riskförlopp som ingår i varje pilot, samtidigt som ett urval av de granskningmarkerade riskerna tas med.",
+          "sourceIds": [
+            "REG",
+            "MYN",
+            "I03",
+            "I04",
+            "I05"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Den första insatsen bör dokumentera ett gemensamt besked om vilka underlag som återstår och varför de behövs. För frågor med ett säsongsfönster bör beskedet även ange när underlaget kan tas fram. Ett avgränsat piloturval gör det möjligt att kontrollera om arbetssättet faktiskt används och om sena kända behov minskar. Det bör också följas om kostnader eller arbete flyttas till ett tidigare skede utan att den totala belastningen minskar.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "Den andra insatsen bör ge varje överlämnat ärende en sammanhållen dokumentation av projektversion, tidigare avgränsningar, öppna frågor och nästa steg. Under organisationsövergången bör en mottagande ansvarig verifiera att detta underlag går att använda. Avvikelser kan då rättas innan de leder till nya frågor till sökanden. Uppföljningen bör pröva om färre frågor behöver tas om och om handläggaren snabbare kan arbeta vidare.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "Den tredje och fjärde insatsen bör knyta planeringen till projektets beslutskedja. En tidplan behöver visa både myndighetens egna aktiviteter och identifierade beroenden till andra beslut. Den kan ge sökanden bättre framförhållning även när en viss tidpunkt inte kan garanteras. Framsteg bör bedömas utifrån prognosernas kvalitet och orsakerna till avvikelser, tillsammans med rättssäkerhet och kvalitet i besluten.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "Granskningen av stora kostnadsvärden bör genomföras i en särskild arbetsström. Börja med risker som både har stora råvärden och tydliga kopplingar till återkommande intervjuteman. Kontrollera ärendevolym, vad som räknats som en händelse, vilka kostnadsslag som ingår och om beloppet överlappar andra risker. Ett korrigerat värde ska införas med en ny källreferens och bevarad historik.",
+          "sourceIds": []
         }
       ]
     },
     {
       "id": "uppfoljning",
-      "number": "18",
-      "part": "Slutsatser",
-      "title": "Genomförande och fortsatt uppföljning",
-      "status": "awaiting_integration",
-      "lead": "Från prioritering till prövbar förbättring.",
+      "number": "17",
+      "title": "Uppföljning och fortsatt effektmätning",
+      "part": "Bedömning och rekommendationer",
+      "status": "published",
+      "lead": "Nästa mätning bör pröva om ett visst arbetssätt förändrar ett avgränsat förlopp, med samma definitioner före och efter.",
       "blocks": [
         {
           "type": "p",
-          "text": "En genomförandeagenda behöver ange ansvar, ordningsföljd, resursbehov och hur effekten kan följas upp. Föreslagna indikatorer skiljs från uppmätt effekt. Där det är möjligt bör framtida utfall användas för att pröva och förbättra modellens antaganden."
+          "text": "För att bedöma en kontrolls effekt behövs först information om faktisk användning. Det bör framgå i vilka ärenden åtgärden tillämpas, när den börjar gälla och vad tillämpningen konkret innebär. En kontroll som endast finns i en rutinbeskrivning kan annars jämföras med ett referensläge utan att någon faktisk förändring har skett. Genomförandet behöver därför mätas tillsammans med utfallet.",
+          "sourceIds": []
+        },
+        {
+          "type": "table",
+          "title": "Tabell 4. Föreslagna uppföljningsmått",
+          "columns": [
+            "Mått",
+            "Definition",
+            "Tolkning och kontroll"
+          ],
+          "rows": [
+            [
+              "Tid till första samlade besked",
+              "Dagar från mottagen ansökan till dokumenterat besked om samlade underlagsbehov",
+              "Redovisa median och spridning per ärendetyp; kontrollera ändrad ärendemix"
+            ],
+            [
+              "Sena tidigare kända behov",
+              "Kompletteringskrav efter första beskedet där behovet kunde identifieras vid granskningen",
+              "Skilj nya sakförhållanden och projektändringar från missade behov"
+            ],
+            [
+              "Kontinuitet vid överlämning",
+              "Ärenden med verifierad överlämning av version, avgränsningar, frister och öppna frågor",
+              "Följ faktisk användbarhet genom stickprov"
+            ],
+            [
+              "Kö och aktiv handläggning",
+              "Tid utan aktiv handläggning respektive tid i dokumenterat arbete",
+              "Redovisa definition och registreringsgrad"
+            ],
+            [
+              "Tid till möjlig projektstart",
+              "Tid tills samtliga identifierade förstartsvillkor är uppfyllda",
+              "Håll isär tillståndsbeslut, laga kraft och andra nödvändiga villkor"
+            ],
+            [
+              "Merkostnad",
+              "Dokumenterad omarbetning och förseningskostnad med orsak och period",
+              "Undvik samma kostnad i flera riskposter"
+            ]
+          ]
         },
         {
           "type": "p",
-          "text": "Nya mätningar ska behandlas som nya utgåvor. Ändrade värden och figurer följs av en granskning av berörda tolkningar och slutsatser. Ett uppdaterat datamaterial ändrar inte automatiskt en fastställd rapporttext."
+          "text": "Om ärenden före och efter införandet jämförs behöver grupperna vara tillräckligt lika. Bransch, ärendets omfattning, tidigare tillstånd, projektändringar och belastning hos handläggande organisation kan påverka utfallet. Där jämförelsen är möjlig bör dessa faktorer dokumenteras. Där jämförelsen är svag bör resultatet redovisas som en beskrivande förändring, med en tydlig begränsning av slutsatsen om orsak.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "Kostnaden för en åtgärd bör delas upp i införande, löpande drift och eventuell kostnad hos sökanden. Ett gemensamt handläggarstöd kan exempelvis kräva tid för utveckling och utbildning men spara tid i senare ärenden. En bedömning av nettonytta behöver en uttrycklig tidsperiod och samma kostnadsbegrepp i referens- och åtgärdsscenario. Okända kostnader ska ligga kvar som okända tills ett användbart underlag finns.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "När nya Runs-resultat förs in ska de få en egen utgåva med fryst omfattning, kontrollbas och källkedja. Förändringar i rangordningen bör brytas ned i ändrat underlag, ändrad modell och ändrade publiceringsbeslut. Detta gör det möjligt att förklara varför en risk flyttar sig utan att besökaren behöver tolka ett oförklarat hopp i ett diagram. Rapportens text och figurer bör låsas till samma utgåva.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "En gemensam monetär Monte Carlo-analys bör övervägas först när en konkret fråga om till exempel budgetrisk eller kostnadsspridning behöver besvaras och underlaget kan bära antagandena. Den kräver en konsekvent händelsemodell, hantering av gemensamma orsaker och överlapp samt kostnadsfördelningar med tydlig betydelse. Tills dess ger de enklare måtten ett mer granskbart beslutsunderlag.",
+          "sourceIds": []
         }
       ]
     },
     {
       "id": "referenser",
-      "number": "19",
-      "part": "Referenser och bilagor",
-      "title": "Referenser och källregister",
-      "status": "draft",
-      "lead": "Källor för grundmaterial, metod och publicerade intervjuutdrag.",
+      "number": "18",
+      "title": "Referenser och källförteckning",
+      "part": "Källor",
+      "status": "published",
+      "lead": "Varje sifferuppgift och intervjuanknuten tolkning kan följas till den utgåva som används i rapporten.",
       "blocks": [
         {
           "type": "p",
-          "text": "Riskernas ursprungliga källhänvisningar finns i respektive riskpost. Rapportens slutliga litteratur- och källförteckning kompletteras och kontrolleras när resultat och intervjumaterial har införts."
+          "text": "Referenser i löptexten pekar på källorna nedan. Riskernas detaljerade rättsliga och processrelaterade källor finns i det länkade registret. Intervjukällorna anges med kod och roll; fullständiga originaldokument och en identitetsnyckel ingår inte i den publika webbplatsen. Källornas urval, begränsningar och hantering beskrivs i metodavsnitten.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "Citat i denna rapport är dokumentcitat ur tillhandahållna intervjuanteckningar. Granskningen avser att utdrag och styckehänvisning stämmer med dokumentet. Den innebär inget påstående om att samtliga respondenter har godkänt rapportens slutsatser. Rapportens förslag och tolkningar redovisas som analys av det samlade underlaget.",
+          "sourceIds": []
         }
       ]
     },
     {
-      "id": "begrepp",
+      "id": "bilaga-metod",
       "number": "A",
-      "part": "Referenser och bilagor",
-      "title": "Begrepp och läsnyckel",
-      "status": "draft",
+      "title": "Matematisk metod och måttens betydelse",
+      "part": "Metodbilagor",
+      "status": "published",
+      "lead": "Bilagan visar vad som beräknas, vilka antaganden som behövs och hur de använda måtten skiljer sig åt.",
       "blocks": [
         {
+          "type": "h3",
+          "text": "A.1 Bedömningsenhet och notation"
+        },
+        {
+          "type": "p",
+          "text": "Låt i beteckna en registerrisk och T en period i år. Λᵢ betecknar den osäkra årliga frekvensen för riskhändelsen i Sverige. Cᵢ betecknar den osäkra bedömningen av genomsnittlig kostnad per inträffad händelse. Nᵢ(T) är antalet inträffade händelser under perioden och Yᵢⱼ kostnaden för händelse j. Den sammanlagda kostnaden för risk i betecknas Lᵢ(T). Frekvens och kostnad är parameterbedömningar; deras osäkerhet är skild från slumpmässig variation i ett visst års faktiska händelser.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "equation",
+          "formula": "Lᵢ(T) = Σⱼ₌₁ᴺⁱ⁽ᵀ⁾ Yᵢⱼ",
+          "caption": "Summan av händelsekostnader under perioden definierar riskens årsförlust. Denna fördelning har inte simulerats i rapporten.",
+          "id": "equation-3",
+          "latex": [
+            "L_i(T)=\\sum_{j=1}^{N_i(T)} Y_{ij}"
+          ]
+        },
+        {
           "type": "table",
-          "title": "Centrala begrepp",
+          "title": "Tabell A1. Enheter",
           "columns": [
-            "Begrepp",
-            "Betydelse i rapporten"
+            "Storhet",
+            "Enhet",
+            "Publicerad användning"
           ],
           "rows": [
             [
-              "BTL-rang",
-              "Relativ rangordning, inte procentuell sannolikhet"
+              "Λᵢ",
+              "Händelser per år i Sverige",
+              "Median på riskkort; medelvärde i årskostnad när det kan användas"
             ],
             [
-              "Sannolikhet",
-              "Sannolikhet för angiven händelse under bestämd period"
+              "Cᵢ",
+              "SEK per händelse",
+              "Median på riskkort; bedömningsmedel i årskostnad"
             ],
             [
-              "Frekvens",
-              "Förväntat antal händelser per tidsenhet"
+              "E[Lᵢ(1)]",
+              "SEK per år",
+              "Ekonomisk rangordning"
             ],
             [
-              "Konsekvenskostnad",
-              "Kostnad givet att en händelse inträffar"
+              "BTL-poäng",
+              "Relativt jämförelsetal",
+              "Separat sannolikhetsrangordning"
             ],
             [
-              "Förväntad förlust",
-              "Medelvärdet av förlust under den angivna modellen och perioden"
+              "δ för kontroll",
+              "Latent modellskala",
+              "Spårbar effektpost; ingen direkt omräkning till procent eller SEK"
+            ]
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "A.2 Relativa parjämförelser och BTL"
+        },
+        {
+          "type": "p",
+          "text": "Bradley–Terry-modellen beskriver en parvis jämförelse med positiva relativa styrkor wᵢ och wⱼ. Sannolikheten i modellen gäller att i bedöms högre än j i jämförelsen. Den gäller inte att riskhändelsen inträffar. Med logstyrkor θᵢ = ln(wᵢ) kan samma relation skrivas med en logistisk funktion. En normaliserad poäng kan därefter användas för rangordning inom det valda riskurvalet.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "equation",
+          "formula": "P(i bedöms högre än j) = wᵢ / (wᵢ + wⱼ)\nwᵢ = exp(θᵢ)\nsᵢ = wᵢ / Σₖ wₖ",
+          "caption": "Grundformen för BTL och en normaliserad relativ poäng. Att poängen ligger mellan noll och ett gör den inte till en absolut inträffandesannolikhet.",
+          "id": "equation-4",
+          "latex": [
+            "P(i\\succ j)=\\frac{w_i}{w_i+w_j}",
+            "w_i=e^{\\theta_i},\\qquad s_i=\\frac{w_i}{\\sum_k w_k}"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "I Cosmic Rhino har rangordning och absolut kalibrering beräknats i en gemensam anpassning där parjämförelser och bedömningar mot tröskelvärden delar ett latent läge per risk. Körningen sparar både rang, poäng och absoluta kalibreringsresultat. Importen återger den exporterade relativa rangordningen utan att anpassa om modellen. Den ekonomiska rangordningen beräknas därefter från de absoluta kostnads- och frekvensmått som uppfyller utgåvans regler.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "De relativa källdata innehåller 57 970 riskpar för respektive dimension i det valda kontrollbasfallet, vilket motsvarar alla par bland 341 risker. Antalet par ska inte tolkas som lika många oberoende observerade tillståndshändelser eller intervjuer. Det är modellens jämförelseunderlag. Graden av empiriskt stöd avgörs av hur bedömningarna har producerats och validerats, inte av antalet jämförelser ensamt.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "A.3 Absoluta ankare och tröskelbedömningar"
+        },
+        {
+          "type": "p",
+          "text": "Absolut kalibrering använder bedömningar av om en storhet överstiger givna ankare. För frekvensen har ankarenheten i denna körning angetts som händelser per år. För kostnaden avser ankarenheten ett belopp per händelse. En bedömning mot ett ankare kan förstås som en punkt på en överlevnadsfunktion: den uttrycker tilltro till att det verkliga parametervärdet ligger över ankaret. Flera sådana punkter ger information om både läge och spridning.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "equation",
+          "formula": "qᵢ(a) = P(Xᵢ > a)\nOm ln(Xᵢ) ∼ N(μᵢ, σᵢ²):\nqᵢ(a) = 1 − Φ((ln(a) − μᵢ) / σᵢ)",
+          "caption": "Xᵢ betecknar här en positiv parameter, till exempel årlig frekvens eller medelkostnad per händelse. Φ är standardnormalfördelningens fördelningsfunktion. Uttrycket beskriver den lognormala tröskelmodellen.",
+          "id": "equation-5",
+          "latex": [
+            "q_i(a)=P(X_i>a)",
+            "\\ln X_i\\sim N(\\mu_i,\\sigma_i^2)",
+            "q_i(a)=1-\\Phi\\!\\left(\\frac{\\ln a-\\mu_i}{\\sigma_i}\\right)"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Körningens metadata anger joint-bt-threshold-survival-log-hazard-normal-v1 för frekvens och joint-bt-threshold-survival-log-normal-v1 för konsekvens. Resultaten klassificerar riskerna som berättigade till absolut beräkning eller som exempelvis endast begränsade av ett ankare. Ett gränsvärde har inte ersatts med ett fritt valt punktvärde. Detta är särskilt viktigt för de tre frekvensresultat och det ena konsekvensresultat som ligger under sin användbara ankarstege.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Kalibreringens intervall är en modellbeskrivning av osäkerheten. De kan vara beroende av bedömningsprompt, ankarval, fördelningsantagande och modellens anpassning. En smalare fördelning innebär därför inte automatiskt bättre träffsäkerhet. Metadata anger responseModelValidated: false. För oberoende validering behövs uppgifter med känd storlek som hållits utanför anpassningen och som är jämförbara med de risker modellen ska bedöma.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "A.4 Medelvärde, median och varför svansen spelar roll"
+        },
+        {
+          "type": "p",
+          "text": "För en lognormal parameterfördelning bestäms medianen av läget μ, medan medelvärdet också beror på spridningen σ. Därför kan två risker ha samma median och mycket olika medelvärden. Denna egenskap förklarar varför ett osäkert resultat kan få en hög förväntad kostnad trots ett måttligt typiskt parametervärde. Formlerna nedan gäller parameterfördelningen och ska inte utan vidare överföras till en årsförlustfördelning.",
+          "sourceIds": [
+            "NIST",
+            "CODE"
+          ]
+        },
+        {
+          "type": "equation",
+          "formula": "Median(X) = exp(μ)\nE[X] = exp(μ + σ²/2)\nE[X] / Median(X) = exp(σ²/2)\nQₚ(X) = exp(μ + σ Φ⁻¹(p))",
+          "caption": "Medelvärdet växer snabbt med osäkerheten på logskalan. P5 och P95 beräknas med p = 0,05 respektive 0,95.",
+          "id": "equation-6",
+          "latex": [
+            "\\mathrm{Median}(X)=e^\\mu",
+            "E[X]=e^{\\mu+\\sigma^2/2}",
+            "\\frac{E[X]}{\\mathrm{Median}(X)}=e^{\\sigma^2/2}",
+            "Q_p(X)=e^{\\mu+\\sigma\\Phi^{-1}(p)}"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "I Cardinals konsekvensflöde är det kalibrerade punktvärdet medianen i bedömningen av medelkostnad per händelse. Den separata impact Monte Carlo-noden skapar en diagnostisk exponering centrerad kring detta punktvärde. Dess exporterade medelvärde är därför inte det medelvärde som Cardinals senare förlustberäkning använder. Importen följer severity-beliefs-kontraktet och beräknar i stället kostnadsmedlet som punktvärdet multiplicerat med exp(σ²/2). Båda källmåtten bevaras med olika benämningar.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Frekvenssidan innehåller en typad occurrence-struktur med medelvärde, median och kvantiler för annualRate. Dessa värden hämtas direkt från de 10 000 exporterade dragningarna. Den parallella likelihood-exposures-strukturen är märkt relative_share och legacy_clipped_normal_diagnostic. Den används inte som absolut frekvens eller sannolikhet i rapportens kostnadsberäkning.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "A.5 Förväntad årskostnad"
+        },
+        {
+          "type": "p",
+          "text": "Om antalet händelser modelleras med betingad intensitet Λᵢ och händelsernas betingade medelkostnad är Cᵢ, blir det förväntade beloppet under perioden T lika med T gånger förväntan av produkten. Produkten av separata medelvärden följer om frekvens- och kostnadsbedömningen antas vara oberoende. I denna utgåva redovisas detta som ett uttryckligt antagande; beroendet har inte skattats ur empiriska projektdata.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "equation",
+          "formula": "E[Lᵢ(T)] = T · E[Λᵢ Cᵢ]\n= T · (E[Λᵢ] E[Cᵢ] + Cov(Λᵢ, Cᵢ))\nVid oberoende: E[Lᵢ(1)] = E[Λᵢ] E[Cᵢ]",
+          "caption": "Cov betecknar kovarians. Om hög frekvens samvarierar med högre eller lägre kostnad kan produkten av medelvärden avvika från det gemensamma förväntade beloppet.",
+          "id": "equation-7",
+          "latex": [
+            "E[L_i(T)]=T\\,E[\\Lambda_i C_i]",
+            "=T\\!\\left(E[\\Lambda_i]E[C_i]+\\mathrm{Cov}(\\Lambda_i,C_i)\\right)",
+            "E[L_i(1)]=E[\\Lambda_i]E[C_i]\\quad\\mathrm{vid\\ oberoende}"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Beräkningen använder frekvensmedlet från den exporterade occurrence-fördelningen och kostnadsmedlet från den kalibrerade konsekvensbedömningen. Den görs deterministiskt i importen. Ingen ny mätning eller stokastisk simulering körs. Beräkningen sker endast om båda indata kan användas och resultatet ligger inom utgåvans publiceringsgräns. Den behåller källornas Run-ID och det använda antagandet.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "A.6 Varför två medianer inte ger en årsförlustmedian"
+        },
+        {
+          "type": "p",
+          "text": "Medianen i en parameterfördelning beskriver dess mittpunkt. Årsförlusten beror dessutom på hur många händelser som faktiskt inträffar och hur deras kostnader varierar. En risk med låg årlig frekvens kan ha noll som medianårsförlust även om både frekvensparameterns median och kostnaden per händelse är positiva. Ett medianproduktmått skulle då ge ett positivt belopp som inte är årsförlustens median.",
+          "sourceIds": []
+        },
+        {
+          "type": "note",
+          "title": "Räkneexempel för att förklara måttet",
+          "text": "Anta en helt känd frekvens på 0,1 händelser per år, oberoende Poissonhändelser och en fast kostnad på 1 miljon kronor per händelse. Sannolikheten för noll händelser under ett år är exp(−0,1), cirka 90,5 procent. Medianårsförlusten blir då noll, medan förväntad årskostnad är 100 000 kronor. Exemplet är illustrativt och är inte ett resultat från Cosmic Rhino.",
+          "sourceIds": []
+        },
+        {
+          "type": "h3",
+          "text": "A.7 Monte Carlo och vad denna utgåva kan visa"
+        },
+        {
+          "type": "p",
+          "text": "Monte Carlo innebär att en modell undersöks genom upprepade dragningar ur dess antagna fördelningar. I den tillgängliga frekvensnoden används dragningar för att beskriva osäkerhet i en konstant parameter, vilket också anges i exportens parameterUncertaintyInterpretation. Median och kvantiler kan läsas som sammanfattningar av den parameterfördelningen. De visar inte en observerad tidsserie över årsutfall.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "En monetär årsförlustfördelning skulle kräva att frekvens, händelseantal och händelsekostnader kombineras i samma modell med angivna beroenden. För en portfölj tillkommer gemensamma orsaker, samtidiga risker och kostnadsposter som kan överlappa. Ingen sparad gemensam förlustmodell fanns för denna execution i den lästa exporten. Årsförlustens median och övre kvantiler lämnas därför odefinierade i denna utgåva.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Antalet dragningar anger beräkningsupplösning, men löser inte brister i ankarbedömningar, fördelningsantaganden eller datakvalitet. Särskilt tunga svansar kan göra ett simulerat medelvärde känsligt för sällsynta dragningar. Rapporten redovisar därför grundmåtten och erbjuder parameterosäkerhet som fördjupning. En ytterligare simulering bör endast införas om den ger en begriplig och relevant upplysning utöver dessa mått.",
+          "sourceIds": []
+        },
+        {
+          "type": "h3",
+          "text": "A.8 Aggregering, överlapp och beroenden"
+        },
+        {
+          "type": "equation",
+          "formula": "E[Σᵢ Lᵢ] = Σᵢ E[Lᵢ]\nVar(Σᵢ Lᵢ) = Σᵢ Var(Lᵢ) + 2 Σᵢ<ⱼ Cov(Lᵢ, Lⱼ)",
+          "caption": "Förväntningar kan summeras utan ett oberoendeantagande mellan riskerna, förutsatt att termerna beskriver rätt avgränsade kostnader. Varians och kvantiler kräver däremot information om beroenden.",
+          "id": "equation-8",
+          "latex": [
+            "E\\!\\left[\\sum_i L_i\\right]=\\sum_i E[L_i]",
+            "\\mathrm{Var}\\!\\left(\\sum_i L_i\\right)=\\sum_i\\mathrm{Var}(L_i)+2\\sum_{i<j}\\mathrm{Cov}(L_i,L_j)"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Två olika problem behöver hanteras vid aggregering. Statistiskt beroende gäller om risker tenderar att inträffa tillsammans. Dubbelräkning gäller om samma ekonomiska förlust redan ingår i flera riskposter. Även en korrekt beroendemodell kan ge en missvisande totalsumma om beloppen överlappar. Den här rapporten har inte ett underlag som fördelar varje projekts kostnad mellan riskerna och anger därför summor som summor av separata riskposter.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "Processredovisningen använder varje risks direkta nod för att undvika att samma värde kopieras till flera processer enbart på grund av följdpåverkan. Denna presentationsregel löser inte ekonomisk överlappning mellan olika risker. En framtida nationell nettoberäkning behöver en kostnadsindelning på projektnivå, med tydliga regler för samtidiga hinder, alternativa processvägar och gemensamma följder.",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "bilaga-kvalitet",
+      "number": "B",
+      "title": "Granskningsregler och känslighet",
+      "part": "Metodbilagor",
+      "status": "published",
+      "lead": "Reglerna ska göra det möjligt att se varför ett värde används, avskiljs eller lämnas odefinierat.",
+      "blocks": [
+        {
+          "type": "h3",
+          "text": "B.1 Tekniska kontroller före beräkning"
+        },
+        {
+          "type": "p",
+          "text": "Importen kräver en avslutad execution i rätt organisation och experiment. Varje Run ska vara avslutad och tillhöra samma källutgåva. Refererade input-Runs måste finnas och den frysta omfattningens hash ska överensstämma där kalibreringen anger den. Frekvens- och konsekvenskällorna väljs med explicit kontrollbas. Två möjliga källor för samma roll ger ett fel som behöver lösas före publicering.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Därefter kontrolleras ID-matchning och kopplingar. Ett kontrollresultat får endast kopplas till en registerrisk om motsvarande risk–kontrollpar finns i det kanoniska underlaget. Risker som ingår i registret men inte i körningen får inget konstruerat mätvärde. I denna utgåva gäller detta R-B40-GN170-02.",
+          "sourceIds": [
+            "REG",
+            "CODE"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "B.2 Publiceringsgränser"
+        },
+        {
+          "type": "table",
+          "title": "Tabell B1. Utgåvans granskningsregler",
+          "columns": [
+            "Regel",
+            "Behandling",
+            "Grund"
+          ],
+          "rows": [
+            [
+              "Absolut kalibrering saknas eller ger endast gränsvärde",
+              "Det absoluta måttet lämnas odefinierat; relativ rang kan finnas kvar",
+              "Källans tekniska behörighet"
             ],
             [
-              "P95",
-              "95-procentskvantil i den redovisade fördelningen"
+              "Medelvärde / median > 10",
+              "Berört medelvärde och härledd årskostnad avskiljs; användbar median behålls",
+              "Redaktionell gräns för svanskänslighet"
             ],
             [
-              "Kontrollkoppling",
-              "Dokumenterad avsikt att möta en risk, orsak eller konsekvens"
+              "Medelfrekvens > 10 000 händelser/år",
+              "Frekvensmedel och årskostnad avskiljs; median prövas mot samma storleksgräns",
+              "Redaktionell kontroll av nationell skala"
             ],
             [
-              "Latent effekt",
-              "Effekt på modellskala, inte direkt procentuell kostnadsreduktion"
+              "Medelkostnad > 10 miljarder SEK/händelse",
+              "Kostnadsmedel och årskostnad avskiljs; median behålls om den ligger inom gränsen",
+              "Bedömningsramen kräver särskild motivering över denna nivå"
+            ],
+            [
+              "Härledd årskostnad > 10 miljarder SEK för en risk",
+              "Årskostnaden avskiljs; övriga användbara mått står kvar",
+              "Redaktionell signal för särskild kontroll av storleksordning"
+            ],
+            [
+              "Jämförbart belopp i riskbeskrivningen",
+              "Kan ersätta ett tveksamt värde först efter dokumenterad bedömning av enhet, period och statistikmått",
+              "Ingen sådan ersättning har använts i denna utgåva"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Gränserna är försiktiga publiceringsbeslut. De ska inte tolkas som att 9,9 miljarder är verifierat och 10,1 miljarder är fel, eller att en tung svans alltid saknar verklig grund. Ett högt värde kan vara rimligt när händelsen berör ett mycket stort projekt. Det behöver då särskilt stöd för antal händelser, kostnadsslag och period. I avvaktan på sådan granskning används inte beloppet för huvudrangordningen.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Regeln om tio gånger medianen påverkar 178 frekvensmedel och sju kostnadsmedel. Reglerna kan överlappa: samma risk kan samtidigt ha en mycket skev frekvensfördelning och en stor konsekvens. Antal flaggor ska därför inte summeras till antal risker. Den samlade bedömningen lämnar 145 risker med publicerad förväntad årskostnad, 196 med granskningsbehov och en utanför körningen.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Den extra gränsen för härledd årskostnad träffar 13 risker som har passerat de föregående reglerna. Den är vald för att fånga stora produkter även när inget enskilt indata överstiger sin gräns. Eftersom denna regel direkt påverkar rangordningens övre del bör de berörda riskerna ingå tidigt i sakgranskningen. Resultatet får inte användas för att hävda att en utelämnad risk är mindre viktig än risk nummer 50.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "B.3 Känslighet för gränsen mellan medelvärde och median"
+        },
+        {
+          "type": "table",
+          "title": "Tabell B2. Alternativa granskningsgränser",
+          "columns": [
+            "Högsta tillåtna kvot",
+            "Risker med årskostnad",
+            "Gemensamma med huvudlistans topp 50"
+          ],
+          "rows": [
+            [
+              "5",
+              "117",
+              "43 / 50"
+            ],
+            [
+              "10",
+              "145",
+              "50 / 50"
+            ],
+            [
+              "20",
+              "188",
+              "41 / 50"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Tabellen ändrar enbart gränsen för förhållandet mellan medelvärde och median; övriga publiceringsgränser ligger fast. Beräkningen återanvänder exporterade värden och innebär ingen ny mätning. Den visar hur mycket själva granskningsvalet påverkar täckning och prioritering. Förändringar mellan raderna är ett argument för att granska underlaget bakom de berörda riskerna och för att undvika överdriven vikt vid en exakt placering.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "B.4 Hantering av uppgifter i riskbeskrivningar"
+        },
+        {
+          "type": "p",
+          "text": "En ersättningsuppgift måste avse samma ekonomiska storhet som det värde den ersätter. Ett projekts investeringsbelopp är inte automatiskt kostnaden för en försening. En uppgift om sex månader är inte ett belopp utan ett tidsmått. Ett kostnadsexempel från ett visst företag är inte utan vidare ett nationellt medelvärde. Granskningen ska därför dokumentera händelse, period, valuta, exponeringsbas och om uppgiften avser median, medelvärde eller ett enskilt fall.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "Riskbeskrivningarna innehåller inga tydligt jämförbara monetära uppskattningar som kan användas för ersättning i denna utgåva. Inga belopp har därför konstruerats från allmänna tidsuppgifter eller rättsliga trösklar. Om ett sådant underlag tillkommer bör det visas med benämningen uppskattning från riskbeskrivning, med källposition och skild proveniens från Cosmic Rhino.",
+          "sourceIds": [
+            "REG"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "B.5 Att återföra ett granskat värde"
+        },
+        {
+          "type": "p",
+          "text": "En ändring bör göras i en ny mät- eller granskningsutgåva. Dokumentera vilket tidigare värde som ändras, varför det ändras, vilket underlag som stödjer den nya bedömningen och hur rangordningen påverkas. Det gamla källvärdet bör bevaras i historiken. Denna ordning gör det möjligt att förbättra underlaget utan att blanda samman en teknisk import, en sakkunnig bedömning och en ny modellkörning.",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "bilaga-intervjuer",
+      "number": "C",
+      "title": "Intervjumetod och analysmatris",
+      "part": "Metodbilagor",
+      "status": "published",
+      "lead": "Intervjuerna används för att förstå förlopp och pröva förbättringsförslag, med öppna begränsningar i urval och återgivning.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Underlaget består av fem dokument och omfattar sex medverkande personer. De representerar offentlig förvaltning, erfarenhet från bransch och förvaltning, industriell projektutveckling, industri och logistik samt infrastruktur och anläggning. Ett dokument sammanfattar ett samtal med två personer. Rapporten räknar därför inte varje dokument som en statistiskt oberoende observation av samma fenomen.",
+          "sourceIds": [
+            "I01",
+            "I02",
+            "I03",
+            "I04",
+            "I05"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Dokumenten har lästs i sin helhet och delats in med stabila styckehänvisningar. Analysen har först identifierat beskrivna händelser och förlopp, därefter kopplat dem till teman och slutligen jämfört dem med risk- och kontrollregistret. Skillnaden mellan respondentens uppgift och rapportens tolkning har bevarats. Företagsspecifika uppgifter om tid och handläggning har inte gjorts om till absoluta frekvenser eller kostnader.",
+          "sourceIds": []
+        },
+        {
+          "type": "table",
+          "title": "Tabell C1. Tematisk analysmatris",
+          "columns": [
+            "Tema",
+            "Källstöd",
+            "Praktisk tolkning och begränsning"
+          ],
+          "rows": [
+            [
+              "Fullständighet och återkoppling",
+              "I03 stycke 8 och 13; I04 stycke 14–15",
+              "Tidsprognos behöver omfatta vägen till komplett ansökan. Ärendehistorikerna är inte aktgranskade."
+            ],
+            [
+              "Sena krav och säsongsfönster",
+              "I05 stycke 16–17",
+              "Tidpunkt för identifiering kan få stor betydelse. Omfattning i hela populationen är okänd."
+            ],
+            [
+              "Kompetens och variation",
+              "I02 stycke 9–11; I03 stycke 10; I04 stycke 19–23",
+              "Möjligt gemensamt förbättringsområde. Ärendekomplexitet och bemanning kan inte separeras kvantitativt."
+            ],
+            [
+              "Överlämning och kontinuitet",
+              "I05 stycke 24 och 62; I01 stycke 9–11",
+              "Dokumenterad avgränsning och projektversion bör följa ärendet. Implementerad effekt har inte uppmätts."
+            ],
+            [
+              "Företagets egen förmåga",
+              "I04 stycke 21 och 32; I05 stycke 37–40",
+              "Förberedelser kan minska omtag men löser inte alla myndighetsberoenden."
+            ],
+            [
+              "Samband med finansiering och start",
+              "I03 stycke 35–36; I05 stycke 44–51",
+              "Projektets samlade tidplan behövs. Uppgifterna ger ingen generell nät- eller stödregel."
+            ],
+            [
+              "Motexempel och variation",
+              "I03 stycke 10 och 22; I04 stycke 13 och 49",
+              "Positiva erfarenheter och begränsad förekomst ska påverka tolkningen."
+            ]
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "C.1 Frågeställningens påverkan"
+        },
+        {
+          "type": "p",
+          "text": "I04 och I05 presenterar tre tidigare högt rankade risker innan intervjupersonerna kommenterar dem. Detta skapar en risk för styrning av uppmärksamheten. Analysen har därför inte räknat instämmande som en oberoende validering av rangordningen. Särskild vikt har lagts vid nyanseringar, ytterligare förlopp och exempel som avviker från den presenterade listan.",
+          "sourceIds": [
+            "I04",
+            "I05"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "C.2 Återgivning och citat"
+        },
+        {
+          "type": "p",
+          "text": "De publicerade utdragen är kontrollerade mot dokumentens text och försedda med styckehänvisning. Den redaktionella granskningen innebär inte att anteckningarnas alla sakuppgifter är externt verifierade eller att intervjupersonerna har godkänt rapportens samlade slutsatser. Där en anteckning beskriver ett konkret ärende anges uppgiften som en erfarenhet i materialet. Den används för att förklara ett möjligt förlopp och inte för att tillskriva en namngiven handläggare ansvar.",
+          "sourceIds": []
+        },
+        {
+          "type": "h3",
+          "text": "C.3 Fortsatt datainsamling"
+        },
+        {
+          "type": "p",
+          "text": "Ett nästa steg är att komplettera med ett avgränsat urval av ärendeakter och intervjuer från fler perspektiv, inklusive handläggare och verksamhetsutövare med olika storlek och erfarenhet. Samma händelseförlopp bör då följas från båda sidor och tidsuppgifterna stämmas av mot dokument. Detta skulle göra det möjligt att pröva om beskrivna mönster återkommer och vilka delar som beror på särskilda ärendeförhållanden.",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "bilaga-kopplingar",
+      "number": "D",
+      "title": "Kopplingar, kontrollanalys och scenarier",
+      "part": "Metodbilagor",
+      "status": "published",
+      "lead": "Risker, kontroller och processnoder behöver behålla sina relationer även när olika system uttrycker dem på olika sätt.",
+      "blocks": [
+        {
+          "type": "h3",
+          "text": "D.1 Relationernas innebörd"
+        },
+        {
+          "type": "p",
+          "text": "En risk hör direkt till en processnod. Fältet Drabbar kan dessutom ange uttryckliga följdrelationer till andra noder. En kontroll kan vara kopplad till flera risker och till ett eller flera element i varje risks bow tie. Kopplingen beskriver om åtgärden avser en orsak, själva händelsen eller en konsekvens. Samma kontroll kan därmed ha olika roller i olika riskförlopp.",
+          "sourceIds": [
+            "REG"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Vid jämförelsen mellan webbplatsen och Cardinal matchar samtliga 500 unika risk–kontrollpar och de 342 direkta processnodkopplingarna. Bow tie-nivån är inte identisk mellan systemen: exporten innehåller 1 206 riktade eller hela-risk-kopplingar, jämfört med 633 riktade kopplingar i webbplatsens kanoniska modell. Den uttryckliga matchningstabellen har en saknad förväntad målrelation och 574 ytterligare relationer i Cardinal. 356 händelsekopplingar representeras där som koppling till hela risken.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Skillnaden innebär att paritet på risk–kontrollnivå inte kan användas som bevis för full paritet på varje bow tie-element. Webbplatsens kanoniska målrelationer har därför bevarats och den exporterade relationstabellen arkiverats separat. Denna utgåva härleder ingen ny effektfördelning mellan orsaker och konsekvenser ur de avvikande målrelationerna. En senare målvis effektmätning behöver först stämma av denna nivå.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "D.2 Val av effektkälla"
+        },
+        {
+          "type": "p",
+          "text": "Cosmic Rhino innehåller tre control_effects-Runs. Importen väljer den som hör till den faktiska inputkedjan för den exporterade kontrollscenariots Monte Carlo-nod: 930101cd-ae3b-459e-94e3-9cfd56d4b7e1. Valet görs via grafens sparade Run-referenser. Den senaste tidsstämpeln eller den första träffen används inte som ersättning för verifierad härledning.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Effektposter innehåller bland annat risk, kontroll, dimension och ett delta på modellskala. I denna utgåva visas de som exporterade modellresultat. Ett delta kan inte multipliceras med en riskkostnad för att ge en besparing utan att modellens transformation, baslinje, kontrollurval och överlapp behandlas konsekvent. Inte heller en kontrolls antal riskkopplingar anger hur stor del av kostnaden den kan reducera.",
+          "sourceIds": []
+        },
+        {
+          "type": "h3",
+          "text": "D.3 Ekonomisk jämförelse av kontrollurval"
+        },
+        {
+          "type": "equation",
+          "formula": "Reduktion(S) = E[L | referens] − E[L | kontrollurval S]\nNettonytta(S) = Reduktion(S) − Kostnad(S)",
+          "caption": "Båda scenarierna behöver samma riskurval, period, valuta och kostnadsavgränsning. Formlerna definierar en framtida jämförelse; denna utgåva har inget tillräckligt monetärt underlag för valfria kontrollkombinationer.",
+          "id": "equation-9"
+        },
+        {
+          "type": "p",
+          "text": "Om två kontroller påverkar samma orsak kan deras effekter överlappa. Om den ena kontrollen gör den andra möjlig kan det i stället finnas en kompletterande effekt. Besökaren kan därför inte få en ny monetär kostnad genom att systemet adderar enskilda effekter oberoende av kombination. Kontrollernas separata analysflik visar dokumenterad räckvidd, tillgängliga effektposter och vilka risker ett valt urval berör. Ett monetärt resultat kräver ett jämförbart underlag för just det urvalet.",
+          "sourceIds": []
+        },
+        {
+          "type": "h3",
+          "text": "D.4 Kontrollbas och faktiskt genomförande"
+        },
+        {
+          "type": "p",
+          "text": "Körningens använda bas heter residual_implemented_controls. Denna tekniska beteckning bevaras i proveniensen. Den ska inte läsas som en oberoende verifiering av att varje beskriven åtgärd faktiskt är genomförd hos berörda myndigheter eller företag. Flera myndighetsåtgärder är förslag, och framtida mandat hålls uttryckligen isär i kontrollregistret. En effektutvärdering behöver komplettera modellbasen med dokumenterat faktiskt införande.",
+          "sourceIds": [
+            "CR",
+            "MYN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bilaga-proveniens",
+      "number": "E",
+      "title": "Reproducerbarhet och källkedja",
+      "part": "Metodbilagor",
+      "status": "published",
+      "lead": "Den publicerade utgåvan kan följas från fryst mätomfattning till varje beräknat värde och visad relation.",
+      "blocks": [
+        {
+          "type": "table",
+          "title": "Tabell E1. Utgåvans identitet",
+          "columns": [
+            "Fält",
+            "Värde"
+          ],
+          "rows": [
+            [
+              "Namn",
+              "Cosmic Rhino"
+            ],
+            [
+              "Execution",
+              "41398273-5724-4f08-8fef-ed92832f527b"
+            ],
+            [
+              "Experiment",
+              "a0b342cd-1e87-4c80-aeeb-091777cb7129"
+            ],
+            [
+              "Organisation",
+              "f0411185-b364-4528-b1bc-228c7d20c02f"
+            ],
+            [
+              "Fryst omfattning",
+              "580ea966-2450-40cb-a269-beed36645df5"
+            ],
+            [
+              "Omfattningens hash",
+              "d336a8e0e6465c55d9f9e0d3abac3f234137d541ef23b7e277187af7d5ffceaf"
+            ],
+            [
+              "Slutförd",
+              "22 oktober 2026, 01.40 svensk tid"
+            ],
+            [
+              "Källarkivets SHA-256",
+              "7c439bd30d142ba370afd4e235e2fbbd2a81b6331fa0ea3b3728d091a76667a1"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Det privata källarkivet innehåller fullständiga Runs med indatareferenser, fryst omfattning och relationstabeller. Det publika mätpaketet är en avgränsad projektion med de värden och metadata som behövs för läsning och kontroll av beräkningen. Användaruppgifter, fullständiga intervjuoriginal och inloggningsinformation ingår inte i denna projektion.",
+          "sourceIds": [
+            "CODE"
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Tabell E2. Primära beräkningskällor",
+          "columns": [
+            "Roll",
+            "Run-ID"
+          ],
+          "rows": [
+            [
+              "BTL frekvens, vald bas",
+              "df7499ed-958a-44ab-8fcb-4729e05ab4fe"
+            ],
+            [
+              "BTL konsekvens, vald bas",
+              "f395e05c-92cb-4aa2-b299-8faa859c7c18"
+            ],
+            [
+              "Monte Carlo, typad frekvens",
+              "3b6aea00-2f91-4a64-9e17-e47ee25a99df"
+            ],
+            [
+              "Monte Carlo konsekvens, diagnostik",
+              "57fb8009-aebf-4bed-8486-3b244abfd224"
+            ],
+            [
+              "Kontrolleffekter enligt scenariokedjan",
+              "930101cd-ae3b-459e-94e3-9cfd56d4b7e1"
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Tabell E3. Exporterad anpassningsinformation",
+          "columns": [
+            "Mått",
+            "Frekvens",
+            "Konsekvens"
+          ],
+          "rows": [
+            [
+              "Rankade risker",
+              "341",
+              "341"
+            ],
+            [
+              "Absolut behöriga i källan",
+              "338",
+              "340"
+            ],
+            [
+              "Endast gränsvärde",
+              "3",
+              "1"
+            ],
+            [
+              "Parjämförelser i vald bas",
+              "57 970",
+              "57 970"
+            ],
+            [
+              "Ankarbedömningar i anpassningen",
+              "3 413",
+              "3 413"
+            ],
+            [
+              "Iterationer",
+              "74",
+              "61"
+            ],
+            [
+              "Konvergens enligt källan",
+              "Ja",
+              "Ja"
+            ],
+            [
+              "Responsmodell validerad enligt källan",
+              "Nej",
+              "Nej"
+            ],
+            [
+              "Monte Carlo-dragningar",
+              "10 000",
+              "10 000"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Konvergens visar att anpassningsförfarandet uppfyllt sitt numeriska stoppvillkor. Det innebär inte att beloppen har validerats mot verkliga händelser. På samma sätt beskriver ett angivet antal dragningar vad simuleringen gjort, utan att i sig fastställa att de underliggande fördelningarna är lämpliga. Denna skillnad är viktig vid granskningen av höga medelvärden.",
+          "sourceIds": []
+        },
+        {
+          "type": "p",
+          "text": "Importen beräknar kontrollsummor för Run-innehåll och behåller källornas beroenden. Rapportens manus, mätunderlag och intervjuprojektion låses tillsammans. PDF och webbläsarversion byggs från samma manus och kontrolleras mot samma filhashar. En senare dataimport ändrar därför inte rapporttexten utan en uttrycklig uppdatering av rapportutgåvan.",
+          "sourceIds": [
+            "CODE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bilaga-topplista",
+      "number": "F",
+      "title": "Kostnadstopp 50",
+      "part": "Registerbilagor",
+      "status": "published",
+      "lead": "Förväntad årskostnad bland de 145 risker som har publicerbart underlag enligt utgåvans granskningsregler.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Beloppen anges i miljoner kronor per år i Sverige och bygger på medelvärden. De är inte observerade kostnader. Risker med granskningskrävande eller saknade värden ligger utanför tabellen och kan ha en högre verklig kostnad. Hela registret och den separata sannolikhetsrangordningen finns på webbplatsen.",
+          "sourceIds": [
+            "CR"
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Tabell F1. Rangordning efter förväntad årskostnad",
+          "columns": [
+            "Rang och risk-ID",
+            "Risk",
+            "Mnkr/år"
+          ],
+          "rows": [
+            [
+              "1 · R-B60-180-01",
+              "Natura 2000- eller artskyddskraven kan inte uppfyllas",
+              "9 700,7"
+            ],
+            [
+              "2 · R-B50-E050-01",
+              "Ledningsrätt eller markupplåtelseavtal blir inte klart i tid – byggstart blockeras trots koncession",
+              "9 304,5"
+            ],
+            [
+              "3 · R-B30-100-01",
+              "Oprecisa yrkanden stjälper handläggningen",
+              "9 271,1"
+            ],
+            [
+              "4 · R-B50-GN040-01",
+              "Kvarstående vetenskapligt tvivel leder till avslag",
+              "8 328,4"
+            ],
+            [
+              "5 · R-B60-090-01",
+              "Motstridiga myndighetsyttranden låser beredningen",
+              "8 213,9"
+            ],
+            [
+              "6 · R-B30-070-01",
+              "MKB:n täcker inte den prövning som faktiskt krävs",
+              "7 430,3"
+            ],
+            [
+              "7 · R-B50-T030-01",
+              "Vatten-, Natura- och artskyddsbeslut ligger efter planen och blockerar etapper",
+              "6 590,1"
+            ],
+            [
+              "8 · R-B50-T020-02",
+              "Planöverklagande och separat byggstartsbeslut skapar två regeringsanknutna steg",
+              "5 284,2"
+            ],
+            [
+              "9 · R-B20-G010-02",
+              "Sektorsspår och Natura-kollisioner fångas inte i vägvalet",
+              "5 101,1"
+            ],
+            [
+              "10 · R-B60-070-01",
+              "Utebliven eller slarvig tidsplan urholkar handläggningstempot",
+              "4 453,3"
+            ],
+            [
+              "11 · R-B70-G020-01",
+              "Överklagande inkommer på sista fristdagen och ändrar finalitetsstatusen",
+              "4 420,2"
+            ],
+            [
+              "12 · R-B50-P050-01",
+              "Överklagandekedjan länsstyrelse–MMD–MÖD stoppar byggstart",
+              "4 193,6"
+            ],
+            [
+              "13 · R-B40-010-02",
+              "Tillfälliga arbeten och grundvattenbortledning faller utanför avgränsningen",
+              "4 114,2"
+            ],
+            [
+              "14 · R-B40-G070-01",
+              "Fel spår väljs: undantag trots att tillståndsplikt föreligger",
+              "4 055,7"
+            ],
+            [
+              "15 · R-B50-E010-01",
+              "Korridorvalet kolliderar med riksintressen, rennäring eller Natura 2000",
+              "3 901,1"
+            ],
+            [
+              "16 · R-B40-START-01",
+              "Vattenpåverkan upptäcks för sent i genomförandekonceptet",
+              "3 833,6"
+            ],
+            [
+              "17 · R-B50-GN040-02",
+              "Instanserna landar i olika bedömningar av samma bevisning",
+              "3 703,0"
+            ],
+            [
+              "18 · R-B50-X030-02",
+              "Omprojektering för att undvika förbudet urholkar projektets funktion eller ekonomi",
+              "3 672,7"
+            ],
+            [
+              "19 · R-B50-START-01",
+              "Osynliga spår blockerar byggstart trots färdigt huvudtillstånd",
+              "2 944,1"
+            ],
+            [
+              "20 · R-B50-P010-02",
+              "Felbedömt planbehov: projektet bedöms inte kräva plan – och tvingas ändå till det sent",
+              "2 640,6"
+            ],
+            [
+              "21 · R-B70-G050-03",
+              "Tillståndshavarens ekonomiska svikt underminerar säkerhets- och garantistrukturen",
+              "2 635,4"
+            ],
+            [
+              "22 · R-B50-M040-02",
+              "Natura 2000-tillståndet hänger inte ihop med koncessionens tidplan",
+              "2 618,3"
+            ],
+            [
+              "23 · R-B50-T020-03",
+              "Överklaganden av planbeslutet från samebyar, markägare och organisationer",
+              "2 600,9"
+            ],
+            [
+              "24 · R-B50-P030-03",
+              "Planens laga kraft avvaktar inte miljöprövningens – beroendekrock mellan spåren",
+              "2 580,7"
+            ],
+            [
+              "25 · R-B50-P020-01",
+              "Lokal opinion och samrådsmotstånd förlänger eller omkullkastar planarbetet",
+              "2 564,7"
+            ],
+            [
+              "26 · R-B40-060-03",
+              "Muddermassor, dumpning och sektorstillstånd staplas i fel ordning",
+              "2 475,4"
+            ],
+            [
+              "27 · R-B10-050-02",
+              "Kommunalt veto eller negativ kommunal signal låser projektet i startgroparna",
+              "2 356,4"
+            ],
+            [
+              "28 · R-B60-170-01",
+              "MKB:n godkänns inte – återförvisning eller avslag i stället för villkor",
+              "2 283,8"
+            ],
+            [
+              "29 · R-B30-O100-01",
+              "Miljökvalitetsnormsöverträdelse tvingar fram omprövning",
+              "2 238,1"
+            ],
+            [
+              "30 · R-B70-G070-01",
+              "Markägare vägrar avtal – ledningsrättsspåret försenar genomföranderätten",
+              "2 155,5"
+            ],
+            [
+              "31 · R-B50-N060-01",
+              "Överklagande i Natura-spåret kan förskjuta byggstarten",
+              "2 102,4"
+            ],
+            [
+              "32 · R-B50-X010-01",
+              "Fridlysta arter missas i screeningen och dyker upp under byggskedet",
+              "2 044,0"
+            ],
+            [
+              "33 · R-B50-S010-01",
+              "Sent upptäckt sektorskrav – Seveso, livsmedel, försvar eller flyg – stoppar byggstart",
+              "2 021,0"
+            ],
+            [
+              "34 · R-B40-P110-02",
+              "Ersättnings- och sakägaravsnitt provocerar fram motstånd",
+              "2 002,0"
+            ],
+            [
+              "35 · R-B50-P010-01",
+              "Kommunens planmonopol: ovilja eller köstopp stoppar projektet i förhand",
+              "1 794,2"
+            ],
+            [
+              "36 · R-B70-END-01",
+              "Byggberedskapen urholkas av att tillståndet aldrig tas i anspråk innan fristens utgång",
+              "1 780,6"
+            ],
+            [
+              "37 · R-B40-G020-01",
+              "Felklassificering av tillfällig grundvattenbortledning",
+              "1 750,4"
+            ],
+            [
+              "38 · R-B50-G010-01",
+              "Ofullständig tillämpbarhetsmatris lämnar obligatoriska spår utanför",
+              "1 696,8"
+            ],
+            [
+              "39 · R-B70-100-01",
+              "Återöppnat B50-spår fastnar i kommunens eller sektorsmyndighetens handläggningskö",
+              "1 586,5"
+            ],
+            [
+              "40 · R-B60-180-03",
+              "Säkerhets- och efterbehandlingsfrågor underblåser oenighet om vem som bär risken",
+              "1 555,9"
+            ],
+            [
+              "41 · R-B40-G020-02",
+              "Gränsdragning mot husbehov och undantagna smååtgärder feltolkas",
+              "1 545,3"
+            ],
+            [
+              "42 · R-B40-P100-01",
+              "B20:s miljöunderlag är föråldrat eller fel avgränsat för vattenfrågorna",
+              "1 510,8"
+            ],
+            [
+              "43 · R-B60-190-01",
+              "Otydliga eller overkställbara villkor föder nya processer efter beslutet",
+              "1 505,0"
+            ],
+            [
+              "44 · R-B70-G090-02",
+              "Detaljplanens laga kraft saknas eller planen överprövas av länsstyrelsen",
+              "1 502,5"
+            ],
+            [
+              "45 · R-B20-040-01",
+              "Avgränsningen blir för snäv – effekter dyker upp sent",
+              "1 487,6"
+            ],
+            [
+              "46 · R-B40-GN130-01",
+              "Kompletteringskrav triggar ändlös loop mot upprättandet",
+              "1 374,1"
+            ],
+            [
+              "47 · R-B40-030-01",
+              "Hydrologiskt och hydrogeologiskt underlag håller inte domstolsmått",
+              "1 264,3"
+            ],
+            [
+              "48 · R-B40-P100-02",
+              "Nya 2026-regler om skriftlig MKB-avgränsning tillämpas fel",
+              "1 161,5"
+            ],
+            [
+              "49 · R-B30-GC140-01",
+              "Positiv BMP kastar om projektet till tillståndsspåret",
+              "1 044,1"
+            ],
+            [
+              "50 · R-B40-G020-03",
+              "Sammansatt åtgärd klassificeras bara delvis",
+              "1 005,5"
             ]
           ]
         }
       ]
     },
     {
-      "id": "matbilaga",
-      "number": "B",
-      "part": "Referenser och bilagor",
-      "title": "Mätmanifest och fullständiga resultattabeller",
-      "status": "awaiting_measurement",
+      "id": "bilaga-myndighetsatgarder",
+      "number": "G",
+      "title": "Myndighetsåtgärder och prioriteringsunderlag",
+      "part": "Registerbilagor",
+      "status": "published",
+      "lead": "Kopplingarna gör det möjligt att följa varje föreslagen åtgärd till riskerna den är avsedd att påverka.",
       "blocks": [
         {
           "type": "p",
-          "text": "Bilagan ska ange organisation, experiment, execution, Runs, indatarelationer, versioner, valuta, period och täckning. Fullständiga resultattabeller gör det möjligt att följa varje publicerad siffra till dess källresultat."
-        }
-      ]
-    },
-    {
-      "id": "intervjubilaga",
-      "number": "C",
-      "part": "Referenser och bilagor",
-      "title": "Intervjuguide, kodning och analysmatris",
-      "status": "awaiting_interviews",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Här dokumenteras intervjuguide, urvalsprinciper, genomförande och kodningsram. Den publicerade versionen får endast innehålla godkända uppgifter. Fullständiga transkript och identifieringsnycklar förvaras separat. Analysmatrisen visar hur teman och utdrag kopplats till risker, åtgärder och tolkningar."
-        }
-      ]
-    },
-    {
-      "id": "kontrollbilaga",
-      "number": "D",
-      "part": "Referenser och bilagor",
-      "title": "Kontroller, scenarier och avgränsningar",
-      "status": "draft",
-      "blocks": [
-        {
-          "type": "p",
-          "text": "Bilagan redovisar åtgärdernas stabila identiteter, myndighetsklassificering, scenariotillhörighet och dokumenterade mål. Resultat per åtgärd och kombination kompletteras efter mätningen. Kostnader som saknas markeras som okända, och olika mandatförutsättningar hålls isär.",
+          "text": "Kolumnen topp 50 visar kopplingen till den publicerade kostnadslistan. Den ska läsas tillsammans med antalet risker som saknar årskostnad. En åtgärd utan en sådan topprisk kan fortfarande vara relevant för problem som framkommer i intervjuer eller riskbeskrivningar. Scenarierna skiljer huvuduppdrag, införande och förslag om framtida mandat.",
           "sourceIds": [
             "MYN"
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Tabell G1. Åtgärder, scenarier och räckvidd",
+          "columns": [
+            "ID och åtgärd",
+            "Scenario",
+            "Risker / topp 50 / utan årskostnad"
+          ],
+          "rows": [
+            [
+              "MPM-01 · Dokumenterad och avgränsad processvägledning",
+              "S1",
+              "11 / 0 / 4"
+            ],
+            [
+              "MPM-02 · Tidig kontroll av behörighet och prövningsram",
+              "S1",
+              "10 / 0 / 4"
+            ],
+            [
+              "MPM-03 · Samordnad handläggning när sambandsregeln medger det",
+              "S1",
+              "2 / 0 / 1"
+            ],
+            [
+              "MPM-04 · Överenskomna gränssnitt med andra beslutsorgan",
+              "S1",
+              "3 / 0 / 2"
+            ],
+            [
+              "MPM-05 · Samlad och preciserad fullständighetsgranskning",
+              "S1",
+              "8 / 2 / 3"
+            ],
+            [
+              "MPM-06 · Tidig identifiering av säsongsberoende underlagsbehov",
+              "S1",
+              "1 / 0 / 0"
+            ],
+            [
+              "MPM-07 · Aktiv tidsplanering och bevakning av egen handläggning",
+              "S1",
+              "3 / 1 / 1"
+            ],
+            [
+              "MPM-08 · Gemensam kapacitets- och specialistfördelning",
+              "S1",
+              "3 / 1 / 1"
+            ],
+            [
+              "MPM-09 · Strukturerad remiss och kommunicering",
+              "S1",
+              "5 / 1 / 3"
+            ],
+            [
+              "MPM-10 · Spårbar ärendeakt och versionskontroll",
+              "S1",
+              "6 / 0 / 5"
+            ],
+            [
+              "MPM-11 · Juridisk och teknisk kvalitetssäkring av egna beslut",
+              "S1",
+              "6 / 2 / 4"
+            ],
+            [
+              "MPM-12 · Entydiga och inbördes förenliga tillståndsvillkor",
+              "S1",
+              "6 / 1 / 4"
+            ],
+            [
+              "MPM-13 · Kontrollerad kungörelse, delgivning och överklagandeinformation",
+              "S1",
+              "8 / 1 / 4"
+            ],
+            [
+              "MPM-14 · Komplett överlämnande och kompetent myndighetsmotpart",
+              "S1",
+              "2 / 0 / 1"
+            ],
+            [
+              "MPM-15 · Samlad prövning av säkerhet och andra egna förstartsgodkännanden",
+              "S1",
+              "3 / 0 / 3"
+            ],
+            [
+              "MPM-16 · Riktad hantering efter återförvisning",
+              "S1",
+              "2 / 0 / 2"
+            ],
+            [
+              "MPM-17 · Tidig jävs- och behörighetskontroll för egen bemanning",
+              "S1",
+              "1 / 0 / 1"
+            ],
+            [
+              "MPM-F01 · Samlad myndighetsledning av BMP och MKB-avgränsning",
+              "Framtida mandat",
+              "4 / 0 / 2"
+            ],
+            [
+              "MPM-F02 · Gemensam kontaktpunkt för flera tillståndsspår",
+              "Framtida mandat",
+              "2 / 0 / 2"
+            ],
+            [
+              "MPM-T01 · Verifierad överföring vid myndighetsstart",
+              "Införande",
+              "9 / 0 / 8"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Varje åtgärds detaljsida innehåller dess tillämpningsvillkor, kopplade risker och eventuella modellresultat. Dessa uppgifter bör användas när pilotinsatser avgränsas. För att beräkna en ekonomisk effekt behöver målpopulation, faktiskt införande och kontrollkombination preciseras, i enlighet med bilaga D.",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "bilaga-granskningslista",
+      "number": "H",
+      "title": "Risker med odefinierad årskostnad",
+      "part": "Registerbilagor",
+      "status": "published",
+      "lead": "Granskningslistan kompletterar topp 50 och visar vilka frågor som behöver lösas för en bredare ekonomisk jämförelse.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Listan omfattar 196 risker med granskningsbehov och en risk utanför körningen. För varje post anges orsaken till att en publicerad årskostnad saknas. Tillgängliga frekvens- och kostnadsmedianer kan fortfarande läsas på riskkortet. Källvärdena finns kvar i mätpaketet och har inte ersatts med noll.",
+          "sourceIds": [
+            "CR",
+            "CODE"
+          ]
+        },
+        {
+          "type": "table",
+          "title": "Tabell H1. Risker att granska",
+          "columns": [
+            "Risk-ID",
+            "Risk",
+            "Granskningsorsak"
+          ],
+          "rows": [
+            [
+              "R-B10-010-01",
+              "Prövningsobjektet låses för snävt och tvingar fram nya prövningar",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-010-02",
+              "Funktionellt sammanhängande åtgärder delas upp och kumulativa effekter faller bort",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-020-01",
+              "Oförenliga riksintressen upptäcks för sent i lokaliseringen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-020-02",
+              "Svag alternativutredning fäller tillåtligheten vid platsvalet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-020-03",
+              "Försvars- och totalförsvarsintressen stoppar lokaliseringen på politisk nivå",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B10-030-02",
+              "Sakägar- och rådighetskrav upptäcks först i domstolsledet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-040-01",
+              "Säsongsberoende inventeringar missar sitt fältfönster",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-040-02",
+              "Extremväder och klimatförändringar korrumperar fältdata och tidplaner",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-050-01",
+              "Muntliga myndighetsråd i tidig dialog tas för bindande besked",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-060-03",
+              "Sektorsspelregler identifieras inte i klassificeringen",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B10-070-01",
+              "Ett tillstånd saknas i matrisen och upptäcks först i byggskedet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-070-02",
+              "Överklagandevägar och talerätt felmappas i instanskartan",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-070-03",
+              "Instanskartan föråldras av myndighetsreformen mitt i projektlöpet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-080-01",
+              "Samordningsmöjligheten missas och prövningarna körs isolerat med motstridiga utfall",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B10-080-03",
+              "Prövningsinstanserna kan inte enas om samordning och handoff",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-090-01",
+              "Typfallsprofilen blir missvisande för grenens verkliga rättsläge",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B10-090-02",
+              "Företagsspecifik data smyger in i det generiska typfallet",
+              "Medelvärde över tio gånger medianen; Absolut underlag saknas eller ger endast gränsvärde"
+            ],
+            [
+              "R-B10-START-01",
+              "Projektet initieras utan tillräcklig konkretion eller för sent",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-010-02",
+              "Säsongsberoende basdata hinner inte samlas in",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-020-02",
+              "Lokal opinion mobiliserar och hårdnar under samrådet",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B20-040-02",
+              "Bred samrådskrets genererar oförenliga krav på MKB:n",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-040-03",
+              "Felbedömd samrådskrets utsätter ansökan för avvisningsrisk",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-050-01",
+              "Avgränsningsbedömningen uteblir eller dröjer",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-050-03",
+              "Mallstyrda avgränsningsbesked spär ut MKB:n",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-080-02",
+              "Berörd stats synpunkter tvingar fram projektändringar",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-090-02",
+              "Projektet har förändrats utan att samrådet förnyats",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-G080-01",
+              "Gränsöverskridande påverkan upptäcks för sent",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B20-START-01",
+              "Samrådet initieras för sent – alternativen är redan låsta",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-010-01",
+              "Oöverblickbar villkorshistorik",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-010-02",
+              "Äldre beslut saknas i arkiv",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-100-02",
+              "Villkorsförslagen krockar med tillståndshistoriken",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-C110-01",
+              "Anmälan registreras hos fel tillsynsmyndighet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-C170-01",
+              "Verksamheten startar utan att startkraven uppfyllts",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-G020-01",
+              "Felaktig verksamhetskod väljs",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-G030-02",
+              "Tillsynsmyndigheten förelägger tillstånd mitt i anmälningsstrategin",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-G040-02",
+              "Kumulativa ändringar glider över tillståndströskeln",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-G050-02",
+              "Sent byte till samlad prövning spräcker underlaget",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-G110-02",
+              "Övergången till Miljöprövningsmyndigheten kräver uppdaterad ärendeplanering",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B30-G110-03",
+              "Miljöprövningsdelegationens handläggningstid överskrider projektplanen",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B30-GC130-01",
+              "Obligatorisk BMP-bedömning förbises",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-GC130-02",
+              "Oklart vilka anmälningar som är BMP-pliktiga",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-GC140-02",
+              "BMP-bedömningen blir överklagandets måltavla",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-GC160-01",
+              "Försiktighetsmått och förbud överklagas",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-GC160-02",
+              "Underrättelse om 'ingen åtgärd' ger falsk trygghet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-GO110-02",
+              "Återkallelsehotet hänger över driften",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-GO130-02",
+              "Omprövningar behöver hanteras enligt övergången till Miljöprövningsmyndigheten",
+              "Absolut underlag saknas eller ger endast gränsvärde"
+            ],
+            [
+              "R-B30-O100-02",
+              "Reformdriven omprövningsplikt träffar äldre tillstånd",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-O120-01",
+              "Sambandskravet begränsar vilka villkor som får röras",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B30-START-01",
+              "Tillståndsmatrisen missar 9 kap.-plikten",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-010-01",
+              "Salami-slicing: åtgärden delas upp och undgår prövning",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-030-03",
+              "Sakägarförteckningen blir felaktig eller ofullständig",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-050-01",
+              "Förhandling om rättighet misslyckas och tvingar fram omprojektering",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-050-02",
+              "Säkrad rättighet täcker inte hela det slutliga prövningsobjektet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-060-02",
+              "Natura 2000-påverkan upptäcks först efter vägvalet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-G040-01",
+              "Rådighetsbrist leder till avvisning utan sakprövning",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-G040-02",
+              "Kommunal rådighet enligt LVV 2 kap. 5 § missförstås",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-G040-03",
+              "Avtal om rådighet håller inte för domstolens krav",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-G070-02",
+              "Muntlig myndighetsdialog ger falsk trygghet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-G070-03",
+              "Markavvattning förväxlas med övrig vattenverksamhet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GE100-02",
+              "Särskilt undantag i 11 kap. 15–16 §§ tolkas för extensivt",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GE100-03",
+              "Förändrade förhållanden gör undantaget inaktuellt",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GE110-02",
+              "Undantaget förväxlas med befrielse från Natura 2000-kraven",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GE110-03",
+              "Betydandeprövningen görs utan tillräckligt ekologiskt underlag",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GE120-02",
+              "12:6-samrådet kan pågå längre än sexveckorsspärren",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B40-GM100-01",
+              "Gränsen mellan markavvattning och tillfällig sänkning dras fel",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GM100-02",
+              "Skydds- och nyttointressen i avvattningen bortfaller ur analysen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GM110-02",
+              "Markavvattningsförbudet i södra Sverige förbises",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GM140-01",
+              "Obligatoriskt överlämnande upptäcks sent och tillför en domstolsfas",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GM140-02",
+              "Diskretionärt överlämnande vid berörda tredje fastigheter skapar oförutsägbarhet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GN100-01",
+              "Tröskelvärdena i FVV 19 § feltolkas",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GN100-02",
+              "Listningen garanterar inte att ärendet stannar i anmälningsspåret",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GN130-02",
+              "Kompletteringskraven avslöjar att åtgärden hör hemma i tillståndsspåret",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GN150-02",
+              "BMP-beslutet motiveras eller offentliggörs felaktigt",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GN150-03",
+              "BMP-begreppet är omdiskuterat och påverkas av pågående reform",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-GN170-02",
+              "Underrättelse om 'ingen åtgärd' ger falsk trygghet",
+              "Utanför körningen"
+            ],
+            [
+              "R-B40-M120-01",
+              "Dispens beviljas inte eftersom 'särskilda skäl' är en restriktiv prövning",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-M120-02",
+              "Dispensbeslutet misstas vara ett tillstånd",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-M130-01",
+              "Handläggningstiden för markavvattning är osäker",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-M150-02",
+              "Villkoren för avvattningen blir tekniskt ogenomförbara eller kostsamma",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-M160-01",
+              "Kostnadsfördelning och deltagandefrågor blåser upp processen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-M160-03",
+              "Tvångsrätt, ersättning och inlösen prövas i samma mål och gör domen oförutsägbar",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-N110-01",
+              "Anmälningsunderlaget underdimensioneras i tron att 'det är bara en anmälan'",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B40-N110-02",
+              "Sakägar- och fastighetsuppgifter i anmälan är inaktuella eller felaktiga",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-N120-01",
+              "Anmälan lämnas till fel tillsynsmyndighet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-N140-01",
+              "Fiske- och naturintressen mobiliserar motstånd vid remissen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-N140-02",
+              "Remissinstanser svarar sent eller inte alls",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-N180-02",
+              "Start sker före negativt BMP-beslut eller särskilt startdatum",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-P110-01",
+              "Oprecist yrkande försvårar eller fäller ansökan",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-P110-03",
+              "Kollision med pågående vattenkraftsomprövning i samma vattensystem",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-P120-01",
+              "Handläggningstiden i vattenmål påverkar projektets tidplan",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B40-P120-02",
+              "Avgiftstvist eller underbetalning stoppar handläggningsstarten",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B40-P120-03",
+              "Behörighets- och kungörelsefel ger återförvisning efter överklagande",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-E010-02",
+              "Anslutningskö och osäker framkomlighet underminerar nätutredningens antaganden",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-E020-01",
+              "Ansökan bedöms som ofullständig och måste kompletteras innan sakprövningen går vidare",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B50-E040-01",
+              "Koncessionsbeslutet överklagas – lång överprövning hos regering eller domstol",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B50-E040-03",
+              "Villkor om skyddsåtgärder eller sträckning blir ogenomförbara i byggskedet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-G900-01",
+              "AND-gatens sista spår blir projektets kritiska linje",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B50-G900-02",
+              "Återkoppling till G010: ett sent upptäckt krav behöver hanteras",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-G900-03",
+              "Tidsglapp mellan spåren urholkar tidiga beslut",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-GX020-01",
+              "Fel behörig instans väljs för dispens eller tillstånd",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-K010-01",
+              "Okända fornlämningar påträffas sent – Fornsök är inte uttömmande",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-K010-02",
+              "Samrådsplikten enligt KML iakttas för sent och förgiftar relationen med länsstyrelsen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-K020-02",
+              "Utredningsresultatet visar större och värdefullare lämningar än väntat",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-K030-01",
+              "Länsstyrelsen avslår ingreppsansökan – fornlämningen ska bevaras",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-K040-01",
+              "Överklagat KML-beslut eller ohanterade förstartsvillkor blockerar markarbetet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-M020-01",
+              "Kungörelse och samråd med länsstyrelsen blir en konfliktarena",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-M020-02",
+              "Kompletteringsbehov fördröjer koncessionsärendets sakprövning",
+              "Kostnad över 10 mdkr per händelse"
+            ],
+            [
+              "R-B50-M030-01",
+              "Hänskjutande till regeringen lägger till ett prövningsled med osäker tidsplan",
+              "Medelvärde över tio gånger medianen; Kostnad över 10 mdkr per händelse"
+            ],
+            [
+              "R-B50-M030-02",
+              "Koncessionsbeslut angrips genom överklagande eller rättsprövning",
+              "Medelvärde över tio gånger medianen; Kostnad över 10 mdkr per händelse"
+            ],
+            [
+              "R-B50-M030-03",
+              "Rikskonflikt enligt MB 3–4 kap. fäller avvägningen mot projektet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-M040-01",
+              "Koncessionen räcker inte – miljötillståndet blir den verkliga flaskhalsen",
+              "Medelvärde över tio gånger medianen; Kostnad över 10 mdkr per händelse"
+            ],
+            [
+              "R-B50-M040-03",
+              "Markanvisning och fastighetsrättslig åtkomst halkar efter tillståndsspåren",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-M050-01",
+              "Beslutspaketet är inkonsistent – villkor biter inte på varandra",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-N020-02",
+              "Bristfällig alternativ- och kumulativ analys håller inte vid prövning",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-N050-01",
+              "Omprojekteringen skapar ny kumulativ påverkan och nollställer underlaget",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-N050-02",
+              "Undantagsvägen i 29 § är politisk och oförutsägbar",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-N060-02",
+              "Natura-villkor kolliderar med huvudtillståndets villkor",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-P030-01",
+              "Antagen detaljplan överklagas och laga kraft skjuts upp",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B50-P040-01",
+              "Lovansökan krockar med icke lagakraftvunnen plan eller kvarstående överklaganderisker",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B50-P040-02",
+              "Kompletteringsföreläggande flyttar tioveckorsfristens startpunkt",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B50-P050-02",
+              "Lovprövningens avgränsning mot miljöprövningen skapar rättstvist",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-P050-03",
+              "Kompetens- och kapacitetsbrist i byggnadsnämnd förlänger tio-veckorsfristen",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B50-P060-01",
+              "Kontrollansvarig saknas eller saknar behörighet för anläggningstypen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-P060-02",
+              "Oenighet vid tekniskt samråd om kontrollplanens omfattning",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-P070-01",
+              "Startbesked uteblir trots lagakraftvunnet lov",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-P070-02",
+              "Sen inhibition eller länsstyrelseprövning stoppar arbetet trots startbesked",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-S010-02",
+              "Ingen äger uppföljningen – sektorsbeslut förverkar tyst",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-T010-01",
+              "Alternativ- och korridorunderlaget håller inte för planprövningen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-T010-02",
+              "MKB och miljöbeskrivning i planen blir inaktuell under den utdragna planprocessen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-T020-01",
+              "Länsstyrelsens granskningsyttrande eller oenighet stoppar fastställelsen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-X010-02",
+              "Strandskydd och lokala skyddsföreskrifter upptäcks sent i detaljutformningen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-X040-01",
+              "Dispens- och skyddsbeslut överklagas och gaten skjuts upp",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B50-X040-02",
+              "Inkonsekvent dispenspraxis mellan kommuner och län skapar oförutsägbarhet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B50-X050-01",
+              "Partiell gate: skyddsbeslut täcker inte hela det planerade markarbetet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-010-01",
+              "Avgifts- och formaliafel lägger ärendet på is innan prövning startat",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-010-02",
+              "Aktörsbytet till Miljöprövningsmyndigheten skapar diarie- och behörighetsglapp",
+              "Absolut underlag saknas eller ger endast gränsvärde"
+            ],
+            [
+              "R-B60-030-01",
+              "MKB-brister stjälper fullständighetsbedömningen",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B60-030-02",
+              "Skiftande kravbild vid aktörsbyte skapar omprövning av underlaget",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-080-01",
+              "Kungörelse- eller delgivningsfel gör prövningen sårbar för ogiltighet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-090-02",
+              "Många synpunkter kräver strukturerad kommunicering och bedömning",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B60-100-01",
+              "Justerade yrkanden underminerar den processuella ramen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-120-02",
+              "Väder och årstid försenar syn och platsbesök",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-140-01",
+              "Sakkunniga ledamöters tillgång och jäv stoppar sammanträdet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-140-02",
+              "Nya yrkanden och bevis vid förhandlingen spränger ramen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-160-01",
+              "Regeringsprövningen är ett separat beslutssteg utan lagstadgad handläggningsfrist",
+              "Medelvärde över tio gånger medianen; Kostnad över 10 mdkr per händelse"
+            ],
+            [
+              "R-B60-160-02",
+              "Regeringen når ett annat resultat än prövningsinstansens yttrande",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-160-03",
+              "Rättsprövning skapar fortsatt processrisk utan automatisk inhibition",
+              "Medelvärde över tio gånger medianen; Kostnad över 10 mdkr per händelse"
+            ],
+            [
+              "R-B60-170-02",
+              "Samrådsresultatet beaktas inte dokumenterbart i avgörandet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-200-01",
+              "Fel i delgivning eller kungörelse försvårar beräkningen av överklagandetiden",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-200-02",
+              "Helger, semester och postlogistik rubbar fristberäkningen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-220-01",
+              "Rättidighetsprövningen blir en juridisk sidoprocess",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-240-01",
+              "Länsstyrelsens tidigare medverkan kräver en konkret jävsprövning",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-240-02",
+              "Återförvisning till kommunen startar om den lokala politiska processen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-250-01",
+              "Överklagandets ram och domstolens utredningsansvar bedöms fel",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-250-02",
+              "Överprövningens handläggningstid påverkar projektet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-250-03",
+              "Ny myndighetsmotpart saknar processvana i domstol",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B60-260-01",
+              "Uteblivet prövningstillstånd lämnar MMD:s avgörande stående utan sakprövning i MÖD",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-260-02",
+              "Uppskjutet PT-besked håller målet svävande",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-270-01",
+              "Återförvisning från MÖD leder till ny handläggning i underinstansen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-270-02",
+              "Prejudicerande avgörande flyttar rättsläget för hela branschen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-270-03",
+              "EU-rättslig osäkerhet tvingar fram förhandsavgörande eller avvaktan",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-280-02",
+              "HD-prejudikat kan upphäva åratal av handläggning i efterhand",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-G020-02",
+              "Utesluten sambandsprövning splittrar målet i parallella processer",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-G040-01",
+              "Kompletteringskraven blir en ändlös pingisrunda",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B60-G130-01",
+              "Fel avgörandeform blir ett processfel i efterhand",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-G150-01",
+              "Sent förbehåll från regeringen kastar om hela beslutskedjan",
+              "Medelvärde över tio gånger medianen; Kostnad över 10 mdkr per händelse"
+            ],
+            [
+              "R-B60-G150-02",
+              "Obligatorisk tillåtlighetsprövning och regeringens förbehåll blandas ihop",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-G210-01",
+              "Ett överklagande startar en separat överprövningskedja",
+              "Medelvärde över tio gånger medianen; Mycket hög nationell frekvens"
+            ],
+            [
+              "R-B60-G230-01",
+              "Klaganden väljer fel forum och får starta om",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-G230-02",
+              "S1-reformen ändrar instanskartan mitt i processen",
+              "Absolut underlag saknas eller ger endast gränsvärde"
+            ],
+            [
+              "R-B60-G290-01",
+              "Ett nytt avgörande efter återförvisning kan överklagas på nytt",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B60-START-01",
+              "Inkonsistent handoff från variantprocesserna stoppar den fortsatta beredningen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-010-01",
+              "Beslutsmatrisen bygger på inaktuella versioner av beslut och villkor",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-010-02",
+              "Parallellt sektorsbeslut faller bort ur konsolideringen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-010-03",
+              "Olika projektgränser i olika beslut omöjliggör konsistent matris",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-030-02",
+              "Inhibitionsbeslut träffar pågående förberedande arbeten mitt i byggberedskapen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-040-02",
+              "Otydliga villkorsformuleringar ger tolkningstvist om vad som krävs före start",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-060-01",
+              "Kompletteringsloopen mellan inlämning och avslag drar ut förstarten",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-060-02",
+              "Ändrad projektering gör ställd säkerhet och förstartshandlingar inaktuella",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-080-02",
+              "Omprojektering för att kringgå markmotstånd skapar nya tillståndsbehov",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-100-02",
+              "Förändrade förutsättningar i parallellspåret gör att beslutet inte längre matchar projektet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-120-01",
+              "Konfliktlösning kräver villkorsändring eller ny prövning med egen processledtid",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-120-02",
+              "Omprojekteringen rubbar alternativ- och MKB-förutsättningarna i det ursprungliga tillståndet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-130-01",
+              "legal_build_ready sätts på felaktig grund – förbisedd verkställighets- eller inhibitionsfråga",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-130-02",
+              "Readiness-beslutet fattas utan dokumenterad spårbarhet per gate",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-150-01",
+              "Restpunkten visar sig vara materiell och kräver ny prövning i stället för komplettering",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G020-02",
+              "Verkställbarhetsbedömningen av icke lagakraftvunna beslut blir fel",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G020-03",
+              "Återförvisning från överinstans river upp hela beslutspaketet",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G050-01",
+              "Säkerhet som krävs för giltighet eller start är inte ställd eller godkänd",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G050-02",
+              "Godkännande av förstartshandlingar tar längre tid än planerat",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G070-03",
+              "Rättighetsbilden visar sig vara felaktig eller ofullständig i lagfarts- och servitutsgranskningen",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G090-01",
+              "Startbesked kan inte meddelas trots beviljat bygglov",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G090-03",
+              "Sektorsbeslutet har ännu inte fått laga kraft eller kan inte tas i anspråk",
+              "Årskostnad över 10 mdkr"
+            ],
+            [
+              "R-B70-G110-01",
+              "Geografisk eller kapacitetsmässig konflikt mellan tillstånd, plan och koncession",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G110-02",
+              "Igångsättningstid eller arbetstid löper ut innan de övriga gates är klara",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G110-03",
+              "Skyddsåtgärd i ett beslut blockerar fysiskt genomförande i ett annat",
+              "Medelvärde över tio gånger medianen"
+            ],
+            [
+              "R-B70-G140-02",
+              "Klimat- eller säsongsfönster för villkorad fältverifiering missas",
+              "Medelvärde över tio gånger medianen"
+            ]
           ]
         }
       ]

@@ -47,6 +47,7 @@ function application() {
     CHART_RISKS: Object.fromEntries(charts.map(id => [id, risks.filter(risk => risk.chart_key === id).length])),
     PROC_NODE: Object.fromEntries(Object.entries(proc).flatMap(([chart, data]) => data.nodes.map(node => [node.id, { ...node, chart }]))),
     state, consequences, riskItemText, triggerFactors,
+    DATA:{measurement:{}}, EX_BY_RISK:new Map(), measurementProvenance:()=>'',
     document: { querySelector: element },
     renderSidebar() {},
     setView: view => { state.view = view; },
@@ -104,7 +105,7 @@ test('ranking page renders the complete distribution, dated provenance and a swi
   assert.equal((html.match(/<tr class=/g) || []).length, 50);
   assert.doesNotMatch(html, /datum saknas/);
   assert.match(html, /16 september 2026 12:28 \(Stockholm\)/);
-  assert.match(html, /inte sannolikheter i procent/);
+  assert.match(html, /inte läsas som en procentsats/);
   element('#toggleRankScope').onclick();
   html = element('#main').innerHTML;
   assert.equal((html.match(/<tr class=/g) || []).length, ranking.rankedCount);
@@ -112,8 +113,8 @@ test('ranking page renders the complete distribution, dated provenance and a swi
   element('#exportRanking').onclick();
   const [, header, rows] = context.csvExport;
   assert.equal(rows.length, ranking.rankedCount);
-  assert.deepEqual(Array.from(rows[0]).slice(0, 4), [ranking.entries[0].rank, ranking.entries[0].riskId, ranking.entries[0].risk.title, ranking.entries[0].score]);
-  assert.equal(header.includes('btl_relativ_poang'), true);
+  assert.deepEqual(Array.from(rows[0]).slice(0, 5), [ranking.entries[0].rank, ranking.entries[0].riskId, ranking.entries[0].risk.title, 'relative_likelihood', ranking.entries[0].score]);
+  assert.equal(header.includes('matt'), true);
 });
 
 test('default process node ranks reflect direct risks and downstream mode includes explicit affected nodes', () => {

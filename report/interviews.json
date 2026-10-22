@@ -1,1 +1,209 @@
-{"schemaVersion":1,"status":"awaiting_material","interviews":[]}
+{
+  "schemaVersion": 1,
+  "status": "ready",
+  "interviews": [
+    {
+      "id": "I01",
+      "publicLabel": "Intervjukälla I01",
+      "role": "Offentlig förvaltning och organisationsförändring",
+      "publicationAllowed": true,
+      "reviewStatus": "approved",
+      "sourceFormat": "interview_notes",
+      "reviewBasis": "Redaktionell kontroll mot tillhandahållet dokument och uppdragets publiceringsmedgivande; ingen uppgift om separat respondentgranskning.",
+      "sourceSha256": "60b935c56352175e3132bdf99013bb31eeaaf47bf1aa36879eec005339831af0",
+      "excerpts": [
+        {
+          "id": "I01-7",
+          "text": "• Samtidigt är det viktigt att skilja mellan enhetlighet i handläggningen och enhetlighet i utfallet. Företag kan uppleva att länsstyrelser hanterar liknande ärenden på olika sätt, och där finns utrymme för större enhetlighet. Däremot kan själva utfallet behöva skilja sig mellan olika delar av landet eftersom de lokala förutsättningarna varierar, exempelvis när det gäller naturtyper och andra miljövärden.",
+          "locator": "Intervjuanteckning, stycke 7",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        },
+        {
+          "id": "I01-12",
+          "text": "• En del av de 342 risker som Cardinal har identifierat ligger utanför organisationskommitténs och/eller den nya myndighetens mandat och kan därför inte hanteras inom ramen för arbetet med att inrätta myndigheten.",
+          "locator": "Intervjuanteckning, stycke 12",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        }
+      ]
+    },
+    {
+      "id": "I02",
+      "publicLabel": "Intervjukälla I02",
+      "role": "Erfarenhet från näringsliv och förvaltning",
+      "publicationAllowed": true,
+      "reviewStatus": "approved",
+      "sourceFormat": "interview_notes",
+      "reviewBasis": "Redaktionell kontroll mot tillhandahållet dokument och uppdragets publiceringsmedgivande; ingen uppgift om separat respondentgranskning.",
+      "sourceSha256": "14ecd708b89750c24256e4522ec44a05f538de4725f481e4884272b91d8bfb66",
+      "excerpts": [
+        {
+          "id": "I02-9",
+          "text": "Ytterligare en aspekt är vilken bransch du är i. Är du i energibranschen finns exempelvis en risk att man gör på ett sätt i en administrativ region och på ett annat sätt i en annan region.  Det drabbar ett och samma projekt som ska byggas i två olika regioner som därmed står inför olika tidsrymder i samma typ av beslut.",
+          "locator": "Intervjuanteckning, stycke 9",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        },
+        {
+          "id": "I02-28",
+          "text": "En av styrkorna i miljöprövningsdelegationerna är att de är lokalt baserade eftersom handläggarna har lokalkännedom. Detta blir en resa för den nya myndigheten att få ihop framåt – att ta till vara den lokala kompetensen och kännedomen om trakten.",
+          "locator": "Intervjuanteckning, stycke 28",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        }
+      ]
+    },
+    {
+      "id": "I03",
+      "publicLabel": "Intervjukälla I03",
+      "role": "Industriell projektutveckling",
+      "publicationAllowed": true,
+      "reviewStatus": "approved",
+      "sourceFormat": "interview_notes",
+      "reviewBasis": "Redaktionell kontroll mot tillhandahållet dokument och uppdragets publiceringsmedgivande; ingen uppgift om separat respondentgranskning.",
+      "sourceSha256": "35208c4865299602c0b56070676da250c954cc6c30cba92ad6b37f3443cf6a95",
+      "excerpts": [
+        {
+          "id": "I03-13",
+          "text": "Myndigheten har satt upp en KPI för en del av sin process men det säger inte mig någonting om slutprodukten som kund.",
+          "locator": "Intervjuanteckning, stycke 13",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        }
+      ]
+    },
+    {
+      "id": "I04",
+      "publicLabel": "Intervjukälla I04",
+      "role": "Industri och logistik",
+      "publicationAllowed": true,
+      "reviewStatus": "approved",
+      "sourceFormat": "interview_notes",
+      "reviewBasis": "Redaktionell kontroll mot tillhandahållet dokument och uppdragets publiceringsmedgivande; ingen uppgift om separat respondentgranskning.",
+      "sourceSha256": "f8b4aa03931f4a25b49acfe2d72dd2fdbbf13bfc962c23c052bb7220109b28da",
+      "excerpts": [
+        {
+          "id": "I04-13",
+          "text": "Intervjupersonen delar delvis bedömningen av de högst rankade riskerna. Att detaljplanen inte har vunnit laga kraft har endast utgjort ett problem vid ett tillfälle. I det aktuella fallet pågick detaljplaneprocessen parallellt med planeringen av en ny verksamhet. Eftersom detaljplanen ännu inte var på plats kunde företaget inte gå vidare med projektet, vilket resulterade i att affärsmöjligheten gick förlorad.",
+          "locator": "Intervjuanteckning, stycke 13",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        },
+        {
+          "id": "I04-21",
+          "text": "Företagens egen kompetens har samtidigt stor betydelse för hur dessa situationer hanteras. Företag med egen personal som arbetar med miljö- och tillståndsfrågor har bättre förutsättningar att bedöma om kompletteringskraven är motiverade. Företag som saknar motsvarande kompetens riskerar i högre utsträckning att acceptera krav på utredningar som egentligen inte är nödvändiga. Intervjupersonen betonar att företag självklart ska kunna visa att deras verksamhet inte medför oacceptabla risker, men anser att utredningskraven behöver stå i proportion till de faktiska riskerna.",
+          "locator": "Intervjuanteckning, stycke 21",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        },
+        {
+          "id": "I04-32",
+          "text": "En viktig framgångsfaktor är enligt intervjupersonen att etablera goda relationer med berörda remissinstanser och handläggande myndigheter. Erfarenheten är att tydlighet från företagets sida bidrar till ett mer konstruktivt samarbete och att myndigheterna då också anstränger sig mer för att driva processen framåt. Väl genomarbetade ansökningar och tydlig kommunikation kan därmed minska risken för missförstånd och onödiga kompletteringar.",
+          "locator": "Intervjuanteckning, stycke 32",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        },
+        {
+          "id": "I04-34",
+          "text": "Samtidigt finns det faktorer som företagen har mycket begränsade möjligheter att påverka. Ett exempel är bristande resurser hos myndigheterna. Intervjupersonen beskriver ett fall där länsstyrelsen inte påbörjade handläggningen av företagets ärende förrän efter ett år, eftersom myndigheten saknade tillräckligt med personal. Sådana förseningar kan uppstå även när företaget har lämnat in en fullständig och väl genomarbetad ansökan.",
+          "locator": "Intervjuanteckning, stycke 34",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        }
+      ]
+    },
+    {
+      "id": "I05",
+      "publicLabel": "Intervjukälla I05",
+      "role": "Infrastruktur och anläggning",
+      "publicationAllowed": true,
+      "reviewStatus": "approved",
+      "sourceFormat": "interview_notes",
+      "reviewBasis": "Redaktionell kontroll mot tillhandahållet dokument och uppdragets publiceringsmedgivande; ingen uppgift om separat respondentgranskning.",
+      "sourceSha256": "46b7096bec13e7b6ce7f537e8dd42e85496bbabd8a06e98efe130e09522e4333",
+      "excerpts": [
+        {
+          "id": "I05-16",
+          "text": "Som exempel nämns kompletteringskrav avseende fågelhäckning som tillkommer sent i processen. Sådana krav kan medföra betydande merkostnader och ytterligare förseningar, särskilt om kompletteringen behöver genomföras under en viss period på året. Problemet är därmed inte enbart att ett kompletteringsföreläggande förskjuter en formell tidsfrist, utan att innehållet i kompletteringen kan få långtgående konsekvenser för hela projektets framdrift.",
+          "locator": "Intervjuanteckning, stycke 16",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        },
+        {
+          "id": "I05-24",
+          "text": "Problematiken förstärks av att flera handläggare kan vara involverade i olika skeden av processen. När ansvaret övergår från en person till en annan finns en risk att tidigare diskussioner och bedömningar inte får fullt genomslag i den fortsatta prövningen. Frågor som verksamhetsutövaren uppfattat som avklarade kan därmed aktualiseras på nytt, samtidigt som nya utredningskrav tillkommer.",
+          "locator": "Intervjuanteckning, stycke 24",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        },
+        {
+          "id": "I05-40",
+          "text": "Samtidigt betonar intervjupersonerna att företagens eget agerande endast kan hantera en del av problematiken. Även med god framförhållning, omfattande utredningar och en väl fungerande dialog kvarstår osäkerheten om vilka krav som kan komma att ställas senare i processen. För att företagen ska kunna planera mer effektivt krävs därför även tydligare ramar för myndigheternas prövning.",
+          "locator": "Intervjuanteckning, stycke 40",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        },
+        {
+          "id": "I05-62",
+          "text": "Ett särskilt problem är bristen på kontinuitet mellan samråd och efterföljande prövning. Om dessa delar även fortsättningsvis hanteras av olika personer eller organisationer finns en risk att samma problem med sena kompletteringskrav och skiftande bedömningar kvarstår.",
+          "locator": "Intervjuanteckning, stycke 62",
+          "publicationAllowed": true,
+          "reviewStatus": "approved",
+          "topicIds": [],
+          "riskIds": [],
+          "controlIds": [],
+          "processIds": []
+        }
+      ]
+    }
+  ]
+}

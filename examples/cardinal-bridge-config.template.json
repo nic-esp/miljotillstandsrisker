@@ -1,0 +1,7 @@
+{
+  "orgId": "REPLACE_WITH_ORGANIZATION_UUID",
+  "orgSlug": "svenskt-naringsliv",
+  "experimentId": "REPLACE_WITH_EXPERIMENT_UUID",
+  "executionId": "REPLACE_WITH_COMPLETED_EXECUTION_UUID",
+  "includeControlAnalysis": true
+}

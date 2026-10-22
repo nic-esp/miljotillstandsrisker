@@ -1,0 +1,21 @@
+{
+  "orgId": "REPLACE_WITH_ORGANIZATION_UUID",
+  "risks": { "NR_RISK_UUID": "SITE_RISK_ID" },
+  "controls": { "NR_CONTROL_UUID": "SITE_CONTROL_ID" },
+  "targets": [
+    {
+      "sourceTargetLinkId": "SITE_TARGET_LINK_ID",
+      "nrControlId": "NR_CONTROL_UUID",
+      "nrRiskId": "NR_RISK_UUID",
+      "nrElementId": "NR_BOW_TIE_ELEMENT_UUID",
+      "nrElementType": "cause"
+    }
+  ],
+  "processMappings": [
+    {
+      "nrRiskId": "NR_RISK_UUID",
+      "nrChartId": "NR_PROCESS_CHART_UUID",
+      "nrNodeId": "NR_PROCESS_NODE_ID"
+    }
+  ]
+}

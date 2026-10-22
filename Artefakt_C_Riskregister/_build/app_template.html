@@ -176,7 +176,7 @@ mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
       <input aria-label="Sök risker" id="search" type="search" placeholder="Sök i titel, beskrivning, motivation, påverkan, åtgärder…" autocomplete="off">
     </div>
     <select id="sort" aria-label="Sortera risker">
-      <option value="rank">Sortera: BTL-rangordning</option>
+      <option value="rank">Sortera: Rangordning</option>
       <option value="loss">Sortera: Högst förväntad förlust</option>
       <option value="likelihood">Sortera: Högst händelsemått</option>
       <option value="impact">Sortera: Högst kostnad vid händelse</option>
@@ -226,7 +226,7 @@ for (const r of RISKS) CHART_RISKS[r.chart_key] = (CHART_RISKS[r.chart_key] || 0
 
 // ---- state ----
 const state = { q:'', charts:new Set(CHARTS), cats:new Set(CATEGORIES), origins:new Set(ORIGINS),
-  node:'', view:'risks', sort:'rank', topOnly:false, rankScope:'top', showDownstream:false, selNode:null, selChart:'B00', selProcNode:null, expandAll:false };
+  node:'', view:'risks', sort:'rank', topOnly:false, rankScope:'top', rankMetric:'cost', quality:'all', showDownstream:false, selNode:null, selChart:'B00', selProcNode:null, expandAll:false };
 const requestedRiskId = new URLSearchParams(location.search).get('risk');
 const requestedRisk = requestedRiskId && RISKS.find(r => r.risk_id === requestedRiskId);
 if (requestedRisk) {
@@ -344,10 +344,11 @@ function renderSidebar(){
     .filter(n => state.charts.has(n.chart_key))
     .map(n => `<option value="${esc(n.node_id)}" ${state.node===n.node_id?'selected':''}>${esc(n.node_id)} – ${esc(n.label)}</option>`).join('');
   $('#sidebar').innerHTML = `
-    <div class="fgroup ranking-filter"><h3>BTL-rangordning</h3>
+    <div class="fgroup ranking-filter"><h3>Prioritering efter kostnad</h3>
       <label class="fopt"><input id="topOnly" type="checkbox" ${state.topOnly?'checked':''}>Endast topp 50 <span class="cnt">${RANKING.topEntries.length}</span></label>
       <p class="ranking-note">Samma topp 50 i hela registret. Övriga filter begränsar urvalet.</p>
     </div>
+    <div class="fgroup"><h3>Mätunderlag</h3><select id="fQuality"><option value="all">Alla risker</option><option value="cost" ${state.quality==='cost'?'selected':''}>Med kostnadsunderlag</option><option value="review" ${state.quality==='review'?'selected':''}>Värden att granska</option></select></div>
     <div class="fgroup">
       <h3>Nod</h3>
       <select id="fNode" style="width:100%">
@@ -365,6 +366,7 @@ function renderSidebar(){
     </div>
     <button class="btn clearbtn" id="clearFilters">Rensa filter</button>`;
   $('#topOnly').onchange = e => { state.topOnly=e.target.checked; state.sort='rank'; $('#sort').value='rank'; renderMain(); };
+  $('#fQuality').onchange=e=>{state.quality=e.target.value;renderMain();};
   $('#fNode').onchange = e => { state.node = e.target.value; renderMain(); };
   document.querySelectorAll('[data-chart]').forEach(cb => cb.onchange = () => {
     cb.checked ? state.charts.add(cb.dataset.chart) : state.charts.delete(cb.dataset.chart);
@@ -380,7 +382,7 @@ function renderSidebar(){
     renderMain();
   });
   $('#clearFilters').onclick = () => {
-    state.q=''; $('#search').value=''; state.charts=new Set(CHARTS); state.cats=new Set(CATEGORIES); state.origins=new Set(ORIGINS); state.node=''; state.topOnly=false;
+    state.q=''; $('#search').value=''; state.charts=new Set(CHARTS); state.cats=new Set(CATEGORIES); state.origins=new Set(ORIGINS); state.node=''; state.topOnly=false; state.quality='all';
     if(typeof exState!=='undefined')exState.missingControls=false;
     renderSidebar(); renderMain();
     if(typeof exSyncRoute==='function')exSyncRoute();
@@ -674,7 +676,7 @@ function renderProcess(){
 
   $('#main').innerHTML = `
     <div class="ex-page-head"><div><div class="eyebrow">Processer</div><h2>Var finns de högst rankade riskerna?</h2>
-    <p>Topp 50 efter relativ sannolikhet · ${rankingDate()}. Antal kopplade risker och deras rang visar var uppmärksamheten behövs; nodernas egen störningssannolikhet är inte beräknad.</p></div></div>
+    <p>Topp 50 efter förväntad kostnad · ${rankingDate()}. Antal kopplade risker och deras rang visar var uppmärksamheten behövs; nodernas egen störningssannolikhet är inte beräknad.</p></div></div>
     <div class="charttabs">${tabs}</div>
     ${processRankingPanel(ck)}
     <div class="proctoolbar">

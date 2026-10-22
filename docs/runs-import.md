@@ -85,3 +85,82 @@ Utan en explicit native-adapter arkiveras likelihood-/impact-Monte Carlo med pro
 - Latent `delta` från kontrolleffekter ändrar inga kanoniska målrelationer och blir aldrig direkt en procentuell förlustreduktion. Saknas en exakt scenariokombination visas ingen beräknad effekt av besökarens val.
 
 Råfilernas okända fält publiceras inte. Kända Run-identiteter och resultatmått plockas ut med en explicit fältlista. Fel i identiteter, hash, målrelationer, enheter, horisont, histogram eller angiven lineage stoppar kandidaten. Luckor redovisas; de fylls inte med nollor.
+
+## Privat exportbrygga från nr
+
+Bryggan är förberedd och lokalt testad. Förberedelse, export, granskning och aktivering är separata steg. Inget steg publicerar automatiskt. Ingen mätning startas och Cardinal-koden ändras inte.
+
+### Förbered nu – utan att hämta eller importera resultat
+
+Kopiera `examples/cardinal-bridge-config.template.json` till en privat konfigurationsfil under `work/`. Ange organisationens UUID och slug, experiment-ID och en uttryckligen vald execution. Exporten kräver att execution är avslutad. Den väljer aldrig automatiskt senaste körning. `examples/cardinal-crosswalk.template.json` visar korsreferensernas struktur; använd de verifierade ID-kopplingarna från paritetsarbetet, inte namnmatchning.
+
+```sh
+npm run export:cardinal -- prepare work/export-config.json work/export-bridge.txt
+npm run export:cardinal -- prepare-loss-cache work/export-config.json work/export-loss-cache.mjs
+```
+
+Dessa kommandon skapar bara granskbara skript med privat filbehörighet. De gör inga nätverksanrop, öppnar ingen databas och läser inga resultat. Befintliga hjälpfiler skrivs inte över. Mappningsversionen binds till sajtens aktuella kontrollmål. Om mappningarna ändras måste konfigurationen förberedas igen.
+
+### Exportera senare, när resultat ska hämtas
+
+**Runs, scope och kopplingar.** Granska `export-bridge.txt` i en editor. En administratör kan köra innehållet i utvecklarkonsolen i sin inloggade `https://nr.getcardinal.io`-flik. Det laddar ned ett paket med kompletta Runs, deras uppströms indata och syskon, fryst scope, graf, fullständig strukturell ZIP samt kontrollanalys för båda kontrollbaserna. Skriptet läser inte lösenord, cookies eller API-nycklar. Webbläsarsessionen används bara mot samma värd. Ändra inte webbläsarens säkerhetsinställningar för att köra hjälpen.
+
+Det strukturella ZIP-uttaget kräver Cardinals befintliga superadminbehörighet. Utan den stoppar exporten; en trunkerad kontrollmatris används aldrig som ersättning. ZIP:en arkiveras privat. Importören läser risker, kontroller, risk–kontrollmål, bow-tie-element och processkopplingar utan att extrahera sökvägar eller köra innehåll. Aktuella kopplingar och den historiska körningens scope hålls isär.
+
+**Sparade förlustfördelningar.** Vissa GET-anrop i Cardinal kan köa en förlustsimulering när en cache saknas. Därför använder bryggan inte `risks.list`, `riskPostureKpis`, `portfolioLossDistribution` eller `costProjection`. Den gamla inställningen `includeAnalytics: true` avvisas. `includeControlAnalysis` hämtar en separat granskad läsare som sammanställer redan sparade kontrollresultat utan att köa simuleringar; sätt den till `false` för ett rent arkiv.
+
+`export-loss-cache.mjs` är ett separat administratörsskript för en redan behörig Cardinal-runtime med `postgres`-paketet och befintlig `POSTGRES_URL`. Det läser `loss_model_results` i en **repeatable read, read only**-transaktion. Organisation, experiment, avslutad execution, scope och båda käll-Run-ID:n kontrolleras. Skriptet anropar inga Cardinal-tjänster eller köer. Standardutdata sparas privat som `loss-cache.json`; anslutningsuppgifter ska aldrig kopieras till sajtens repo eller lämnas i chatten. Körningen av detta nya lässkript behöver verifieras vid nästa riktiga export; förberedelsen ansluter inte till nr.
+
+Om ingen sparad förlustmodell finns exporteras detta som frånvaro. Bryggan startar inte en beräkning för att fylla luckan. Native Monte Carlo-Runs innehåller sannolikhets- och konsekvensstatistik; den gemensamma monetära förlustfördelningen ligger i en separat tabell. Det är därför två kompletterande exportunderlag behövs.
+
+### Granska lokalt före aktivering
+
+När exporten senare är beställd och filerna finns:
+
+```sh
+npm run import:cardinal -- inspect work/cardinal-export.json work/crosswalk.json work/candidate-unique --loss-cache work/loss-cache.json
+```
+
+`inspect` skriver endast en privat kandidat och `validation.json`. Den ändrar inte sajtens aktiva data. Residualbasen är standard; `--basis inherent_no_controls` skapar en separat kandidat för den inherenta basen. Kandidatens katalog måste vara ny. Arkivet bevarar båda baserna oavsett vald projektion.
+
+Korsreferensen innehåller `orgId`, `risks` och `controls` (nr-UUID → sajt-ID), `targets` och `processMappings`. Alla sajt-ID:n och mål måste finnas med. Risk, kontroll och måltyp verifieras mot sajtens kanoniska data. Nya, saknade eller dubbla kopplingar arkiveras och spärrar aktivering tills källmodellen och korsreferensen har stämts av. Importen skriver inte om kontroller, risker eller processer.
+
+Adaptern bevarar medelvärde och median från native occurrence- och impactresultat. Årlig monetär förlust hämtas från den sparade förlustmodellen. Analytiskt medelvärde och simulerat medelvärde hålls isär, även per risk. Portföljens median kommer från den gemensamma fördelningen; individmedianer summeras inte. Bedömningshorisonten och den årliga förlusthorisonten lagras separat. Nollmedian är ett giltigt resultat. Okända kontrollkostnader fylls inte med noll.
+
+Adaptern stöder den granskade sparade modellen `loss-model-v2.1` med dess dokumenterade inställningar. Annan modellversion, seed, antal dragningar eller uppsättning horisonter kräver adaptergranskning; nya format tolkas inte tyst. Äldre redan hämtade analys-API-paket kan fortfarande läsas offline, men bryggan skapar inte nya sådana paket.
+
+`validation.json` redovisar tillgängliga medelvärden och medianer, bortfall, kopplingsskillnader och avstämning av kontrollbidrag. Saknade sparade årsresultat, pågående simulering i äldre exporter, saknad kontrollanalys, kopplingsdrift och kontrolltotaler som inte går ihop spärrar aktivering. Saknade värden konstrueras aldrig.
+
+Hela källpaketet, råa Runs, ZIP, korsreferens och förlustmodell arkiveras med kontrollsummor. Publiceringsprojektionen använder tillåtna fält; råa promptar, kontaktuppgifter och privata beskrivningar följer inte med. Kontrollanalysen behåller sin egen flik. Allokerad kontrollnytta omtolkas inte som marginaleffekten av valfria kryssrutor; dessa kräver separata exporterade scenarier. Scenariounderlagen finns kvar i råarkivet.
+
+### Aktivera som ett separat beslut
+
+Först när kandidaten är granskad och import ska ske:
+
+```sh
+npm run import:runs -- activate work/candidate-unique
+npm run build
+npm test
+```
+
+Aktivering kontrollerar åter kopplingsversion, råfiler och kontrollsummor och arkiverar föregående mätutgåva lokalt. Publicering till GitHub Pages görs separat. Median förblir administratörens standard i `publication/presentation.json`; besökare kan inte byta mått. Importen ändrar inte rapportmanus, intervjuer eller rapportens fastställda mätutgåva.
+
+## Cosmic Rhino: offlineprojektion utan ny simulering
+
+Utgåvan den 22 oktober 2026 använder en arkiverad, skrivskyddad databasexport eftersom körningen saknar lagrad gemensam monetär förlustfördelning. `scripts/project-cardinal-snapshot.mjs` är en separat adapter för detta format. Den anropar aldrig Cardinal och skapar inga nya mätningar eller simuleringar.
+
+```sh
+node scripts/project-cardinal-snapshot.mjs \
+  work/cosmic-rhino-2026-10-22/snapshot.json \
+  work/nr-bridge-2026-10-21/crosswalk.json \
+  publication/value-policy.json \
+  work/cosmic-rhino-2026-10-22/candidate
+```
+
+Adaptern kräver slutförd körning, samma organisation och experiment i alla Runs, komplett källkedja, fryst ettårsomfattning i SEK och fullständiga ID-korsreferenser. Risk–kontrollpar och direkta processmappningar måste stämma. Avvikelser på bow tie-elementnivå redovisas separat; sajten behåller sina ursprungliga kopplingar. Effektkällan väljs från scenariokörningens faktiska föräldrar.
+
+Frekvens hämtas från `occurrence.results[].annualRate`. Kostnadsfördelningens median är BTL-resultatets kalibrerade `absolute.point`; dess medelvärde är `point * exp(latentStdDev² / 2)`, enligt Cardinals severity-belief-kontrakt. Impact-Monte-Carlos diagnostiska `exposures.mean` är inte detta kostnadsmedel. Förväntad årskostnad beräknas från frekvensmedel och kostnadsmedel under ett explicit oberoendeantagande. Medianprodukter, summerade medianer och latenta kontrolleffekter omvandlas inte till årsförlust eller besparing.
+
+`sourceStatistics` bevarar ursprungliga värden. `summaries`, `expectedLoss` och `review` beskriver publiceringsbeslutet. `publication/value-policy.json` anger redaktionella granskningsgränser; dessa är inte empiriskt fastställda naturliga tak. När ett medelvärde underkänns kan medianen behållas om dess egen storleksordning klarar granskningen. Beskrivningsuppskattningar kräver en separat adapter med enhets- och omfattningskontroll och används inte i denna utgåva.
+
+Granska kandidatens `measurement.json` och `link-audit.json` före aktivering. Kopiera den godkända mätutgåvan till `publication/measurement.json`; rapportens låsta kopia och manus uppdateras tillsammans enligt `report/README.md`. Kör tester, generera PDF och bygg sedan sajten. Fullständiga exporter, intervjudokument och privata korsreferenser stannar i den ignorerade katalogen `work/`.

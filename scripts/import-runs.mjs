@@ -220,6 +220,14 @@ export function importPackage(manifestPath, outputDirectory) {
 export function verifyCandidate(directory) {
   const canonical=canonicalContext(), snapshot=read(join(directory,'measurement.json')), report=read(join(directory,'validation.json'));
   if(snapshot.mappingVersion!==canonical.mappingVersion||digest(snapshot)!==report.projectionSha256)fail('kandidaten har ändrats sedan valideringen');
+  if(report.activationBlockers?.length)fail(`aktivering spärrad: ${report.activationBlockers.join(', ')}`);
+  if(snapshot.provenance?.bridge) {
+    if(snapshot.provenance.bridge.activationBlockers?.length)fail(`Cardinal-kandidaten kräver granskning: ${snapshot.provenance.bridge.activationBlockers.join(', ')}`);
+    if(digest(read(join(directory,'bridge-bundle.json')))!==snapshot.provenance.bridge.bundleSha256)fail('arkiverat Cardinal-paket har ändrats');
+    if(snapshot.provenance.bridge.lossCacheSha256&&digest(read(join(directory,'loss-cache.json')))!==snapshot.provenance.bridge.lossCacheSha256)fail('arkiverad förlustmodell har ändrats');
+    for(const [name,hash] of Object.entries(report.archiveChecksums||{}))if(sha256(readFileSync(inside(directory,name)))!==hash)fail('arkiverade kopplingar har ändrats');
+    if(!report.archiveChecksums?.['crosswalk.json']||!report.archiveChecksums?.['relationships.zip'])fail('kopplingsarkivets hashvärden saknas');
+  }
   validateMeasurement(snapshot,canonical.risks.map(r=>r.risk_id),canonical.controls.map(c=>c.id));
   if(snapshot.ranking)createRankingModel(canonical.risks,snapshot.ranking);
   for(const run of snapshot.provenance.runs)if(sha256(readFileSync(join(directory,'raw',`${run.runId}.json`)))!==run.sha256)fail('arkiverad råfil har ändrats efter granskning');

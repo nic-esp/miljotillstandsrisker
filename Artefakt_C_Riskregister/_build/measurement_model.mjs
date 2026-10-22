@@ -51,7 +51,8 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
   const summary = (s,dimension) => {
     source(s);
     if(!['mean','median'].some(k=>s[k]!=null)||['mean','median'].some(k=>s[k]!=null&&!finite(s[k])))fail('ogiltig median eller medelvärde');
-    if(s.horizonYears!==p.horizonYears||!s.definition)fail('statistikens period eller definition saknas');
+    const horizon=dimension==='expectedLoss'?p.horizonYears:(p.assessmentHorizonYears??p.horizonYears);
+    if(s.horizonYears!==horizon||!s.definition)fail('statistikens period eller definition saknas');
     if(dimension==='likelihood'&&(!['probability','events_per_year'].includes(s.unit)||s.unit==='probability'&&['mean','median'].some(k=>s[k]>1)))fail('ogiltig sannolikhet/frekvens i statistik');
     if(dimension==='impact'&&s.unit!==`${p.currency}_per_event`||dimension==='expectedLoss'&&s.unit!==p.currency)fail('statistikens valuta/enhet avviker');
     if(dimension!=='expectedLoss'&&(s.eligible!==true||s.calibrationStatus!=='anchor_scaled'))fail('absolut statistik kräver anchor_scaled och eligibleForAbsolute');
@@ -82,7 +83,7 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
       source(m);
       if (!finite(m.value) || m.eligible !== true || m.calibrationStatus !== 'anchor_scaled') fail('absoluta mått kräver anchor_scaled och eligibleForAbsolute');
       if (dimension === 'likelihood' && (!['probability', 'events_per_year'].includes(m.unit) || (m.unit === 'probability' && m.value > 1))) fail('ogiltig sannolikhet/frekvens');
-      if (m.horizonYears !== p.horizonYears) fail('perioderna skiljer sig');
+      if (m.horizonYears !== (p.assessmentHorizonYears??p.horizonYears)) fail('perioderna skiljer sig');
       if (dimension === 'impact' && m.unit !== `${p.currency}_per_event`) fail('konsekvensens valuta/enhet avviker');
       if (m.interval90 && (!Array.isArray(m.interval90) || m.interval90.length !== 2 || m.interval90.some(v => !finite(v)) || m.interval90[1] < m.interval90[0])) fail('ogiltigt osäkerhetsintervall');
     }
@@ -109,6 +110,14 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
       source(e);
       if (!risks.has(e.riskId) || !['likelihood', 'impact'].includes(e.dimension) || typeof e.delta !== 'number' || !Number.isFinite(e.delta)) fail('ogiltig latent kontrolleffekt');
     }
+  }
+  if(snapshot.controlAnalysis) {
+    const a=snapshot.controlAnalysis;
+    if(a.statistic!=='mean'||a.horizonYears!==p.horizonYears||!Array.isArray(a.controls))fail('ogiltig kontrollanalys');
+    ids(a.controls.map(c=>c.controlId),controls,'kontrollanalys-ID');
+    if(a.runId)source(a);
+    for(const key of ['residualExpectedLoss','inherentExpectedLoss','totalAttributedReduction'])if(a[key]!=null&&!finite(a[key]))fail('ogiltig kontrollanalysstatistik');
+    for(const c of a.controls)if(c.attributedReduction!=null&&!finite(c.attributedReduction)||c.annualCost!=null&&!finite(c.annualCost))fail('ogiltigt kontrollbidrag');
   }
   const portfolios = [...(snapshot.portfolio ? [snapshot.portfolio] : []),...(snapshot.portfolios||[])],portfolioScopes=new Set();
   for (const a of portfolios) {

@@ -624,6 +624,6 @@ test('derived node dictionary and built HTML exactly mirror the canonical data',
     return [key, chart.name];
   }));
   assert.deepEqual(htmlData.chartNames, expectedChartNames, 'den byggda appens diagramnamn ar inaktuella');
-  assert.match(generatedHtml, /Baslinje S0 per 2026-08-20/);
+  assert.match(generatedHtml, /Risker, motåtgärder och samband i miljötillståndsprocessen/);
   assert.doesNotMatch(generatedHtml, /Baslinje S0 per 2026-08-14/);
 });

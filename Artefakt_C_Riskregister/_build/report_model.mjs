@@ -22,8 +22,9 @@ export function validateReport(report, interviews, riskIds, controlIds) {
     if(!c.id||chapters.has(c.id)||!c.title||!Array.isArray(c.blocks))fail('ogiltigt eller dubblerat kapitel');
     chapters.add(c.id);
     for(const b of c.blocks) {
-      if(!['p','h3','note','highlight','quote','figure','table','integration'].includes(b.type))fail('okänd manusblocktyp');
+      if(!['p','h3','note','highlight','quote','figure','table','integration','equation'].includes(b.type))fail('okänd manusblocktyp');
       if((b.sourceIds||[]).some(id=>!sources.has(id)))fail('hänvisning till okänd källa');
+      if(b.type==='equation'&&(!b.formula||b.latex&&!/^equation-[0-9]+$/.test(b.id)))fail('ogiltig ekvation');
       if(b.type==='quote'&&!excerpts.has(b.excerptId))fail('citat saknas i godkänt intervjuunderlag');
       if(b.type==='quote'&&b.text)fail('citattext hämtas från källan, inte en separat kopia');
     }
@@ -36,11 +37,15 @@ export function validateReport(report, interviews, riskIds, controlIds) {
   return report;
 }
 export function reportStatus(status) {
-  return ({draft:'Arbetsmanus',awaiting_measurement:'Inväntar mätresultat',awaiting_interviews:'Inväntar intervjumaterial',awaiting_integration:'Inväntar samlad analys',reviewed:'Sakgranskad'})[status]||'Arbetsmanus';
+  return ({published:'',draft:'Arbetsmanus',awaiting_measurement:'Inväntar mätresultat',awaiting_interviews:'Inväntar intervjumaterial',awaiting_integration:'Inväntar samlad analys',reviewed:'Sakgranskad'})[status]??'Arbetsmanus';
 }
 export function reportFigureData(id,report,measurement,risks,controls=[]) {
   if(!report.measurementEditionId||report.measurementEditionId!==measurement.editionId)return {kind:'pending'};
   const rows=new Map((measurement.risks||[]).map(r=>[r.riskId,r]));
+  const top=new Set(measurement.ranking?.entries.slice(0,50).map(r=>r.riskId)||[]);
+  const names={B10:'B10 · Klassificering',B20:'B20 · Miljöbedömning',B30:'B30 · Miljöfarlig verksamhet',B40:'B40 · Vattenverksamhet',B50:'B50 · Sektorsspår',B60:'B60 · Prövning',B70:'B70 · Inför start'};
+  if(['cost-top-process','process-coverage'].includes(id))return {kind:'bars',unit:'risker',rows:[...new Set(risks.map(r=>r.chart_key))].sort().map(key=>({label:names[key]||key,value:risks.filter(r=>r.chart_key===key&&(id==='cost-top-process'?top.has(r.risk_id):rows.get(r.risk_id)?.expectedLoss)).length}))};
+  if(id==='authority-reach')return {kind:'bars',unit:'risker',rows:controls.filter(c=>c.driver==='authority').sort((a,b)=>b.riskIds.length-a.riskIds.length||a.id.localeCompare(b.id)).slice(0,10).map(c=>({label:c.id+' · '+c.title,value:c.riskIds.length}))};
   if(id==='portfolio-distribution')return measurement.portfolio?.lossDistribution?{kind:'histogram',...measurement.portfolio.lossDistribution}: {kind:'pending'};
   if(id==='risk-contributions')return {kind:'bars',rows:risks.map(r=>({id:r.risk_id,label:r.title,value:rows.get(r.risk_id)?.expectedLoss?.value})).filter(r=>r.value!=null).sort((a,b)=>b.value-a.value).slice(0,10)};
   if(id==='process-contributions') {
@@ -55,7 +60,7 @@ export function reportFigureData(id,report,measurement,risks,controls=[]) {
 }
 export function renderReportFigure(id,report,measurement,risks,controls=[]) {
   const data=reportFigureData(id,report,measurement,risks,controls),e=reportEscape;
-  const money=v=>`${new Intl.NumberFormat('sv-SE',{maximumFractionDigits:2}).format(v/1e6)} ${measurement.provenance?.currency==='SEK'?'mnkr':`mn ${measurement.provenance?.currency||'SEK'}`}`;
+  const money=v=>data.unit==='risker'?`${v} risker`:`${new Intl.NumberFormat('sv-SE',{maximumFractionDigits:2}).format(v/1e6)} ${measurement.provenance?.currency==='SEK'?'mnkr':`mn ${measurement.provenance?.currency||'SEK'}`}`;
   if(data.kind==='pending'||data.kind==='bars'&&!data.rows.length)return '<div class="ms-empty"><span class="ms-status">Inväntar rapportens mätutgåva</span><p>Figuren färdigställs med rapportens fastställda mätunderlag. En ny mätning ändrar inte den granskade rapporttexten automatiskt.</p></div>';
   if(data.kind==='histogram') {
     const max=Math.max(...data.bins.map(b=>b.count/data.sampleCount),.01);
@@ -69,10 +74,11 @@ export function renderReportChapter(chapter, report, interviews, {figure=()=>'',
   const e=reportEscape, quotes=new Map((interviews?.interviews||[]).flatMap(i=>(i.excerpts||[]).map(q=>[q.id,{...q,interview:i}])));
   const cite=b=>(b.sourceIds||[]).length?`<span class="rp-citations">${b.sourceIds.map(id=>`<a href="${e(linkBase)}view=report&amp;chapter=referenser#source-${e(id)}">[${e(id)}]</a>`).join(' ')}</span>`:'';
   const blocks=chapter.blocks.map(b=> {
+    if(b.type==='equation')return `<figure class="rp-equation">${b.latex?`<img src="${e(linkBase.replace(/\?$/,''))}report/equations/${e(b.id)}.svg" alt="${e(b.formula)}" style="max-width:100%;height:auto">`:`<pre>${e(b.formula)}</pre>`}<figcaption>${e(b.caption)}</figcaption></figure>`;
     if(b.type==='h3')return `<h3>${e(b.text)}</h3>`;
     if(b.type==='p')return `<p>${e(b.text)} ${cite(b)}</p>`;
     if(b.type==='note')return `<aside class="rp-note"><strong>${e(b.title||'Avgränsning')}</strong><p>${e(b.text)}</p>${cite(b)}</aside>`;
-    if(b.type==='highlight')return `<aside class="rp-highlight"><span>Redaktionellt lyft</span><p>${e(b.text)}</p>${cite(b)}</aside>`;
+    if(b.type==='highlight')return `<aside class="rp-highlight"><p>${e(b.text)}</p>${cite(b)}</aside>`;
     if(b.type==='quote') {
       const q=quotes.get(b.excerptId); if(!q)return '';
       return `<figure class="rp-quote"><blockquote>${e(q.text)}</blockquote><figcaption>${e(q.interview.publicLabel)} · ${e(q.interview.role)}<br>${e(q.locator)} · ${e(q.id)}</figcaption></figure>`;
@@ -86,5 +92,5 @@ export function renderReportChapter(chapter, report, interviews, {figure=()=>'',
     return '';
   }).join('');
   const thematicQuotes=[...quotes.values()].filter(q=>(q.topicIds||[]).includes(chapter.id));
-  return `<div class="rp-chapter-meta"><span>Kapitel ${e(chapter.number)}</span><span>${e(reportStatus(chapter.status))}</span></div><h2>${e(chapter.title)}</h2>${chapter.lead?`<p class="rp-lead">${e(chapter.lead)}</p>`:''}${blocks}${thematicQuotes.length?`<section class="rp-interview-evidence"><h3>Röster ur intervjumaterialet</h3>${thematicQuotes.map(q=>`<figure class="rp-quote"><blockquote>${e(q.text)}</blockquote><figcaption>${e(q.interview.publicLabel)} · ${e(q.interview.role)} · ${e(q.locator)} [${e(q.id)}]</figcaption></figure>`).join('')}</section>`:''}${chapter.id==='referenser'?`<ol class="rp-sources">${(report.sources||[]).map(s=>`<li id="source-${e(s.id)}"><strong>[${e(s.id)}] ${e(s.title)}</strong><p>${e(s.description||'')}${s.url?` <a href="${e(s.url)}">Öppna källa</a>`:''}</p></li>`).join('')}${(interviews?.interviews||[]).map(i=>`<li id="source-${e(i.id)}"><strong>[${e(i.id)}] ${e(i.publicLabel)}</strong><p>${e(i.role)} · ${e(i.date||'Datum ej publicerat')} · Godkända utdrag: ${i.excerpts.length}</p></li>`).join('')}</ol>`:''}`;
+  return `<div class="rp-chapter-meta"><span>${/^[A-Z]$/.test(chapter.number)?'Bilaga':'Kapitel'} ${e(chapter.number)}</span><span>${e(reportStatus(chapter.status))}</span></div><h2>${e(chapter.title)}</h2>${chapter.lead?`<p class="rp-lead">${e(chapter.lead)}</p>`:''}${blocks}${thematicQuotes.length?`<section class="rp-interview-evidence"><h3>Röster ur intervjumaterialet</h3>${thematicQuotes.map(q=>`<figure class="rp-quote"><blockquote>${e(q.text)}</blockquote><figcaption>${e(q.interview.publicLabel)} · ${e(q.interview.role)} · ${e(q.locator)} [${e(q.id)}]</figcaption></figure>`).join('')}</section>`:''}${chapter.id==='referenser'?`<ol class="rp-sources">${(report.sources||[]).map(s=>`<li id="source-${e(s.id)}"><strong>[${e(s.id)}] ${e(s.title)}</strong><p>${e(s.description||'')}${s.url?` <a href="${e(s.url)}">Öppna källa</a>`:''}</p></li>`).join('')}${(interviews?.interviews||[]).map(i=>`<li id="source-${e(i.id)}"><strong>[${e(i.id)}] ${e(i.publicLabel)}</strong><p>${e(i.role)} · ${e(i.date||'Datum ej publicerat')} · Utdrag ur intervjuanteckningar: ${i.excerpts.length}</p></li>`).join('')}</ol>`:''}`;
 }

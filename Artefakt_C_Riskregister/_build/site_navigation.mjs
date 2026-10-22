@@ -29,7 +29,7 @@ export function renderSectionNavigation(page,{base='',firstChapter}={}) {
 export function renderSiteHeader({page='risks',base='',logo='',firstChapter}={}) {
   const section=siteSection(page);
   return `<a class="site-skip" href="#main">Hoppa till innehållet</a><header class="site-header">
-    <div class="site-brand"><a class="site-logo" href="https://www.svensktnaringsliv.se/" aria-label="Svenskt Näringsliv" target="_blank" rel="noopener">${logo}</a><div><a class="site-title" href="${base}?view=risks" data-site-page="risks">Miljötillståndsrisker</a><p>Risker, motåtgärder och samband · Baslinje S0 per 2026-08-20</p></div></div>
+    <div class="site-brand"><a class="site-logo" href="https://www.svensktnaringsliv.se/" aria-label="Svenskt Näringsliv" target="_blank" rel="noopener">${logo}</a><div><a class="site-title" href="${base}?view=risks" data-site-page="risks">Miljötillståndsrisker</a><p>Risker, motåtgärder och samband i miljötillståndsprocessen</p></div></div>
     <nav class="site-primary-nav" aria-label="Huvudnavigation">${SITE_SECTIONS.map(s=>`<a href="${navEscape(siteHref(s.view,base,firstChapter))}" data-site-section="${s.id}" data-site-page="${s.view}"${section.id===s.id?' aria-current="true"':''}>${s.label}</a>`).join('')}</nav>
     <nav class="site-section-nav" aria-label="${section.label} – vyer">${renderSectionNavigation(page,{base,firstChapter})}</nav>
   </header>`;
