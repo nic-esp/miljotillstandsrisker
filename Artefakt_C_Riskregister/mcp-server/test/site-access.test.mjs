@@ -55,7 +55,7 @@ test('all nested HTML entry points lock before content and resolve their own gat
     assert.match(html,/<html data-access-locked="true" lang="sv">/);
     assert.ok(html.indexOf('html[data-access-locked]')<html.indexOf('<body>'));
     assert.ok(html.indexOf('id="site-access-gate"')<html.indexOf('<main'));
-    assert.ok(html.includes('href="'+base+'assets/site-access.css"'));
+    assert.ok(html.includes('href="'+base+'assets/site-access.css?v=cardinal-1"'));
     assert.ok(html.includes('src="'+base+'assets/site-access.js"'));
     assert.ok(html.includes('src="'+base+'assets/cardinal-wordmark.svg"'));
     assert.match(html,/<noscript>JavaScript behöver vara aktiverat/);
