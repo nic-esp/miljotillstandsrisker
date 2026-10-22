@@ -76,7 +76,7 @@ test('published edition reconciles ranks, statistics, report tables and read-onl
  assert.equal(presentation.riskStatistic,'median');assert.equal(presentation.costPriority,true);
  const priced=snapshot.risks.filter(r=>r.expectedLoss);
  assert.equal(priced.length,snapshot.quality.expectedCostCount);
- assert.equal(priced.length,145);
+ assert.equal(priced.length,307);
  assert.equal(snapshot.risks.length,342);
  assert.equal(snapshot.ranking.entries.length,priced.length);
  for(const entry of snapshot.ranking.entries){const row=priced.find(r=>r.riskId===entry.riskId);assert.equal(entry.score,row.expectedLoss.value);assert.equal(entry.score,row.summaries.likelihood.mean*row.summaries.impact.mean);}

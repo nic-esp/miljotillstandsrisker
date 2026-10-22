@@ -1,6 +1,6 @@
 # Rapportens arbetsyta
 
-`manuscript.json` är den gemensamma källan till webbläsaren, den utskriftsvänliga HTML-utgåvan och PDF-rapporten. Utgåvan den 22 oktober 2026 innehåller 18 huvudkapitel och åtta bilagor, med Cosmic Rhino, hela risk- och kontrollregistret och fem intervjukällor som underlag. Den låsta mätkopian i `measurement.json` innehåller publiceringsbeslut och ursprungliga statistikvärden separat.
+`manuscript.json` är den gemensamma källan till webbläsaren, den utskriftsvänliga HTML-utgåvan och PDF-rapporten. Utgåvan den 22 oktober 2026 innehåller 17 huvudkapitel och åtta bilagor, med hela risk- och kontrollregistret, avslutade mätresultat och fem intervjukällor som underlag. Den låsta mätkopian i `measurement.json` bevarar båda kontrollbaserna och använder läget utan införda kontroller för riskkorten och investeringsjämförelserna.
 
 Huvudprioriteringen är förväntad årskostnad. Frekvens och kostnad per händelse visas normalt med median. Rapporten skiljer dessa mått åt och använder ingen konstruerad årsmedian eller ny Monte Carlo-simulering. Metodbilagorna dokumenterar beräkning, granskningsgränser, känslighet, intervjuer och källkedja.
 
@@ -31,3 +31,11 @@ Tematiska **fynd skrivs och granskas** som poster i `findings`: `id`, `title`, `
 `p`, `h3`, `note`, `highlight`, `quote`, `figure`, `table`, `integration`, `equation`. Text är ren text och escapes vid rendering. Ekvationer har en tillgänglig textformel, en förklarande bildtext och valfria LaTeX-rader som sätts till SVG/PNG vid PDF-bygget. Källhänvisningar anges som `sourceIds` som måste finnas i rapportens källregister. Endast HTTPS-länkar till externa källor tillåts.
 
 Statusar: `draft`, `awaiting_measurement`, `awaiting_interviews`, `awaiting_integration`, `reviewed`, `published`. `published` visar ingen statusetikett och innebär inte extern sakgranskning eller respondenternas godkännande. Dispositionen är utbyggbar; nya tematiska intervjuavsnitt kan läggas till utan att bygga om läsaren.
+
+## Värdegranskning och åtgärdsjämförelser
+
+`publication/value-policy.json` väljer basen utan kontroller. Skevhet eller hög årskostnad räcker inte som uteslutningsskäl; skala, absolut kalibrering och specificerade populationsproblem granskas separat. `publication/description-review.json` dokumenterar 198 granskningar och bevarar intervall utan att skapa medelvärden eller medianer.
+
+Den reproducerbara offlineordningen är `scripts/project-cardinal-snapshot.mjs`, därefter `scripts/apply-description-review.mjs`. De behöver det arkiverade exportunderlaget och dess matchningstabell. Kopiera den granskade mätningen till rapportens låsta kopia, uppdatera manuset och bygg PDF före webbplatsen. Ingen av dessa operationer startar en mätning.
+
+`investment_model.mjs` omvandlar identifierade logaritmiska skift till jämförelser från läget utan kontroller. Spridningen hålls konstant och interaktioner skattas inte. Okända effekter och genomförandekostnader lämnas odefinierade; negativa bidrag bevaras. Fristående belopp summeras inte till kombinationer.

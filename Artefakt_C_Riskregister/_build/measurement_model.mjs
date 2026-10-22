@@ -18,6 +18,17 @@ export function riskStatistic(row,dimension,statistic) {
   return null;
 }
 
+export function validateDescriptionReview(review) {
+  const fail = message => { throw new Error(`Beskrivningsgranskning: ${message}`); };
+  if(!review?.riskId||!Array.isArray(review.estimates)||!Array.isArray(review.contextValues)||!Array.isArray(review.missing)||!review.assessment||!/^[a-f0-9]{64}$/.test(review.source?.sha256||''))fail('källposition eller granskning saknas');
+  for(const [key,items] of [['estimates',review.estimates],['contextValues',review.contextValues]])for(const item of items) {
+    if(!['likelihood','impact'].includes(item.dimension)||!Number.isFinite(item.lower)||!Number.isFinite(item.upper)||item.lower<0||item.upper<item.lower||item.mean!==null||item.median!==null||item.statistic!=='unspecified_range'||item.sourceKind!=='description_estimate'||!item.sourceQuote||!item.scope||item.verification!=='attributed_estimate_not_independently_verified')fail('intervall får inte bli ett centralmått');
+    if(item.dimension==='impact'&&item.unit!=='SEK_per_event'||item.dimension==='likelihood'&&!(key==='contextValues'?['events_per_year','events_in_period']:['events_per_year']).includes(item.unit))fail('fel enhet eller period');
+  }
+  if(!['undefined','model_estimate'].includes(review.annualCostStatus))fail('beskrivningsintervall ger ingen årskostnad');
+  return review;
+}
+
 export function validateMeasurement(snapshot, riskIds, controlIds) {
   const fail = text => { throw new Error(`Mätpaket: ${text}`); };
   const ids = (values, allowed, label) => {
@@ -70,6 +81,7 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
     if (d.p50 < d.bins[0].lower || d.p95 > d.bins.at(-1).upper) fail('kvantiler utanför fördelningens intervall');
   };
   for (const r of snapshot.risks) {
+    if(r.descriptionReview){validateDescriptionReview(r.descriptionReview);if(r.descriptionReview.riskId!==r.riskId)fail('beskrivning avser annan risk');}
     for(const [dimension,s] of Object.entries(r.summaries||{})) {
       if(!['likelihood','impact','expectedLoss'].includes(dimension))fail('okänd statistikdimension');
       summary(s,dimension);
@@ -110,6 +122,11 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
       source(e);
       if (!risks.has(e.riskId) || !['likelihood', 'impact'].includes(e.dimension) || typeof e.delta !== 'number' || !Number.isFinite(e.delta)) fail('ogiltig latent kontrolleffekt');
     }
+  }
+  if(snapshot.controlInvestment) {
+    const a=snapshot.controlInvestment;
+    if(a.schemaVersion!==1||a.baseline!=='inherent_no_controls'||p.controlBasis!==a.baseline||a.implementationStatus!=='none_implemented'||a.method!=='additive_log_shifts_fixed_uncertainty'||a.interactionsEstimated!==false||a.costsAvailable!==false||!runIds.has(a.effectRunId))fail('ogiltig investeringsbas eller effektkälla');
+    for(const c of snapshot.controls)if(c.implementationStatus!=='proposed'||c.annualCost!==null||c.effects.some(e=>e.runId!==a.effectRunId))fail('investeringsanalysen kräver föreslagna kontroller och en gemensam effektkälla');
   }
   if(snapshot.controlAnalysis) {
     const a=snapshot.controlAnalysis;

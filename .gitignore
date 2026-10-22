@@ -35,6 +35,7 @@ Artefakt_C_Riskregister/_build/*
 !Artefakt_C_Riskregister/_build/authority_controls.mjs
 !Artefakt_C_Riskregister/_build/authority-inputs/
 !Artefakt_C_Riskregister/_build/measurement_model.mjs
+!Artefakt_C_Riskregister/_build/investment_model.mjs
 !Artefakt_C_Riskregister/_build/measurement_view.mjs
 !Artefakt_C_Riskregister/_build/measurement.css
 !Artefakt_C_Riskregister/_build/report_model.mjs

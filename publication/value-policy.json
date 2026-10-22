@@ -1,10 +1,32 @@
 {
   "schemaVersion": 1,
-  "id": "cosmic-rhino-review-2026-10-22",
-  "maxMeanMedianRatio": 10,
+  "id": "value-review-2026-10-22-v3",
+  "maxMeanMedianRatio": null,
   "maxAnnualFrequency": 10000,
   "maxCostPerEventSEK": 10000000000,
-  "maxExpectedAnnualCostSEK": 10000000000,
-  "description": "Redaktionella granskningsgränser för denna utgåva. Berörda medelvärden och härledda årskostnader lämnas odefinierade. Medianer behålls när deras egen storleksordning inte överskrider gränsen. Gränserna är försiktiga publiceringsval, inte bevis för fel eller naturliga övre gränser. Teknisk godkänd import innebär inte empirisk validering.",
-  "descriptionEstimates": []
+  "maxExpectedAnnualCostSEK": null,
+  "description": "Kalibrerade värden används som huvudregel. Stor skillnad mellan medelvärde och median redovisas som fördelningsinformation och medför inte uteslutning. Ingen generell gräns används för beräknad årskostnad. Medelfrekvens över 10 000 händelser per år eller medelkostnad över 10 miljarder kronor per händelse kräver separat stöd för exponering respektive projektkonsekvens och hålls tills dess odefinierade. En uttrycklig populationskonflikt behandlas individuellt. Gränserna är granskningsbeslut, inte naturliga tak eller bevis på modellfel.",
+  "descriptionEstimates": [],
+  "warningMeanMedianRatio": 10,
+  "riskExclusions": [
+    {
+      "riskId": "R-B30-O100-02",
+      "dimension": "likelihood",
+      "code": "population_mismatch",
+      "reason": "Beskrivningens numeriska underlag avser vattenkraftens omprövning. Risken gäller reformdriven omprövningsplikt för miljöfarlig verksamhet, för vilken beskrivningen inte anger en tillämplig bindande ordning. Jämförbar händelsefrekvens saknas för denna riskpopulation."
+    },
+    {
+      "riskId": "R-B60-270-02",
+      "dimension": "likelihood",
+      "code": "event_population_ambiguity",
+      "reason": "Källtexten blandar antalet prejudicerande avgöranden med antalet berörda projekt och anger 1–10 per år utan entydig population. Modellens över 450 händelser per år kan inte förenas med denna beskrivningsram innan händelseenheten klargörs."
+    },
+    {
+      "riskId": "R-B30-G110-03",
+      "dimension": "likelihood",
+      "code": "exposure_volume_conflict",
+      "reason": "Modellens över 1 300 försenade MPD-ärenden per år överstiger beskrivningens totala ärendevolym på cirka 260–330. Jämförbar population och skillnaden mellan inflöde, avgjorda och pågående ärenden behöver klargöras."
+    }
+  ],
+  "controlBasis": "inherent_no_controls"
 }

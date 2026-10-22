@@ -122,8 +122,8 @@ story += [p('ANALYSRAPPORT · OKTOBER 2026', 'label'), p(report['title'], 'title
           p(report['subtitle'], 'subtitle'),
           HRFlowable(width='16%', thickness=4, color=orange, hAlign='LEFT'), Spacer(1, 9*mm),
           p(report['description']), Spacer(1, 10*mm),
-          p('Cosmic Rhino · 342 risker · 378 motåtgärder · fem intervjukällor', 'small'),
-          p(report['extent'], 'small'), p(report['editionId'], 'small'), PageBreak(),
+          p('342 risker · 378 föreslagna motåtgärder · fem intervjukällor', 'small'),
+          p(report['extent'], 'small'), p(report['date'], 'small'), PageBreak(),
           p('Innehåll', 'chapter')]
 toc = TableOfContents()
 toc.levelStyles = [ParagraphStyle('toc', fontName='Body',fontSize=8.5,leading=11,textColor=ink,spaceBefore=0,spaceAfter=0,leftIndent=0,rightIndent=20)]
@@ -176,10 +176,54 @@ for chapter in report['chapters']:
                 for r in data['rows']:
                     drawing=Drawing(doc.width*.38,20)
                     drawing.add(Rect(0,3,doc.width*.38*r['value']/maximum,14,fillColor=orange,strokeColor=None))
-                    cells.append([p(r['label'],'cell'),drawing,p(str(r['value'])+' risker' if data.get('unit')=='risker' else f"{r['value']/1e6:,.1f} {money_unit}".replace(',',' ').replace('.',','),'cell')])
+                    cells.append([p(r['label'],'cell'),drawing,p(f"{r['value']:g} {data['unit']}" if data.get('unit') else f"{r['value']/1e6:,.1f} {money_unit}".replace(',',' ').replace('.',','),'cell')])
                 chart=Table(cells,colWidths=[doc.width*.42,doc.width*.4,doc.width*.18])
                 chart.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'MIDDLE'),('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7)]))
                 story += [chart]
+            elif data['kind']=='grouped':
+                maximum=max([v for r in data['rows'] for v in r['values']]+[1])
+                cells=[]
+                for r in data['rows']:
+                    drawing=Drawing(doc.width*.40,36)
+                    for j,v in enumerate(r['values']):
+                        drawing.add(Rect(0,22-j*18,doc.width*.40*v/maximum,11,fillColor=colors.HexColor(data['series'][j]['color']),strokeColor=None))
+                    cells.append([p(r['label'],'cell'),drawing,p(' / '.join(str(v) for v in r['values']),'cell')])
+                chart=Table(cells,colWidths=[doc.width*.42,doc.width*.42,doc.width*.16])
+                chart.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'MIDDLE'),('TOPPADDING',(0,0),(-1,-1),5),('BOTTOMPADDING',(0,0),(-1,-1),5)]))
+                story += [p('Grå: '+data['series'][0]['label']+'. Orange: '+data['series'][1]['label']+'.','small'),chart]
+            elif data['kind']=='matrix':
+                cells=[[p('Åtgärdsområde','cellhead')]+[p(x,'cellhead') for x in data['columns']]]
+                cells += [[p(r['label'],'cell')]+[p(str(v),'cell') for v in r['values']] for r in data['rows']]
+                chart=Table(cells,colWidths=[doc.width*.37]+[doc.width*.09]*len(data['columns']))
+                rules=[('VALIGN',(0,0),(-1,-1),'MIDDLE'),('TOPPADDING',(0,0),(-1,-1),9),('BOTTOMPADDING',(0,0),(-1,-1),9),('LINEBELOW',(0,0),(-1,-1),.4,line),('BACKGROUND',(0,0),(-1,0),pale)]
+                maximum=max([v for r in data['rows'] for v in r['values']]+[1])
+                for y,r in enumerate(data['rows'],1):
+                    for x,v in enumerate(r['values'],1):
+                        shade=v/maximum*.65
+                        rules.append(('BACKGROUND',(x,y),(x,y),colors.Color(1-(1-.85)*shade,1-(1-.55)*shade,1-(1-.13)*shade)))
+                chart.setStyle(TableStyle(rules));story += [chart]
+            elif data['kind']=='ranges':
+                maximum=max(r['upper'] for r in data['rows']);cells=[]
+                for r in data['rows']:
+                    drawing=Drawing(doc.width*.36,24)
+                    drawing.add(Line(0,12,doc.width*.36,12,strokeColor=line,strokeWidth=1))
+                    lo=doc.width*.36*r['lower']/maximum;hi=doc.width*.36*r['upper']/maximum
+                    drawing.add(Rect(lo,7,max(1,hi-lo),10,fillColor=orange,strokeColor=None))
+                    cells.append([p(r['label'],'cell'),drawing,p(f"{r['lower']:g}–{r['upper']:g}",'cell')])
+                chart=Table(cells,colWidths=[doc.width*.44,doc.width*.38,doc.width*.18])
+                chart.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'MIDDLE'),('TOPPADDING',(0,0),(-1,-1),8),('BOTTOMPADDING',(0,0),(-1,-1),8)]))
+                story += [chart,p(f"{data['unit']}. Linjär skala 0–{maximum:g}.",'small')]
+            elif data['kind']=='signed-bars':
+                maximum=max(abs(r['value']) for r in data['rows']);cells=[]
+                for r in data['rows']:
+                    w=doc.width*.32;drawing=Drawing(w,24);zero=w/2
+                    drawing.add(Line(zero,0,zero,24,strokeColor=muted,strokeWidth=.7))
+                    length=abs(r['value'])/maximum*zero
+                    drawing.add(Rect(zero-length if r['value']<0 else zero,5,length,14,fillColor=colors.HexColor('#93574f') if r['value']<0 else orange,strokeColor=None))
+                    cells.append([p(r['label'],'cell'),drawing,p(f"{r['value']:.1f} %".replace('.',','),'cell')])
+                chart=Table(cells,colWidths=[doc.width*.50,doc.width*.34,doc.width*.16])
+                chart.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'MIDDLE'),('TOPPADDING',(0,0),(-1,-1),6),('BOTTOMPADDING',(0,0),(-1,-1),6)]))
+                story += [chart,p('Noll i mitten. Höger: minskning. Vänster: ökning i modellen. Gemensam linjär skala.','small')]
             elif data['kind']=='histogram':
                 drawing=Drawing(doc.width,220)
                 left,bottom,plot_w,plot_h=38,30,doc.width-50,160
@@ -197,8 +241,7 @@ for chapter in report['chapters']:
                 story += [drawing,p(f"Median (P50): {data['p50']/1e6:.2f} {money_unit} · P95: {data['p95']/1e6:.2f} {money_unit} · {data['sampleCount']} utfall",'small')]
             else:
                 story += [p('Figurunderlag inväntas. Figuren kopplas till rapportens fastställda mätutgåva.','small')]
-            citation = ' · Mätutgåva '+report['measurementEditionId'] if report.get('measurementEditionId') else ' · Mätresultat inväntas'
-            if data.get('runId'): citation += ' · Run '+data['runId']
+            citation = ' · Källa: '+', '.join(block.get('sourceIds',[]))
             story += [p(block.get('caption','')+citation,'small'),Spacer(1,5*mm)]
             story[figure_start:] = [KeepTogether(story[figure_start:])]
         elif kind == 'table':

@@ -69,7 +69,7 @@ const processChartExport = readFileSync(join(here, 'process_chart_export.mjs'), 
   .replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
 
 const template = readFileSync(join(here, 'app_template.html'), 'utf8');
-const publicationModel = ['measurement_model.mjs','report_model.mjs'].map(file=>readFileSync(join(here,file),'utf8').replace(/^export /gm,'')).join('\n');
+const publicationModel = ['measurement_model.mjs','investment_model.mjs','report_model.mjs'].map(file=>readFileSync(join(here,file),'utf8').replace(/^export /gm,'').replace(/^import .*;\n/gm,'')).join('\n');
 const rankingModel = readFileSync(join(here, 'btl_ranking.mjs'), 'utf8').replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
 const rankingView = readFileSync(join(here, 'ranking_view.mjs'), 'utf8');
 const brandCss = readFileSync(join(here, 'svenskt-naringsliv.css'), 'utf8');
@@ -89,7 +89,7 @@ for (const marker of ['/*__EXPLORATION_CSS__*/','/*__EXPLORATION_VIEW__*/','/*__
 }
 const html = template
   .replace('<!--__SITE_HEADER__-->',()=>renderSiteHeader({logo:logoHorizontal,firstChapter:report.chapters[0].id}))
-  .replace('/*__SITE_NAVIGATION__*/',()=>readFileSync(join(here,'site_navigation.mjs'),'utf8').replace(/^export /gm,''))
+  .replace('/*__SITE_NAVIGATION__*/',()=>readFileSync(join(here,'site_navigation.mjs'),'utf8').replace(/^export /gm,'').replace(/^import .*;\n/gm,''))
   .replace('/*__NAVIGATION_VIEW__*/',()=>readFileSync(join(here,'navigation_view.mjs'),'utf8'))
   .replace('/*__PUBLICATION_MODEL__*/', () => publicationModel)
   .replace('/*__MEASUREMENT_VIEW__*/', () => readFileSync(join(here,'measurement_view.mjs'),'utf8'))
