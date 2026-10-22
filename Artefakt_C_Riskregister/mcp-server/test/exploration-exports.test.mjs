@@ -104,12 +104,14 @@ function withSiteFixture(callback) {
     'site/data/index.html', 'site/ai-access.html', 'site/llms.txt', 'site/sitemap.xml',
     'site/assets/svenskt-naringsliv-logo.svg', 'site/assets/svenskt-naringsliv-logo-stacked.svg',
     'site/assets/site-navigation.css',
+    'site/assets/site-access.css', 'site/assets/site-access.js', 'publication/site-access.json',
     'site/favicon.ico',
   ];
   for (const path of files) {
     mkdirSync(dirname(join(directory, path)), { recursive: true });
-    writeFileSync(join(directory, path), `fixture: ${path}`);
+    writeFileSync(join(directory, path), path.endsWith('.html')?`<!doctype html><html lang="sv"><head><title>Fixture</title></head><body>fixture: ${path}</body></html>`:`fixture: ${path}`);
   }
+  writeFileSync(join(directory, 'publication/site-access.json'),JSON.stringify({schemaVersion:1,passwordSha256:'a'.repeat(64),sessionHours:8}));
   writeFileSync(join(directory, 'report/manuscript.json'), JSON.stringify({chapters:[{id:'sammanfattning'}]}));
   writeFileSync(join(directory, 'private-source.txt'), 'Do not publish');
   try { return callback(directory); }
@@ -131,6 +133,12 @@ test('Pages preparation publishes all documented downloads and brand assets and 
     assert.equal(existsSync(join(output, 'stale.txt')), false);
     assert.equal(existsSync(join(output, 'private-source.txt')), false);
     assert.equal(existsSync(join(output, 'Artefakt_C_Riskregister')), false);
+    for(const [page,base] of [['index.html',''],['data/index.html','../'],['ai-access.html',''],['report/index.html','../']]) {
+      const html=readFileSync(join(output,page),'utf8');
+      assert.ok(html.includes('data-access-locked="true"'),page);
+      assert.ok(html.includes(`src="${base}assets/site-access.js"`),page);
+      assert.ok(html.includes('id="site-access-gate"'),page);
+    }
 
     rmSync(join(directory, STATIC_DATA_FILES['exploration.json']));
     assert.throws(() => prepareSite(directory), /ENOENT/);

@@ -1,0 +1,22 @@
+#site-access-gate{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;overflow:auto;padding:28px;background:#f6f5f2;color:#202930;font:16px/1.6 Arial,"Helvetica Neue",sans-serif;box-sizing:border-box}
+#site-access-gate *{box-sizing:border-box}
+.site-access-card{width:min(100%,480px);margin:auto;background:white;border:1px solid #d6dadd;box-shadow:0 12px 36px #1f272f0d}
+.site-access-brand{padding:28px 34px;background:#1f272f;border-bottom:4px solid #ea8f12;color:white}
+.site-access-brand img,.site-access-brand svg{display:block;width:195px;max-width:100%;height:auto}
+.site-access-content{padding:32px 34px 36px}
+#site-access-gate h1{font:700 clamp(24px,5vw,29px)/1.2 Arial,sans-serif;letter-spacing:-.6px;margin:0 0 18px}
+#site-access-gate p{margin:0 0 22px;font-size:15px;line-height:1.6}
+#site-access-gate label{display:block;font-size:14px;font-weight:700;margin:26px 0 8px}
+#site-access-password{display:block;width:100%;min-height:48px;padding:12px;border:1px solid #788793;border-radius:0;font:18px/1.3 Arial,sans-serif;background:white;color:#202930}
+#site-access-password:focus{outline:3px solid #ea8f12;outline-offset:2px}
+#site-access-gate #site-access-error{min-height:22px;margin:8px 0 14px;color:#944137;font-size:14px}
+#site-access-gate button{width:100%;min-height:48px;padding:12px 16px;border:0;border-radius:0;background:#ea8f12;color:#171d22;font:700 14px/1.5 Arial,sans-serif;cursor:pointer}
+#site-access-gate button:hover{background:#d8800b}
+#site-access-gate button:focus-visible{outline:3px solid #202930;outline-offset:3px}
+#site-access-gate button:disabled{opacity:.65;cursor:wait}
+#site-access-gate noscript{display:block;margin-top:18px;font-size:14px}
+.site-access-logout{margin-left:auto;align-self:center;flex-shrink:0;padding:8px 12px;border:1px solid #6d7c87;border-radius:0;background:transparent;color:#fff;font:600 12px/1.5 Arial,sans-serif;cursor:pointer}
+.site-access-logout:hover{background:#33414e}
+.site-access-logout:focus-visible{outline:3px solid #ea8f12;outline-offset:2px}
+@media(max-width:760px){.site-access-logout{position:absolute;right:18px;top:14px}.site-access-content{padding:26px 24px 30px}.site-access-brand{padding:24px}}
+@media print{.site-access-logout{display:none!important}html[data-access-locked] body>:not(#site-access-gate){display:none!important}#site-access-gate{position:static;min-height:100vh}}

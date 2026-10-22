@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-import { readFileSync, copyFileSync, cpSync, mkdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { readFileSync, copyFileSync, cpSync, mkdirSync, rmSync, statSync, writeFileSync, readdirSync } from 'node:fs';
+import { dirname, join, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildReport } from './build-report.mjs';
 import { renderSiteHeader } from '../Artefakt_C_Riskregister/_build/site_navigation.mjs';
+import { addSiteAccess } from './site-access.mjs';
 
 const rootDirectory = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -47,6 +48,9 @@ export function prepareSite(root = rootDirectory) {
     'site/assets/svenskt-naringsliv-logo.svg',
     'site/assets/svenskt-naringsliv-logo-stacked.svg',
     'site/assets/site-navigation.css',
+    'site/assets/site-access.css',
+    'site/assets/site-access.js',
+    'publication/site-access.json',
   ];
   // Verify all build inputs before replacing the previous preview.
   for (const relativePath of required) {
@@ -68,6 +72,19 @@ export function prepareSite(root = rootDirectory) {
   }
   writeFileSync(join(output, '.nojekyll'), '');
   buildReport(join(output,'report'));
+  const access=JSON.parse(readFileSync(join(root,'publication/site-access.json'),'utf8'));
+  const protectHtml=directory=>{
+    for(const entry of readdirSync(directory,{withFileTypes:true})) {
+      const file=join(directory,entry.name);
+      if(entry.isDirectory())protectHtml(file);
+      else if(entry.isFile()&&entry.name.endsWith('.html')) {
+        const path=relative(directory,output).replaceAll('\\','/');
+        const base=path?path+'/':'';
+        writeFileSync(file,addSiteAccess(readFileSync(file,'utf8'),access,base,logo));
+      }
+    }
+  };
+  protectHtml(output);
   return output;
 }
 
