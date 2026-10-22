@@ -24,7 +24,7 @@ Den senaste importerade BTL-rangordningen kommer från **16 september 2026 kl. 1
 - Källregister (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/sources.json>
 - Processkartor B00–B70 (JSON): <https://nic-esp.github.io/miljotillstandsrisker/data/process-charts.json>
 
-GitHub Pages-publiceringen använder den ursprungliga adressen ovan med en gemensam lösenordsruta på alla HTML-sidor. Inloggningen gäller i åtta timmar i samma webbläsare och kan avslutas med ”Logga ut”. Inställningen finns i `publication/site-access.json` som en SHA-256-kontrollsumma; lösenordet lagras inte i klartext i källkoden.
+GitHub Pages-publiceringen använder den ursprungliga adressen ovan med en gemensam, Cardinal-profilerad lösenordsruta på alla HTML-sidor. Inloggningen gäller i åtta timmar i samma webbläsare och kan avslutas med ”Logga ut”. Inställningen finns i `publication/site-access.json` som en SHA-256-kontrollsumma; lösenordet lagras inte i klartext i källkoden.
 
 Detta är en enkel visningsspärr enligt beställarens val, inte serverbaserad autentisering. Direkta PDF-, JSON- och CSV-länkar, GitHub-repot och MCP-servern är fortsatt publika. `scripts/prepare-site.mjs` lägger till samma ruta på appen, rapportens läsversion, dataindex och övriga HTML-sidor.
 

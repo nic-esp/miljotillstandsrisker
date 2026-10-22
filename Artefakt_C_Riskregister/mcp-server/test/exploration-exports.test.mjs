@@ -104,6 +104,7 @@ function withSiteFixture(callback) {
     'site/data/index.html', 'site/ai-access.html', 'site/llms.txt', 'site/sitemap.xml',
     'site/assets/svenskt-naringsliv-logo.svg', 'site/assets/svenskt-naringsliv-logo-stacked.svg',
     'site/assets/site-navigation.css',
+    'site/assets/cardinal-wordmark.svg', 'site/assets/SuisseIntl-Regular.woff2', 'site/assets/SuisseIntl-Medium.woff',
     'site/assets/site-access.css', 'site/assets/site-access.js', 'publication/site-access.json',
     'site/favicon.ico',
   ];

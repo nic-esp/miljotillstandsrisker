@@ -57,7 +57,7 @@ test('all nested HTML entry points lock before content and resolve their own gat
     assert.ok(html.indexOf('id="site-access-gate"')<html.indexOf('<main'));
     assert.ok(html.includes('href="'+base+'assets/site-access.css"'));
     assert.ok(html.includes('src="'+base+'assets/site-access.js"'));
-    assert.ok(html.includes('src="'+base+'assets/svenskt-naringsliv-logo.svg"'));
+    assert.ok(html.includes('src="'+base+'assets/cardinal-wordmark.svg"'));
     assert.match(html,/<noscript>JavaScript behöver vara aktiverat/);
     assert.match(html,/<input[^>]*type="password"[^>]*autocomplete="current-password"/);
     assert.doesNotMatch(html,/<input[^>]*name=/);

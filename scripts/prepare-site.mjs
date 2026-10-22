@@ -50,6 +50,9 @@ export function prepareSite(root = rootDirectory) {
     'site/assets/site-navigation.css',
     'site/assets/site-access.css',
     'site/assets/site-access.js',
+    'site/assets/cardinal-wordmark.svg',
+    'site/assets/SuisseIntl-Regular.woff2',
+    'site/assets/SuisseIntl-Medium.woff',
     'publication/site-access.json',
   ];
   // Verify all build inputs before replacing the previous preview.
@@ -80,7 +83,7 @@ export function prepareSite(root = rootDirectory) {
       else if(entry.isFile()&&entry.name.endsWith('.html')) {
         const path=relative(directory,output).replaceAll('\\','/');
         const base=path?path+'/':'';
-        writeFileSync(file,addSiteAccess(readFileSync(file,'utf8'),access,base,logo));
+        writeFileSync(file,addSiteAccess(readFileSync(file,'utf8'),access,base));
       }
     }
   };
