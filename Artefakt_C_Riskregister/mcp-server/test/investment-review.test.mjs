@@ -37,9 +37,9 @@ test('description audit never manufactures point values or changes cost ranks',(
 test('published baseline and authorities reconcile to the source-derived comparison',()=>{
  assert.equal(measurement.provenance.controlBasis,'inherent_no_controls');assert.equal(measurement.quality.expectedCostCount,307);assert.equal(measurement.quality.flaggedCount,34);
  assert.equal(measurement.reviewPolicy.maxMeanMedianRatio,null);assert.equal(measurement.reviewPolicy.maxExpectedAnnualCostSEK,null);
- const authority=controls.filter(c=>c.driver==='authority'&&c.scenario==='S1_beslutat_uppdrag'),s=evaluateInvestment(measurement,controls,authority.map(c=>c.id));
+ const authority=controls.filter(c=>c.driver==='authority'&&c.scenario==='S1_beslutat_uppdrag'),meanMeasurement={...measurement,priorityMetric:'expected_annual_cost'},s=evaluateInvestment(meanMeasurement,controls,authority.map(c=>c.id));
  assert.equal(s.affectedCount,78);assert.equal(s.pricedCount,72);assert.ok(Math.abs(s.reductionFraction-.2341617858610496)<1e-10);
- const ranked=rankInvestments(measurement,controls,authority);assert.equal(ranked[0].control.id,'MPM-16');assert.ok(ranked.find(r=>r.control.id==='MPM-14').reduction<0);
+ const ranked=rankInvestments(meanMeasurement,controls,authority);assert.equal(ranked[0].control.id,'MPM-16');assert.ok(ranked.find(r=>r.control.id==='MPM-14').reduction<0);
 });
 test('reader report has supported figures, no internal execution labels, and methods in appendices',()=>{
  let html='';
@@ -47,4 +47,15 @@ test('reader report has supported figures, no internal execution labels, and met
  assert.doesNotMatch(html,/cosmic rhino|execution|930101cd|residual_implemented|Run-ID|sammanhängande underlag/i);
  assert.ok(!report.chapters.some(c=>c.id==='metod'));assert.ok(report.chapters.find(c=>c.id==='bilaga-metod'));
  assert.ok(report.chapters.flatMap(c=>c.blocks).filter(b=>b.type==='p').reduce((n,b)=>n+b.text.split(/\s+/).length,0)>9000);
+});
+
+test('central indicator never replaces loss mean or fabricates predictive annual median',()=>{
+ const risk=measurement.risks.find(r=>r.riskId==='R-B60-250-02');
+ assert.ok(Math.abs(risk.centralCost.value-8239210693.005016)<.01);
+ assert.ok(Math.abs(risk.expectedLoss.value-601948246899.331)<.01);
+ assert.equal(risk.lossDistribution,undefined);assert.equal(risk.centralCost.method,'product_of_medians');
+ for(const id of ['R-B60-G210-01','R-B40-N110-01','R-B40-GE120-02'])assert.equal(measurement.risks.find(r=>r.riskId===id).centralCost,undefined);
+ const m={...model,priorityMetric:'median_product_annual_cost',risks:[{riskId:'r',expectedLoss:{value:10000},centralCost:{value:100}},{riskId:'missing'}]};
+ assert.equal(evaluateInvestment(m,cs,['a','b']).reduction,75);
+ assert.equal(evaluateInvestment({...m,priorityMetric:'expected_annual_cost'},cs,['a','b']).reduction,7500);
 });

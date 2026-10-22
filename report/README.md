@@ -2,7 +2,7 @@
 
 `manuscript.json` är den gemensamma källan till webbläsaren, den utskriftsvänliga HTML-utgåvan och PDF-rapporten. Utgåvan den 22 oktober 2026 innehåller 17 huvudkapitel och åtta bilagor, med hela risk- och kontrollregistret, avslutade mätresultat och fem intervjukällor som underlag. Den låsta mätkopian i `measurement.json` bevarar båda kontrollbaserna och använder läget utan införda kontroller för riskkorten och investeringsjämförelserna.
 
-Huvudprioriteringen är förväntad årskostnad. Frekvens och kostnad per händelse visas normalt med median. Rapporten skiljer dessa mått åt och använder ingen konstruerad årsmedian eller ny Monte Carlo-simulering. Metodbilagorna dokumenterar beräkning, granskningsgränser, känslighet, intervjuer och källkedja.
+Huvudprioriteringen är en medianbaserad kostnadsindikator: medianfrekvens × mediankostnad. De ursprungliga årsmedelvärdena och deras rangordning bevaras som fördjupning och känslighetsjämförelse. Inställningen finns i publication/presentation.json och publiceringspolicyn. Rapporten skiljer dessa mått åt och använder ingen konstruerad årsmedian eller ny Monte Carlo-simulering. Metodbilagorna dokumenterar beräkning, granskningsgränser, känslighet, intervjuer och källkedja.
 
 ## När nya resultat kommer
 

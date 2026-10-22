@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "id": "value-review-2026-10-22-v3",
+  "id": "value-review-2026-10-22-v4",
   "maxMeanMedianRatio": null,
   "maxAnnualFrequency": 10000,
   "maxCostPerEventSEK": 10000000000,
   "maxExpectedAnnualCostSEK": null,
-  "description": "Kalibrerade värden används som huvudregel. Stor skillnad mellan medelvärde och median redovisas som fördelningsinformation och medför inte uteslutning. Ingen generell gräns används för beräknad årskostnad. Medelfrekvens över 10 000 händelser per år eller medelkostnad över 10 miljarder kronor per händelse kräver separat stöd för exponering respektive projektkonsekvens och hålls tills dess odefinierade. En uttrycklig populationskonflikt behandlas individuellt. Gränserna är granskningsbeslut, inte naturliga tak eller bevis på modellfel.",
+  "description": "Prioriteringen utgår från medianfrekvens multiplicerad med mediankostnad som en årlig kostnadsindikator. Medelvärden och deras separata rangordning bevaras för fördjupning. Indikatorn är varken förväntad årsförlust eller medianen för verklig årlig förlust. Saknad kalibrering, populationskonflikter och orimliga medianer hindrar indikatorn; enbart extrema medelvärden gör det inte. Medelfrekvens över 10 000 händelser per år eller medelkostnad över 10 miljarder kronor per händelse kräver fortsatt särskilt stöd innan ett förlustmedelvärde redovisas. Gränserna är granskningsbeslut, inte naturliga tak eller bevis på modellfel.",
   "descriptionEstimates": [],
   "warningMeanMedianRatio": 10,
   "riskExclusions": [
@@ -26,7 +26,60 @@
       "dimension": "likelihood",
       "code": "exposure_volume_conflict",
       "reason": "Modellens över 1 300 försenade MPD-ärenden per år överstiger beskrivningens totala ärendevolym på cirka 260–330. Jämförbar population och skillnaden mellan inflöde, avgjorda och pågående ärenden behöver klargöras."
+    },
+    {
+      "riskId": "R-B60-G210-01",
+      "dimension": "likelihood",
+      "code": "exposure_volume_conflict",
+      "reason": "Modellens median är cirka 2 726 nya överprövningskedjor per år, medan den frysta riskbeskrivningen anger cirka 300–500 per år för samma händelse inom miljöbalken, PBL och sektorskoncessioner. Skillnaden i händelsepopulation och skala behöver klarläggas innan ett kostnadsbelopp används. Beskrivningens intervall behålls separat utan vald mittpunkt."
+    },
+    {
+      "riskId": "R-B40-N110-01",
+      "dimension": "likelihood",
+      "code": "exposure_volume_conflict",
+      "reason": "Modellens median är cirka 1 133 händelser per år, medan den frysta riskbeskrivningen bedömer 100–250 underdimensionerade vattenanmälningar som förskjuter starten per år. Samma händelse har därmed väsentligt olika frekvens i underlagen. Population och skala behöver klarläggas innan kostnadsindikatorn används; beskrivningsintervallet behålls utan vald mittpunkt."
+    },
+    {
+      "riskId": "R-B40-GE120-02",
+      "dimension": "likelihood",
+      "code": "exposure_volume_conflict",
+      "reason": "Modellens median är cirka 3 553 försenade 12:6-samråd per år, medan den frysta riskbeskrivningen anger storleksordningen hundratals sådana förseningshändelser. Detta är en skillnad i storleksordning som behöver klarläggas, inte ett statistiskt bevis på ett visst sant årsantal. Kostnadsindikatorn hålls odefinierad tills händelsepopulation och skala kan förenas."
     }
   ],
-  "controlBasis": "inherent_no_controls"
+  "controlBasis": "inherent_no_controls",
+  "priorityMetric": "median_product_annual_cost",
+  "sourceCaveats": [
+    {
+      "riskId": "R-B10-080-01",
+      "dimension": "impact",
+      "code": "description_range_tension",
+      "reason": "Modellens mediankostnad är cirka 4,83 miljarder kronor, medan beskrivningen anger typiskt 10–500 miljoner och högre belopp i enskilda storprojekt. Ett typiskt händelseintervall är inte samma mått som medianen i en bedömning av medelkostnaden. Skillnaden motiverar fördjupad granskning men används inte som ett godtyckligt kostnadstak. Beskrivningen anger att nationell statistik saknas. Det angivna SSAB-exemplet på 6,2 miljarder gäller en investering och belägger inte en lika stor riskförlust. Detta påverkar även kostnadsjämförelsen för MPM-03."
+    },
+    {
+      "riskId": "R-B50-GN040-01",
+      "dimension": "impact",
+      "code": "description_range_tension",
+      "reason": "Modellens mediankostnad är cirka 4,81 miljarder kronor, medan beskrivningen anger typiskt 10–500 miljoner och mer i stora gruvprojekt. Skillnaden mellan typiska händelsekostnader och bedömningen av genomsnittlig händelsekostnad behöver granskas; intervallet används inte som ett hårt tak."
+    },
+    {
+      "riskId": "R-B50-M020-01",
+      "dimension": "impact",
+      "code": "description_range_tension",
+      "reason": "Modellens mediankostnad är cirka 4,88 miljarder kronor, medan beskrivningen anger typiskt 50–500 miljoner och mer i strategiska storprojekt. Skillnaden mellan typiska händelsekostnader och bedömningen av genomsnittlig händelsekostnad behöver granskas; intervallet används inte som ett hårt tak."
+    },
+    {
+      "riskId": "R-B50-M040-02",
+      "dimension": "impact",
+      "code": "description_range_tension",
+      "reason": "Modellens mediankostnad är cirka 5,91 miljarder kronor, medan beskrivningen anger typiskt 50–500 miljoner och mer i strategiska projekt. Skillnaden mellan typiska händelsekostnader och bedömningen av genomsnittlig händelsekostnad behöver granskas; intervallet används inte som ett hårt tak."
+    },
+    {
+      "riskId": "R-B40-P120-01",
+      "dimension": "impact",
+      "code": "description_range_tension",
+      "reason": "Modellens mediankostnad är cirka 601 miljoner kronor per förseningshändelse. Riskbeskrivningens 5–200 miljoner per händelse och 50–100 händelser per år är bedömningar. Naturvårdsverket redovisar 193 avgjorda vattenmål i första instans 2024 och 356 dagars medianhandläggningstid. Dessa historiska uppgifter avser samtliga avgjorda mål, inte antalet kostsamma förseningar, och kan därför inte direkt ersätta modellens 109 händelser. Jämförbar observerad förlust per händelse saknas; den höga monetära placeringen behöver prövas mot ärendedata.",
+      "sourceUrl": "https://www.naturvardsverket.se/49e4ea/globalassets/vagledning/miljobalken/miljoprovning/samlad-statistik-om-miljoprovning-for-ar-2024.pdf",
+      "sourceTitle": "Naturvårdsverket: miljöprövning 2024, s. 3 och 52"
+    }
+  ]
 }

@@ -1,7 +1,13 @@
 // Shared by the offline importer and the browser. Missing values remain missing.
 export function validatePresentation(settings) {
   if(settings?.schemaVersion!==1||!['median','mean'].includes(settings.riskStatistic))throw new Error('Visningsinställning: riskStatistic måste vara median eller mean');
+  if(settings.costMetric!=null&&!['expected_annual_cost','median_product_annual_cost'].includes(settings.costMetric))throw new Error('Visningsinställning: okänt kostnadsmått');
   return settings;
+}
+// A central cost indicator is kept separate from a predictive loss mean or median.
+export function priorityCost(row,metric='expected_annual_cost') {
+  if(!['expected_annual_cost','median_product_annual_cost'].includes(metric))throw new Error('Okänt prioriteringsmått');
+  return (metric==='median_product_annual_cost'?row?.centralCost:row?.expectedLoss)??null;
 }
 export function riskStatistic(row,dimension,statistic) {
   if(!['mean','median'].includes(statistic))throw new Error('Okänt riskmått');
@@ -36,12 +42,13 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
   };
   const finite = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;
   if (snapshot?.schemaVersion !== 1) fail('okänd formatversion');
+  if(snapshot.priorityMetric!=null&&!['expected_annual_cost','median_product_annual_cost'].includes(snapshot.priorityMetric))fail('okänt prioriteringsmått');
   if (!['awaiting_measurement', 'ready'].includes(snapshot.status)) fail('ogiltig status');
   const risks = new Set(riskIds), controls = new Set(controlIds);
   ids((snapshot.risks || []).map(r => r.riskId), risks, 'risk-ID');
   ids((snapshot.controls || []).map(c => c.controlId), controls, 'kontroll-ID');
   if (snapshot.status === 'awaiting_measurement') {
-    if (snapshot.risks?.length || snapshot.controls?.length || snapshot.portfolio || snapshot.portfolios?.length || snapshot.scenarios?.length || snapshot.ranking) fail('väntande paket får inte innehålla mätresultat');
+    if (snapshot.risks?.length || snapshot.controls?.length || snapshot.portfolio || snapshot.portfolios?.length || snapshot.scenarios?.length || snapshot.ranking || snapshot.meanRanking) fail('väntande paket får inte innehålla mätresultat');
     return snapshot;
   }
   const p = snapshot.provenance;
@@ -109,6 +116,16 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
         if (Math.abs(expected - r.expectedLoss.value) > Math.max(0.01, expected * 1e-8)) fail('förväntad förlust stämmer inte med formeln');
       } else if (r.expectedLoss.method !== 'exported_loss_mean') fail('okänd förlustmetod');
     }
+    if(r.centralCost) {
+      const c=r.centralCost,l=riskStatistic(r,'likelihood','median'),i=riskStatistic(r,'impact','median');
+      source(c);
+      if(!finite(c.value)||c.method!=='product_of_medians'||c.unit!==p.currency||c.horizonYears!==p.horizonYears||!c.definition)fail('ogiltig medianbaserad kostnadsindikator');
+      if(!l||!i||l.eligible!==true||i.eligible!==true||l.calibrationStatus!=='anchor_scaled'||i.calibrationStatus!=='anchor_scaled'||l.unit!=='events_per_year'||i.unit!==`${p.currency}_per_event`)fail('kostnadsindikatorn kräver kalibrerade frekvens- och kostnadsmedianer');
+      if((r.review||[]).some(f=>['population_mismatch','event_population_ambiguity','exposure_volume_conflict','source_ineligible','outside_execution'].includes(f.code)))fail('kostnadsindikatorn har en olöst definitions- eller kalibreringsbrist');
+      if(!Array.isArray(c.inputRunIds)||c.inputRunIds.length!==2||c.inputRunIds[0]!==l.runId||c.inputRunIds[1]!==i.runId||c.inputRunIds.some(id=>!runIds.has(id))||c.runId!==l.runId)fail('kostnadsindikatorns källkedja avviker');
+      const expected=l.value*i.value*p.horizonYears;
+      if(Math.abs(expected-c.value)>Math.max(0.01,expected*1e-8))fail('kostnadsindikatorn stämmer inte med medianprodukten');
+    }
     distribution(r.lossDistribution);
     if(r.summaries?.expectedLoss?.mean!=null&&r.expectedLoss?.value!==r.summaries.expectedLoss.mean)fail('förlustmedelvärden skiljer sig');
     if(r.summaries?.expectedLoss?.median!=null&&r.lossDistribution&&r.lossDistribution.p50!==r.summaries.expectedLoss.median)fail('förlustmedianer skiljer sig');
@@ -116,6 +133,16 @@ export function validateMeasurement(snapshot, riskIds, controlIds) {
       source(r.sensitivity);
       if (!r.sensitivity.method || !Array.isArray(r.sensitivity.items) || r.sensitivity.items.some(i => !i.label || !finite(i.value) || i.value > 1)) fail('ogiltig känslighetsanalys');
     }
+  }
+  if(snapshot.priorityMetric==='median_product_annual_cost') {
+    const checkRanking=(ranking,metric)=>{
+      const rows=snapshot.risks.filter(r=>priorityCost(r,metric)).sort((a,b)=>priorityCost(b,metric).value-priorityCost(a,metric).value||a.riskId.localeCompare(b.riskId));
+      if(ranking?.run?.metric!==metric||!Array.isArray(ranking.entries)||ranking.entries.length!==rows.length)fail('rangordningens mått eller omfattning avviker');
+      for(const [index,row] of rows.entries()){const entry=ranking.entries[index];if(entry.riskId!==row.riskId||entry.rank!==index+1||!finite(entry.score)||Math.abs(entry.score-priorityCost(row,metric).value)>Math.max(.01,priorityCost(row,metric).value*1e-8))fail('rangordningen stämmer inte med valt kostnadsmått');}
+    };
+    checkRanking(snapshot.ranking,'median_product_annual_cost');
+    checkRanking(snapshot.meanRanking,'expected_annual_cost');
+    if(snapshot.quality?.centralCostCount!==snapshot.risks.filter(r=>r.centralCost).length||snapshot.quality?.centralUndefinedCount!==snapshot.risks.filter(r=>!r.centralCost).length)fail('kostnadsindikatorns täckning avviker');
   }
   for (const c of snapshot.controls || []) {
     for (const e of c.effects || []) {

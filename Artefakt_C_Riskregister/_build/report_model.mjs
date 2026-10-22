@@ -1,3 +1,4 @@
+import {priorityCost} from './measurement_model.mjs';
 import {evaluateInvestment,rankInvestments} from './investment_model.mjs';
 // One manuscript serves the web reader and the printable edition.
 export function reportEscape(value) {
@@ -71,13 +72,13 @@ export function reportFigureData(id,report,measurement,risks,controls=[]) {
     const labels=['Underdimensionerad vattenanmälan','Försenat 12:6-samråd','Olika dispensbedömningar','Väntan på prövningstillstånd','Lov med överklagad plan','Sista spåret försenar byggstart'];
     return {kind:'ranges',unit:'mnkr per händelse',rows:ids.map((id,i)=>{const r=rows.get(id).descriptionReview.estimates.find(e=>e.dimension==='impact');return {label:labels[i],lower:r.lower/1e6,upper:r.upper/1e6};})};
   }
-  if(['cost-top-process','process-coverage'].includes(id))return {kind:'bars',unit:'risker',rows:[...new Set(risks.map(r=>r.chart_key))].sort().map(key=>({label:names[key]||key,value:risks.filter(r=>r.chart_key===key&&(id==='cost-top-process'?top.has(r.risk_id):rows.get(r.risk_id)?.expectedLoss)).length}))};
+  if(['cost-top-process','process-coverage'].includes(id))return {kind:'bars',unit:'risker',rows:[...new Set(risks.map(r=>r.chart_key))].sort().map(key=>({label:names[key]||key,value:risks.filter(r=>r.chart_key===key&&(id==='cost-top-process'?top.has(r.risk_id):priorityCost(rows.get(r.risk_id),measurement.priorityMetric))).length}))};
   if(id==='authority-reach')return {kind:'bars',unit:'risker',rows:controls.filter(c=>c.driver==='authority').sort((a,b)=>b.riskIds.length-a.riskIds.length||a.id.localeCompare(b.id)).slice(0,10).map(c=>({label:c.id+' · '+c.title,value:c.riskIds.length}))};
   if(id==='portfolio-distribution')return measurement.portfolio?.lossDistribution?{kind:'histogram',...measurement.portfolio.lossDistribution}: {kind:'pending'};
-  if(id==='risk-contributions')return {kind:'bars',rows:risks.map(r=>({id:r.risk_id,label:r.risk_id==='R-B70-130-01'?'Felbedömd byggberedskap':r.title,value:rows.get(r.risk_id)?.expectedLoss?.value})).filter(r=>r.value!=null).sort((a,b)=>b.value-a.value).slice(0,10)};
+  if(id==='risk-contributions')return {kind:'bars',rows:risks.map(r=>({id:r.risk_id,label:r.risk_id==='R-B70-130-01'?'Felbedömd byggberedskap':r.title,value:priorityCost(rows.get(r.risk_id),measurement.priorityMetric)?.value})).filter(r=>r.value!=null).sort((a,b)=>b.value-a.value).slice(0,10)};
   if(id==='process-contributions') {
     const charts=[...new Set(risks.map(r=>r.chart_key))];
-    return {kind:'bars',rows:charts.map(key=>({id:key,label:key,value:risks.filter(r=>r.chart_key===key).reduce((a,r)=>a+(rows.get(r.risk_id)?.expectedLoss?.value||0),0)})).filter(x=>risks.some(r=>r.chart_key===x.id&&rows.get(r.risk_id)?.expectedLoss))};
+    return {kind:'bars',rows:charts.map(key=>({id:key,label:key,value:risks.filter(r=>r.chart_key===key).reduce((a,r)=>a+(priorityCost(rows.get(r.risk_id),measurement.priorityMetric)?.value||0),0)})).filter(x=>risks.some(r=>r.chart_key===x.id&&priorityCost(rows.get(r.risk_id),measurement.priorityMetric)))};
   }
   if(id==='control-scenario') {
     const s=measurement.scenarios?.find(s=>s.id===report.scenarioId);

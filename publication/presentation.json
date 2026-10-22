@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
   "riskStatistic": "median",
-  "costPriority": true
+  "costPriority": true,
+  "costMetric": "median_product_annual_cost"
 }

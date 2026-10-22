@@ -348,7 +348,7 @@ function renderSidebar(){
       <label class="fopt"><input id="topOnly" type="checkbox" ${state.topOnly?'checked':''}>Endast topp 50 <span class="cnt">${RANKING.topEntries.length}</span></label>
       <p class="ranking-note">Samma topp 50 i hela registret. Övriga filter begränsar urvalet.</p>
     </div>
-    <div class="fgroup"><h3>Mätunderlag</h3><select id="fQuality"><option value="all">Alla risker</option><option value="cost" ${state.quality==='cost'?'selected':''}>Med kostnadsunderlag</option><option value="review" ${state.quality==='review'?'selected':''}>Saknar årskostnad</option><option value="description" ${state.quality==='description'?'selected':''}>Beskrivningsvärden finns</option></select></div>
+    <div class="fgroup"><h3>Mätunderlag</h3><select id="fQuality"><option value="all">Alla risker</option><option value="cost" ${state.quality==='cost'?'selected':''}>Med kostnadsunderlag</option><option value="review" ${state.quality==='review'?'selected':''}>Saknar kostnadsindikator</option><option value="description" ${state.quality==='description'?'selected':''}>Beskrivningsvärden finns</option></select></div>
     <div class="fgroup">
       <h3>Nod</h3>
       <select id="fNode" style="width:100%">
