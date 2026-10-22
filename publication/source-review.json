@@ -1,0 +1,3419 @@
+{
+  "schemaVersion": 1,
+  "id": "top50-history-2026-10-22-v1",
+  "reviewedAt": "2026-10-22",
+  "intervalPoint": "arithmetic_midpoint",
+  "sourceSnapshotSha256": "7c439bd30d142ba370afd4e235e2fbbd2a81b6331fa0ea3b3728d091a76667a1",
+  "originalTop50": [
+    "R-B40-P120-01",
+    "R-B10-080-01",
+    "R-B70-G090-03",
+    "R-B50-G900-01",
+    "R-B10-060-03",
+    "R-B10-020-03",
+    "R-B50-E040-01",
+    "R-B50-P040-01",
+    "R-B60-090-01",
+    "R-B50-T030-01",
+    "R-B60-250-02",
+    "R-B30-070-01",
+    "R-B50-E050-01",
+    "R-B50-GN040-01",
+    "R-B60-G040-01",
+    "R-B50-E010-01",
+    "R-B20-G010-02",
+    "R-B50-T020-02",
+    "R-B50-X030-02",
+    "R-B40-010-02",
+    "R-B50-P030-03",
+    "R-B50-GN040-02",
+    "R-B50-P010-02",
+    "R-B40-060-03",
+    "R-B50-START-01",
+    "R-B20-020-02",
+    "R-B60-260-01",
+    "R-B40-START-01",
+    "R-B40-G070-01",
+    "R-B50-T020-03",
+    "R-B40-G020-01",
+    "R-B60-070-01",
+    "R-B50-X040-01",
+    "R-B50-P020-01",
+    "R-B70-G050-03",
+    "R-B50-G010-01",
+    "R-B50-E020-01",
+    "R-B60-170-01",
+    "R-B50-P050-01",
+    "R-B70-END-01",
+    "R-B20-010-02",
+    "R-B50-P050-03",
+    "R-B60-180-01",
+    "R-B50-P010-01",
+    "R-B60-180-03",
+    "R-B50-M030-02",
+    "R-B70-100-01",
+    "R-B50-P030-01",
+    "R-B40-P100-01",
+    "R-B40-030-01"
+  ],
+  "scope": "Samtliga ursprungliga topp 50 samt 30 möjliga nytillkommande risker har granskats mot frysta riskbeskrivningar. Primärkällor har kontrollerats för väsentliga historiska påståenden; kvarstående verifieringsluckor redovisas per risk.",
+  "decisionRule": "Dokumenterad jämförbar historik har företräde. Där den saknas får ett uttryckligt jämförbart bedömningsintervall i riskbeskrivningen ersätta en orimlig modellnivå. Den aritmetiska mittpunkten används enligt användarens beslut; hela intervallet visas. Avrundade ramar är inga hårda tak. Oavgränsade händelser eller kostnader utan jämförbart ersättningsvärde hålls odefinierade.",
+  "entries": [
+    {
+      "riskId": "R-B40-P120-01",
+      "originalRank": 1,
+      "decision": "replace_source",
+      "reason": "Modellens 600.82 miljoner kronor per händelse ligger över beskrivningens typiska ram 5–200 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 109.21867625149747,
+        "decision": "retain",
+        "value": 109.21867625149747,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Handläggningstiden i vattenmål påverkar projektets tidplan i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 50,
+          "upper": 100,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: storleksordningen 50–100 händelser per år där handläggningstiden i ett mål om vattenverksamhet påtagligt förskjuter projektets tidplan.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 600824467.5849417,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 5000000.0,
+        "upper": 200000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Typisk kostnad är 5–200 Mkr per händelse (kapitalkostnad och förlorat förädlingsvärde under 6–24 månaders försening), upp till några mdkr i enstaka stora gruv-, industri- och energiprojekt.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B40-P120-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B40-P120-01",
+        "scope": "Handläggningstiden i vattenmål påverkar projektets tidplan i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "193 vattenmål fick första avgörande 2024; median 356 dagar. Bland 34 överklagade vattenmål var totalmedianen 1 004 dagar. Antalen mäter inte kostsamma förseningar.",
+          "sourceUrl": "https://www.naturvardsverket.se/49e4ea/globalassets/vagledning/miljobalken/miljoprovning/samlad-statistik-om-miljoprovning-for-ar-2024.pdf",
+          "sourceTitle": "Naturvårdsverket, miljöprövning 2024, s. 3 och 52",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "284af38882490c6c4ca6de0cc6a3bc8734465e25f1c711e0dd839ab53dda4c0e",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ],
+      "sanityAssessment": "Naturvårdsverkets statistik för 2024 redovisar 193 första avgöranden i vattenmål med en medianhandläggningstid på 356 dagar; för 34 mål som avgjordes i överinstans var totalmedianen 1 004 dagar. Statistiken visar att långa prövningsförlopp förekommer, men uppger varken hur många projekt som faktiskt försenades eller deras ekonomiska förlust. Modellens cirka 109 händelser per år ligger något över riskbeskrivningens avrundade bedömning 50–100 och behålls därför som modelluppgift, medan kostnaden har sänkts från cirka 601 till 102,5 miljoner kronor per händelse, mittpunkten i beskrivningens intervall 5–200 miljoner. Den granskade indikatorn på cirka 11,2 miljarder kronor är därmed en jämförelsegrund vars kostnadsdel bygger på en uttrycklig bedömning och fortfarande behöver prövas mot faktiska projektkostnader.",
+      "historyStatus": "supported_context_only",
+      "openQuestion": "Hur många av de avgjorda vattenmålen medförde en mätbar förskjutning av projektets tidplan, och vilken merkostnad uppstod jämfört med genomförande utan denna förskjutning?"
+    },
+    {
+      "riskId": "R-B10-080-01",
+      "originalRank": 2,
+      "decision": "replace_source",
+      "reason": "Modellens 4834.61 miljoner kronor per händelse ligger över beskrivningens typiska ram 10–500 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 8.662326840268529,
+        "decision": "retain",
+        "value": 8.662326840268529,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Samordningsmöjligheten missas och prövningarna körs isolerat med motstridiga utfall i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 5,
+          "upper": 20,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: 5–20 händelser per år.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 4834611651.832051,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 10000000.0,
+        "upper": 500000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "En händelse kostar typiskt 10–500 Mkr, och i enskilda storprojekt mer än 1 mdkr.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B10-080-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B10-080-01",
+        "scope": "Samordningsmöjligheten missas och prövningarna körs isolerat med motstridiga utfall i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "SSAB beslutade 2023 om en investering på 6,2 miljarder kronor. Detta är investeringsutgift, inte observerad förlust från separata prövningar.",
+          "sourceUrl": "https://www.ssab.com/en-us/news/2023/06/ssab-invests-in-green-transformation-of-production-in-oxelsund",
+          "sourceTitle": "SSAB: investering i Oxelösund, juni 2023",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "10261a565b019cbe97d40039ca8a2511c0b2180415e446ca1ec690ef0b9ebd06",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B70-G090-03",
+      "originalRank": 3,
+      "decision": "replace_source",
+      "reason": "Modellens 1976.01 miljoner kronor per händelse ligger över beskrivningens typiska ram 10–500 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 16.253906346999134,
+        "decision": "retain",
+        "value": 16.253906346999134,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Sektorsbeslutet har ännu inte fått laga kraft eller kan inte tas i anspråk i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "impact": {
+        "model": 1976007257.1771717,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 10000000.0,
+        "upper": 500000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Per händelse typiskt 10–500 Mkr i försening, i storprojekt mer.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B70-G090-03&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B70-G090-03",
+        "scope": "Sektorsbeslutet har ännu inte fått laga kraft eller kan inte tas i anspråk i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "Individuella fall och övriga källreferenser i beskrivningen har lästs som bakgrund. Inget verifierat, representativt händelseantal eller förlustbelopp har kunnat hämtas som direkt ersättning. Den använda numeriska ramen är därför uttryckligen beskrivningens bedömning.",
+          "sourceUrl": null,
+          "sourceTitle": "Fryst riskbeskrivning",
+          "verification": "description_only_not_independently_verified",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "0b7aa6d07db3cab631b27fb3e18972022f6e30a7b80d6ea0db59a80929ffe788",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ],
+      "sanityAssessment": "Riskbeskrivningens exempel på sektorsbeslut visar väntan mellan beslut och möjligheten att gå vidare med ett projekt, men underlaget innehåller ingen verifierad nationell fördelning av dessa väntetider eller tillhörande förluster. Modellens cirka 16 händelser per år ligger i samma storleksordning som beskrivningens bedömning av ett tiotal ärenden. Den tidigare kostnadsmedianen på nästan 2 miljarder kronor per händelse låg däremot långt över beskrivningens typiska intervall 10–500 miljoner och har ersatts med intervallets mittpunkt 255 miljoner. Den korrigerade indikatorn blir cirka 4,14 miljarder kronor, medan kostnadsnivån fortfarande behöver beläggas med projekt där just väntan på sektorsbeslutet har kunnat avgränsas från andra hinder för genomförandet.",
+      "historyStatus": "no_comparable_history",
+      "openQuestion": "I hur många projekt hindrade ett ännu oanvändbart sektorsbeslut genomförandet, under vilken extra tid och till vilken dokumenterad merkostnad?"
+    },
+    {
+      "riskId": "R-B50-G900-01",
+      "originalRank": 4,
+      "decision": "replace_source",
+      "reason": "Modellens 865.29 miljoner kronor per händelse ligger över beskrivningens typiska ram 10–300 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 28.044593227814204,
+        "decision": "retain",
+        "value": 28.044593227814204,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "AND-gatens sista spår blir projektets kritiska linje i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 20,
+          "upper": 50,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: storleksordningen 20–50 händelser per år i hela Sverige.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 865285037.2148404,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 10000000.0,
+        "upper": 300000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Typisk kostnad är 10–300 Mkr per händelse i försenad byggstart och kapitalkostnad.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B50-G900-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B50-G900-01",
+        "scope": "AND-gatens sista spår blir projektets kritiska linje i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "Individuella fall och övriga källreferenser i beskrivningen har lästs som bakgrund. Inget verifierat, representativt händelseantal eller förlustbelopp har kunnat hämtas som direkt ersättning. Den använda numeriska ramen är därför uttryckligen beskrivningens bedömning.",
+          "sourceUrl": null,
+          "sourceTitle": "Fryst riskbeskrivning",
+          "verification": "description_only_not_independently_verified",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "cc15c8a8bcc140eb42e627a99638cffb002e5896df722bb0f6a0bcc478504388",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ],
+      "sanityAssessment": "De beskrivna fallen visar hur ett parallellt beslut kan hålla tillbaka byggstarten även när huvudtillståndet är klart, men de ger ingen representativ nationell statistik över antalet sådana projekt eller deras förseningskostnader. Modellens cirka 28 händelser per år ligger inom riskbeskrivningens bedömda intervall 20–50. Kostnadsmedianen på cirka 865 miljoner kronor saknade motsvarande stöd och har ersatts med 155 miljoner, den aritmetiska mittpunkten i beskrivningens typiska kostnadsintervall 10–300 miljoner. Indikatorn på cirka 4,35 miljarder kronor speglar därmed en korrigerad bedömning, och en fortsatt uppföljning behöver också skilja dessa förluster från kostnader som redan redovisas för det försenade delbeslutet.",
+      "historyStatus": "no_comparable_history",
+      "openQuestion": "Vilka projekt väntade på ett sista parallellt beslut, hur mycket senare blev den gemensamma byggstarten och hur kan samma försening undvikas att räknas både här och i risken för det enskilda beslutet?"
+    },
+    {
+      "riskId": "R-B10-060-03",
+      "originalRank": 5,
+      "decision": "replace_source",
+      "reason": "Modellens 1328.96 miljoner kronor per händelse ligger över beskrivningens typiska ram 10–300 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 11.91043502961287,
+        "decision": "retain",
+        "value": 11.91043502961287,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Sektorsspelregler identifieras inte i klassificeringen i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "impact": {
+        "model": 1328957977.8304086,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 10000000.0,
+        "upper": 300000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Per händelse typiskt 10–300 Mkr i försening, mer när en storinvestering väntar.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B10-060-03&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B10-060-03",
+        "scope": "Sektorsspelregler identifieras inte i klassificeringen i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "Ei bekräftar nekad direktanslutning i mars 2025 och sitt senare beslut om anslutningsskyldighet. Fallet ger inga nationella händelseantal eller förlustbelopp.",
+          "sourceUrl": "https://ei.se/om-oss/nyheter/2026/2026-04-13-ei-beslutar-om-anslutningsskyldighet-av-145-kv-ledning-till-transmissionsnatet",
+          "sourceTitle": "Ei, anslutningsskyldighet Östrand, 13 april 2026",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "3b7332a3071f46514f19d5201243cd061033e0f50d50c46cd28828e2d63c5cff",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B10-020-03",
+      "originalRank": 6,
+      "decision": "withhold",
+      "reason": "Modellens 2,11 miljarder per stoppat projekt överstiger den enda angivna storleksramen omkring 1 miljard för havsvind; landvind anges mycket lägre. Beskrivningen blandar dessutom företagets förlust med förlorad klimatnytta och saknar en användbar gemensam kostnadsfördelning. Därför hålls kostnaden odefinierad i stället för att låta den osakligt höga punkten styra rangordningen.",
+      "likelihood": {
+        "model": 5.598945149972192,
+        "decision": "retain",
+        "value": 5.598945149972192,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Försvars- och totalförsvarsintressen stoppar lokaliseringen på politisk nivå i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 5,
+          "upper": 12,
+          "unit": "events_per_year",
+          "sourceQuote": "Ett tjugotal projekt har alltså stoppats på försvarsgrund 2024–2026, dvs. storleksordningen 5–12 ärenden per år.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 2110594978.8653262,
+        "decision": "withhold",
+        "value": null,
+        "lower": null,
+        "upper": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "non_comparable_description",
+        "sourceQuote": "Konsekvensen per stoppat projekt består främst av nedlagda utvecklingskostnader, kapitalkostnad och förlorad klimatnytta och bedöms grovt till hundratals Mkr upp till omkring 1 mdkr för havsvind och tiotals Mkr för landbaserad vind.",
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Försvars- och totalförsvarsintressen stoppar lokaliseringen på politisk nivå i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Olika land- och havsvindpopulationer och delvis samhällsnytta blandas. Ingen exakt nedre gräns eller gemensam per-händelseförlust anges."
+      },
+      "history": [
+        {
+          "finding": "Regeringens beslutstabell visar 13 avslag 4 november 2024 och 11 avslag 16 juli 2026. Beslutsklustren är ingen representativ årsrate för samtliga försvarsrelaterade stopp.",
+          "sourceUrl": "https://www.regeringen.se/regeringens-politik/miljo-och-klimat/havsbaserad-vindkraft/",
+          "sourceTitle": "Regeringen: havsbaserad vindkraft, beslutstabell",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [
+        "Jämförbar monetär företagsförlust per stoppat projekt, uppdelad på landvind och havsvind."
+      ],
+      "sourceDescriptionSha256": "2e6d6c1ae2e02f62128e98bdcb83b78d6e8bfabe2f129b630a9db95d6fec7034",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B50-E040-01",
+      "originalRank": 7,
+      "decision": "withhold",
+      "reason": "Modellens 5,20 miljarder per koncessionsöverklagande saknar stöd i beskrivningens ekonomiska storleksordning. SSAB:s 6,2 miljarder är en investering; den citerade förlusten anges bara som hundratals miljoner per förseningsår. Utan händelsens förseningstid kan den inte omräknas till en per-händelsekostnad. Kostnaden och kostnadsrangen hålls därför odefinierade.",
+      "likelihood": {
+        "model": 2.00446714568105,
+        "decision": "retain",
+        "value": 2.00446714568105,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Koncessionsbeslutet överklagas – lång överprövning hos regering eller domstol i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "impact": {
+        "model": 5198061415.81919,
+        "decision": "withhold",
+        "value": null,
+        "lower": null,
+        "upper": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "non_comparable_description",
+        "sourceQuote": "Konsekvensen för ledningar som en större industriinvestering hänger på kan därmed nå hundratals Mkr per år av försening.",
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Koncessionsbeslutet överklagas – lång överprövning hos regering eller domstol i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källan anger kostnad per förseningsår, medan riskmåttet gäller kostnad per händelse. Jämförbar förseningstid och exakt kostnadsintervall saknas."
+      },
+      "history": [
+        {
+          "finding": "6,2 miljarder i SSAB-exemplet är investeringsbelopp. Uppgiften ger ingen förlust per koncessionsöverklagande.",
+          "sourceUrl": "https://www.ssab.com/en-us/news/2023/06/ssab-invests-in-green-transformation-of-production-in-oxelsund",
+          "sourceTitle": "SSAB: investering i Oxelösund, juni 2023",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [
+        "Förseningstid orsakad av själva överklagandet och jämförbar kostnad per förseningsår."
+      ],
+      "sourceDescriptionSha256": "9adbd1c9868677c3d4ce87ffb29c2ff7eb3fa18fded2846728e00ef8f52e313b",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B50-P040-01",
+      "originalRank": 8,
+      "decision": "replace_source",
+      "reason": "Modellens 73.85 miljoner kronor per händelse ligger över beskrivningens typiska ram 5–50 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 131.96521755170116,
+        "decision": "retain",
+        "value": 131.96521755170116,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Lovansökan krockar med icke lagakraftvunnen plan eller kvarstående överklaganderisker i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 50,
+          "upper": 150,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: 50–150 händelser per år där lov eller byggstart i projekt inom registret vilar på en överklagad plan.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 73850345.15721981,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 5000000.0,
+        "upper": 50000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Typisk kostnad 5–50 Mkr per händelse (6–18 månaders försening, omförhandlade kontrakt), högre om planen upphävs.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B50-P040-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B50-P040-01",
+        "scope": "Lovansökan krockar med icke lagakraftvunnen plan eller kvarstående överklaganderisker i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "Boverket redovisar 261 överklagade planer och 41 planer upphävda i MMD 2023. Antalen motsvarar inte antalet byggstarter som försenas och kan inte kopplas som matchad kohort till årets 968 planbeslut.",
+          "sourceUrl": "https://www.boverket.se/globalassets/publikationer/dokument/2024/redovisning-av-tillampningen-av-plan--och-bygglagstiftningen-ar-2023.pdf",
+          "sourceTitle": "Boverket 2024:10, s. 14–16",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "ca9aeb33005d20d10d2b9bfc161a4925e19ce671e7b6aedbc8c3ca573cefa26e",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ],
+      "sanityAssessment": "Boverkets statistik för 2023 redovisar 261 överklagade planer och områdesbestämmelser samt 41 planer som upphävdes av mark- och miljödomstol. Dessa antal gäller bredare och delvis olika populationer; de visar varken hur många byggstarter inom riskregistrets område som försenades eller en säker överklagandeandel av årets 968 planbeslut. Modellens cirka 132 händelser per år ligger inom beskrivningens bedömda intervall 50–150 och behålls, medan kostnaden har sänkts från cirka 73,9 till 27,5 miljoner kronor, mittpunkten i beskrivningens intervall 5–50 miljoner. Indikatorn på cirka 3,63 miljarder kronor har därmed fått en lägre kostnadsgrund, men behöver fortfarande följas upp med faktisk väntetid och merkostnad i jämförbara projekt.",
+      "historyStatus": "supported_context_only",
+      "openQuestion": "Hur många överklagade planbeslut försenade faktiskt lov eller byggstart i de projekt som registret omfattar, och vad blev den tillkommande kostnaden i dessa projekt?"
+    },
+    {
+      "riskId": "R-B60-090-01",
+      "originalRank": 9,
+      "decision": "replace_source",
+      "reason": "Modellens 320.81 miljoner kronor per händelse ligger över beskrivningens typiska ram 2–50 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 27.225846464463643,
+        "decision": "retain",
+        "value": 27.225846464463643,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Motstridiga myndighetsyttranden låser beredningen i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 20,
+          "upper": 60,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: 20–60 ärenden per år där motstridiga yttranden förlänger beredningen.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 320805803.6390504,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 2000000.0,
+        "upper": 50000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "En händelse kostar typiskt 2–50 Mkr. När ett storprojekt lämnas över till regeringen kan kostnaden nå några hundra Mkr eller mer än en miljard kronor.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B60-090-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B60-090-01",
+        "scope": "Motstridiga myndighetsyttranden låser beredningen i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "Individuella fall och övriga källreferenser i beskrivningen har lästs som bakgrund. Inget verifierat, representativt händelseantal eller förlustbelopp har kunnat hämtas som direkt ersättning. Den använda numeriska ramen är därför uttryckligen beskrivningens bedömning.",
+          "sourceUrl": null,
+          "sourceTitle": "Fryst riskbeskrivning",
+          "verification": "description_only_not_independently_verified",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "29762b9e68e186e7360b6bcd3df9f1402c42126878b51ba9826d80917cac2f49",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B50-T030-01",
+      "originalRank": 10,
+      "decision": "replace_source",
+      "reason": "Modellens 563.10 miljoner kronor per händelse ligger över beskrivningens typiska ram 10–300 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 15.450729966134174,
+        "decision": "retain",
+        "value": 15.450729966134174,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Vatten-, Natura- och artskyddsbeslut ligger efter planen och blockerar etapper i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 10,
+          "upper": 30,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: 10–30 händelser per år.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 563102540.002078,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 10000000.0,
+        "upper": 300000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Typisk kostnad 10–300 Mkr per händelse.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B50-T030-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B50-T030-01",
+        "scope": "Vatten-, Natura- och artskyddsbeslut ligger efter planen och blockerar etapper i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "Trafikverket anger att byggtiden för Tjärnbäcksbron går från 1,5–2 till cirka tre år och att byggstart skjuts till hösten 2027. Myndigheten säger uttryckligen att total kostnadspåverkan ännu inte kan uppskattas.",
+          "sourceUrl": "https://via.tt.se/pressmeddelande/4401546/byggstarten-for-tjarnbacksbron-forsenas?lang=sv&publisherId=44450",
+          "sourceTitle": "Trafikverket: Tjärnbäcksbron, 26 maj 2026",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "377f4a5f434df4f5517ff79bb173f0c2ef7a1524fd4824e08a4bd751998a8186",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B60-250-02",
+      "originalRank": 11,
+      "decision": "retain_model",
+      "reason": "Historiken styr tids- och volymbeskrivningen, men gäller hela instanskedjan och samtliga avgjorda överklaganden. Den motsäger inte i sig 43 kostsamma projektförseningar per år och anger inget jämförbart förlustbelopp som kan ersätta 191 miljoner per händelse. Modellvärdena behålls som bedömningar.",
+      "likelihood": {
+        "model": 43.144491328489934,
+        "decision": "retain",
+        "value": 43.144491328489934,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Överprövningens handläggningstid påverkar projektet i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "impact": {
+        "model": 190967848.71732524,
+        "decision": "retain",
+        "value": 190967848.71732524,
+        "lower": null,
+        "upper": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Överprövningens handläggningstid påverkar projektet i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "history": [
+        {
+          "finding": "58 överklagade MPD-tillståndsmål avgjordes 2024 med totalmedian 834 dagar. Måtten gäller hela prövningskedjan, inte överprövningens merkostnad eller antal projektförseningar.",
+          "sourceUrl": "https://www.naturvardsverket.se/49e4ea/globalassets/vagledning/miljobalken/miljoprovning/samlad-statistik-om-miljoprovning-for-ar-2024.pdf",
+          "sourceTitle": "Naturvårdsverket, miljöprövning 2024, s. 54–55",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [
+        "Observerad merkostnad och tidsförskjutning orsakad av överprövningen, skild från hela prövningskedjans tid."
+      ],
+      "sourceDescriptionSha256": "38ca0f4b3a9b951f602dcf463aaa44d2a8571a68cc4d277126150ac57bea30e9",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ],
+      "sanityAssessment": "År 2024 avgjordes 58 överklagade tillståndsmål som hade inletts hos miljöprövningsdelegation, med en median på 834 dagar från ansökan till lagakraftvunnet avgörande. Denna historik ger stöd för att överprövning ingår i långa prövningsförlopp, men totalhandläggningstiden kan inte direkt räknas om till överprövningens merkostnad eller till antalet försenade projekt. Modellmedianerna på cirka 43 händelser per år och 191 miljoner kronor per händelse behålls eftersom underlaget saknar en jämförbar uppgift som motiverar ett annat värde. Produkten blir cirka 8,24 miljarder kronor och ska läsas som en modellbaserad prioriteringsindikator, med särskilt behov av att kontrollera vilka förseningar och kostnader som verkligen kan hänföras till överprövningen.",
+      "historyStatus": "supported_context_only",
+      "openQuestion": "Vilken extra väntetid och kostnad orsakade själva överprövningen i jämförbara projekt, efter att tid och kostnader i första instans räknats bort?"
+    },
+    {
+      "riskId": "R-B30-070-01",
+      "originalRank": 12,
+      "decision": "replace_source",
+      "reason": "Modellens 191.10 miljoner kronor per händelse ligger över beskrivningens typiska ram 5–100 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 37.13472694950964,
+        "decision": "retain",
+        "value": 37.13472694950964,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "MKB:n täcker inte den prövning som faktiskt krävs i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 20,
+          "upper": 60,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: större kompletteringsrundor på grund av täckningsbrister förekommer i storleksordningen 20–60 ärenden/år, medan avvisning är sällsynt (några per år).",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 191097004.79564297,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Kostnaden per händelse är typiskt 5–100 Mkr och kan nå mdkr-nivå för stora industriprojekt.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B30-070-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B30-070-01",
+        "scope": "MKB:n täcker inte den prövning som faktiskt krävs i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "MÖD bekräftar avvisningen av Cementas ansökan 6 juli 2021 på grund av brister i MKB:n. Beskedet innehåller ingen representativ kostnad per kompletteringshändelse.",
+          "sourceUrl": "https://www.domstol.se/nyheter/2021/07/domstolen-avvisar-cementas-ansokan-om-takttillstand-vid-slite-pa-gotland/",
+          "sourceTitle": "MÖD: Cementa, mål M 1579-20, 6 juli 2021",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "e6416eb7e1455aa44a40de83f69b379d159addd5920b10b8df19c68d1c3062dd",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B50-E050-01",
+      "originalRank": 13,
+      "decision": "retain_model",
+      "reason": "Beskrivningen anger tiotal ledningsprojekt och kostnader från några till hundratals miljoner. Modellens 16,65 händelser och 417 miljoner ligger i dessa kvalitativa storleksordningar. Antalet markupplåtelseavtal är inte antalet försenade projekt; ingen exakt ersättningspunkt kan härledas.",
+      "likelihood": {
+        "model": 16.64944913836977,
+        "decision": "retain",
+        "value": 16.64944913836977,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Ledningsrätt eller markupplåtelseavtal blir inte klart i tid – byggstart blockeras trots koncession i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "impact": {
+        "model": 417348197.045067,
+        "decision": "retain",
+        "value": 417348197.045067,
+        "lower": null,
+        "upper": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Ledningsrätt eller markupplåtelseavtal blir inte klart i tid – byggstart blockeras trots koncession i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "history": [
+        {
+          "finding": "Individuella fall och övriga källreferenser i beskrivningen har lästs som bakgrund. Inget verifierat, representativt händelseantal eller förlustbelopp har kunnat hämtas som direkt ersättning. Den använda numeriska ramen är därför uttryckligen beskrivningens bedömning.",
+          "sourceUrl": null,
+          "sourceTitle": "Fryst riskbeskrivning",
+          "verification": "description_only_not_independently_verified",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [
+        "Nationella antal projekt där markåtkomst faktiskt är kritisk linje och observerade förseningskostnader."
+      ],
+      "sourceDescriptionSha256": "59ebf1c2bbdf7d5a6946fa9444b304fd9ad5074c41bb845024e38dac30410eab",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ],
+      "sanityAssessment": "Riskbeskrivningen anger att markåtkomst kan bli avgörande för byggstarten i ett tiotal ledningsprojekt per år och att förseningskostnaden kan sträcka sig från några till hundratals miljoner kronor. Modellmedianerna på cirka 17 händelser och 417 miljoner kronor per händelse ryms i dessa breda storleksordningar, men kostnaden ligger i den höga delen och har inte kunnat kontrolleras mot representativa förlustuppgifter. Uppgiften i beskrivningen om cirka 800 markupplåtelseavtal under ett år gäller avtal och kan inte användas som antal försenade projekt, eftersom ett ledningsprojekt kan beröra många markägare. Indikatorn på cirka 6,95 miljarder kronor behålls som modellbedömning, med en betydande kvarstående osäkerhet om hur ofta markåtkomsten ensam förskjuter byggstarten och vilka ekonomiska följder detta får.",
+      "historyStatus": "no_comparable_history",
+      "openQuestion": "Hur många ledningsprojekt fick faktiskt senare byggstart enbart på grund av markåtkomst, och hur fördelades merkostnaden mellan nätprojektet och de verksamheter som väntade på anslutning?"
+    },
+    {
+      "riskId": "R-B50-GN040-01",
+      "originalRank": 14,
+      "decision": "replace_source",
+      "reason": "Modellens 4810.09 miljoner kronor per händelse ligger över beskrivningens typiska ram 10–500 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 1.317460558453389,
+        "decision": "retain",
+        "value": 1.317460558453389,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Kvarstående vetenskapligt tvivel leder till avslag i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 2,
+          "upper": 10,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: storleksordningen 2–10 avslag per år.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 4810093853.633152,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 10000000.0,
+        "upper": 500000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Ett avslag kostar typiskt 10–500 Mkr genom nedlagd utredning, förlorad fyndighet eller omlokalisering, och mer i stora gruvprojekt.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B50-GN040-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B50-GN040-01",
+        "scope": "Kvarstående vetenskapligt tvivel leder till avslag i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "HD bekräftar att bolaget i Bästeträsk inte hade rätt till statlig ersättning när ny kalkstensbrytning nekades. Beskedet fastställer ingen representativ förlustnivå för Natura 2000-avslag.",
+          "sourceUrl": "https://www.domstol.se/nyheter/2026/06/ett-bolag-som-nekades-tillstand-till-kalkstensbrytning-pa-sin-fastighet-hade-inte-ratt-till-ersattning-av-staten/",
+          "sourceTitle": "Högsta domstolen: Bästeträsk, T 5718-24, 30 juni 2026",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "e86408f34dd7d6b0f8eae861d6e8bcfb2c4013bc49b35e7c81e65833a06ba089",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B60-G040-01",
+      "originalRank": 15,
+      "decision": "retain_model",
+      "reason": "Beskrivningens 40–80 avser bara MPD-ärenden och säger uttryckligen att domstolsmål tillkommer. Studien av ofullständiga ansökningar mäter en bredare händelse än upprepade rundor. Den kan därför varken ersätta nationella 271,57 direkt eller ensam bevisa att detta modellantal är orimligt.",
+      "likelihood": {
+        "model": 271.56888826323825,
+        "decision": "retain",
+        "value": 271.56888826323825,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Kompletteringskraven blir en ändlös pingisrunda i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "impact": {
+        "model": 21406250.45822451,
+        "decision": "retain",
+        "value": 21406250.45822451,
+        "lower": null,
+        "upper": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Kompletteringskraven blir en ändlös pingisrunda i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Modellvärdet behålls eftersom jämförelsen inte styrker en orimlig nivå; det är inte ett observerat historiskt utfall."
+      },
+      "history": [
+        {
+          "finding": "LTU:s studie redovisar 80 procent ofullständiga MPD-ansökningar och ungefär dubblerad genomsnittstid. Den mäter inte frekvensen av upprepade kompletteringsrundor i alla instanser.",
+          "sourceUrl": "https://www.ltu.se/aktuellt/nyheter/nyhetsarkiv/2026-03-24-kunskapsglapp-fordrojer-miljotillstand",
+          "sourceTitle": "LTU: Kunskapsglapp fördröjer miljötillstånd, 24 mars 2026",
+          "verification": "verified_primary",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [
+        "Jämförbart totalt antal ärenden med upprepade kompletteringsrundor inklusive domstolar, samt kostnad per sådan runda."
+      ],
+      "sourceDescriptionSha256": "067882bde2804101c7ed4edcb0d75fcac58d44cb220fdcfb590306cbe272ab1a",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ],
+      "sanityAssessment": "LTU:s studie av drygt 1 600 ansökningar hos miljöprövningsdelegationerna 2018–2022 visar att omkring 80 procent var ofullständiga och att dessa i genomsnitt fick ungefär dubbelt så lång handläggningstid. Studien stöder sambandet mellan bristande underlag och längre prövning, men mäter inte hur många ärenden som fastnar i upprepade kompletteringsrundor. Riskbeskrivningens uppskattning på 40–80 sådana delegationsärenden per år omfattar dessutom en mindre population än modellens cirka 272 händelser, eftersom domstolsmål tillkommer i modellen. Frekvensen och kostnadsmedianen på cirka 21,4 miljoner kronor behålls som modellbedömningar, men skillnaden i population gör att indikatorn på cirka 5,81 miljarder kronor ännu saknar en direkt historisk kontroll av både antal och kostnad.",
+      "historyStatus": "supported_context_only",
+      "openQuestion": "Hur många ärenden hos delegationer respektive domstolar hade upprepade kompletteringsrundor som faktiskt förlängde processen, och vilken merkostnad kunde hänföras till dessa rundor?"
+    },
+    {
+      "riskId": "R-B50-E010-01",
+      "originalRank": 16,
+      "decision": "replace_source",
+      "reason": "Modellens 770.24 miljoner kronor per händelse ligger över beskrivningens typiska ram 10–300 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 7.4059919210000285,
+        "decision": "retain",
+        "value": 7.4059919210000285,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Korridorvalet kolliderar med riksintressen, rennäring eller Natura 2000 i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 5,
+          "upper": 20,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: i storleksordningen 5–20 ledningsprojekt per år får korridoren omprövad eller koncessionen överklagad av dessa skäl.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 770242156.4472095,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 10000000.0,
+        "upper": 300000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "En händelse kostar typiskt 10–300 Mkr i försening och omutredning, mer om en industrietablering väntar på ledningen.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B50-E010-01&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B50-E010-01",
+        "scope": "Korridorvalet kolliderar med riksintressen, rennäring eller Natura 2000 i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "Individuella fall och övriga källreferenser i beskrivningen har lästs som bakgrund. Inget verifierat, representativt händelseantal eller förlustbelopp har kunnat hämtas som direkt ersättning. Den använda numeriska ramen är därför uttryckligen beskrivningens bedömning.",
+          "sourceUrl": null,
+          "sourceTitle": "Fryst riskbeskrivning",
+          "verification": "description_only_not_independently_verified",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "d73da7dc72c7b8823ce6f693b38d008b9b5be525654f05455997266319d6cbc8",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B20-G010-02",
+      "originalRank": 17,
+      "decision": "replace_source",
+      "reason": "Modellens 145.53 miljoner kronor per händelse ligger över beskrivningens typiska ram 2–50 miljoner. Historiska exempel ger inget representativt stöd för denna högre genomsnittliga nivå. Den jämförbara per-händelseramen ska styra publicerat värde och rangordning, medan råmodellen bevaras separat.",
+      "likelihood": {
+        "model": 35.820858481817965,
+        "decision": "retain",
+        "value": 35.820858481817965,
+        "lower": null,
+        "upper": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": null,
+        "scope": "Sektorsspår och Natura-kollisioner fångas inte i vägvalet i Sverige, händelser per år",
+        "period": "ett år",
+        "qualification": "Modellens frekvens ligger inom eller nära beskrivningens grova bedömningsram. Intervallet är inte ett observerat historiskt antal eller en kalibrerad sannolikhetsfördelning.",
+        "comparisonRange": {
+          "lower": 20,
+          "upper": 60,
+          "unit": "events_per_year",
+          "sourceQuote": "Bedömning: att ett parallellt spår (försvar, kommunal tillstyrkan, Natura 2000, artskydd, strandskydd, koncession) fångas för sent förekommer i storleksordningen 20–60 ärenden/år.",
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 145527758.14273056,
+        "decision": "replace_range",
+        "value": null,
+        "lower": 2000000.0,
+        "upper": 50000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Kostnaden per händelse är typiskt 2–50 Mkr, och för storskaliga energiprojekt hundratals Mkr.",
+        "sourceUrl": "https://nic-esp.github.io/miljotillstandsrisker/?risk=R-B20-G010-02&tab=analysis",
+        "sourceTitle": "Fryst riskbeskrivning: R-B20-G010-02",
+        "scope": "Sektorsspår och Natura-kollisioner fångas inte i vägvalet i Sverige, ekonomisk konsekvens per drabbat ärende/projekt",
+        "period": "per händelse",
+        "qualification": "Källans typiska per-händelseintervall används som bedömningsram enligt granskningsbeslutet. Det är inte observerad statistik, ett konfidensintervall eller ett hårt maximibelopp; större enskilda projekt kan ligga över. En jämförelsepunkt inom intervallet får inte kallas empiriskt medelvärde eller median."
+      },
+      "history": [
+        {
+          "finding": "Individuella fall och övriga källreferenser i beskrivningen har lästs som bakgrund. Inget verifierat, representativt händelseantal eller förlustbelopp har kunnat hämtas som direkt ersättning. Den använda numeriska ramen är därför uttryckligen beskrivningens bedömning.",
+          "sourceUrl": null,
+          "sourceTitle": "Fryst riskbeskrivning",
+          "verification": "description_only_not_independently_verified",
+          "usableAsReplacement": false
+        }
+      ],
+      "missing": [],
+      "sourceDescriptionSha256": "c3aac0676f5b576157556b9b8471e711fa61d83c724b284059f89b9716f2f6d9",
+      "checkedAt": "2026-10-22",
+      "checkedAgainst": [
+        "full_frozen_description",
+        "canonical_site_description",
+        "retained_description_review"
+      ]
+    },
+    {
+      "riskId": "R-B50-T020-02",
+      "originalRank": 18,
+      "decision": "replace_source",
+      "reason": "Mediankostnaden 1 739 miljoner saknar stöd i beskrivningens typiska förseningskostnad 50–500 miljoner. Planbudgeten 1 171 miljarder avser investeringar under tolv år och kan inte föras över till förlust i en händelse. Använd beskrivningens kostnadsintervall som egen källbaserad bedömning; frekvensen 2,95 behålls eftersom ett tiotal är en grov storleksordning, inte ett dokumenterat exakt årsantal.",
+      "history": [
+        {
+          "sourceUrl": "https://www.regeringen.se/contentassets/1c9861ada88148ffb4f92ee1dbef51d0/nationell-planering-for-transportinfrastrukturen-20262037-skr.-202526259",
+          "sourceTitle": "Regeringens skrivelse 2025/26:259",
+          "status": "verified_primary_context",
+          "finding": "Plan och byggstartsgrupper är olika steg. Planramen är investering, inte riskförlust; ingen jämförbar förseningskostnad eller årlig incidentserie redovisas."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 2.953341921109326,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_with_context",
+        "sourceQuote": "ett tiotal objekt per år påverkas av att planens laga kraft och byggstarts- eller finansieringsbeslut inte sammanfaller. Typisk kostnad 50–500 Mkr per händelse vid ett års förskjutning.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Planöverklagande och separat byggstartsbeslut skapar två regeringsanknutna steg i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 1739367669.7936988,
+        "decision": "replace_range",
+        "lower": 50000000.0,
+        "upper": 500000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "ett tiotal objekt per år påverkas av att planens laga kraft och byggstarts- eller finansieringsbeslut inte sammanfaller. Typisk kostnad 50–500 Mkr per händelse vid ett års förskjutning.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Planöverklagande och separat byggstartsbeslut skapar två regeringsanknutna steg i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Källtextens uttryckliga bedömningsintervall, inte observerad statistik, konfidensintervall eller fastställd median. Genomsnittsvärdet inom intervallet är en redaktionell jämförelse enligt användarens val."
+      },
+      "sourceDescriptionSha256": "83055b4b1fb2ef4fc05bef80c3127d2a0b706f7ab45646420ea95cb2400224e0"
+    },
+    {
+      "riskId": "R-B50-X030-02",
+      "originalRank": 19,
+      "decision": "replace_source",
+      "reason": "Frekvensen 20,82 ligger i beskrivningens intervall. Modellens kostnad 235,98 miljoner ligger över den angivna ramen 5–200 miljoner utan jämförbart belägg för nivån; använd därför beskrivningsintervallet som bedömningsvärde. Antal lägenheter, hektar och enskilda projekttider är inte monetära förluster.",
+      "history": [
+        {
+          "status": "not_primary_verified",
+          "finding": "Ön och Tjärnbäcksbron är enskilda fall citerade genom SVT i beskrivningen. De visar mekanismen men ingen nationell incidentserie eller representativ förlust; ingen numerisk ersättning hämtas från dessa fall."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 20.819015372095382,
+        "decision": "retain",
+        "lower": 20,
+        "upper": 50,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 20–50 händelser per år. En händelse kostar typiskt 5–200 Mkr genom omprojektering, förlorad byggrätt eller längre byggtid.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Omprojektering för att undvika förbudet urholkar projektets funktion eller ekonomi i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 235982182.600214,
+        "decision": "replace_range",
+        "lower": 5000000.0,
+        "upper": 200000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 20–50 händelser per år. En händelse kostar typiskt 5–200 Mkr genom omprojektering, förlorad byggrätt eller längre byggtid.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Omprojektering för att undvika förbudet urholkar projektets funktion eller ekonomi i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Källtextens uttryckliga bedömningsintervall, inte observerad statistik, konfidensintervall eller fastställd median. Genomsnittsvärdet inom intervallet är en redaktionell jämförelse enligt användarens val."
+      },
+      "sourceDescriptionSha256": "88db41e809da7c47abde3e9c1a8a97d9754039ef171ef87323214c106931de65"
+    },
+    {
+      "riskId": "R-B40-010-02",
+      "originalRank": 20,
+      "decision": "replace_source",
+      "reason": "Frekvensen 28,38 överensstämmer med bedömda 20–60 händelser. 158,17 miljoner per händelse överstiger den typiska ramen 5–100 miljoner. Stora tunnelprojekt kan kosta mer men deras andel och skador är inte belagda; använd beskrivningsintervallet, med storprojektsreservationen kvar.",
+      "history": [
+        {
+          "status": "not_primary_verified",
+          "finding": "Tillståndsvillkor för Gula linjen och Nordkalk avser skyldigheter och enskilda projekt, inte uppmätt kostnad när grundvattenarbeten felavgränsas."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 28.378734569988197,
+        "decision": "retain",
+        "lower": 20,
+        "upper": 60,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 20–60 händelser per år, med en typisk kostnad på 5–100 Mkr per händelse (kompletterande prövning, stoppade schakt, skadeersättning) och mer för större tunnelprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Tillfälliga arbeten och grundvattenbortledning faller utanför avgränsningen i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 158172834.0449124,
+        "decision": "replace_range",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 20–60 händelser per år, med en typisk kostnad på 5–100 Mkr per händelse (kompletterande prövning, stoppade schakt, skadeersättning) och mer för större tunnelprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Tillfälliga arbeten och grundvattenbortledning faller utanför avgränsningen i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Källtextens uttryckliga bedömningsintervall, inte observerad statistik, konfidensintervall eller fastställd median. Genomsnittsvärdet inom intervallet är en redaktionell jämförelse enligt användarens val."
+      },
+      "sourceDescriptionSha256": "f264d47ad00f230d1f5ca0558e7537cf3f3794a7d954537c0cdc72fc420b3870"
+    },
+    {
+      "riskId": "R-B50-P030-03",
+      "originalRank": 21,
+      "decision": "replace_source",
+      "reason": "Modellfrekvensen 8,98 ligger i ramen 5–30. Kostnaden 479,98 miljoner ligger mer än dubbelt över beskrivningens 10–200 miljoner. Antal bostäder i Hornsbergskvarteren och projektets fleråriga omtag ger ingen uppmätt förlust. Använd beskrivningens kostnadsintervall.",
+      "history": [
+        {
+          "status": "not_primary_verified",
+          "finding": "Hornsbergskvarteren är ett enskilt fall från sekundärkällor. Antal bostäder och planändringar belägger inte en monetär riskkostnad."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 8.981512711373965,
+        "decision": "retain",
+        "lower": 5,
+        "upper": 30,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "5–30 händelser per år. Typisk kostnad 10–200 Mkr per händelse (omplanering, 1–5 års försening för delar av projektet).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Planens laga kraft avvaktar inte miljöprövningens – beroendekrock mellan spåren i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 479976596.0902517,
+        "decision": "replace_range",
+        "lower": 10000000.0,
+        "upper": 200000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "5–30 händelser per år. Typisk kostnad 10–200 Mkr per händelse (omplanering, 1–5 års försening för delar av projektet).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Planens laga kraft avvaktar inte miljöprövningens – beroendekrock mellan spåren i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Källtextens uttryckliga bedömningsintervall, inte observerad statistik, konfidensintervall eller fastställd median. Genomsnittsvärdet inom intervallet är en redaktionell jämförelse enligt användarens val."
+      },
+      "sourceDescriptionSha256": "a5881e42d086c52c4391761b5a4466fd698b067ed414b5f35fe4412bf5bb84cb"
+    },
+    {
+      "riskId": "R-B50-GN040-02",
+      "originalRank": 22,
+      "decision": "retain_model",
+      "reason": "75,82 händelser ligger inom 30–100. Kostnaden 51,11 miljoner ligger endast cirka 2 procent över det avrundade typiska övre värdet 50 miljoner. Det räcker inte för att bedöma modellen som orimlig; behåll modellen. Överklagandefrekvens är inte samma sak som ändrad bevisvärdering.",
+      "history": [
+        {
+          "status": "not_comparable",
+          "finding": "Vindkraftens överklagandeandelar och ett skärpt villkor i ett Nordkalkmål mäter inte den nationella frekvensen av olika bevisvärdering eller dess kostnad."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 75.82256208144696,
+        "decision": "retain",
+        "lower": 30,
+        "upper": 100,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 30–100 händelser per år där överinstansen värderar samma bevisning annorlunda. Kostnaden per händelse är typiskt 2–50 Mkr i utredning, expertstöd och försening.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Instanserna landar i olika bedömningar av samma bevisning i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 51107781.81341717,
+        "decision": "retain",
+        "lower": 2000000.0,
+        "upper": 50000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 30–100 händelser per år där överinstansen värderar samma bevisning annorlunda. Kostnaden per händelse är typiskt 2–50 Mkr i utredning, expertstöd och försening.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Instanserna landar i olika bedömningar av samma bevisning i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "sourceDescriptionSha256": "59583f6f5884b019970ec82da71b3bf79f7d73f378d597bcd66c0aed6ec9fefe",
+      "sanityAssessment": "Beskrivningens exempel visar hur en högre instans kan bedöma bevisning eller skyddsbehov annorlunda, men överklagandeandelar säger inte hur ofta samma bevisning faktiskt får en annan värdering. Modellens cirka 76 händelser per år ligger inom beskrivningens uppskattning 30–100, och kostnadsmedianen på cirka 51,1 miljoner kronor ligger endast något över den avrundade typiska ramen 2–50 miljoner. Den lilla avvikelsen ger inte i sig tillräckligt stöd för att byta ut modellvärdet, varför indikatorn på cirka 3,88 miljarder kronor behålls. Historiken har dock inte kunnat verifiera vare sig denna nationella frekvens eller den genomsnittliga ekonomiska följden av ändrad bevisvärdering.",
+      "historyStatus": "no_comparable_history",
+      "openQuestion": "Hur ofta ändras bedömningen av samma bevisning mellan instanser, och vilka ytterligare utrednings-, expert- och förseningskostnader uppstår till följd av just denna ändring?"
+    },
+    {
+      "riskId": "R-B50-P010-02",
+      "originalRank": 23,
+      "decision": "replace_source",
+      "reason": "18,99 händelser ligger inom ramen 10–50. Kostnaden 202,95 miljoner överstiger beskrivningens 5–100 miljoner med drygt två gånger. Upphävda detaljplaner är en annan händelse än felbedömt planbehov; använd kostnadsintervallet och behåll frekvensmedianen.",
+      "history": [
+        {
+          "sourceUrl": "https://www.boverket.se/globalassets/publikationer/dokument/2024/redovisning-av-tillampningen-av-plan--och-bygglagstiftningen-ar-2023.pdf",
+          "sourceTitle": "Boverket rapport 2024:10, s. 16–17",
+          "status": "verified_primary_context",
+          "finding": "41 planer upphävdes av MMD 2023. Statistiken inkluderar områdesbestämmelser och mäter inte lov som upphävs på grund av planbehov; ingen direkt frekvensersättning."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 18.98820787402247,
+        "decision": "retain",
+        "lower": 10,
+        "upper": 50,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 10–50 händelser per år i industri-, energi- och anläggningsprojekt. Typisk kostnad 5–100 Mkr per händelse (planprocess i efterhand, ofta 1–3 års försening).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Felbedömt planbehov: projektet bedöms inte kräva plan – och tvingas ändå till det sent i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 202945437.8729282,
+        "decision": "replace_range",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 10–50 händelser per år i industri-, energi- och anläggningsprojekt. Typisk kostnad 5–100 Mkr per händelse (planprocess i efterhand, ofta 1–3 års försening).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Felbedömt planbehov: projektet bedöms inte kräva plan – och tvingas ändå till det sent i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Källtextens uttryckliga bedömningsintervall, inte observerad statistik, konfidensintervall eller fastställd median. Genomsnittsvärdet inom intervallet är en redaktionell jämförelse enligt användarens val."
+      },
+      "sourceDescriptionSha256": "d7a6ad03789329f77ef1e420de3bbc445a8b5b373ee21b495062e072d0fa1d59"
+    },
+    {
+      "riskId": "R-B40-060-03",
+      "originalRank": 24,
+      "decision": "replace_source",
+      "reason": "13,00 händelser ligger inom bedömda 10–30. Mediankostnaden 288,25 miljoner ligger i den särskilt nämnda storprojektssvansen men nästan tre gånger över den typiska övre ramen. Utan belagd andel sådana storprojekt används typintervallet 5–100 miljoner; reservationen om några hundra miljoner i stora hamnprojekt bevaras.",
+      "history": [
+        {
+          "status": "not_primary_verified",
+          "finding": "Skandiaportens olika beslutstidpunkter illustrerar parallella spår. De och antal kubikmeter massor är inte direkt jämförbara med kostnad eller frekvens för fel ordningsföljd. De används inte som numerisk ersättning."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 13.000589820371761,
+        "decision": "retain",
+        "lower": 10,
+        "upper": 30,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 10–30 händelser per år där muddrings-, dumpnings- eller sektorstillstånd prövas i fel ordning eller faller isär. Typisk kostnad är 5–100 Mkr per händelse (omtag av masshanteringen, 6–24 månaders försening och kapitalkostnad), upp till några hundra Mkr i stora hamn- och farledsprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Muddermassor, dumpning och sektorstillstånd staplas i fel ordning i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 288252807.0207399,
+        "decision": "replace_range",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 10–30 händelser per år där muddrings-, dumpnings- eller sektorstillstånd prövas i fel ordning eller faller isär. Typisk kostnad är 5–100 Mkr per händelse (omtag av masshanteringen, 6–24 månaders försening och kapitalkostnad), upp till några hundra Mkr i stora hamn- och farledsprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Muddermassor, dumpning och sektorstillstånd staplas i fel ordning i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Källtextens uttryckliga bedömningsintervall, inte observerad statistik, konfidensintervall eller fastställd median. Genomsnittsvärdet inom intervallet är en redaktionell jämförelse enligt användarens val. Stora hamnprojekt kan enligt samma källa kosta några hundra miljoner; deras andel är inte angiven."
+      },
+      "sourceDescriptionSha256": "5511f080c2f796dff2f382833fb272f64697b3d9dc807c5ad32fd549cdd0bfc9"
+    },
+    {
+      "riskId": "R-B50-START-01",
+      "originalRank": 25,
+      "decision": "replace_source",
+      "reason": "11,50 händelser är förenligt med beskrivningens tiotal. 308,74 miljoner överstiger typintervallet 5–200 miljoner. TNT-fabrikens cirka 900 miljoner är projektinvestering, inte kostnad för det sena spåret. Använd beskrivningens kostnadsintervall.",
+      "history": [
+        {
+          "status": "not_primary_verified",
+          "finding": "Swebals fabrik och överklagade parallella beslut är ett enskilt fall. Investeringens storlek kan inte ersätta förseningskostnaden och händelsen ger ingen nationell frekvens."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 11.498501342432835,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_with_context",
+        "sourceQuote": "tiotal projekt per år. Per händelse typiskt 5–200 Mkr i kapitalkostnad och försening.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Osynliga spår blockerar byggstart trots färdigt huvudtillstånd i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 308742082.8640697,
+        "decision": "replace_range",
+        "lower": 5000000.0,
+        "upper": 200000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "tiotal projekt per år. Per händelse typiskt 5–200 Mkr i kapitalkostnad och försening.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Osynliga spår blockerar byggstart trots färdigt huvudtillstånd i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Källtextens uttryckliga bedömningsintervall, inte observerad statistik, konfidensintervall eller fastställd median. Genomsnittsvärdet inom intervallet är en redaktionell jämförelse enligt användarens val."
+      },
+      "sourceDescriptionSha256": "294cad5daf6a4300d6df446f3e7de3b2de38ea5205a91847070081ea4625486a"
+    },
+    {
+      "riskId": "R-B20-020-02",
+      "originalRank": 26,
+      "decision": "withhold",
+      "reason": "192,40 händelser per år ligger tydligt över beskrivningens några tiotal till ett hundratal. Den formuleringen har ingen exakt nedre gräns som kan användas för en ärlig mittpunkt. Vindkraftsveton och planöverklaganden avser andra och delvis överlappande populationer. Lämna frekvens och årlig kostnadsrang odefinierade tills en jämförbar händelseavgränsning och ett numeriskt intervall finns.",
+      "history": [
+        {
+          "sourceUrl": "https://www.boverket.se/globalassets/publikationer/dokument/2024/redovisning-av-tillampningen-av-plan--och-bygglagstiftningen-ar-2023.pdf",
+          "sourceTitle": "Boverket rapport 2024:10, s. 14 och 16",
+          "status": "verified_primary_context",
+          "finding": "968 beslutade detaljplaner och 261 överklagade planer 2023 är olika årsflöden; överklaganden inkluderar områdesbestämmelser. De är inte en matchad kohort eller antal organiserade samrådsmotstånd med kostsam försening."
+        }
+      ],
+      "missing": [
+        "Jämförbart numeriskt intervall eller observerat årsantal för organiserat motstånd som medför påtaglig försening; verbal storleksordning ges ingen konstruerad mittpunkt."
+      ],
+      "likelihood": {
+        "model": 192.40046554021828,
+        "decision": "withhold",
+        "lower": null,
+        "upper": null,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Lokal opinion är mest mätbar inom vindkraft. Där stoppades 43 av 46 landbaserade projekt 2025 av kommunalt veto (68 % i snitt 2021–2024, Green Power Sweden), och 62 % av miljöprövningsdelegationernas vindkraftsbeslut 2014–2025 överklagades till mark- och miljödomstol. För detaljplaner överklagades 261 av 968 antagna planer 2023 (27 %, Boverket). Organiserat motstånd som förlänger processen påtagligt bedöms därför förekomma i några tiotal till ett hundratal projekt per år, med störst sannolikhet för vindkraft, gruvor, kraftledningar och täkter.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Lokal opinion mobiliserar och hårdnar under samrådet i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 17398847.849882368,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_with_context",
+        "sourceQuote": "Lokal opinion är mest mätbar inom vindkraft. Där stoppades 43 av 46 landbaserade projekt 2025 av kommunalt veto (68 % i snitt 2021–2024, Green Power Sweden), och 62 % av miljöprövningsdelegationernas vindkraftsbeslut 2014–2025 överklagades till mark- och miljödomstol. För detaljplaner överklagades 261 av 968 antagna planer 2023 (27 %, Boverket). Organiserat motstånd som förlänger processen påtagligt bedöms därför förekomma i några tiotal till ett hundratal projekt per år, med störst sannolikhet för vindkraft, gruvor, kraftledningar och täkter.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Lokal opinion mobiliserar och hårdnar under samrådet i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "sourceDescriptionSha256": "e294e0c3bc740dc398e1c49f0d297ffb98bc085e706bd5bed190d851e4843bfd"
+    },
+    {
+      "riskId": "R-B60-260-01",
+      "originalRank": 27,
+      "decision": "retain_model",
+      "reason": "204,65 händelser och 15,82 miljoner ligger inom beskrivningens 100–300 respektive 1–20 miljoner. Behåll modellen; Tunadal kan inte ge ett representativt nationellt kostnadsvärde och dess totala väntan avser flera instanser, inte enbart PT-steget.",
+      "history": [
+        {
+          "sourceUrl": "https://koping.se/download/18.44f6c3fa19a419dd5076d2ef/1762512606947/Kbab-protokoll-2025-10-30-signed.pdf",
+          "sourceTitle": "KBAB styrelseprotokoll 30 oktober 2025, § 1930",
+          "status": "verified_primary_context",
+          "finding": "Bygglovsöverklagande till MMD sköt upp Tunadal och investeringsstödet var osäkert. Protokollet verifierar mekanismen men inget slutligt 12-miljonersbelopp eller isolerad MÖD-PT-kostnad; ingen direkt ersättning."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 204.64640549063589,
+        "decision": "retain",
+        "lower": 100,
+        "upper": 300,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 100–300 händelser per år i hela landet (uppskattning, ej verifierad). Kostnaden per händelse räknar bara väntetiden fram till PT-beskedet. Hela överprövningskedjan räknas redan i den breda överklaganderisken. Typiskt 1–20 Mkr per ärende, mer för stora industri- och energiprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Uteblivet prövningstillstånd lämnar MMD:s avgörande stående utan sakprövning i MÖD i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 15823766.58486486,
+        "decision": "retain",
+        "lower": 1000000.0,
+        "upper": 20000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 100–300 händelser per år i hela landet (uppskattning, ej verifierad). Kostnaden per händelse räknar bara väntetiden fram till PT-beskedet. Hela överprövningskedjan räknas redan i den breda överklaganderisken. Typiskt 1–20 Mkr per ärende, mer för stora industri- och energiprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Uteblivet prövningstillstånd lämnar MMD:s avgörande stående utan sakprövning i MÖD i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "sourceDescriptionSha256": "6762605643eb92e261426f130d163ed92636c18837c3a19934fa5e67952b6d2e",
+      "sanityAssessment": "Modellmedianerna på cirka 205 händelser per år och 15,8 miljoner kronor per händelse ligger inom riskbeskrivningens uttryckligen uppskattade intervall 100–300 respektive 1–20 miljoner. Det verifierade styrelseprotokollet för Tunadal visar att ett bygglovsöverklagande sköt upp projektet och gjorde investeringsstödet osäkert, men avgränsar ingen slutlig kostnad för väntan på MÖD:s besked om prövningstillstånd. Det åberopade fallet kan därför ge bakgrund till förloppet utan att bekräfta modellens nationella antal eller belopp. Indikatorn på cirka 3,24 miljarder kronor behålls som bedömning, och vid samlad kostnadsanalys behöver denna väntan hållas isär från den bredare överprövningsrisken så att samma förlust inte räknas flera gånger.",
+      "historyStatus": "supported_context_only",
+      "openQuestion": "Hur många besked om nekat prövningstillstånd medförde en faktisk projektförsening, och vilken kostnad uppstod enbart under väntan på detta besked?"
+    },
+    {
+      "riskId": "R-B40-START-01",
+      "originalRank": 28,
+      "decision": "retain_model",
+      "reason": "Kostnaden 19,39 miljoner ligger inom 1–20. Frekvensen 156,06 ligger cirka 4 procent över beskrivningens avrundade storleksordning 50–150, vilket inte ger tillräckligt stöd för att underkänna modellen. Regionala stödbelopp för dammar är inte incidentkostnad.",
+      "history": [
+        {
+          "sourceUrl": "https://press.newsmachine.com/pressroom/archive/lansstyrelsen-skane/year/2026",
+          "sourceTitle": "Länsstyrelsen Skåne, pressmeddelande 3 juni 2026",
+          "status": "verified_primary_context",
+          "finding": "Pressarkivet bekräftar att åtta av 53 miljoner stödmedel använts. Det är regional bidragsanvändning, inte förlust eller antal sent upptäckta vattenfrågor."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 156.06222642923188,
+        "decision": "retain",
+        "lower": 50,
+        "upper": 150,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 50–150 händelser per år, med en typisk kostnad på 1–20 Mkr per händelse (omprojektering, kasserade utredningar, 6–24 månaders försening).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Vattenpåverkan upptäcks för sent i genomförandekonceptet i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 19392460.26243257,
+        "decision": "retain",
+        "lower": 1000000.0,
+        "upper": 20000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 50–150 händelser per år, med en typisk kostnad på 1–20 Mkr per händelse (omprojektering, kasserade utredningar, 6–24 månaders försening).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Vattenpåverkan upptäcks för sent i genomförandekonceptet i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "sourceDescriptionSha256": "9be19d6aeafc3d6ed1d4bcd9801721351e90eed10eca0d1fb6df7e9472f6dae4",
+      "sanityAssessment": "De historiska exemplen beskriver sent uppmärksammade vattenfrågor och väntan på vattenrättsliga besked, men någon nationell statistik över just sent upptäckt vattenpåverkan har inte verifierats. Länsstyrelsens uppgifter om åtta utnyttjade miljoner av en stödbudget på 53 miljoner i Skåne avser bidragsanvändning och ger ingen uppskattning av projektens förlust. Modellens cirka 156 händelser per år ligger nära beskrivningens avrundade intervall 50–150, medan kostnadsmedianen 19,4 miljoner kronor ligger inom den typiska ramen 1–20 miljoner. Modellvärdena och indikatorn på cirka 3,03 miljarder kronor behålls, med behov av ett underlag som skiljer sena upptäckter från vattenprövning som har varit känd och planerad från början.",
+      "historyStatus": "supported_context_only",
+      "openQuestion": "Hur många projekt behövde göra om sin planering efter att vattenpåverkan upptäckts sent, och vad kostade omprojektering, övergivna utredningar och tillkommande väntetid i dessa fall?"
+    },
+    {
+      "riskId": "R-B40-G070-01",
+      "originalRank": 29,
+      "decision": "retain_model",
+      "reason": "140,00 händelser ligger inom 50–200. Beskrivningen har två kostnadsgrupper: 1–10 miljoner för typiska små fall och 10–100 miljoner för industri/infrastruktur. Modellens 20,39 miljoner ligger i den senare gruppen. Utan uppgift om gruppvikter går det inte att visa att bedömningen av genomsnittlig händelsekostnad är orimlig eller ersätta den med en grupps mittpunkt.",
+      "history": [
+        {
+          "sourceUrl": "https://www.naturvardsverket.se/49e4ea/globalassets/vagledning/miljobalken/miljoprovning/samlad-statistik-om-miljoprovning-for-ar-2024.pdf",
+          "sourceTitle": "Naturvårdsverket: samlad statistik om miljöprövning 2024",
+          "status": "verified_primary_context",
+          "finding": "356 dagars median för första avgörande i vattenmål avser alla avgjorda tillståndsmål, inte tillsynsärenden där ett undantag underkänns. Kan inte ersätta incidentantal eller kostnad."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 140.0028958977078,
+        "decision": "retain",
+        "lower": 50,
+        "upper": 200,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 50–200 händelser per år där ett valt undantag underkänns i tillsyn, de flesta små. Typisk kostnad är 1–10 Mkr per händelse (återställning, efterhandsansökan, stillestånd) och 10–100 Mkr när infrastruktur- eller industriprojekt drabbas.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Fel spår väljs: undantag trots att tillståndsplikt föreligger i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 20389155.04743316,
+        "decision": "retain",
+        "lower": 1000000.0,
+        "upper": 10000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 50–200 händelser per år där ett valt undantag underkänns i tillsyn, de flesta små. Typisk kostnad är 1–10 Mkr per händelse (återställning, efterhandsansökan, stillestånd) och 10–100 Mkr när infrastruktur- eller industriprojekt drabbas.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Fel spår väljs: undantag trots att tillståndsplikt föreligger i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad. Separat delpopulation industri/infrastruktur har 10–100 miljoner; okända gruppvikter hindrar ett sammanvägt källvärde."
+      },
+      "sourceDescriptionSha256": "f6ccd2a6bfdd1639d60a0ce190a3d74ce1ae8a7ab52b18d6bb15859aa48a16f1"
+    },
+    {
+      "riskId": "R-B50-T020-03",
+      "originalRank": 30,
+      "decision": "replace_source",
+      "reason": "4,95 händelser är förenligt med den avrundade nedre ramen 5. Kostnaden 543,94 miljoner saknar stöd jämfört med angivna 20–300 miljoner. Ostlänkens totala projektbudget och ett koncessionsöverklagande om en gruva kan inte användas som järnvägsplansförlust. Använd beskrivningens kostnadsintervall.",
+      "history": [
+        {
+          "sourceUrl": "https://www.regeringen.se/contentassets/1c9861ada88148ffb4f92ee1dbef51d0/nationell-planering-for-transportinfrastrukturen-20262037-skr.-202526259",
+          "sourceTitle": "Regeringens skrivelse 2025/26:259",
+          "status": "verified_primary_context",
+          "finding": "Transportplanens investeringsramar och objektbeslut är inte förlustkostnader. Nautanen är dessutom bearbetningskoncession, inte väg- eller järnvägsplan; ingen direkt numerisk ersättning från det exemplet."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 4.953398445952303,
+        "decision": "retain",
+        "lower": 5,
+        "upper": 15,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "5–15 överklagade planer per år. Typisk kostnad 20–300 Mkr per händelse vid 6–18 månaders förskjutning av markåtkomst och byggstart.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Överklaganden av planbeslutet från samebyar, markägare och organisationer i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 543941366.2625612,
+        "decision": "replace_range",
+        "lower": 20000000.0,
+        "upper": 300000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "5–15 överklagade planer per år. Typisk kostnad 20–300 Mkr per händelse vid 6–18 månaders förskjutning av markåtkomst och byggstart.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Överklaganden av planbeslutet från samebyar, markägare och organisationer i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Källtextens uttryckliga bedömningsintervall, inte observerad statistik, konfidensintervall eller fastställd median. Genomsnittsvärdet inom intervallet är en redaktionell jämförelse enligt användarens val."
+      },
+      "sourceDescriptionSha256": "a5d031755cfbde0e7bbaa29cf22c2c195f34266b49640b48a2bf7751c150e9a8"
+    },
+    {
+      "riskId": "R-B40-G020-01",
+      "originalRank": 31,
+      "decision": "retain_model",
+      "reason": "30,77 händelser och 83,19 miljoner ligger inom beskrivningens 20–60 och 5–100 miljoner. Ingen jämförbar historisk serie motsäger skalan. Behåll modellen; 13 månaders efterhandsprövning är en handläggningstid i ett fall, inte årsfrekvens.",
+      "history": [
+        {
+          "sourceUrl": "https://www.naturvardsverket.se/49e4ea/globalassets/vagledning/miljobalken/miljoprovning/samlad-statistik-om-miljoprovning-for-ar-2024.pdf",
+          "sourceTitle": "Naturvårdsverket: samlad statistik om miljöprövning 2024",
+          "status": "verified_primary_context",
+          "finding": "Vattenmålens 356 dagar är historisk tidsåtgång för en bredare målpopulation. Det belägger inte incidensen av felklassificerad tillfällig bortledning."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 30.765051752858696,
+        "decision": "retain",
+        "lower": 20,
+        "upper": 60,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 20–60 händelser per år, främst i bygg-, lednings- och infrastrukturprojekt, med en typisk kostnad på 5–100 Mkr per händelse (stoppade arbeten, efterhandsprövning, omplanerad entreprenad).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Felklassificering av tillfällig grundvattenbortledning i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 83189876.16747792,
+        "decision": "retain",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "storleksordningen 20–60 händelser per år, främst i bygg-, lednings- och infrastrukturprojekt, med en typisk kostnad på 5–100 Mkr per händelse (stoppade arbeten, efterhandsprövning, omplanerad entreprenad).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Felklassificering av tillfällig grundvattenbortledning i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "sourceDescriptionSha256": "f6d931d10d9a7011bdabc13929a974d33af201e2c50108be7308c25461c143e1"
+    },
+    {
+      "riskId": "R-B60-070-01",
+      "originalRank": 32,
+      "decision": "retain_model",
+      "reason": "146,79 händelser och 16,68 miljoner ligger inom beskrivningens 50–150 respektive 1–20 miljoner. Behåll modellen. Rekommenderade tidsfrister och reformkrav är inte observerade incidentantal eller kostnader.",
+      "history": [
+        {
+          "status": "not_comparable",
+          "finding": "Förslag om handläggare inom två veckor och tidsplan inom två månader avser önskat arbetssätt. De är inga historiska skade- eller frekvensvärden som ersätter modellmåtten."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 146.7937110869649,
+        "decision": "retain",
+        "lower": 50,
+        "upper": 150,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "50–150 ärenden per år saknar en fungerande tidsplan. En händelse kostar typiskt 1–20 Mkr, genom osäker beslutstidpunkt och finansierings- och leveransavtal som måste förlängas.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Utebliven eller slarvig tidsplan urholkar handläggningstempot i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 16679839.789300991,
+        "decision": "retain",
+        "lower": 1000000.0,
+        "upper": 20000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "50–150 ärenden per år saknar en fungerande tidsplan. En händelse kostar typiskt 1–20 Mkr, genom osäker beslutstidpunkt och finansierings- och leveransavtal som måste förlängas.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Utebliven eller slarvig tidsplan urholkar handläggningstempot i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "sourceDescriptionSha256": "e9cdb1f6bfd3229414d355944ce71273ab9e7e911751b3adc5c397cd82744741"
+    },
+    {
+      "riskId": "R-B50-X040-01",
+      "originalRank": 33,
+      "decision": "retain_model",
+      "reason": "350,46 händelser och 6,82 miljoner kan inte ersättas av bred strandskyddsstatistik utan att händelsepopulationen ändras. Historiska 646 avser upphävda åtgärder, inte lika många projekt eller kostsamma väntetider. Ingen tydlig numerisk motsägelse eller jämförbar kostnadsuppgift finns; behåll som modellbedömning med uttrycklig avsaknad av empirisk riskserie.",
+      "history": [
+        {
+          "sourceUrl": "https://www.naturvardsverket.se/49ac7a/contentassets/46684c3759ab477a835f0e9ee305e8d5/uppfoljning-av-strandskyddet-2024.pdf",
+          "sourceTitle": "Naturvårdsverket: uppföljning av strandskyddet 2024, s. 8, 22 och 26",
+          "status": "verified_primary_context",
+          "finding": "2024: 4 298 kommunala dispensbeslut, 6 135 medgivna åtgärder och 646 upphävda åtgärder. Länsstyrelserna beslutade om 395 dispenser. Beslut, åtgärder och projekt är skilda enheter; underlaget mäter inte registerprojekt som försenas genom överklagande."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 350.46441364592977,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "model_with_context",
+        "sourceQuote": "Kommunerna fattade ca 4 100–4 300 beslut om strandskyddsdispens per år 2023–2025 (6 001 år 2021), och länsstyrelserna upphävde vid överprövning ca 10 % av de medgivna åtgärderna, dvs. ca 600–740 åtgärder per år (739 av 7 151 år 2022, 646 av 6 135 år 2024). Länsstyrelserna fattade därutöver 400–500 egna dispensbeslut per år, där ca 20 % av åtgärderna nekades (länsstyrelsernas årliga redovisning till regeringen). Strandskyddsdispenser för de projekttyper registret avser är en liten andel av volymen, men frekvensen för att ett dispensbeslut överprövas eller överklagas och skjuter upp ett projekt bör ses mot den basnivån.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Dispens- och skyddsbeslut överklagas och gaten skjuts upp i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 6815976.06812986,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_with_context",
+        "sourceQuote": "Kommunerna fattade ca 4 100–4 300 beslut om strandskyddsdispens per år 2023–2025 (6 001 år 2021), och länsstyrelserna upphävde vid överprövning ca 10 % av de medgivna åtgärderna, dvs. ca 600–740 åtgärder per år (739 av 7 151 år 2022, 646 av 6 135 år 2024). Länsstyrelserna fattade därutöver 400–500 egna dispensbeslut per år, där ca 20 % av åtgärderna nekades (länsstyrelsernas årliga redovisning till regeringen). Strandskyddsdispenser för de projekttyper registret avser är en liten andel av volymen, men frekvensen för att ett dispensbeslut överprövas eller överklagas och skjuter upp ett projekt bör ses mot den basnivån.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Dispens- och skyddsbeslut överklagas och gaten skjuts upp i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "sourceDescriptionSha256": "cc3731626a04fb0ffa842e7b077c769f2fb4f5030c064494aad6049c5175c0da"
+    },
+    {
+      "riskId": "R-B50-P020-01",
+      "originalRank": 34,
+      "decision": "retain_model",
+      "reason": "73,14 händelser och 32,60 miljoner ligger inom beskrivningens 30–100 och 2–50 miljoner. Behåll modellen. Planöverklaganden kan bero på flera frågor och visar inte att lokal opinion orsakat alla tidsförskjutningar.",
+      "history": [
+        {
+          "sourceUrl": "https://www.boverket.se/globalassets/publikationer/dokument/2024/redovisning-av-tillampningen-av-plan--och-bygglagstiftningen-ar-2023.pdf",
+          "sourceTitle": "Boverket rapport 2024:10, s. 14 och 16–17",
+          "status": "verified_primary_context",
+          "finding": "261 överklagade planer och 41 upphävda planer 2023 är bekräftade. 27 procent fås från olika årsflöden; uppgiften att 12 procent ändras kan inte härledas till samma kohort. De ersätter inte förekomsten av opinionsdriven försening."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 73.13526009587773,
+        "decision": "retain",
+        "lower": 30,
+        "upper": 100,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "30–100 händelser per år i projekt inom registret. Typisk kostnad 2–50 Mkr per händelse, högre för stora logistik- och industrietableringar.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Lokal opinion och samrådsmotstånd förlänger eller omkullkastar planarbetet i Sverige; händelser per år",
+        "period": "Årsfrekvens bedömd i riskunderlaget, ingen observerad referensperiod",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "impact": {
+        "model": 32602010.759858113,
+        "decision": "retain",
+        "lower": 2000000.0,
+        "upper": 50000000.0,
+        "value": null,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "30–100 händelser per år i projekt inom registret. Typisk kostnad 2–50 Mkr per händelse, högre för stora logistik- och industrietableringar.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning som ingick i riskbedömningen",
+        "scope": "Lokal opinion och samrådsmotstånd förlänger eller omkullkastar planarbetet i Sverige; kostnad i det enskilda ärende där händelsen inträffar",
+        "period": "Per händelse; källtextens kostnadsram",
+        "qualification": "Modellvärdet behålls efter jämförelse med händelse, population och beskrivningens angivna storleksordning; empirisk kalibrering är inte därmed bevisad."
+      },
+      "sourceDescriptionSha256": "3a41ef44f74a45ef845526c13aca3126334e475ee5aa1c41ec87cde46c6897d7"
+    },
+    {
+      "riskId": "R-B70-G050-03",
+      "originalRank": 35,
+      "decision": "retain_model",
+      "reason": "Båda medianerna ligger inom den frysta beskrivningens uttryckliga bedömningsram: 3–10 händelser per år och 20 miljoner–2 miljarder kronor per händelse. Ingen jämförbar historisk serie visar att dessa centrala nivåer är orimliga. Bolagskonkurser och finansiering är inte i sig observationer av tillståndets säkerhetsförlust.",
+      "likelihood": {
+        "model": 3.157215790172853,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 3.157215790172853,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 3,
+          "upper": 10,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 737705163.8724847,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 737705163.8724847,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 20000000.0,
+          "upper": 2000000000.0,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "history": [
+        {
+          "sourceTitle": "Fallreferenser i fryst beskrivning",
+          "sourceUrl": null,
+          "summary": "Northvolt, Aldermyrberget och Stegra anges som exempel på finansiell svikt. Beskrivningen säger uttryckligen att påverkan på tillståndens säkerhets- och garantistrukturer inte har verifierats.",
+          "comparable": false,
+          "verified": false
+        }
+      ],
+      "missing": [
+        "Observerad frekvens och ekonomisk merkostnad för just bristande tillståndssäkerheter saknas."
+      ],
+      "sourceDescriptionSha256": "84114b35c6109a12c6fe74f3fd9160c537f363a4dc82f4f741af8f3d5a16a2bb"
+    },
+    {
+      "riskId": "R-B50-G010-01",
+      "originalRank": 36,
+      "decision": "replace_source",
+      "reason": "Kostnadsmedianen 201,54 miljoner överstiger den enda jämförbara kostnadsramen 5–100 miljoner. Kålviks hamns flera tillståndsspår ger ingen observerad förlust som stöder det högre modellvärdet. Ersätt kostnadsdelen med beskrivningsintervallet; frekvensen 11,51 per år är förenlig med uppgiften tiotal projekt och behålls.",
+      "likelihood": {
+        "model": 11.506873506733465,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 11.506873506733465,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "impact": {
+        "model": 201536375.6374299,
+        "decision": "replace_range",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "value": 52500000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Per händelse typiskt 5–100 Mkr när ett spår måste startas sent och byggstarten skjuts fram.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning i mätunderlaget",
+        "scope": "Försening och merkostnad när ett obligatoriskt sektorsspår startas sent i samma projekt.",
+        "period": "Per inträffad händelse",
+        "qualification": "Beskrivningens bedömda typiska intervall, inte observerad statistik eller konfidensintervall. Aritmetisk mittpunkt kan användas enligt användarens beslut; den är inte en uppmätt median. Enstaka storprojekt kan ligga över intervallet."
+      },
+      "history": [
+        {
+          "sourceTitle": "Kålviks hamn i fryst beskrivning",
+          "sourceUrl": null,
+          "summary": "Illustration av flera parallella tillståndsspår; ingen verifierad observation av ett bortglömt spår eller dess merkostnad.",
+          "comparable": false,
+          "verified": false
+        }
+      ],
+      "missing": [
+        "Nationell frekvens av bortglömda obligatoriska tillståndsspår saknas."
+      ],
+      "sourceDescriptionSha256": "101e9e239c0909da426b2f570ca9f9f7d3866175de6b636027a14da465d3c9c7"
+    },
+    {
+      "riskId": "R-B50-E020-01",
+      "originalRank": 37,
+      "decision": "retain_model",
+      "reason": "Frekvensmedianen 167,38 ligger högt relativt nyansökningar. Ei redovisar dock separata inflöden, beslut och pågående balanser; inkomna ärenden är inte samma population som ärenden där komplettering begärs under året. Historiken ger därför inte ett jämförbart punktbyte eller ett säkert tak utan att även kohort och ändringsärenden avgränsas. Behåll modellen tills en sådan avgränsning finns; använd inte MPD:s 80 procent som andel för Ei.",
+      "likelihood": {
+        "model": 167.37777362699896,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 167.37777362699896,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "impact": {
+        "model": 13785974.159102162,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 13785974.159102162,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "history": [
+        {
+          "sourceTitle": "Ei årsredovisning 2025, s.44–45",
+          "sourceUrl": "https://ei.se/download/18.f4d6fbf19c47959a1511076/1771851211990/Energimarknadsinspektionens-%C3%A5rsredovisning-2025-Ei-R2026-03.pdf",
+          "summary": "2025 inkom 67 nyansökningar om linjekoncession, mot 46 år 2024;59 beslut fattades 2025. Nya och ändrade koncessioner tillsammans hade 129 inkommande och 142 beslutade ärenden 2025 samt 106 i ingående balans. Uppgifterna avser exponering, inte antalet ofullständiga ansökningar.",
+          "comparable": false,
+          "verified": true
+        },
+        {
+          "sourceTitle": "LTU: Kunskapsglapp fördröjer miljötillstånd",
+          "sourceUrl": "https://www.ltu.se/aktuellt/nyheter/nyhetsarkiv/2026-03-24-kunskapsglapp-fordrojer-miljotillstand",
+          "summary": "Studien av drygt 1600 MPD-ärenden 2018–2022 fann 80 procent ofullständiga ansökningar. Ei:s linjekoncessioner är en annan population.",
+          "comparable": false,
+          "verified": true
+        }
+      ],
+      "missing": [
+        "Antal unika ofullständiga linjekoncessionsärenden per år, inklusive tydlig hantering av ändringsansökningar och äldre balanser.",
+        "Jämförbar monetär kostnadsuppgift per kompletteringshändelse."
+      ],
+      "sourceDescriptionSha256": "78f4c064f2ad9b778e89c9a3eda3fe4d8e1ac4e9905c63c7872811c265e24a70"
+    },
+    {
+      "riskId": "R-B60-170-01",
+      "originalRank": 38,
+      "decision": "replace_source",
+      "reason": "Frekvensmedianen 38,90 ligger inom den jämförbara bedömningen 20–60. Kostnadsmedianen 59,29 miljoner ligger över beskrivningens typiska 2–30 miljoner utan en verifierad ekonomisk förlustserie som stöder övervikten för storprojekt. Använd beskrivningens kostnadsintervall i huvudvärdet.",
+      "likelihood": {
+        "model": 38.90078484210519,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 38.90078484210519,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 20,
+          "upper": 60,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 59291571.68387196,
+        "decision": "replace_range",
+        "lower": 2000000.0,
+        "upper": 30000000.0,
+        "value": 16000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Kostnaden är typiskt 2–30 Mkr per ärende, betydligt mer för stora infrastrukturprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning i mätunderlaget",
+        "scope": "Ett ärende där miljöunderlaget underkänns och orsakar avslag eller återförvisning.",
+        "period": "Per inträffad händelse",
+        "qualification": "Beskrivningens bedömda typiska intervall, inte observerad statistik eller konfidensintervall. Aritmetisk mittpunkt kan användas enligt användarens beslut; den är inte en uppmätt median. Enstaka storprojekt kan ligga över intervallet."
+      },
+      "history": [
+        {
+          "sourceTitle": "Accelerationskontoret: Var tar tiden vägen?",
+          "sourceUrl": "https://accelerationskontoret.se/pressmeddelande/ny-studie-visar-sa-kan-ansokan-om-miljotillstand-effektiviseras/",
+          "summary": "17 procent av kompletteringsärendena vid MPD tog mer än 100 dagar att handlägga. Detta avser hantering av kompletteringar och mäter inte hur ofta en MKB underkänns i slutprövning eller överprövning.",
+          "comparable": false,
+          "verified": true
+        }
+      ],
+      "missing": [
+        "Observerad nationell andel slutligt underkända miljöunderlag."
+      ],
+      "sourceDescriptionSha256": "5fc70736ca32241992921ab116fb471fdd50f94d4f7c8ec7022977bf6a0bf7cd"
+    },
+    {
+      "riskId": "R-B50-P050-01",
+      "originalRank": 39,
+      "decision": "retain_model",
+      "reason": "Frekvensmedianen 16,90 är förenlig med beskrivningens tiotal byggstartskritiska lovöverklaganden. Beskrivningen saknar monetär kostnadsram som kan ersätta kostnadsmedianen 130,05 miljoner, och dess detaljplanestatistik avser en annan process än lovöverklaganden. Något jämförbart belägg för en orimlig modellnivå identifierades inte.",
+      "likelihood": {
+        "model": 16.903361009226074,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 16.903361009226074,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "impact": {
+        "model": 130054755.34209576,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 130054755.34209576,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "history": [
+        {
+          "sourceTitle": "Boverket: PBL-tillämpning 2023, s.14–16",
+          "sourceUrl": "https://www.boverket.se/globalassets/publikationer/dokument/2024/redovisning-av-tillampningen-av-plan--och-bygglagstiftningen-ar-2023.pdf",
+          "summary": "968 beslut om detaljplaner och 261 inkommande överklaganden av planer är separata årsvolymer; de utgör inte en matchad kohort. Planöverklaganden inkluderar områdesbestämmelser och kan inte ersätta frekvensen för kritiska bygglovsöverklaganden.",
+          "comparable": false,
+          "verified": true
+        }
+      ],
+      "missing": [
+        "Kostnad per kritiskt lovöverklagande samt en avgränsad nationell årsserie."
+      ],
+      "sourceDescriptionSha256": "3bd1e30724cb281b3009b0a1da1c37d281a746fedf6060c8bc01a7630911f758"
+    },
+    {
+      "riskId": "R-B70-END-01",
+      "originalRank": 40,
+      "decision": "retain_model",
+      "reason": "Modellmedianerna 10,82 händelser och 177,73 miljoner ligger inom beskrivningens 10–30 och 5–200 miljoner. Ett nedlagt projekt är inte automatiskt ett förfallet tillstånd; de nämnda investeringsprojekten får inte användas som nationellt incidensmått.",
+      "likelihood": {
+        "model": 10.82353518953285,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 10.82353518953285,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 10,
+          "upper": 30,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 177731416.43083888,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 177731416.43083888,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 5000000.0,
+          "upper": 200000000.0,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "history": [
+        {
+          "sourceTitle": "MÖD M9024-15",
+          "sourceUrl": "https://www.domstol.se/mark--och-miljooverdomstolen/mark--och-miljooverdomstolens-avgoranden/2016/72817/",
+          "summary": "Avgörandet 2016 vägrade förlängd igångsättningstid för en vindkraftpark; det belägger mekanismen men ger varken nationell årsfrekvens eller uppmätt förlust.",
+          "comparable": false,
+          "verified": true
+        },
+        {
+          "sourceTitle": "Industriprojekt i fryst beskrivning",
+          "sourceUrl": null,
+          "summary": "Fem nedlagda satsningar av 19 och ett tillstånd med 20 års igångsättningstid är inte observationer av förfall enligt 24 kap.2§MB.",
+          "comparable": false,
+          "verified": false
+        }
+      ],
+      "missing": [
+        "Nationell serie över faktiskt förfallna tillstånd och deras förlorade ärendekostnader."
+      ],
+      "sourceDescriptionSha256": "ffa6fa8edeaabcfe68831ca6c205308b2f85d8f9efe51d7697dd7d8da9b96364"
+    },
+    {
+      "riskId": "R-B20-010-02",
+      "originalRank": 41,
+      "decision": "retain_model",
+      "reason": "Medianen 231,91 händelser är i samma storleksordning som beskrivningens hundratals fältberoende ärenden, men den jämförbara observerade frekvensen för missad inventeringssäsong saknas. Kostnadsmedianen 8,05 miljoner motsägs inte av någon monetär källuppgift. Behåll modellvärden; överför inte 80 procent ofullständiga MPD-ansökningar till säsongsförlust.",
+      "likelihood": {
+        "model": 231.90603359508924,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 231.90603359508924,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "impact": {
+        "model": 8047467.729729142,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 8047467.729729142,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "history": [
+        {
+          "sourceTitle": "LTU: Kunskapsglapp fördröjer miljötillstånd",
+          "sourceUrl": "https://www.ltu.se/aktuellt/nyheter/nyhetsarkiv/2026-03-24-kunskapsglapp-fordrojer-miljotillstand",
+          "summary": "80 procent ofullständiga MPD-ansökningar i studien gäller alla former av brist och anger inte andelen missade inventeringssäsonger.",
+          "comparable": false,
+          "verified": true
+        },
+        {
+          "sourceTitle": "Fältfönster i fryst riskbeskrivning",
+          "sourceUrl": null,
+          "summary": "Ett säsongsfönster och mellanårsvariation beskriver när inventering är möjlig, inte antalet nationella förseningshändelser eller deras kostnad.",
+          "comparable": false,
+          "verified": false
+        }
+      ],
+      "missing": [
+        "Nationellt antal unika projekt som missat relevant inventeringssäsong och monetära följder."
+      ],
+      "sourceDescriptionSha256": "30a9926c6ff1552e1a43dd77c74eb39307b923011e32c432dd4b2f852e238eae"
+    },
+    {
+      "riskId": "R-B50-P050-03",
+      "originalRank": 42,
+      "decision": "withhold",
+      "reason": "Frekvensmedianen 792,40 stöds endast av en bred bygglovspopulation. Riskbeskrivningen anger samtidigt få sådana händelser i stora industriärenden. Stockholms lokala urval om 150 bygglov under tre månader kan inte ge en nationell årlig frekvens för miljötillståndsprojekten. Lämna årsindikatorn odefinierad tills händelsepopulationen är klar; kostnadsmedianen 2,33 miljoner ligger inom beskrivningens 1–10 miljoner och kan bevaras separat.",
+      "likelihood": {
+        "model": 792.4030660941644,
+        "decision": "withhold",
+        "lower": null,
+        "upper": null,
+        "value": null,
+        "unit": "events_per_year",
+        "evidenceKind": "population_mismatch",
+        "sourceQuote": "Bedömning: hundratals händelser per år, men få i stora industriärenden.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning i mätunderlaget",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Beskrivningen skiljer hundratals bygglovshändelser i allmänhet från få stora industriärenden. Den uppmätta frekvensen har inte avgränsats till registerprojekten. Ett lokalt urval får inte skalas till Sverige utan exponeringsdata."
+      },
+      "impact": {
+        "model": 2329140.112051063,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 2329140.112051063,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 1000000.0,
+          "upper": 10000000.0,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "history": [
+        {
+          "sourceTitle": "Svenskt Näringslivs urval återgivet i fryst beskrivning",
+          "sourceUrl": null,
+          "summary": "52 av 150 bygglovsärenden i Stockholm från tre månader 2025 hade vid något tillfälle svarstid över tio veckor. Den ursprungliga urvalsredovisningen har inte verifierats i primärkälla; även som korrekt uppgift gäller den ett lokalt urval, inte nationella industriprojekt.",
+          "comparable": false,
+          "verified": false
+        }
+      ],
+      "missing": [
+        "Antal relevanta industri-, energi- och infrastrukturärenden per år.",
+        "Observerad frekvens av fristöverskridanden i samma projektpopulation."
+      ],
+      "sourceDescriptionSha256": "f5aa568be624b33817d6874449ca599f946b2bf192266a6661cb1d94bc0c9a72"
+    },
+    {
+      "riskId": "R-B60-180-01",
+      "originalRank": 43,
+      "decision": "retain_model",
+      "reason": "Frekvensmedianen 5,01 är förenlig med beskrivningens flera stopp per år. De historiska rättsfallen visar att mekanismen förekommer men innehåller ingen jämförbar monetär förlust som kan ersätta 365,23 miljoner. Något belägg för att just medianen är orimlig har inte identifierats; modellen behålls som modellvärde, inte observerad förlust.",
+      "likelihood": {
+        "model": 5.013479868394832,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 5.013479868394832,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "impact": {
+        "model": 365233481.21694636,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 365233481.21694636,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "history": [
+        {
+          "sourceTitle": "Källhänvisade artskydds- och Naturafall",
+          "sourceUrl": null,
+          "summary": "NJA2013 s.613, M5431-14 och andra namngivna fall beskriver prövningens rättsliga följder. Deras antal är ett urval av exempel och får inte räknas om till nationell årsincidens. Kostnadsuppgifter saknas.",
+          "comparable": false,
+          "verified": false
+        }
+      ],
+      "missing": [
+        "Nationell jämförbar ärendeserie och realiserade förluster vid stopp av större projekt."
+      ],
+      "sourceDescriptionSha256": "0d79d242a9e1ca1b4745f48f06dab0b96128350475c366404b2796fa2f0658d5"
+    },
+    {
+      "riskId": "R-B50-P010-01",
+      "originalRank": 44,
+      "decision": "retain_model",
+      "reason": "Modellmedianerna 40,88 och 41,58 miljoner ligger inom bedömningsramen 20–100 och 1–50 miljoner. Fornhöjdenexemplet kan däremot inte användas som verifierad historisk stopphändelse: kommunens egen aktuella projektredovisning motsäger uppgiften om avbruten planläggning. Ingen numerisk korrigering grundas på det osäkra fallet.",
+      "likelihood": {
+        "model": 40.879599431273256,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 40.879599431273256,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 20,
+          "upper": 100,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 41580030.46888412,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 41580030.46888412,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 1000000.0,
+          "upper": 50000000.0,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "history": [
+        {
+          "sourceTitle": "Södertälje kommun: Södra Fornhöjden",
+          "sourceUrl": "https://www.sodertalje.se/bo-och-bygga/planering/pagaende-planprojekt/detaljplan-for-ostertalje-115-sodra-fornhojden/",
+          "summary": "Officiell projektsida, uppdaterad 22 september 2026, anger pågående tekniska utredningar och planerade senare plansteg. Den frysta beskrivningen säger att planen avbröts juni 2026. Konflikten behöver lösas i beslutshandlingar innan fallet behandlas som dokumenterat stopp.",
+          "comparable": false,
+          "verified": true
+        }
+      ],
+      "missing": [
+        "Beslutsprotokoll som avgör Fornhöjdenuppgiften.",
+        "Nationell historik för negativa eller avbrutna planprocesser i rätt projektpopulation."
+      ],
+      "sourceDescriptionSha256": "b1ebe7f3aff8a2df8a299696a278670765b4603490391f9111360f7cd08a64f9"
+    },
+    {
+      "riskId": "R-B60-180-03",
+      "originalRank": 45,
+      "decision": "replace_source",
+      "reason": "Modellens 385,55 miljoner per händelse saknar jämförbart historiskt förluststöd och ligger över beskrivningens 5–100 miljoner. Aitikmålets miljarder gäller säkerhetens nominella belopp, inte uppkommen merkostnad. Ersätt kostnadsdelen med beskrivningsintervallet. Frekvensmedianen 4,25 ligger nära den grova bedömningen 5–15; den lilla avvikelsen är inte i sig bevis på en orimlig frekvens.",
+      "likelihood": {
+        "model": 4.251369594503623,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 4.251369594503623,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 5,
+          "upper": 15,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 385552153.0952952,
+        "decision": "replace_range",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "value": 52500000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Typisk kostnad är 5–100 Mkr per händelse i förlängd process och kapitalbindning, och mer i gruvmål där tvisten gäller miljardbelopp.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning i mätunderlaget",
+        "scope": "Förlängd process och kapitalbindning till följd av tvist om ekonomisk säkerhet i gruv-, deponi- och större industrimål.",
+        "period": "Per inträffad händelse",
+        "qualification": "Beskrivningens bedömda typiska intervall, inte observerad statistik eller konfidensintervall. Aritmetisk mittpunkt kan användas enligt användarens beslut; den är inte en uppmätt median. Enstaka storprojekt kan ligga över intervallet."
+      },
+      "history": [
+        {
+          "sourceTitle": "Umeå tingsrätt: Aitik M3747-23",
+          "sourceUrl": "https://www.domstol.se/nyheter/2026/06/mark--och-miljodomstolen-lamnar-tillstand-till-fortsatt-och-utokad-gruvverksamhet-i-aitik/",
+          "summary": "Domstolen bekräftar tvist om en säkerhet på drygt 12 miljarder mot ungefär hälften och ett beslut nära bolagets nivå. Säkerheten är inte en realiserad kostnad. Domstolen uppger dessutom att den planerade handläggningstiden hölls; fallet belägger därför inte en säkerhetsorsakad försening.",
+          "comparable": false,
+          "verified": true
+        }
+      ],
+      "missing": [
+        "Observerad merkostnad och tidsförlust orsakad av säkerhetstvister, skild från säkerhetens belopp."
+      ],
+      "sourceDescriptionSha256": "b58f8cfb306954bec472c9161be9a4672e4dacdd8482d28812de462d5efab860"
+    },
+    {
+      "riskId": "R-B50-M030-02",
+      "originalRank": 46,
+      "decision": "retain_model",
+      "reason": "Modellmedianen 1,03 händelser per år är inte oförenlig med beskrivningens några överklaganden per år. Upphävande efter rättsprövning är ett betydligt snävare utfall än riskens alla överklaganden och kan inte ersätta frekvensen med 0,1 per år. En tioårig enskild ärendekedja ger heller ingen monetär förlust per händelse. Kostnadsmedianen 1,56 miljarder saknar jämförbar historisk punktuppgift men kan inte klassas som orimlig enbart av denna lucka.",
+      "likelihood": {
+        "model": 1.0271283833657532,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 1.0271283833657532,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "impact": {
+        "model": 1561251357.058874,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 1561251357.058874,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "history": [
+        {
+          "sourceTitle": "Regeringen: Norra Kärr 2026",
+          "sourceUrl": "https://www.regeringen.se/pressmeddelanden/2026/06/regeringen-beslutar-att-fyndigheten-i-norra-karr-far-undersokas-vidare/",
+          "summary": "Regeringen beviljade bearbetningskoncession i juni 2026 efter ett reviderat projekt; miljötillstånd behövs fortfarande. Beslutet belägger ett specifikt ärendeförlopp men varken årsfrekvens för upphävanden eller monetär förlust per överklagande.",
+          "comparable": false,
+          "verified": true
+        }
+      ],
+      "missing": [
+        "Gemensam ekonomisk avgränsning för vanliga överklaganden och sällsynta upphävanden.",
+        "Observerad kostnad per respektive utfall."
+      ],
+      "sourceDescriptionSha256": "350e36af1c3beedc2bc958b25f2afe3eac495b5bd48e4b29cfd9025d069b4fdd"
+    },
+    {
+      "riskId": "R-B70-100-01",
+      "originalRank": 47,
+      "decision": "replace_source",
+      "reason": "Kostnadsmedianen 106,07 miljoner är drygt dubbelt så hög som beskrivningens typiska övre ram 50 miljoner utan jämförbart historiskt förluststöd. Använd 2–50 miljoner i huvudjämförelsen. Frekvensen 14,67 per år är förenlig med tiotal projekt.",
+      "likelihood": {
+        "model": 14.665827379287297,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 14.665827379287297,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "impact": {
+        "model": 106067497.35342506,
+        "decision": "replace_range",
+        "lower": 2000000.0,
+        "upper": 50000000.0,
+        "value": 26000000.0,
+        "unit": "SEK_per_event",
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Per händelse typiskt 2–50 Mkr i entreprenader som står och väntar och i försening.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning i mätunderlaget",
+        "scope": "Väntande entreprenader och försening när ett återöppnat sektorsärende fastnar i handläggningskö.",
+        "period": "Per inträffad händelse",
+        "qualification": "Beskrivningens bedömda typiska intervall, inte observerad statistik eller konfidensintervall. Aritmetisk mittpunkt kan användas enligt användarens beslut; den är inte en uppmätt median. Enstaka storprojekt kan ligga över intervallet."
+      },
+      "history": [
+        {
+          "sourceTitle": "Accelerationskontorets förslag 2026 i fryst beskrivning",
+          "sourceUrl": null,
+          "summary": "Förslag om utsedd handläggare och kommunicerad tidplan stöder behov av tidsstyrning men mäter inte hur många återöppnade sektorsärenden som köar eller deras ekonomiska förlust.",
+          "comparable": false,
+          "verified": false
+        }
+      ],
+      "missing": [
+        "Observerat antal återöppnade sektorsärenden med kritisk väntetid och tillhörande entreprenadkostnader."
+      ],
+      "sourceDescriptionSha256": "8570067fa29c760719015321ebe5c85ace8096ec5be60df39e2aa9a5d1d91069"
+    },
+    {
+      "riskId": "R-B50-P030-01",
+      "originalRank": 48,
+      "decision": "retain_model",
+      "reason": "Frekvensmedianen 40,60 är förenlig med några tiotal berörda industri-, energi- och infrastrukturplaner.261 överklagade planer eller kvoten 261/968 får inte ersätta detta värde eftersom totalpopulationen och kohorterna skiljer sig. Kostnadsmedianen 37,62 miljoner motsägs inte av en jämförbar kostnadsuppgift.",
+      "likelihood": {
+        "model": 40.59839168240057,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 40.59839168240057,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "impact": {
+        "model": 37615508.69646289,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 37615508.69646289,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat."
+      },
+      "history": [
+        {
+          "sourceTitle": "Boverket: PBL-tillämpning 2023, s.14–16",
+          "sourceUrl": "https://www.boverket.se/globalassets/publikationer/dokument/2024/redovisning-av-tillampningen-av-plan--och-bygglagstiftningen-ar-2023.pdf",
+          "summary": "261 överklagade planer omfattar även områdesbestämmelser.968 avser beslut om nya, ändrade eller upphävda detaljplaner. Dessa olika årsflöden bildar inte ett belagt 27-procentigt utfall i en matchad industriärendekohort.",
+          "comparable": false,
+          "verified": true
+        }
+      ],
+      "missing": [
+        "Projektklassad serie över överklagade planer och monetär kostnad för tidsförskjutningen."
+      ],
+      "sourceDescriptionSha256": "1b83a4600feba43d4f9f27b8e09f5f52a0e36140d7d790ceee599c94a3180ec3"
+    },
+    {
+      "riskId": "R-B40-P100-01",
+      "originalRank": 49,
+      "decision": "retain_model",
+      "reason": "Medianerna 70,22 händelser och 21,68 miljoner ligger inom beskrivningens 30–80 och 1–30 miljoner. LTU:s MPD-resultat avser annan population och kan inte användas för vattenmålsfrekvens; Naturvårdsverkets 193 avgöranden är total ärendevolym, inte antal inaktuella B20-underlag. Ingen jämförbar källa motsäger de centrala modellvärdena.",
+      "likelihood": {
+        "model": 70.21676276544756,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 70.21676276544756,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 30,
+          "upper": 80,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 21679142.561900947,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 21679142.561900947,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 1000000.0,
+          "upper": 30000000.0,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "history": [
+        {
+          "sourceTitle": "LTU: Kunskapsglapp fördröjer miljötillstånd",
+          "sourceUrl": "https://www.ltu.se/aktuellt/nyheter/nyhetsarkiv/2026-03-24-kunskapsglapp-fordrojer-miljotillstand",
+          "summary": "Studien belägger ofullständighet i MPD-ansökningar, inte kompletteringsfrekvens i vattenmål.",
+          "comparable": false,
+          "verified": true
+        },
+        {
+          "sourceTitle": "Naturvårdsverket: Samlad miljöprövningsstatistik 2024",
+          "sourceUrl": "https://www.naturvardsverket.se/49e4ea/globalassets/vagledning/miljobalken/miljoprovning/samlad-statistik-om-miljoprovning-for-ar-2024.pdf",
+          "summary": "193 avgjorda vattenmål och 356 dagars medianhandläggningstid avser samtliga första avgöranden. Uppgifterna isolerar inte inaktuellt eller felavgränsat miljöunderlag.",
+          "comparable": false,
+          "verified": true
+        }
+      ],
+      "missing": [
+        "Observerad andel vattenmål med just inaktuellt B20-underlag, skild från hydrologisk underlagsbrist."
+      ],
+      "sourceDescriptionSha256": "4f14e7a1b175477d1a4f0fab2f916367033e43b621287a9cabc7da5c000635c4"
+    },
+    {
+      "riskId": "R-B40-030-01",
+      "originalRank": 50,
+      "decision": "retain_model",
+      "reason": "Medianerna 38,55 händelser och 38,74 miljoner ligger inom den uttryckliga bedömningen 20–60 och 2–50 miljoner. De namngivna målens krav på hydrogeologiskt underlag är illustrationer och innehåller inte en jämförbar kostnadsserie som motiverar ett annat punktvärde.",
+      "likelihood": {
+        "model": 38.54786430884901,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 38.54786430884901,
+        "unit": "events_per_year",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; händelser under ett år",
+        "period": "Ett år",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 20,
+          "upper": 60,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "impact": {
+        "model": 38736197.64810206,
+        "decision": "retain",
+        "lower": null,
+        "upper": null,
+        "value": 38736197.64810206,
+        "unit": "SEK_per_event",
+        "evidenceKind": "model_estimate",
+        "sourceQuote": null,
+        "sourceUrl": null,
+        "sourceTitle": "Kalibrerad modellmedian",
+        "scope": "Svenska tillståndsprojekt; ekonomisk förlust i det enskilda ärendet",
+        "period": "Per inträffad händelse",
+        "qualification": "Bibehållet modellvärde innebär inte att värdet är empiriskt validerat.",
+        "descriptionAssessmentRange": {
+          "lower": 2000000.0,
+          "upper": 50000000.0,
+          "evidenceKind": "description_estimate"
+        }
+      },
+      "history": [
+        {
+          "sourceTitle": "Hydrogeologiska fall i fryst beskrivning",
+          "sourceUrl": null,
+          "summary": "Ultunabron och Klinthagen illustrerar underlags- och skyddsåtgärdsfrågor. Enskilda fall och eventuella nya villkor belägger inte den nationella årliga incidensen eller den monetära merkostnaden.",
+          "comparable": false,
+          "verified": false
+        }
+      ],
+      "missing": [
+        "Nationell historik för kompletterande hydrologiska mätningar och uppmätta förseningskostnader."
+      ],
+      "sourceDescriptionSha256": "a78585fc19e1cf985c967c50046b554aa5e66cb34ee7767dd4252e6001359324"
+    },
+    {
+      "riskId": "R-B40-G020-03",
+      "originalRank": 51,
+      "decision": "retain_model",
+      "reason": "Kostnaden 55,6 miljoner ligger nära den avrundade typiska övre ramen 50 miljoner; ingen tydlig orimlighet har belagts.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 26.728367816185123,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 55596087.45587854,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "14b04accf3f18cd0e31e6be2bf195f05074451d766f04b652f8600de35f3a7ba"
+    },
+    {
+      "riskId": "R-B40-P110-02",
+      "originalRank": 52,
+      "decision": "retain_model",
+      "reason": "Frekvensen ligger inom beskrivningens 10–30 mål per år. Historiska handläggningstider är inte kostnader och kan inte användas som ersättningsbelopp.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 11.615255658341832,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 123394942.83709458,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "78e2db5dc610aa04ec2c5a5b13d2e1b8774e95f7632495cf3e346591ca20795e"
+    },
+    {
+      "riskId": "R-B30-GC140-01",
+      "originalRank": 53,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 29.114861832628673,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 47837902.336195655,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 2000000.0,
+        "upper": 30000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: storleksordningen 20–60 händelser per år. Typisk kostnad är 2–30 Mkr per händelse (12–24 månaders tillkommande handläggning, nytt samråds- och MKB-underlag, kapitalkostnad) och mer när vattenåtgärden ligger på kritisk linje i infrastruktur- eller energiprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "3dfdfe24549b3169d94e8af400347661ed0f03a502bf0a42fd72af30d3fbb363"
+    },
+    {
+      "riskId": "R-B70-G020-01",
+      "originalRank": 54,
+      "decision": "retain_model",
+      "reason": "Tiotal ärenden är förenligt med modellens cirka 20. Historiska totaler och överklagandeandelar identifierar inte sista-fristdagshändelser eller deras kostnad.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 20.298807765819816,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 64386722.428464726,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "ddf34709a7d67895bcb8201a49336a9c7b6f7fa3e860b498125aec5b2c6a4ced"
+    },
+    {
+      "riskId": "R-B30-100-01",
+      "originalRank": 55,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 578.8986628320179,
+        "decision": "replace_range",
+        "unit": "events_per_year",
+        "lower": 50,
+        "upper": 150,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: 50–150 ärenden per år behöver minst en extra kompletteringsrunda på grund av oprecisa eller motsägelsefulla yrkanden. En händelse kostar typiskt 1–10 Mkr, motsvarande 2–6 månaders försening och extra konsultarbete.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Den angivna riskhändelsen i Sverige per år",
+        "period": "Årlig bedömningsram",
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "impact": {
+        "model": 2207016.0174170113,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "7637a8a53ee5887d6d961a0ff3bf1c34d7dd162c6fefbc932acc392d71f3648c"
+    },
+    {
+      "riskId": "R-B50-M020-01",
+      "originalRank": 56,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 0.2586571113053413,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 4884111261.301787,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 50000000.0,
+        "upper": 500000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: några få konfliktfyllda gruvärenden per år. Per händelse typiskt 50–500 Mkr i försening, i strategiska storprojekt mer.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "3414e142b166fc2e2b3df2de05b64070d5ccbbf3977c91a50854e3f75ce471d1"
+    },
+    {
+      "riskId": "R-B60-G290-02",
+      "originalRank": 57,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 6.237790421498723,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 192830603.9947107,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: storleksordningen 5–20 händelser per år i hela Sverige, främst i stora gruv-, industri- och vattenmål. Typisk kostnad är 5–100 Mkr per händelse i etappindelning, omplanering och försenad full drift.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "a5bf2972585860f0b13c7f4e698f339a6de7b8fda487353eb858ffb17591006c"
+    },
+    {
+      "riskId": "R-B40-010-03",
+      "originalRank": 58,
+      "decision": "retain_model",
+      "reason": "Båda modellmedianerna ligger inom de uttryckliga beskrivningsintervallen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 29.92739845741943,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 39311657.49384039,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "fbc9e17e5f7b5d59264f0699361130c0fc334cb10b3ea53c2a19858a2384eb40"
+    },
+    {
+      "riskId": "R-B40-N180-03",
+      "originalRank": 59,
+      "decision": "retain_model",
+      "reason": "Båda modellmedianerna ligger inom de uttryckliga beskrivningsintervallen. Dispensbeslut eller åtgärder är inte antal olagliga starter.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 59.256872874514904,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 18839882.301929243,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "7a28932cf4706ac8e80a3e945718ace69a47176225f5fca522fcece4947e3804"
+    },
+    {
+      "riskId": "R-B70-G070-01",
+      "originalRank": 60,
+      "decision": "retain_model",
+      "reason": "Modellfrekvensen är förenlig med tiotal projekt. 800 tecknade avtal är inte ett antal vägrade projekt; ingen jämförbar kostnadsstatistik finns.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 14.913987477940115,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 71281448.96930636,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "082c2e86740c5cc824ac06c41f3fe2e62d8317aa1df0151f18c719943eb12cb0"
+    },
+    {
+      "riskId": "R-B10-080-02",
+      "originalRank": 61,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 13.28675231914742,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 77587456.35754028,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 5000000.0,
+        "upper": 50000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: 10–30 händelser per år. En händelse kostar typiskt 5–50 Mkr, eftersom hela projektet försenas i flera månader, och mer i stora vatten- och infrastrukturprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "fa4da3c530964119e84844d7a5e507693e58cf30c21fe5081ebd76f8c5ef6e31"
+    },
+    {
+      "riskId": "R-B60-190-01",
+      "originalRank": 62,
+      "decision": "retain_model",
+      "reason": "Båda medianerna ligger inom beskrivningens uttryckliga ram; den historiska domens villkor bekräftar en mekanism, inte nationellt antal sådana händelser.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 115.07178822392815,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 8745250.55897961,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "8422ecd6a42189aceaecc02ad7bc15b1ec9f3b33ce335e8e40417e95845738e5"
+    },
+    {
+      "riskId": "R-B10-050-02",
+      "originalRank": 63,
+      "decision": "retain_model",
+      "reason": "Historiken över 43 kommunala veton 2025 gäller landbaserad vindkraft. Risken omfattar även andra negativa kommunala signaler och planbesked. Varken 43 eller beskrivningens därifrån härledda 30–45 kan ersätta hela riskens frekvens utan snävare avgränsning.",
+      "history": [
+        {
+          "value": 43,
+          "unit": "projects",
+          "period": "2025",
+          "sourceUrl": "https://greenpowersweden.se/statistik/kommunala-vetot-landbaserad-vindkraft-2021-2025/",
+          "sourceTitle": "Green Power Sweden: kommunala vetot 2021–2025",
+          "finding": "43 av 46 landbaserade vindkraftsprojekt stoppades. Verifierat hos statistikproducenten; snävare population än den sammansatta risken. Därför inte en nationell allsektorsfrekvens."
+        }
+      ],
+      "missing": [],
+      "likelihood": {
+        "model": 76.25594293551094,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 12943222.253156848,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "70b906324120c20b811c45bef64c31272401a371dd6dea675d3a677adb08f130"
+    },
+    {
+      "riskId": "R-B10-040-01",
+      "originalRank": 64,
+      "decision": "retain_model",
+      "reason": "Inventeringssäsonger anger tid, inte inträffade störningar. Hundratals är en grov exponeringsuppgift. Inget jämförbart historiskt händelseantal som belägger ett punktbyte har identifierats.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 979.1923049894222,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 1005944.6072203304,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "750638e8884a595753e7d5fa67a2ee2693a474f1063c78079d19649569a42171"
+    },
+    {
+      "riskId": "R-B50-S010-01",
+      "originalRank": 65,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 3.06548161142274,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 315706487.32066244,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: tiotal projekt per år träffas av ett sent sektorskrav. Per händelse typiskt 5–100 Mkr i förlorad projektering, för havsvindprojekt betydligt mer. Projekt som stoppas på politisk nivå av försvarsskäl räknas i risken 'Försvars- och totalförsvarsintressen stoppar lokaliseringen på politisk nivå' och ska inte räknas dubbelt här.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "935c07102ed8146021c8166473b1f491d82d3630fd2004b7c925f75e70932749"
+    },
+    {
+      "riskId": "R-B40-G020-02",
+      "originalRank": 66,
+      "decision": "retain_model",
+      "reason": "Frekvensen 200,85 ligger vid den avrundade övre ramen 200. Kostnaden ligger inom 1–10 miljoner; ingen tydlig orimlighet.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 200.84897324501333,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 4808570.4806163125,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "4af80ff1cd8a80ec9847ba73bbc91691f243869c9d38ff1a1b02b4e119711eb1"
+    },
+    {
+      "riskId": "R-B20-060-03",
+      "originalRank": 67,
+      "decision": "retain_model",
+      "reason": "Kostnaden 58,2 miljoner ligger nära en grovt bedömd typisk ram på upp till 50 miljoner; exakta nationella kostnadsobservationer saknas. Ingen storleksordningskonflikt.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 16.370078312617338,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 58206563.8242253,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "610e14a146f304d14152324de70ee7c0d9a6abf6d93060b14d14a730fec0b065"
+    },
+    {
+      "riskId": "R-B60-050-01",
+      "originalRank": 68,
+      "decision": "retain_model",
+      "reason": "Medianerna ligger inom de uttryckliga intervallen 20–60 händelser och 2–30 miljoner per händelse.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 31.02008072489355,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 29920007.383788183,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "dc9e8b07757cb6a9afb821e81f24a7ffd01be234b84a7389819a1ac4525dc020"
+    },
+    {
+      "riskId": "R-B50-T030-02",
+      "originalRank": 69,
+      "decision": "retain_model",
+      "reason": "119,6 miljoner ligger nära det avrundade typiska intervallets övre nivå 100 miljoner. Underlaget ger inget hårt kostnadstak; ingen tydlig storleksordningskonflikt.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 7.45006081788272,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 119557754.85728939,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "dafea7373c244af30a8a48b9ffc66c362f6e00e6b4726392243deaf11c05b51c"
+    },
+    {
+      "riskId": "R-B10-060-02",
+      "originalRank": 70,
+      "decision": "retain_model",
+      "reason": "Båda medianerna ligger inom beskrivningens intervall.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 18.64803889180842,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 47397676.37267242,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "04c4f4a8d6029621dbdc8c3a6cd86247faa994f5b79d7711b35aedf061898e44"
+    },
+    {
+      "riskId": "R-B70-060-01",
+      "originalRank": 71,
+      "decision": "retain_model",
+      "reason": "Beskrivningen innehåller ingen numerisk historik. Ingen konkret motsägelse har identifierats, men värdet är en modellbedömning utan oberoende empiriskt stöd.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 100.2378044602759,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 8668592.567703338,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "e318b7a1fb6ca51d737653ec99a41cb8acf7ccd97077fa4da56da5f27d79da8b"
+    },
+    {
+      "riskId": "R-B70-G140-01",
+      "originalRank": 72,
+      "decision": "retain_model",
+      "reason": "Medianerna ligger inom beskrivningens 10–40 händelser och 2–50 miljoner.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 17.22875032447397,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 49061591.12144592,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "1d252c9f532caed0a9994ed4f2b997b718b9d7a5040ffea1d670ec031395f797"
+    },
+    {
+      "riskId": "R-B50-N060-03",
+      "originalRank": 73,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 17.67686127944528,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 47432280.956772685,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 2000000.0,
+        "upper": 30000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: storleksordningen 10–40 händelser per år i hela Sverige. Typisk kostnad är 2–30 Mkr per händelse, och mer i stora industriprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "5825355096527d9c4bedb1664afbd7f316afd9e016d5c3e4dd4270f5fafe3880"
+    },
+    {
+      "riskId": "R-B70-G070-02",
+      "originalRank": 74,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 3.9150908156801387,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 198345726.07155567,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: tiotal projekt per år i renskötselområdet. Per händelse typiskt 5–100 Mkr i etappindelning, omplanering och försening.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "60dd3933c914c831c92cfd2191c76d86b8ee62f0538394a9c972b0e46b43ce4c"
+    },
+    {
+      "riskId": "R-B50-N030-01",
+      "originalRank": 75,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 5.406302094634104,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 141215496.52406365,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 5000000.0,
+        "upper": 100000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: storleksordningen 5–15 händelser per år. En händelse kostar typiskt 5–100 Mkr, och mer i stora gruvprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "50db3c9c9a05bd8ba4727fbd5e0d94744526f005e7a8fbe7713926d702081b04"
+    },
+    {
+      "riskId": "R-B20-060-02",
+      "originalRank": 76,
+      "decision": "retain_model",
+      "reason": "Båda medianerna ligger inom beskrivningens 20–60 händelser och 2–30 miljoner.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 40.113259616568584,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 18553322.002044383,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "2e3cf41edd136764247dc00cdfc643999b80f31aee0fcfe5f8755788a4dcd4eb"
+    },
+    {
+      "riskId": "R-B30-O100-01",
+      "originalRank": 77,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 0.7299938377313675,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 1007109401.5870569,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 10000000.0,
+        "upper": 300000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: i storleksordningen 1–5 händelser per år för miljöfarlig verksamhet utöver NAP, stigande efter 2030. En händelse kostar typiskt 10–300 Mkr (utredning, process och investeringar eller produktionsbegränsningar till följd av skärpta villkor).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "6c3b53074752a9457122f0e0ca6713622af86065e830a162c4adfde0f74f36e6"
+    },
+    {
+      "riskId": "R-B40-GN130-01",
+      "originalRank": 78,
+      "decision": "retain_model",
+      "reason": "Båda medianerna ligger inom beskrivningens 50–150 händelser och 1–10 miljoner; upprepade kompletteringar ska räknas separat från allmänna underlagsbrister.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 104.56475562590084,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 6590709.327631809,
+        "decision": "retain",
+        "unit": "SEK_per_event"
+      },
+      "sourceDescriptionSha256": "3b0cb88a982b4b5ed23abd6c3a2d83a2e0cce3fbd77313399f1c1e504a79a12e"
+    },
+    {
+      "riskId": "R-B40-GE110-01",
+      "originalRank": 79,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 17.489947299193986,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 39011323.27100391,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 2000000.0,
+        "upper": 30000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: storleksordningen 10–40 händelser per år, med en typisk kostnad på 2–30 Mkr per händelse (kompletterande Natura 2000-utredning, ny prövning, 6–18 månaders försening).",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "0637634f4f4bdd8748b2d9bc5eea5451ad3636469f9d96b1b40f968a96645146"
+    },
+    {
+      "riskId": "R-B50-N010-01",
+      "originalRank": 80,
+      "decision": "replace_source",
+      "reason": "Modellens kostnads- eller frekvensnivå ligger tydligt över den jämförbara bedömningsramen. Källans uttryckliga intervall får styra publiceringsvärdet; enstaka stora projekt kan ligga utanför ramen.",
+      "history": [],
+      "missing": [],
+      "likelihood": {
+        "model": 13.472243019310406,
+        "decision": "retain",
+        "unit": "events_per_year"
+      },
+      "impact": {
+        "model": 48559886.93287648,
+        "decision": "replace_range",
+        "unit": "SEK_per_event",
+        "lower": 2000000.0,
+        "upper": 30000000.0,
+        "evidenceKind": "description_estimate",
+        "sourceQuote": "Bedömning: storleksordningen 10–30 händelser per år. En händelse kostar typiskt 2–30 Mkr genom kompletterande Natura-utredning och 6–18 månaders försening, och mer i gruv- och vattenprojekt.",
+        "sourceUrl": null,
+        "sourceTitle": "Fryst riskbeskrivning till riskbedömningen",
+        "scope": "Kostnad i det enskilda projekt där riskhändelsen inträffar",
+        "period": null,
+        "qualification": "Bedömt typiskt intervall, inte observerad statistik eller statistiskt konfidensintervall. Mittpunkten används enligt publiceringsbeslutet."
+      },
+      "sourceDescriptionSha256": "fd05033f5d4165ef71f9600e9cbf2f3936b6c52fa234dfcac0eaa4aada933010"
+    }
+  ]
+}

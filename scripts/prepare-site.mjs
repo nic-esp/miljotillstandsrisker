@@ -23,6 +23,7 @@ export const STATIC_DATA_FILES = Object.freeze({
   'measurement.json':'publication/measurement.json',
   'presentation.json':'publication/presentation.json',
   'value-policy.json':'publication/value-policy.json',
+  'source-review.json':'publication/source-review.json',
   'description-review.json':'publication/description-review.json',
   'interviews.json':'publication/interviews.json',
   'report-manuscript.json':'report/manuscript.json',

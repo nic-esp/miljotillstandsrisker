@@ -2,5 +2,5 @@
   "schemaVersion": 1,
   "riskStatistic": "median",
   "costPriority": true,
-  "costMetric": "median_product_annual_cost"
+  "costMetric": "reviewed_cost_indicator"
 }

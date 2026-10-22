@@ -2,7 +2,7 @@
 
 `manuscript.json` är den gemensamma källan till webbläsaren, den utskriftsvänliga HTML-utgåvan och PDF-rapporten. Utgåvan den 22 oktober 2026 innehåller 17 huvudkapitel och åtta bilagor, med hela risk- och kontrollregistret, avslutade mätresultat och fem intervjukällor som underlag. Den låsta mätkopian i `measurement.json` bevarar båda kontrollbaserna och använder läget utan införda kontroller för riskkorten och investeringsjämförelserna.
 
-Huvudprioriteringen är en medianbaserad kostnadsindikator: medianfrekvens × mediankostnad. De ursprungliga årsmedelvärdena och deras rangordning bevaras som fördjupning och känslighetsjämförelse. Inställningen finns i publication/presentation.json och publiceringspolicyn. Rapporten skiljer dessa mått åt och använder ingen konstruerad årsmedian eller ny Monte Carlo-simulering. Metodbilagorna dokumenterar beräkning, granskningsgränser, känslighet, intervjuer och källkedja.
+Huvudprioriteringen är en källgranskad kostnadsindikator: medianfrekvens × mediankostnad. De ursprungliga årsmedelvärdena och deras rangordning bevaras som fördjupning och känslighetsjämförelse. Inställningen finns i publication/presentation.json och publiceringspolicyn. Rapporten skiljer dessa mått åt och använder ingen konstruerad årsmedian eller ny Monte Carlo-simulering. Metodbilagorna dokumenterar beräkning, granskningsgränser, känslighet, intervjuer och källkedja.
 
 ## När nya resultat kommer
 
@@ -39,3 +39,5 @@ Statusar: `draft`, `awaiting_measurement`, `awaiting_interviews`, `awaiting_inte
 Den reproducerbara offlineordningen är `scripts/project-cardinal-snapshot.mjs`, därefter `scripts/apply-description-review.mjs`. De behöver det arkiverade exportunderlaget och dess matchningstabell. Kopiera den granskade mätningen till rapportens låsta kopia, uppdatera manuset och bygg PDF före webbplatsen. Ingen av dessa operationer startar en mätning.
 
 `investment_model.mjs` omvandlar identifierade logaritmiska skift till jämförelser från läget utan kontroller. Spridningen hålls konstant och interaktioner skattas inte. Okända effekter och genomförandekostnader lämnas odefinierade; negativa bidrag bevaras. Fristående belopp summeras inte till kombinationer.
+
+Källgranskningen 22 oktober 2026 ligger i `publication/source-review.json`. `apply-source-review.mjs` beräknar aritmetiska mittpunkter av jämförbara beskrivningsintervall enligt användarens val och bevarar alla råa modellvärden. Rapportens huvudmått blandar dessa tydligt märkta beskrivningsskattningar med kvarvarande modellmedianer; det får inte kallas en förlustmedian eller en observerad årskostnad.

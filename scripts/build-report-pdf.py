@@ -187,10 +187,10 @@ for chapter in report['chapters']:
                     drawing=Drawing(doc.width*.40,36)
                     for j,v in enumerate(r['values']):
                         drawing.add(Rect(0,22-j*18,doc.width*.40*v/maximum,11,fillColor=colors.HexColor(data['series'][j]['color']),strokeColor=None))
-                    cells.append([p(r['label'],'cell'),drawing,p(' / '.join(str(v) for v in r['values']),'cell')])
+                    cells.append([p(r['label'],'cell'),drawing,Paragraph('<br/>'.join(html.escape(f"{v:,.1f}".replace(',',' ').replace('.',',') if data.get('unit')=='mnkr per år' else str(v)) for v in r['values']),styles['cell'])])
                 chart=Table(cells,colWidths=[doc.width*.42,doc.width*.42,doc.width*.16])
                 chart.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'MIDDLE'),('TOPPADDING',(0,0),(-1,-1),5),('BOTTOMPADDING',(0,0),(-1,-1),5)]))
-                story += [p('Grå: '+data['series'][0]['label']+'. Orange: '+data['series'][1]['label']+'.','small'),chart]
+                story += [p('Grå: '+data['series'][0]['label']+'. Orange: '+data['series'][1]['label']+'. '+data.get('unit','risker')+'.','small'),chart]
             elif data['kind']=='matrix':
                 cells=[[p('Åtgärdsområde','cellhead')]+[p(x,'cellhead') for x in data['columns']]]
                 cells += [[p(r['label'],'cell')]+[p(str(v),'cell') for v in r['values']] for r in data['rows']]
@@ -246,7 +246,7 @@ for chapter in report['chapters']:
             story[figure_start:] = [KeepTogether(story[figure_start:])]
         elif kind == 'table':
             columns = block['columns']; rows=[[p(c,'cellhead') for c in columns]]+[[p(c,'cell') for c in row] for row in block['rows']]
-            table = Table(rows,colWidths=([doc.width*.24,doc.width*.54,doc.width*.22] if block['title'].startswith('Tabell F1') else [doc.width*.23,doc.width*.38,doc.width*.39] if block['title'].startswith('Tabell H1') else [doc.width/len(columns)]*len(columns)),repeatRows=1,hAlign='LEFT')
+            table = Table(rows,colWidths=([doc.width*.24,doc.width*.54,doc.width*.22] if block['title'].startswith('Tabell F1') else [doc.width*.23,doc.width*.38,doc.width*.39] if block['title'].startswith('Tabell H1') else [doc.width*.26,doc.width*.16,doc.width*.58] if block['title'].startswith('Tabell 1. Rimlighetsbedömning') else [doc.width/len(columns)]*len(columns)),repeatRows=1,hAlign='LEFT')
             table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),pale),('LINEBELOW',(0,0),(-1,-1),.4,line),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),9),('RIGHTPADDING',(0,0),(-1,-1),9),('TOPPADDING',(0,0),(-1,-1),10),('BOTTOMPADDING',(0,0),(-1,-1),10)]))
             story += [p(block['title'],'h3'),table,Spacer(1,5*mm)]
         elif kind == 'integration':

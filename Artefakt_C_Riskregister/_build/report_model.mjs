@@ -50,6 +50,17 @@ export function reportFigureData(id,report,measurement,risks,controls=[]) {
   const covered=new Set(authority.flatMap(c=>c.riskIds)),mainCovered=new Set(main.flatMap(c=>c.riskIds));
   const packages=[['Vägledning och mottagning',['MPM-01','MPM-02']],['Underlag och ärendeakt',['MPM-05','MPM-06','MPM-10']],['Planering och samordning',['MPM-03','MPM-04','MPM-07','MPM-08','MPM-09']],['Beslut och delgivning',['MPM-11','MPM-12','MPM-13']],['Överlämnande och fortsatt prövning',['MPM-14','MPM-15','MPM-16','MPM-17']]].map(([label,ids])=>({label,ids,risks:new Set(main.filter(c=>ids.includes(c.id)).flatMap(c=>c.riskIds))}));
   const origins=['Sökande & ansökan','Myndighet & prövning','Extern & omvärld'];
+  const originalTop=new Set(measurement.sourceReview?.originalTop50||[]);
+  const reviewedOriginal=[...originalTop].map(id=>rows.get(id)).filter(Boolean);
+  const comparisonSeries=[{label:'Ursprungliga modellmedianer',color:'#6d7c87'},{label:'Efter källgranskning',color:'#d88b22'}];
+  if(id==='review-decisions')return {kind:'bars',unit:'risker',rows:[{label:'Värden ersatta av källuppgifter',value:reviewedOriginal.filter(r=>r.sourceReview?.decision==='replace_source').length},{label:'Modellvärden behållna',value:reviewedOriginal.filter(r=>r.sourceReview?.decision==='retain_model').length},{label:'Kostnadsrang odefinierad',value:reviewedOriginal.filter(r=>r.sourceReview?.decision==='withhold').length}]};
+  if(id==='review-top50-movement')return {kind:'bars',unit:'risker',rows:[{label:'Kvar i topp 50 efter granskning',value:[...top].filter(id=>originalTop.has(id)).length},{label:'Nytillkomna i topp 50',value:[...top].filter(id=>!originalTop.has(id)).length}]};
+  if(id==='review-cost-comparison')return {kind:'grouped',unit:'mnkr per år',series:comparisonSeries,rows:(measurement.modelMedianRanking?.entries||[]).filter(e=>rows.get(e.riskId)?.reviewedCost).slice(0,6).map(e=>({label:e.riskId+' · '+(risks.find(r=>r.risk_id===e.riskId)?.title||''),values:[e.score/1e6,rows.get(e.riskId).reviewedCost.value/1e6]}))};
+  if(id==='authority-review-comparison')return {kind:'grouped',unit:'mnkr per år',series:comparisonSeries,rows:rankInvestments(measurement,controls,main).filter(r=>r.reduction!=null).slice(0,5).map(r=>{
+    const old=evaluateInvestment({...measurement,priorityMetric:'median_product_annual_cost'},controls,[r.control.id]),eligible=new Set(r.rows.filter(x=>x.reduction!=null).map(x=>x.riskId));
+    return {label:r.control.id+' · '+r.control.title+' ('+eligible.size+' risker)',values:[old.rows.filter(x=>eligible.has(x.riskId)).reduce((a,x)=>a+x.reduction,0)/1e6,r.reduction/1e6]};
+  })};
+  if(id==='process-reviewed-cost')return {kind:'bars',unit:'mnkr per år',rows:Object.keys(names).map(key=>({label:names[key],value:risks.filter(r=>r.chart_key===key).reduce((sum,r)=>sum+(rows.get(r.risk_id)?.reviewedCost?.value||0),0)/1e6}))};
   if(id==='authority-investment') {
     const ranked=rankInvestments(measurement,controls,main);
     return {kind:'signed-bars',unit:'%',rows:[...ranked.filter(r=>r.reduction>0).slice(0,6),...ranked.filter(r=>r.reduction<0)].map(r=>({label:r.control.id+' · '+r.control.title,value:r.reductionFraction*100}))};
@@ -96,7 +107,7 @@ export function renderReportFigure(id,report,measurement,risks,controls=[]) {
   }
   if(data.kind==='grouped') {
     const max=Math.max(...data.rows.flatMap(r=>r.values),1);
-    return `<div class="rp-chart-legend">${data.series.map(s=>`<span style="--series-color:${s.color}">${e(s.label)}</span>`).join('')}</div>${data.rows.map(r=>`<div class="rp-grouped-row"><span>${e(r.label)}</span><div class="rp-series-tracks">${r.values.map((v,i)=>`<div class="rp-series-track"><span style="width:${v/max*100}%;background:${data.series[i].color}"></span></div>`).join('')}</div><div class="rp-grouped-values">${r.values.map(v=>`<div>${v}</div>`).join('')}</div></div>`).join('')}<p class="rp-graph-note">Antal risker. Gemensam linjär skala för samtliga staplar.</p>`;
+    return `<div class="rp-chart-legend">${data.series.map(s=>`<span style="--series-color:${s.color}">${e(s.label)}</span>`).join('')}</div>${data.rows.map(r=>`<div class="rp-grouped-row"><span>${e(r.label)}</span><div class="rp-series-tracks">${r.values.map((v,i)=>`<div class="rp-series-track"><span style="width:${v/max*100}%;background:${data.series[i].color}"></span></div>`).join('')}</div><div class="rp-grouped-values">${r.values.map(v=>`<div>${new Intl.NumberFormat('sv-SE',{maximumFractionDigits:data.unit==='mnkr per år'?1:0}).format(v)}</div>`).join('')}</div></div>`).join('')}<p class="rp-graph-note">${e(data.unit||'Antal risker')}. Gemensam linjär skala för samtliga staplar.</p>`;
   }
   if(data.kind==='matrix') {
     const max=Math.max(...data.rows.flatMap(r=>r.values),1);

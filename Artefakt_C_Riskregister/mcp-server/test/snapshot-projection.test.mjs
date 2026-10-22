@@ -79,10 +79,10 @@ test('published edition reconciles ranks, statistics, report tables and read-onl
  assert.equal(priced.length,307);
  assert.equal(snapshot.risks.length,342);
  assert.equal(snapshot.meanRanking.entries.length,priced.length);
- assert.equal(snapshot.ranking.entries.length,snapshot.quality.centralCostCount);
- assert.equal(snapshot.priorityMetric,'median_product_annual_cost');
+ assert.equal(snapshot.ranking.entries.length,snapshot.quality.reviewedCostCount);
+ assert.equal(snapshot.priorityMetric,'reviewed_cost_indicator');
  for(const entry of snapshot.meanRanking.entries){const row=priced.find(r=>r.riskId===entry.riskId);assert.equal(entry.score,row.expectedLoss.value);assert.equal(entry.score,row.summaries.likelihood.mean*row.summaries.impact.mean);}
- for(const entry of snapshot.ranking.entries){const row=snapshot.risks.find(r=>r.riskId===entry.riskId);assert.equal(entry.score,row.centralCost.value);assert.equal(entry.score,row.summaries.likelihood.median*row.summaries.impact.median);}
+ for(const entry of snapshot.ranking.entries){const row=snapshot.risks.find(r=>r.riskId===entry.riskId);assert.equal(entry.score,row.reviewedCost.value);assert.equal(entry.score,row.reviewedInputs.likelihood.value*row.reviewedInputs.impact.value);}
  const top=report.chapters.find(c=>c.number==='F').blocks.find(b=>b.type==='table').rows;
  assert.equal(top.length,50);
  top.forEach((row,i)=>assert.ok(row[0].includes(snapshot.ranking.entries[i].riskId)));
