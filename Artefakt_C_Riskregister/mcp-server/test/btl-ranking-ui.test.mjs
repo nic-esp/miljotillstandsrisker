@@ -3,11 +3,17 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 import { createRankingModel } from '../../_build/btl_ranking.mjs';
+import {createMeasurementModel,validatePresentation,priorityCost} from '../../_build/measurement_model.mjs';
+import * as numericProvenance from '../../_build/measurement_provenance.mjs';
 import { consequences, riskItemText, triggerFactors } from '../../_build/risk_fields.mjs';
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const template = read('../../_build/app_template.html');
 const rankingView = read('../../_build/ranking_view.mjs');
+const measurementView = read('../../_build/measurement_view.mjs');
+const measurement = JSON.parse(read('../../../publication/measurement.json'));
+const presentation = JSON.parse(read('../../../publication/presentation.json'));
+const numericAudit = JSON.parse(read('../../../publication/numeric-audit.json'));
 const risks = JSON.parse(read('../../Artefakt_C_riskregister.json'));
 const snapshot = JSON.parse(read('../../_build/btl_snapshot.json'));
 const processSource = JSON.parse(read('../../../Artefakt_B_Processkarta_nodordbok/Artefakt_B_processkarta_import.json'));
@@ -47,7 +53,9 @@ function application() {
     CHART_RISKS: Object.fromEntries(charts.map(id => [id, risks.filter(risk => risk.chart_key === id).length])),
     PROC_NODE: Object.fromEntries(Object.entries(proc).flatMap(([chart, data]) => data.nodes.map(node => [node.id, { ...node, chart }]))),
     state, consequences, riskItemText, triggerFactors,
-    DATA:{measurement:{}}, EX_BY_RISK:new Map(), measurementProvenance:()=>'',
+    DATA:{measurement,presentation,numericAudit}, EX_BY_RISK:new Map(),
+    EX_DATA:{controls:measurement.controls.map(c=>({id:c.controlId}))},
+    createMeasurementModel,validatePresentation,priorityCost,...numericProvenance,
     document: { querySelector: element },
     renderSidebar() {},
     setView: view => { state.view = view; },
@@ -56,6 +64,7 @@ function application() {
   vm.runInContext([
     section(template, '// ---- helpers ----', '// ---- CSV export ----'),
     section(template, '// ---- filtering ----', '// ---- shared rendering ----'),
+    measurementView,
     rankingView,
   ].join('\n'), context);
   return { context, state, element };
@@ -115,6 +124,9 @@ test('ranking page renders the complete distribution, dated provenance and a swi
   assert.equal(rows.length, ranking.rankedCount);
   assert.deepEqual(Array.from(rows[0]).slice(0, 5), [ranking.entries[0].rank, ranking.entries[0].riskId, ranking.entries[0].risk.title, 'relative_likelihood', ranking.entries[0].score]);
   assert.equal(header.includes('matt'), true);
+  assert.ok(header.includes('ursprung'));assert.ok(header.includes('statistiskt_matt'));
+  assert.equal(rows[0][header.indexOf('ursprung')], 'Mätresultat · BTL-modell');
+  assert.equal(rows[0][header.indexOf('statistiskt_matt')], 'Relativ BTL-poäng');
 });
 
 test('default process node ranks reflect direct risks and downstream mode includes explicit affected nodes', () => {

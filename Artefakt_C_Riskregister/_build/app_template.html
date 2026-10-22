@@ -294,7 +294,7 @@ function exportStats(){
   rows.push(['Datamodell', 'Källförankrade premisser – utlösande faktorer', factors.filter(item => item.basis === 'source').length]);
   rows.push(['Datamodell', 'Möjliga konsekvenser', effects.length]);
   rows.push(['Datamodell', 'Källförankrade premisser – konsekvenser', effects.filter(item => item.basis === 'source').length]);
-  csvDownload('riskregister_statistik.csv', ['grupp','namn','antal'], rows);
+  csvDownload('riskregister_statistik.csv', ['grupp','namn','antal','ursprung','matt'], rows.map(r=>[...r,'Riskregistret','Antal registrerade poster']));
 }
 
 // ---- filtering ----
@@ -417,6 +417,8 @@ function riskCard(r){
     <div class="cardbody">
       <div class="ex-actions" style="margin-top:16px"><button class="btn" data-ex-risk="${esc(r.risk_id)}">Öppna bow tie &amp; motåtgärder</button></div>
       ${rankDetail(r)}
+      ${measurementStrip(r.risk_id)}
+      ${measurementSanitySummary(r.risk_id)}
       <div class="sect"><h4>Beskrivning</h4><p>${hl(r.description,q)}</p></div>
       <div class="grid2">
         <div class="sect"><h4>Utlösande faktorer (${factors.length})</h4>${itemList(factors)}</div>
@@ -531,7 +533,7 @@ function renderNodes(){
 
 // ---- view: stats ----
 function bar(label, val, max){
-  const pct = max ? Math.max(2, Math.round(val/max*100)) : 0;
+  const pct = max ? val/max*100 : 0;
   return `<div class="bar"><span class="lbl" title="${esc(label)}">${esc(label)}</span>
     <span class="track"><span class="fill" style="width:${pct}%"></span></span>
     <span class="val">${val}</span></div>`;
@@ -549,7 +551,7 @@ function renderStats(){
   const topNodes = Object.entries(byNode).sort((a,b)=>b[1]-a[1]).slice(0,15);
   const avg = (RISKS.length / NODES.length).toFixed(1);
   $('#main').innerHTML = `
-    <div class="ex-page-head"><div><div class="eyebrow">Riskregistret</div><h2>Hur är riskerna fördelade?</h2><p>Registerstatistik över processer, orsaker och riskernas ursprung.</p></div><button class="btn" id="csvStats">Exportera statistik (CSV)</button></div>
+    <div class="ex-page-head"><div><div class="eyebrow">Riskregistret</div><h2>Hur är riskerna fördelade?</h2><p>Registerstatistik över processer, orsaker och riskernas ursprung.</p><p class="ex-note">Ursprung: riskregistret. Mått: antal registrerade poster och aritmetiska genomsnitt av dessa antal. Diagrammen visar kartläggningen, utan bedömning av observerade händelser eller kostnader.</p></div><button class="btn" id="csvStats">Exportera statistik (CSV)</button></div>
     <div class="statbox"><h3>Orsaks- och konsekvensmodell</h3>
       <p style="color:var(--muted);font-size:14px">${allFactors.length} utlösande faktorer (${sourceFactors} källförankrade premisser) · ${allEffects.length} möjliga konsekvenser (${sourceEffects} källförankrade premisser) · i snitt ${(allFactors.length/RISKS.length).toFixed(1)} respektive ${(allEffects.length/RISKS.length).toFixed(1)} poster per risk.</p></div>
     <div class="statbox"><h3>Risker per ursprung</h3>
@@ -562,7 +564,7 @@ function renderStats(){
     <div class="statbox"><h3>Noder med flest risker (topp 15)</h3>
       ${topNodes.map(([id,v]) => bar(id+' – '+(NODE_BY_ID[id]?.label||''), v, topNodes[0][1])).join('')}</div>
     <div class="statbox"><h3>Täckning</h3>
-      <p style="color:var(--muted);font-size:14px">${NODES.length} av ${NODES.length} riskmappbara noder täckta · i snitt ${avg} risker per nod · B00 (masterprocess) samt handoffs/slutnoder är av design inte riskmappade.</p></div>`;
+      <p style="color:var(--muted);font-size:14px">${NODES.filter(n=>byNode[n.node_id]).length} av ${NODES.length} riskmappbara noder täckta · i snitt ${avg} risker per nod · B00 (masterprocess) samt handoffs/slutnoder är av design inte riskmappade.</p></div>`;
   $('#csvStats').onclick = exportStats;
 }
 

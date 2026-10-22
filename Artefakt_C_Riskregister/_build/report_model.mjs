@@ -1,4 +1,5 @@
 import {priorityCost} from './measurement_model.mjs';
+import {costProvenance,aggregateProvenance,controlEffectProvenance} from './measurement_provenance.mjs';
 import {evaluateInvestment,rankInvestments} from './investment_model.mjs';
 // One manuscript serves the web reader and the printable edition.
 export function reportEscape(value) {
@@ -41,7 +42,61 @@ export function validateReport(report, interviews, riskIds, controlIds) {
 export function reportStatus(status) {
   return ({published:'',draft:'Arbetsmanus',awaiting_measurement:'Inväntar mätresultat',awaiting_interviews:'Inväntar intervjumaterial',awaiting_integration:'Inväntar samlad analys',reviewed:'Sakgranskad'})[status]??'Arbetsmanus';
 }
+// Each numerical figure carries its own readable source and statistic, shared by web and PDF.
+export function reportFigureProvenance(id,report,measurement,risks=[],controls=[]) {
+  const date=report.date||measurement.sourceReview?.reviewedAt||'Datum saknas';
+  const modelDate=measurement.provenance?.completedAt?new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm'}).format(new Date(measurement.provenance.completedAt)):date;
+  const reviewDate=measurement.sourceReview?.reviewedAt||date;
+  const register=`Registerutdrag för rapportutgåva ${date}; risk- och processregister samt kontrollkopplingar (REG, MYN).`;
+  const cost=`Riskbedömning ${modelDate} (RES) och källgranskning ${reviewDate} (SRC).`;
+  const product='Årlig kostnadsindikator = använd händelsefrekvens × använd kostnad per händelse. Jämförbara beskrivningsintervall representeras av aritmetisk mittpunkt; övriga användbara komponenter är modellmedianer. Ingen observerad årsförlust eller statistisk årsmedian.';
+  const effect='Modellerad fristående förändring från läget utan åtgärder: riskens kostnadsindikator × [1 − exp(−frekvensskift − kostnadsskift)]. Effektskiftena kommer från risk- och kontrollbedömningen; angivna källnivåer får samma proportionella effekt.';
+  const entries={
+    'source-audit-coverage':{source:`Individuell källgranskning och oberoende aritmetisk kontroll ${date} (SRC, NUM).`,statistic:'Antal registerrisker med respektive utan fördjupad individuell källgranskning. Detta är granskningsomfattning, inte en bedömning av faktisk risk eller av hur många modellvärden som är korrekta. Den aritmetiska kontrollen omfattar samtliga 342 risker.'},
+    'current-value-origins':{source:cost+' Registerurval: REG.',statistic:'Antal registerrisker efter kostnadsindikatorns ursprung: produkt av två modellmedianer, blandad produkt av modellmedian och beskrivningsmittpunkt, eller odefinierad indikator. Ingen riskindikator bygger direkt på observerad eller anpassad historisk förluststatistik.'},
+    'risk-cost-components':{source:cost,statistic:'De två använda komponenterna visas separat: händelser per år och miljoner kronor per händelse. Varje kolumn har egen linjär skala. Komponentens typ anges vid värdet; deras produkt ger kostnadsindikatorn, inte medianen av verklig årsförlust.'},
+    'authority-priority-amounts':{source:cost+' Huvudscenariots 17 åtgärder: MYN.',statistic:effect+' Staplarna visar de åtta största positiva fristående bidragen, i miljoner kronor per år. Varje åtgärd har sitt eget riskunderlag. Kostnader för införande och drift saknas; bidragen får inte adderas till ett åtgärdspaket.'},
+    'authority-priority-contributions':{source:cost+' Åtgärder och riskkopplingar: MYN.',statistic:effect+' De två största positiva riskbidragen visas för var och en av huvudscenariots fyra högst rangordnade åtgärder. Övriga riskbidrag ingår i respektive åtgärds total men visas inte här. Samma risk eller förlust kan beröras av flera åtgärder.'},
+    'review-decisions':{source:`Källgranskning ${reviewDate} (SRC).`,statistic:'Antal individuella granskningsbeslut bland den tidigare huvudlistans 50 högsta risker; registerräkning, inte en frekvens av verkliga händelser.'},
+    'review-top50-movement':{source:`Rangordningar före och efter källgranskning ${reviewDate} (RES, SRC).`,statistic:'Antal risk-ID som återkommer respektive tillkommer i topp 50 efter omräkningen; jämförelse av två listor.'},
+    'review-cost-comparison':{source:cost,statistic:'Grå stapel: ursprunglig frekvensmedian × kostnadsmedian. Orange: korrigerad kostnadsindikator med källbaserade mittpunkter där komponenter ersatts. Samma risker visas i båda lägena.'},
+    'risk-contributions':{source:cost,statistic:product},
+    'process-reviewed-cost':{source:cost+' Processkopplingar: REG.',statistic:product+' Staplarna summerar separata riskposter per direkt delprocess; ekonomiskt överlapp är inte avräknat.'},
+    'authority-review-comparison':{source:cost+' Kontrollkopplingar och scenarioklassning: MYN.',statistic:effect+' Grå använder ursprungliga modellmedianer, orange den korrigerade kostnadsgrunden, på samma prissatta risker för varje åtgärd. Ingen genomförandekostnad har dragits av.'},
+    'authority-investment':{source:cost+' Huvudscenariots 17 åtgärder: MYN.',statistic:effect+' Procent = summerad indikatorminskning / samma åtgärds summerade kostnadsunderlag. Andra åtgärder är inte införda; negativa effekter behålls.'},
+    'authority-investment-combination':{source:cost+' Huvudscenariots 17 åtgärder: MYN.',statistic:'Index 100 är summan av 75 jämförbara riskindikatorer utan åtgärder. Kontrollernas logaritmiska effektskift summeras per risk; kvarvarande kostnadsindikatorer jämförs på samma riskurval. Tre kopplade risker saknar jämförbart underlag. Modellerad potential före genomförandekostnad, inte empiriskt uppmätt nytta.'},
+    'description-cost-ranges':{source:`Riskbeskrivningar i det frysta bedömningsunderlaget; återvunna och granskade ${date} (REG, RES).`,statistic:'Uttryckliga uppskattade typiska intervall för kostnad per händelse. Intervallgränserna återges direkt; de är inte observerade min/max, medianer eller konfidensintervall.'},
+    'description-recovery':{source:`Tidigare beskrivningsgranskning ${measurement.quality?.descriptionReview?.reviewedAt||date} (REG, RES).`,statistic:'Antal av de 198 genomgångna riskbeskrivningarna med respektive utan jämförbar numerisk ram. Registerräkning av granskningens utfall; ett annat urval än den senare toppgranskningen.'},
+    'cost-top-process':{source:register+' Rangordning: '+cost,statistic:'Antal unika risker i den källgranskade topp 50, grupperade efter direkt delprocess. Måttet är en registerräkning, inte sannolikheten att en process störs.'},
+    'authority-process-coverage':{source:register,statistic:'Antal unika risker i varje delprocess och antal med minst en dokumenterad koppling till huvudscenariots 17 myndighetsåtgärder. Ingen modellerad effekt ingår i antalen.'},
+    'authority-origin-coverage':{source:register,statistic:'Antal unika risker per ursprungskategori; åtgärdstäckning räknas för alla 20 myndighetsåtgärder inklusive övergång och framtida mandat. Kopplingarna anger räckvidd, inte uppmätt riskreduktion.'},
+    'authority-packages':{source:register+' Rangordning: '+cost,statistic:'Antal unika risker per arbetsområde bland huvudscenariots 17 åtgärder samt antal av dessa i topp 50. En risk kan ingå i flera arbetsområden; summan av grupperna är inte antal unika risker i hela urvalet.'},
+    'authority-matrix':{source:register,statistic:'Antal unika risker inom varje kombination av arbetsområde och direkt delprocess för huvudscenariots 17 åtgärder. Kopplingsräkning, inte effektstorlek eller sannolikhet.'}
+  };
+  const basis={date,...(entries[id]||{source:register+' '+cost,statistic:'Mått och enhet enligt den aktuella figuren; källunderlaget är låst till rapportutgåvan.'})};
+  let selectedIds=null;
+  if(id==='risk-contributions')selectedIds=(measurement.ranking?.entries||[]).slice(0,10).map(r=>r.riskId);
+  if(id==='process-reviewed-cost')selectedIds=(measurement.ranking?.entries||[]).map(r=>r.riskId);
+  if(selectedIds) {
+    basis.origins=aggregateProvenance(measurement,selectedIds);
+    const c=basis.origins.counts;
+    basis.statistic+=` I det visade urvalet bygger ${c.measurement} riskposter enbart på modellmedianer och ${c.mixed} på modellvärden tillsammans med beskrivningsskattningar. ${c.adapted_history} bygger på anpassade historiska belopp.`;
+  }
+  if(['authority-review-comparison','authority-investment','authority-investment-combination'].includes(id))basis.effect=controlEffectProvenance();
+  return basis;
+}
 export function reportFigureData(id,report,measurement,risks,controls=[]) {
+  const data=calculateReportFigureData(id,report,measurement,risks,controls);
+  if(data.kind==='pending')return data;
+  return {...data,provenance:reportFigureProvenance(id,report,measurement,risks,controls)};
+}
+export function renderReportFigure(id,report,measurement,risks,controls=[]) {
+  const chart=renderReportFigureChart(id,report,measurement,risks,controls);
+  if(!report.measurementEditionId||report.measurementEditionId!==measurement.editionId)return chart;
+  const basis=reportFigureProvenance(id,report,measurement,risks,controls),e=reportEscape;
+  return chart+`<div class="rp-number-basis"><p class="rp-graph-note"><strong>Ursprung och datum:</strong> ${e(basis.source)}</p><p class="rp-graph-note"><strong>Statistik och beräkning:</strong> ${e(basis.statistic)}</p></div>`;
+}
+function calculateReportFigureData(id,report,measurement,risks,controls=[]) {
   if(!report.measurementEditionId||report.measurementEditionId!==measurement.editionId)return {kind:'pending'};
   const rows=new Map((measurement.risks||[]).map(r=>[r.riskId,r]));
   const top=new Set(measurement.ranking?.entries.slice(0,50).map(r=>r.riskId)||[]);
@@ -53,6 +108,14 @@ export function reportFigureData(id,report,measurement,risks,controls=[]) {
   const originalTop=new Set(measurement.sourceReview?.originalTop50||[]);
   const reviewedOriginal=[...originalTop].map(id=>rows.get(id)).filter(Boolean);
   const comparisonSeries=[{label:'Ursprungliga modellmedianer',color:'#6d7c87'},{label:'Efter källgranskning',color:'#d88b22'}];
+  if(id==='source-audit-coverage')return {kind:'bars',unit:'risker',rows:[{label:'Individuell källgranskning',value:measurement.quality?.sourceReview?.reviewed||80},{label:'Utan fördjupad individuell källgranskning',value:risks.length-(measurement.quality?.sourceReview?.reviewed||80)}]};
+  if(id==='current-value-origins') {
+    const c=aggregateProvenance(measurement,risks.map(r=>r.risk_id)).counts;
+    return {kind:'bars',unit:'risker',rows:[{label:'Två modellmedianer',value:c.measurement},{label:'Modellmedian och beskrivningsmittpunkt',value:c.mixed},{label:'Utan jämförbar kostnadsindikator',value:c.undefined}]};
+  }
+  if(id==='risk-cost-components')return {kind:'components',rows:(measurement.ranking?.entries||[]).slice(0,10).map(e=>{const r=rows.get(e.riskId),basis=costProvenance(r,measurement.priorityMetric);return {riskId:e.riskId,label:e.riskId+' · '+risks.find(x=>x.risk_id===e.riskId)?.title,frequency:basis.frequency.value,severity:basis.severity.value/1e6,frequencyType:basis.frequency.statisticLabel,severityType:basis.severity.statisticLabel};})};
+  if(id==='authority-priority-amounts')return {kind:'bars',unit:'mnkr per år',rows:rankInvestments(measurement,controls,main).filter(x=>x.reduction>0).slice(0,8).map(x=>({label:x.control.id+' · '+x.control.title+' ('+x.pricedCount+'/'+x.affectedCount+' risker)',value:x.reduction/1e6}))};
+  if(id==='authority-priority-contributions')return {kind:'bars',unit:'mnkr per år',rows:rankInvestments(measurement,controls,main).filter(x=>x.reduction>0).slice(0,4).flatMap(x=>x.rows.filter(r=>r.reduction>0).sort((a,b)=>b.reduction-a.reduction).slice(0,2).map(r=>({label:x.control.id+' · '+r.riskId+' · '+risks.find(y=>y.risk_id===r.riskId)?.title,value:r.reduction/1e6,share:r.reduction/x.reduction}))) };
   if(id==='review-decisions')return {kind:'bars',unit:'risker',rows:[{label:'Värden ersatta av källuppgifter',value:reviewedOriginal.filter(r=>r.sourceReview?.decision==='replace_source').length},{label:'Modellvärden behållna',value:reviewedOriginal.filter(r=>r.sourceReview?.decision==='retain_model').length},{label:'Kostnadsrang odefinierad',value:reviewedOriginal.filter(r=>r.sourceReview?.decision==='withhold').length}]};
   if(id==='review-top50-movement')return {kind:'bars',unit:'risker',rows:[{label:'Kvar i topp 50 efter granskning',value:[...top].filter(id=>originalTop.has(id)).length},{label:'Nytillkomna i topp 50',value:[...top].filter(id=>!originalTop.has(id)).length}]};
   if(id==='review-cost-comparison')return {kind:'grouped',unit:'mnkr per år',series:comparisonSeries,rows:(measurement.modelMedianRanking?.entries||[]).filter(e=>rows.get(e.riskId)?.reviewedCost).slice(0,6).map(e=>({label:e.riskId+' · '+(risks.find(r=>r.risk_id===e.riskId)?.title||''),values:[e.score/1e6,rows.get(e.riskId).reviewedCost.value/1e6]}))};
@@ -86,7 +149,7 @@ export function reportFigureData(id,report,measurement,risks,controls=[]) {
   if(['cost-top-process','process-coverage'].includes(id))return {kind:'bars',unit:'risker',rows:[...new Set(risks.map(r=>r.chart_key))].sort().map(key=>({label:names[key]||key,value:risks.filter(r=>r.chart_key===key&&(id==='cost-top-process'?top.has(r.risk_id):priorityCost(rows.get(r.risk_id),measurement.priorityMetric))).length}))};
   if(id==='authority-reach')return {kind:'bars',unit:'risker',rows:controls.filter(c=>c.driver==='authority').sort((a,b)=>b.riskIds.length-a.riskIds.length||a.id.localeCompare(b.id)).slice(0,10).map(c=>({label:c.id+' · '+c.title,value:c.riskIds.length}))};
   if(id==='portfolio-distribution')return measurement.portfolio?.lossDistribution?{kind:'histogram',...measurement.portfolio.lossDistribution}: {kind:'pending'};
-  if(id==='risk-contributions')return {kind:'bars',rows:risks.map(r=>({id:r.risk_id,label:r.risk_id==='R-B70-130-01'?'Felbedömd byggberedskap':r.title,value:priorityCost(rows.get(r.risk_id),measurement.priorityMetric)?.value})).filter(r=>r.value!=null).sort((a,b)=>b.value-a.value).slice(0,10)};
+  if(id==='risk-contributions')return {kind:'bars',rows:risks.map(r=>({id:r.risk_id,label:r.risk_id+' · '+(r.risk_id==='R-B70-130-01'?'Felbedömd byggberedskap':r.title),value:priorityCost(rows.get(r.risk_id),measurement.priorityMetric)?.value,basis:costProvenance(rows.get(r.risk_id),measurement.priorityMetric)})).filter(r=>r.value!=null).sort((a,b)=>b.value-a.value).slice(0,10)};
   if(id==='process-contributions') {
     const charts=[...new Set(risks.map(r=>r.chart_key))];
     return {kind:'bars',rows:charts.map(key=>({id:key,label:key,value:risks.filter(r=>r.chart_key===key).reduce((a,r)=>a+(priorityCost(rows.get(r.risk_id),measurement.priorityMetric)?.value||0),0)})).filter(x=>risks.some(r=>r.chart_key===x.id&&priorityCost(rows.get(r.risk_id),measurement.priorityMetric)))};
@@ -97,10 +160,14 @@ export function reportFigureData(id,report,measurement,risks,controls=[]) {
   }
   return {kind:'pending'};
 }
-export function renderReportFigure(id,report,measurement,risks,controls=[]) {
+function renderReportFigureChart(id,report,measurement,risks,controls=[]) {
   const data=reportFigureData(id,report,measurement,risks,controls),e=reportEscape;
   const money=v=>data.unit?`${new Intl.NumberFormat('sv-SE',{maximumFractionDigits:2}).format(v)} ${e(data.unit)}`:`${new Intl.NumberFormat('sv-SE',{maximumFractionDigits:2}).format(v/1e6)} mnkr`;
   if(data.kind==='pending'||data.kind==='bars'&&!data.rows.length)return '<div class="ms-empty"><span class="ms-status">Inväntar rapportens mätutgåva</span><p>Figuren färdigställs med rapportens fastställda mätunderlag. En ny mätning ändrar inte den granskade rapporttexten automatiskt.</p></div>';
+  if(data.kind==='components') {
+    const fm=Math.max(...data.rows.map(r=>r.frequency),1),sm=Math.max(...data.rows.map(r=>r.severity),1),nf=v=>new Intl.NumberFormat('sv-SE',{maximumFractionDigits:1}).format(v);
+    return `<div class="rp-chart-legend"><span>Händelser per år</span><span>Kostnad per händelse, mnkr</span></div><div class="ex-table-wrap"><table class="ex-table"><thead><tr><th>Risk</th><th>Händelser/år</th><th>Mnkr/händelse</th></tr></thead><tbody>${data.rows.map(r=>`<tr><td>${e(r.label)}</td><td><div class="ms-bar-track"><span style="width:${r.frequency/fm*100}%;background:#6d7c87"></span></div><strong>${nf(r.frequency)}</strong><br><small>${e(r.frequencyType)}</small></td><td><div class="ms-bar-track"><span style="width:${r.severity/sm*100}%;background:#d88b22"></span></div><strong>${nf(r.severity)}</strong><br><small>${e(r.severityType)}</small></td></tr>`).join('')}</tbody></table></div><p class="rp-graph-note">Separata linjära skalor: 0–${nf(fm)} händelser/år respektive 0–${nf(sm)} mnkr/händelse. Stapellängder mellan kolumnerna är inte jämförbara.</p>`;
+  }
   if(data.kind==='signed-bars') {
     const max=Math.max(...data.rows.map(r=>Math.abs(r.value)),1);
     return `<div class="rp-signed-bars">${data.rows.map(r=>`<div class="rp-signed-row"><span>${e(r.label)}</span><div class="rp-signed-track"><i></i><b style="left:${r.value<0?50+r.value/max*50:50}%;width:${Math.abs(r.value)/max*50}%;background:${r.value<0?'#93574f':'#d88b22'}"></b></div><strong>${new Intl.NumberFormat('sv-SE',{maximumFractionDigits:1}).format(r.value)} %</strong></div>`).join('')}</div><p class="rp-graph-note">Noll i mitten. Höger: minskning. Vänster: ökning i modellen. Samma linjära skala på båda sidor.</p>`;
@@ -123,7 +190,7 @@ export function renderReportFigure(id,report,measurement,risks,controls=[]) {
     return `<svg class="ms-report-hist" viewBox="0 0 660 245" role="img" aria-label="Förlustfördelning. P50 ${money(data.p50)}, P95 ${money(data.p95)}">${[0,.5,1].map(f=>`<line x1="55" x2="640" y1="${200-f*180}" y2="${200-f*180}" stroke="#dfe4e7"/><text x="45" y="${204-f*180}" text-anchor="end">${Math.round(f*max*100)} %</text>`).join('')}${data.bins.map(b=>`<rect x="${55+(b.lower-lo)/span*585}" y="${200-b.count/data.sampleCount/max*180}" width="${Math.max(2,(b.upper-b.lower)/span*585-2)}" height="${b.count/data.sampleCount/max*180}" fill="#1d6362"><title>${money(b.lower)}–${money(b.upper)}: ${b.count} utfall</title></rect>`).join('')}<text x="55" y="225">${money(lo)}</text><text x="640" y="225" text-anchor="end">${money(hi)}</text></svg><div class="ms-quantiles"><span>P50<strong>${money(data.p50)}</strong></span><span>P95<strong>${money(data.p95)}</strong></span></div><p class="ex-note">${data.sampleCount} simulerade utfall · Run ${e(data.runId)}</p><details><summary>Visa figurdata</summary><table class="ex-table"><thead><tr><th>Från</th><th>Till</th><th>Antal</th></tr></thead><tbody>${data.bins.map(b=>`<tr><td>${money(b.lower)}</td><td>${money(b.upper)}</td><td>${b.count}</td></tr>`).join('')}</tbody></table></details>`;
   }
   const max=Math.max(...data.rows.map(r=>r.value),1);
-  return `<div class="ms-bars">${data.rows.map((r,i)=>`<div class="ms-bar-row"><span>${e(r.label)}</span><div class="ms-bar-track"><span class="${i===0?'ms-bar-first':''}" style="width:${r.value/max*100}%"></span></div><strong>${money(r.value)}</strong></div>`).join('')}</div><p class="ex-note">Risk- och åtgärdsunderlag · ${e(report.date)}</p>`;
+  return `<div class="ms-bars">${data.rows.map((r,i)=>`<div class="ms-bar-row"><span>${e(r.label)}${r.basis?`<small class="rp-graph-note" style="display:block">${e(r.basis.statisticLabel)}</small>`:''}</span><div class="ms-bar-track"><span class="${i===0?'ms-bar-first':''}" style="width:${r.value/max*100}%"></span></div><strong>${money(r.value)}</strong></div>`).join('')}</div><p class="ex-note">Risk- och åtgärdsunderlag · ${e(report.date)}</p>`;
 }
 export function renderReportChapter(chapter, report, interviews, {figure=()=>'',linkBase='?'}={}) {
   const e=reportEscape, quotes=new Map((interviews?.interviews||[]).flatMap(i=>(i.excerpts||[]).map(q=>[q.id,{...q,interview:i}])));
@@ -139,7 +206,7 @@ export function renderReportChapter(chapter, report, interviews, {figure=()=>'',
       return `<figure class="rp-quote"><blockquote>${e(q.text)}</blockquote><figcaption>${e(q.interview.publicLabel)} · ${e(q.interview.role)}<br>${e(q.locator)} · ${e(q.id)}</figcaption></figure>`;
     }
     if(b.type==='figure')return `<figure class="rp-figure"><h3>${e(b.title)}</h3>${figure(b.figureId)}<figcaption>${e(b.caption)}${b.sourceIds?.length?' · Källa: '+b.sourceIds.map(e).join(', '):''}</figcaption></figure>`;
-    if(b.type==='table')return `<div class="ex-table-wrap"><table class="ex-table"><caption>${e(b.title)}</caption><thead><tr>${b.columns.map(c=>`<th>${e(c)}</th>`).join('')}</tr></thead><tbody>${b.rows.map(row=>`<tr>${row.map(cell=>`<td>${e(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    if(b.type==='table')return `<div class="ex-table-wrap"><table class="ex-table"><caption>${e(b.title)}</caption><thead><tr>${b.columns.map(c=>`<th>${e(c)}</th>`).join('')}</tr></thead><tbody>${b.rows.map(row=>`<tr>${row.map(cell=>`<td>${e(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${b.numericBasis?`<p class="rp-graph-note"><strong>Ursprung och beräkning:</strong> ${e(b.numericBasis)} ${cite(b)}</p>`:cite(b)}`;
     if(b.type==='integration') {
       const findings=(report.findings||[]).filter(f=>(f.chapterIds||[]).includes(chapter.id));
       return findings.length?`<section class="rp-findings"><h3>Sammanvägd evidens</h3>${findings.map(f=>`<article><h4>${e(f.title)}</h4><p>${e(f.interpretation)}</p><p class="ex-note">${e(f.relationship||'Tematiskt stöd')} · ${f.excerptIds.map(id=>{const q=quotes.get(id);return `${e(q.interview.publicLabel)}, ${e(q.locator)} [${e(id)}]`;}).join(' · ')}</p><p class="ex-note">${e(f.counterEvidence||'Motstridigt underlag har inte redovisats för detta fynd.')} ${e(f.limitations||'')}</p>${(f.riskIds||[]).map(id=>`<a class="ref" href="${e(linkBase)}risk=${e(id)}&amp;tab=analysis">${e(id)}</a>`).join('')}${(f.controlIds||[]).map(id=>`<a class="ref" href="${e(linkBase)}view=controls&amp;control=${e(id)}">${e(id)}</a>`).join('')}</article>`).join('')}</section>`:`<aside class="rp-pending"><span class="rp-section-label">Planerad syntes</span><h3>Här möts mätning och intervjuer</h3><p>När underlagen är klara binds varje tolkning till en mätversion och till källbelagda intervjuutdrag. Även skillnader, motexempel och kunskapsluckor redovisas.</p></aside>`;

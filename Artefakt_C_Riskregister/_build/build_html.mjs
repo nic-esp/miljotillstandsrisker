@@ -47,6 +47,7 @@ const chartNames = Object.fromEntries(imp.charts.map(chart => {
 }));
 
 const measurement = JSON.parse(readFileSync(join(root, '../publication/measurement.json'), 'utf8'));
+const numericAudit = JSON.parse(readFileSync(join(root,'../publication/numeric-audit.json'),'utf8'));
 const presentation = validatePresentation(JSON.parse(readFileSync(join(root,'../publication/presentation.json'),'utf8')));
 const ranking = measurement.ranking || JSON.parse(readFileSync(join(here, 'btl_snapshot.json'), 'utf8'));
 createRankingModel(risks, ranking, proc); // Fail the build on stale or ambiguous risk mappings.
@@ -59,7 +60,7 @@ const reportInterviews = JSON.parse(readFileSync(join(root,'../report/interviews
 validateMeasurement(reportMeasurement,risks.map(r=>r.risk_id),exploration.controls.map(c=>c.id));
 if(report.measurementEditionId!==reportMeasurement.editionId)throw new Error('Rapportmanus och låst mätutgåva skiljer sig');
 validateReport(report,reportInterviews,risks.map(r=>r.risk_id),exploration.controls.map(c=>c.id));
-const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc, processExport: imp, ranking, exploration, measurement, presentation, report, interviews, reportMeasurement, reportInterviews })
+const payload = JSON.stringify({ risks, nodesByChart, sources, chartNames, proc, processExport: imp, ranking, exploration, measurement, numericAudit, presentation, report, interviews, reportMeasurement, reportInterviews })
   .replace(/</g, '\\u003c');
 const processGeometry = readFileSync(join(here, 'process_geometry.mjs'), 'utf8')
   .replace(/^export\s*\{\s*createProcessGeometry\s*\};?\s*$/m, '');
@@ -69,7 +70,7 @@ const processChartExport = readFileSync(join(here, 'process_chart_export.mjs'), 
   .replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
 
 const template = readFileSync(join(here, 'app_template.html'), 'utf8');
-const publicationModel = ['measurement_model.mjs','investment_model.mjs','report_model.mjs'].map(file=>readFileSync(join(here,file),'utf8').replace(/^export /gm,'').replace(/^import .*;\n/gm,'')).join('\n');
+const publicationModel = ['measurement_model.mjs','measurement_provenance.mjs','investment_model.mjs','report_model.mjs'].map(file=>readFileSync(join(here,file),'utf8').replace(/^export /gm,'').replace(/^import .*;\n/gm,'')).join('\n');
 const rankingModel = readFileSync(join(here, 'btl_ranking.mjs'), 'utf8').replace(/export\s*\{[\s\S]*?\};?\s*$/, '');
 const rankingView = readFileSync(join(here, 'ranking_view.mjs'), 'utf8');
 const brandCss = readFileSync(join(here, 'svenskt-naringsliv.css'), 'utf8');

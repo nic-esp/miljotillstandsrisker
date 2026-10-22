@@ -61,7 +61,11 @@ jobs:
             Artefakt_C_Riskregister/mcp-server/data/riskregister.csv \
             Artefakt_C_Riskregister/mcp-server/data/riskregister-items.csv \
             Artefakt_C_Riskregister/mcp-server/data/exploration.json \
-            Artefakt_C_Riskregister/mcp-server/data/controls.csv
+            Artefakt_C_Riskregister/mcp-server/data/controls.csv \
+            publication/numeric-audit.json \
+            publication/risk-values.csv \
+            publication/control-priorities.csv \
+            publication/control-risk-effects.csv
 
       - name: Prepare static site
         run: node scripts/prepare-site.mjs

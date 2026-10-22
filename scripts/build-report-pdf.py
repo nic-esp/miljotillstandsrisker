@@ -64,11 +64,15 @@ def p(text, style='body'):
     escaped = re.sub('[₀₁₂₃₄₅₆₇₈₉ᵢⱼₖₙₜ]+', lambda m: '<sub>'+m.group().translate(subscripts)+'</sub>', escaped)
     return Paragraph(escaped, styles[style])
 
+def sv_number(value, decimals=1):
+    text = f'{value:,.{decimals}f}'.replace(',', ' ').replace('.', ',')
+    return text.rstrip('0').rstrip(',') if decimals else text
+
 class ReportDoc(BaseDocTemplate):
     def __init__(self, filename):
         super().__init__(str(filename), pagesize=(210*mm, 297*mm), rightMargin=23*mm,
                          leftMargin=23*mm, topMargin=25*mm, bottomMargin=23*mm,
-                         title=report['title'], author='Miljötillståndsrisker')
+                         title=report['title'], author='Svenskt Näringsliv')
         self.addPageTemplates(PageTemplate('report', [Frame(self.leftMargin, self.bottomMargin,
                              self.width, self.height, leftPadding=0, rightPadding=0,
                              topPadding=0, bottomPadding=0)], onPage=self.page_chrome))
@@ -118,7 +122,7 @@ if logo.exists():
     mast = Table([[img]], colWidths=[doc.width])
     mast.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,-1),ink),('LEFTPADDING',(0,0),(-1,-1),15),('TOPPADDING',(0,0),(-1,-1),17),('BOTTOMPADDING',(0,0),(-1,-1),17)]))
     story += [mast, Spacer(1, 20*mm)]
-story += [p('ANALYSRAPPORT · OKTOBER 2026', 'label'), p(report['title'], 'title'),
+story += [p('SVENSKT NÄRINGSLIV · ANALYSRAPPORT · OKTOBER 2026', 'label'), p(report['title'], 'title'),
           p(report['subtitle'], 'subtitle'),
           HRFlowable(width='16%', thickness=4, color=orange, hAlign='LEFT'), Spacer(1, 9*mm),
           p(report['description']), Spacer(1, 10*mm),
@@ -129,7 +133,7 @@ toc = TableOfContents()
 toc.levelStyles = [ParagraphStyle('toc', fontName='Body',fontSize=8.5,leading=11,textColor=ink,spaceBefore=0,spaceAfter=0,leftIndent=0,rightIndent=20)]
 toc.tableStyle = TableStyle([('LEFTPADDING',(0,0),(-1,-1),0),('RIGHTPADDING',(0,0),(-1,-1),0),('TOPPADDING',(0,0),(-1,-1),3),('BOTTOMPADDING',(0,0),(-1,-1),3)])
 story += [toc]
-story += [Spacer(1, 8*mm), p('Om rapporten', 'h3'),p('Rapporten förenar risk- och processkartläggning, modellskattningar och intervjuer. Mätunderlag och intervjukällor är låsta till denna utgåva. Bilagorna redovisar metod, källkedja, granskningsregler och registerutdrag.') ]
+story += [Spacer(1, 8*mm), p('Om rapporten', 'h3'),p('Svenskt Näringsliv analyserar risker i miljötillståndsprocessen och föreslagna åtgärder inom myndigheternas handlingsutrymme. Underlaget omfattar processkartor, riskbeskrivningar, modellskattningar och intervjuer. Bilagorna redovisar metod, källor, datakvalitet och registerutdrag.') ]
 statuses = {'published':'','draft':'Arbetsmanus','awaiting_measurement':'Inväntar mätresultat',
             'awaiting_interviews':'Inväntar intervjumaterial','awaiting_integration':'Inväntar samlad analys','reviewed':'Sakgranskad'}
 quotes = {e['id']:{**e,'interview':i} for i in interviews['interviews'] for e in i['excerpts']}
@@ -176,10 +180,24 @@ for chapter in report['chapters']:
                 for r in data['rows']:
                     drawing=Drawing(doc.width*.38,20)
                     drawing.add(Rect(0,3,doc.width*.38*r['value']/maximum,14,fillColor=orange,strokeColor=None))
-                    cells.append([p(r['label'],'cell'),drawing,p(f"{r['value']:g} {data['unit']}" if data.get('unit') else f"{r['value']/1e6:,.1f} {money_unit}".replace(',',' ').replace('.',','),'cell')])
+                    number_label = sv_number(r['value'], 0 if data.get('unit') in ('risker','åtgärder','kopplingar') else 1)+' '+data['unit'] if data.get('unit') else sv_number(r['value']/1e6)+' '+money_unit
+                    cells.append([p(r['label']+(' · '+r['basis']['statisticLabel'] if r.get('basis') else ''),'cell'),drawing,p(number_label,'cell')])
                 chart=Table(cells,colWidths=[doc.width*.42,doc.width*.4,doc.width*.18])
                 chart.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'MIDDLE'),('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7)]))
                 story += [chart]
+            elif data['kind']=='components':
+                fm=max([r['frequency'] for r in data['rows']]+[1]); sm=max([r['severity'] for r in data['rows']]+[1])
+                cells=[[p('Risk','cellhead'),p('Händelser per år','cellhead'),p('Mnkr per händelse','cellhead')]]
+                for r in data['rows']:
+                    vals=[]
+                    for value,maximum,label,color in [(r['frequency'],fm,r['frequencyType'],muted),(r['severity'],sm,r['severityType'],orange)]:
+                        drawing=Drawing(doc.width*.22,17)
+                        drawing.add(Rect(0,3,doc.width*.22*value/maximum,10,fillColor=color,strokeColor=None))
+                        vals.append([drawing,p(f'{value:,.1f}'.replace(',',' ').replace('.',',')+' · '+label,'cell')])
+                    cells.append([p(r['label'],'cell')]+vals)
+                chart=Table(cells,colWidths=[doc.width*.48,doc.width*.26,doc.width*.26])
+                chart.setStyle(TableStyle([('VALIGN',(0,0),(-1,-1),'MIDDLE'),('BACKGROUND',(0,0),(-1,0),pale),('TOPPADDING',(0,0),(-1,-1),5),('BOTTOMPADDING',(0,0),(-1,-1),5)]))
+                story += [chart,p('Separata linjära skalor för händelser per år och kostnad per händelse. Stapellängder mellan kolumnerna är inte jämförbara.','small')]
             elif data['kind']=='grouped':
                 maximum=max([v for r in data['rows'] for v in r['values']]+[1])
                 cells=[]
@@ -242,13 +260,22 @@ for chapter in report['chapters']:
             else:
                 story += [p('Figurunderlag inväntas. Figuren kopplas till rapportens fastställda mätutgåva.','small')]
             citation = ' · Källa: '+', '.join(block.get('sourceIds',[]))
-            story += [p(block.get('caption','')+citation,'small'),Spacer(1,5*mm)]
-            story[figure_start:] = [KeepTogether(story[figure_start:])]
+            story += [p(block.get('caption','')+citation,'small')]
+            basis = data.get('provenance') or {}
+            if basis:
+                story += [p('Ursprung och datum: '+basis.get('source',''),'small'),p('Statistik och beräkning: '+basis.get('statistic',''),'small')]
+            story += [Spacer(1,5*mm)]
+            if len(data.get('rows',[])) <= 8:
+                story[figure_start:] = [KeepTogether(story[figure_start:])]
         elif kind == 'table':
             columns = block['columns']; rows=[[p(c,'cellhead') for c in columns]]+[[p(c,'cell') for c in row] for row in block['rows']]
-            table = Table(rows,colWidths=([doc.width*.24,doc.width*.54,doc.width*.22] if block['title'].startswith('Tabell F1') else [doc.width*.23,doc.width*.38,doc.width*.39] if block['title'].startswith('Tabell H1') else [doc.width*.26,doc.width*.16,doc.width*.58] if block['title'].startswith('Tabell 1. Rimlighetsbedömning') else [doc.width/len(columns)]*len(columns)),repeatRows=1,hAlign='LEFT')
+            table = Table(rows,colWidths=([doc.width*.24,doc.width*.54,doc.width*.22] if block['title'].startswith('Tabell F1') else [doc.width*.23,doc.width*.38,doc.width*.39] if block['title'].startswith('Tabell H1') else [doc.width*.26,doc.width*.16,doc.width*.58] if block['title'].startswith('Tabell 1. Rimlighetsbedömning') else [doc.width*.43,doc.width*.14,doc.width*.27,doc.width*.16] if block['title'].startswith(('Tabell G1','Tabell G2','Tabell G3')) else [doc.width/len(columns)]*len(columns)),repeatRows=1,hAlign='LEFT')
             table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),pale),('LINEBELOW',(0,0),(-1,-1),.4,line),('VALIGN',(0,0),(-1,-1),'TOP'),('LEFTPADDING',(0,0),(-1,-1),9),('RIGHTPADDING',(0,0),(-1,-1),9),('TOPPADDING',(0,0),(-1,-1),10),('BOTTOMPADDING',(0,0),(-1,-1),10)]))
-            story += [p(block['title'],'h3'),table,Spacer(1,5*mm)]
+            story += [p(block['title'],'h3'),table]
+            if block.get('numericBasis'):
+                citation = ' ['+', '.join(block.get('sourceIds',[]))+']' if block.get('sourceIds') else ''
+                story += [p('Ursprung och beräkning: '+block['numericBasis']+citation,'small')]
+            story += [Spacer(1,5*mm)]
         elif kind == 'integration':
             findings=[f for f in report.get('findings',[]) if chapter['id'] in f.get('chapterIds',[])]
             if not findings: story += [p('Planerad samlad analys','h3'),p('Mätresultat, intervjufynd och dokumentunderlag vägs samman här. Samstämmighet, motexempel och kunskapsluckor redovisas med spårbara belägg.','small')]

@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import {convertRuns,sha256} from '../../../scripts/import-runs.mjs';
-import {createMeasurementModel,validateMeasurement,validatePresentation} from '../../_build/measurement_model.mjs';
+import {createMeasurementModel,validateMeasurement,validatePresentation,priorityCost} from '../../_build/measurement_model.mjs';
+
+import * as numericProvenance from '../../_build/measurement_provenance.mjs';
 
 const canonical={risks:[{risk_id:'R1',title:'A'},{risk_id:'R2',title:'B'}],controls:[],mappingVersion:'mapping'};
 const spec=(runId,kind,extra={})=>({runId,kind,functionId:`fn-${runId}`,status:'completed',completedAt:'2026-10-21T10:00:00Z',sha256:sha256(runId),inputRunIds:[],...extra});
@@ -104,10 +106,14 @@ test('administrative setting validates; risk cards display the configured metric
   const {snapshot}=convert([loss()],{loss:rawLoss()});
   const source=readFileSync(new URL('../../_build/measurement_view.mjs',import.meta.url),'utf8');
   for(const statistic of ['median','mean']){
-    const context=vm.createContext({DATA:{measurement:snapshot,presentation:{schemaVersion:1,riskStatistic:statistic}},RISKS:canonical.risks,EX_DATA:{controls:[]},createMeasurementModel,validatePresentation,esc:s=>String(s)});
+    const context=vm.createContext({DATA:{measurement:snapshot,presentation:{schemaVersion:1,riskStatistic:statistic}},RISKS:canonical.risks,EX_DATA:{controls:[]},createMeasurementModel,validatePresentation,priorityCost,...numericProvenance,esc:s=>String(s)});
     vm.runInContext(source+"\nthis.card=measurementStrip('R1');this.formula=measurementFormula('R1');",context);
     assert.match(context.card,statistic==='median'?/Medianförlust/:/Förväntad kostnad/);
     assert.match(context.card,statistic==='median'?/<strong>0 mnkr<\/strong>/:/<strong>10 mnkr<\/strong>/);
+    const lossCard=context.card.slice(context.card.lastIndexOf('<div><span>'));
+    assert.match(lossCard,/Ursprung: Mätresultat · förlustmodell/);
+    assert.match(lossCard,statistic==='median'?/Mått: Median \(P50\) av modellförlust/:/Mått: Medelvärde av modellförlust/);
+    assert.doesNotMatch(lossCard,/Underlag saknas|Odefinierat|modellmedian ×/);
     assert.doesNotMatch(context.card,/<button|<select|<input/);
     assert.match(context.formula,statistic==='median'?/multipliceras inte/:/Exporterat medelvärde/);
   }

@@ -126,7 +126,12 @@ test('report figures bind to their own measurement edition',()=>{
   const measuredData=measured(),report={measurementEditionId:'test-edition'};
   const figure=reportFigureData('risk-contributions',report,measuredData,[{risk_id:'R1',title:'Risk 1'}]);
   assert.equal(figure.rows[0].value,1.8e6);
-  assert.deepEqual(reportFigureData('risk-contributions',{measurementEditionId:'other'},measuredData,[]),{kind:'pending'});
+  const pending=reportFigureData('risk-contributions',{measurementEditionId:'other'},measuredData,[]);
+  assert.equal(pending.kind,'pending');
+  assert.equal(pending.rows,undefined,'A mismatched edition must never expose result rows');
+  assert.equal(pending.provenance,undefined,'A mismatched edition must not inherit provenance from another edition');
+  assert.ok(figure.provenance.source);assert.ok(figure.provenance.statistic);
+  assert.equal(figure.provenance.origins.counts.adapted_history,0);
 });
 test('a cyclic input chain or an unconnected upstream declaration is rejected',()=>{
   const s=measured();s.provenance.runs[0].inputRunIds=['I'];s.provenance.runs[1].inputRunIds=['L'];
